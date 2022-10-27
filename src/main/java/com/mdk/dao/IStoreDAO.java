@@ -13,7 +13,6 @@ public interface IStoreDAO {
     List<Store_1000> find1000StoresLatestCreationTime();
     int totalStores();
     List<Store> topStores();
-
     Store findStoreById(long id);
     void updateStore (Store store);
     User findOwnerInfo(long id);
