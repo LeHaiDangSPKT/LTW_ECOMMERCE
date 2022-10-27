@@ -12,4 +12,5 @@ public interface IUserDAO {
     int totalUsers();
     List<User> topUsers();
 
+    User findUserById(long id);
 }

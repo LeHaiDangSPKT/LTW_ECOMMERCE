@@ -9,11 +9,14 @@ import com.mdk.models.User_1000;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends DBConnection implements IUserDAO {
-
+    public Connection conn = null;
+    public PreparedStatement ps = null;
+    public ResultSet rs = null;
     @Override
     public List<User> findAll() {
         String sql = "SELECT * FROM user";
@@ -97,6 +100,30 @@ public class UserDAO extends DBConnection implements IUserDAO {
             e.printStackTrace();
         }
         return users;
+    }
+
+    @Override
+    public User findUserById(long id) {
+        String sql = "select * from user where _id = ?";
+        User user = new User();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setCover(rs.getString("cover"));
+                user.setCreatedAt(rs.getTimestamp("createdAt"));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
 }

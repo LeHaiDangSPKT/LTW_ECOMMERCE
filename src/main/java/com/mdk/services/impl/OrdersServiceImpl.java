@@ -23,4 +23,9 @@ public class OrdersServiceImpl implements IOrdersService {
     public void updateStatus(Orders orders) {
         ordersDAO.updateStatus(orders);
     }
+
+    @Override
+    public int totalOder() {
+        return ordersDAO.totalOder();
+    }
 }

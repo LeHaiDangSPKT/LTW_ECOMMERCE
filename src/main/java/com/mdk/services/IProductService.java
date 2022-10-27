@@ -7,4 +7,6 @@ import java.util.List;
 public interface IProductService {
     List<Product> findAllProductProhibited();
     List<Product> findAllProductPermited();
+    void update (Product product);
+    int totalProductByStore(long storeId);
 }

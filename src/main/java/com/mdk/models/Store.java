@@ -11,7 +11,7 @@ public class Store extends AbstractModel<Delivery> {
 	private boolean isOpen;
 	private String avatar;
 	private String cover;
-	private int commission;
+	private long commissionId;
 	private int point;
 	private int rating;
 	private BigDecimal e_wallet;
@@ -80,12 +80,12 @@ public class Store extends AbstractModel<Delivery> {
 		this.cover = cover;
 	}
 	
-	public int getCommission() {
-		return commission;
+	public long getCommissionId() {
+		return commissionId;
 	}
 	
-	public void setCommission(int commission) {
-		this.commission = commission;
+	public void setCommissionId(long commission) {
+		this.commissionId = commission;
 	}
 	
 	public int getPoint() {
@@ -95,15 +95,15 @@ public class Store extends AbstractModel<Delivery> {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	
+
 	public int getRating() {
 		return rating;
 	}
-	
-	public void setRating(int raitng) {
-		this.rating = raitng;
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
-	
+
 	public BigDecimal getE_wallet() {
 		return e_wallet;
 	}

@@ -8,10 +8,14 @@ import com.mdk.models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrdersDAO extends DBConnection implements IOrdersDAO {
+    public Connection conn = null;
+    public PreparedStatement ps = null;
+    public ResultSet rs = null;
     @Override
     public List<Orders> findAll() {
         String sql = "SELECT * FROM orders";
@@ -72,5 +76,22 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int totalOder() {
+        String sql = "select count(*) from orders";
+        int total = 0;
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                total = rs.getInt(1);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 }

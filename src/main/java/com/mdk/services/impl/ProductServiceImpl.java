@@ -18,4 +18,14 @@ public class ProductServiceImpl implements IProductService {
     public List<Product> findAllProductPermited() {
         return productDAO.findAllProductPermited();
     }
+
+    @Override
+    public void update(Product product) {
+        productDAO.update(product);
+    }
+
+    @Override
+    public int totalProductByStore(long storeId) {
+        return productDAO.totalProductByStore(storeId);
+    }
 }

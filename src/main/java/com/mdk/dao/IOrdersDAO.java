@@ -9,5 +9,7 @@ public interface IOrdersDAO {
     List<Orders> findDelivering();
     void updateStatus(Orders orders);
 
+    int totalOder();
+
 
 }

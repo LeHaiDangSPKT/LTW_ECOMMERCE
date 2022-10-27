@@ -8,4 +8,5 @@ public interface IOrdersService {
     List<Orders> findAll();
     List<Orders> findDelivering();
     void updateStatus(Orders orders);
+    int totalOder();
 }
