@@ -1,12 +1,10 @@
 package com.mdk.models;
 
-import java.math.BigDecimal;
-
 public class Delivery extends AbstractModel<Delivery>{
     private String name;
     private String description;
-    private BigDecimal price;
-    private Boolean idDeleted;
+    private double price;
+    private boolean idDeleted;
 
     public String getName() {
         return name;
@@ -24,19 +22,19 @@ public class Delivery extends AbstractModel<Delivery>{
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public Boolean getIdDeleted() {
+    public boolean isIdDeleted() {
         return idDeleted;
     }
 
-    public void setIdDeleted(Boolean idDeleted) {
+    public void setIdDeleted(boolean idDeleted) {
         this.idDeleted = idDeleted;
     }
 }

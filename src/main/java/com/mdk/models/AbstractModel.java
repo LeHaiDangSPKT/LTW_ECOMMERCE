@@ -3,15 +3,15 @@ package com.mdk.models;
 import java.sql.Timestamp;
 
 public class AbstractModel<T> {
-    private Long id;
+    private int id;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

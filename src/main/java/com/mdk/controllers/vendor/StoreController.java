@@ -16,11 +16,11 @@ public class StoreController extends HttpServlet {
         if (url.contains("home")) {
             req.getRequestDispatcher("/views/vendor/home.jsp").forward(req, resp);
         } else if (url.contains("create-store")) {
-            req.getRequestDispatcher("/views/vendor/createStore.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         } else if (url.contains("list-store")) {
             req.getRequestDispatcher("/views/vendor/listStore.jsp").forward(req, resp);
         } else if (url.contains("edit-store")) {
-            req.getRequestDispatcher("/views/vendor/editStore.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         } else if (url.contains("statistic")) {
             req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
         }

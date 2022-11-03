@@ -31,24 +31,6 @@
                         <div class="row">
                             <div class="form-group col-sm-6">
                                 <div class="form-group">
-                                    <label>Chọn cửa hàng:</label>
-                                    <select class="form-control" id="">
-                                        <option selected="" disabled="">Cửa hàng</option>
-                                        <option>General Books</option>
-                                        <option>History Books</option>
-                                        <option>Horror Story</option>
-                                        <option>Arts Books</option>
-                                        <option>Film & Photography</option>
-                                        <option>Business & Economics</option>
-                                        <option>Comics & Mangas</option>
-                                        <option>Computers & Internet</option>
-                                        <option> Sports</option>
-                                        <option> Travel & Tourism</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <div class="form-group">
                                     <label>Chọn thể loại:</label>
                                     <select class="form-control" id="exampleFormControlSelect1">
                                         <option selected="" disabled="">Thể loại</option>
