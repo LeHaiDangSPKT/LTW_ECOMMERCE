@@ -1,21 +1,19 @@
 package com.mdk.models;
 
-import java.math.BigDecimal;
+import java.util.List;
 
-public class Product extends AbstractModel<Product> {
+public class Product extends AbstractModel<Product>{
     private String name;
-    private String slug;
     private String description;
-    private BigDecimal price;
-    private BigDecimal promotionalPrice;
+    private double price;
+    private double promotionalPrice;
     private int quantity;
     private int sold;
-    private Boolean isActive;
-    private Boolean isSelling;
-    private Long categoryId;
-    private Long storeId;
-    private Long rating;
-
+    private boolean isActive;
+    private int categoryId;
+    private int storeId;
+    private int rating;
+    private List<ImageProduct> images;
 
     public String getName() {
         return name;
@@ -23,14 +21,6 @@ public class Product extends AbstractModel<Product> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
     }
 
     public String getDescription() {
@@ -41,19 +31,19 @@ public class Product extends AbstractModel<Product> {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public BigDecimal getPromotionalPrice() {
+    public double getPromotionalPrice() {
         return promotionalPrice;
     }
 
-    public void setPromotionalPrice(BigDecimal promotionalPrice) {
+    public void setPromotionalPrice(double promotionalPrice) {
         this.promotionalPrice = promotionalPrice;
     }
 
@@ -73,43 +63,43 @@ public class Product extends AbstractModel<Product> {
         this.sold = sold;
     }
 
-    public Boolean getActive() {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
     }
 
-    public Boolean getSelling() {
-        return isSelling;
-    }
-
-    public void setSelling(Boolean selling) {
-        isSelling = selling;
-    }
-
-    public Long getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
-    public Long getStoreId() {
+    public int getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(Long storeId) {
+    public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
 
-    public Long getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(Long rating) {
+    public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public List<ImageProduct> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ImageProduct> images) {
+        this.images = images;
     }
 }

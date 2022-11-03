@@ -67,23 +67,6 @@
                                 </div>
                             </div>
                             <div class="iq-card-body">
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <div class="form-group">
-                                            <label>Chọn cửa hàng:</label>
-                                            <select class="form-control" id="">
-                                                <option selected="" disabled="">Cửa hàng</option>
-                                                <option>General Books</option>
-                                                <option>History Books</option>
-                                            </select>
-
-                                        </div>
-                                        <button type="submit" class="btn btn-primary search-data ml-2">
-                                            Xác nhận
-                                        </button>
-                                    </div>
-
-                                </div>
                                 <div class="table-responsive">
                                     <table id="list-all-order" class="table table-striped table-bordered mt-4"
                                            role="grid" aria-describedby="user-list-page-info">

@@ -12,7 +12,7 @@
     <div id="sidebar-scrollbar">
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
-                <li class="active">
+                <li>
                     <a href="<c:url value="/vendor/home" />">
                         <i class="fa-solid fa-book-open"></i>
                         Sản phẩm

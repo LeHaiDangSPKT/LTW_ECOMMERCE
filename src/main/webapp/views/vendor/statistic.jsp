@@ -12,7 +12,9 @@
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                 <div class="iq-card-body">
                     <div class="d-flex align-items-center">
-                        <div class="rounded-circle iq-card-icon bg-primary"><i class="fa-solid fa-users"></i></div>
+                        <div
+                                class="rounded-circle iq-card-icon d-flex align-items-center justify-content-center bg-primary"><i
+                                class="fa-solid fa-users"></i></div>
                         <div class="text-left ml-3">
                             <h2 class="mb-0"><span class="counter">5000</span></h2>
                             <h5 class="">Customer</h5>
@@ -25,7 +27,9 @@
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                 <div class="iq-card-body">
                     <div class="d-flex align-items-center">
-                        <div class="rounded-circle iq-card-icon bg-danger"><i class="fa-solid fa-book"></i></div>
+                        <div
+                                class="rounded-circle iq-card-icon d-flex align-items-center justify-content-center bg-danger"><i
+                                class="fa-solid fa-book"></i></div>
                         <div class="text-left ml-3">
                             <h2 class="mb-0"><span class="counter">4.8</span>k</h2>
                             <h5 class="">Books</h5>
@@ -38,7 +42,8 @@
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                 <div class="iq-card-body">
                     <div class="d-flex align-items-center">
-                        <div class="rounded-circle iq-card-icon bg-warning"><i class="fa-solid fa-cart-shopping"></i>
+                        <div class="rounded-circle iq-card-icon d-flex align-items-center justify-content-center bg-warning"><i
+                                class="fa-solid fa-cart-shopping"></i>
                         </div>
                         <div class="text-left ml-3">
                             <h2 class="mb-0"><span class="counter">1.2</span>k</h2>
@@ -52,7 +57,9 @@
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                 <div class="iq-card-body">
                     <div class="d-flex align-items-center">
-                        <div class="rounded-circle iq-card-icon bg-info"><i class="fa-solid fa-satellite-dish"></i></div>
+                        <div
+                                class="rounded-circle iq-card-icon d-flex align-items-center justify-content-center bg-info"><i
+                                class="fa-solid fa-satellite-dish"></i></div>
                         <div class="text-left ml-3">
                             <h2 class="mb-0"><span class="counter">690</span></h2>
                             <h5 class="">Orders</h5>
