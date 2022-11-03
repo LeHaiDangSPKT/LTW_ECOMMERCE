@@ -22,17 +22,17 @@ public class UserDAO extends DBConnection implements IUserDAO {
         String sql = "SELECT * FROM user";
         List<User> users = new ArrayList<User>();
         try {
-            Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            ResultSet resultSet = pStatement.executeQuery();
-            while(resultSet.next()) {
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
                 User user = new User();
-                user.setFirstname(resultSet.getString("firstname"));
-                user.setLastname(resultSet.getString("lastname"));
-                user.setId_card(resultSet.getLong("id_card"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPhone(resultSet.getString("phone"));
-                user.setPoint(resultSet.getInt("point"));
+//                user.setFirstname(rs.getString("firstname"));
+//                user.setLastname(rs.getString("lastname"));
+//                user.setId_card(rs.getLong("id_card"));
+//                user.setEmail(rs.getString("email"));
+//                user.setPhone(rs.getString("phone"));
+//                user.setPoint(rs.getInt("point"));
                 users.add(user);
             }
         } catch (Exception e) {
@@ -49,12 +49,12 @@ public class UserDAO extends DBConnection implements IUserDAO {
         List<User_1000> users_1000 = new ArrayList<User_1000>();
         try {
             Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            ResultSet resultSet = pStatement.executeQuery();
-            while(resultSet.next()) {
+            ps = getConnection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
                 User_1000 user = new User_1000();
-                user.setQuatity_group(resultSet.getInt("quantity"));
-                user.setPoint(resultSet.getInt("point"));
+                user.setQuatity_group(rs.getInt("quantity"));
+                user.setPoint(rs.getInt("point"));
                 users_1000.add(user);
             }
         } catch (Exception e) {
@@ -69,8 +69,8 @@ public class UserDAO extends DBConnection implements IUserDAO {
         int result = 0;
         try {
             Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            result = pStatement.executeUpdate();
+            ps = getConnection.prepareStatement(sql);
+            result = ps.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,16 +84,16 @@ public class UserDAO extends DBConnection implements IUserDAO {
         List<User> users = new ArrayList<User>();
         try {
             Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            ResultSet resultSet = pStatement.executeQuery();
-            while(resultSet.next()) {
+            ps = getConnection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
                 User user = new User();
-                user.setFirstname(resultSet.getString("firstname"));
-                user.setLastname(resultSet.getString("lastname"));
-                user.setId_card(resultSet.getLong("id_card"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPhone(resultSet.getString("phone"));
-                user.setPoint(resultSet.getInt("point"));
+//                user.setFirstname(rs.getString("firstname"));
+//                user.setLastname(rs.getString("lastname"));
+//                user.setId_card(rs.getLong("id_card"));
+//                user.setEmail(rs.getString("email"));
+//                user.setPhone(rs.getString("phone"));
+//                user.setPoint(rs.getInt("point"));
                 users.add(user);
             }
         } catch (Exception e) {
@@ -101,29 +101,4 @@ public class UserDAO extends DBConnection implements IUserDAO {
         }
         return users;
     }
-
-    @Override
-    public User findUserById(long id) {
-        String sql = "select * from user where _id = ?";
-        User user = new User();
-        try {
-            conn = getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setLong(1, id);
-            rs = ps.executeQuery();
-            while (rs.next()){
-                user.setFirstname(rs.getString("firstname"));
-                user.setLastname(rs.getString("lastname"));
-                user.setEmail(rs.getString("email"));
-                user.setPhone(rs.getString("phone"));
-                user.setAvatar(rs.getString("avatar"));
-                user.setCover(rs.getString("cover"));
-                user.setCreatedAt(rs.getTimestamp("createdAt"));
-            }
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-
 }

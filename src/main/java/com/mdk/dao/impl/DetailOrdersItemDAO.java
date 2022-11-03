@@ -12,23 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailOrdersItemDAO extends DBConnection implements IDetailOrdersItemDAO {
+    public Connection conn = null;
+    public PreparedStatement ps = null;
+    public ResultSet rs = null;
     @Override
-    public DetailOrdersItem findOneByOrderId(Long id) {
+    public DetailOrdersItem findOneByOrderId(int id) {
         String sql = "SELECT productId, name, count, price, status FROM product INNER JOIN ordersItem  " +
                 "ON productId = product._id INNER JOIN orders ON" +
                 "orderId = orders._id WHERE orderId = ?";
         try {
-            Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            pStatement.setLong(1, id);
-            ResultSet resultSet = pStatement.executeQuery();
-            while(resultSet.next()) {
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, id);
+            rs = ps.executeQuery();
+            while(rs.next()) {
                 DetailOrdersItem detailOrdersItem = new DetailOrdersItem();
-                detailOrdersItem.setProductId(resultSet.getLong("productId"));
-                detailOrdersItem.setName(resultSet.getString("name"));
-                detailOrdersItem.setCount(resultSet.getInt("count"));
-                detailOrdersItem.setPrice(resultSet.getBigDecimal("price"));
-                detailOrdersItem.setStatus(resultSet.getString("status"));
+//                detailOrdersItem.setProductId(rs.getLong("productId"));
+                detailOrdersItem.setName(rs.getString("name"));
+                detailOrdersItem.setCount(rs.getInt("count"));
+//                detailOrdersItem.setPrice(rs.getBigDecimal("price"));
+//                detailOrdersItem.setStatus(rs.getString("status"));
                 return detailOrdersItem;
             }
         } catch (Exception e) {

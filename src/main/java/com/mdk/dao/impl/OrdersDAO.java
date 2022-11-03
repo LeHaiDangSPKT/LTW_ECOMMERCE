@@ -21,17 +21,17 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         String sql = "SELECT * FROM orders";
         List<Orders> orders = new ArrayList<Orders>();
         try {
-            Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            ResultSet resultSet = pStatement.executeQuery();
-            while(resultSet.next()) {
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
                 Orders oder = new Orders();
-                oder.setUserId(resultSet.getLong("userId"));
-                oder.setStoreId(resultSet.getLong("storeId"));
-                oder.setDeliveryId(resultSet.getLong("deliveryId"));
-                oder.setAddress(resultSet.getString("address"));
-                oder.setPhone(resultSet.getInt("phone"));
-                oder.setStatus(resultSet.getString("status"));
+//                oder.setUserId(rs.getLong("userId"));
+//                oder.setStoreId(rs.getLong("storeId"));
+//                oder.setDeliveryId(rs.getLong("deliveryId"));
+                oder.setAddress(rs.getString("address"));
+                oder.setPhone(rs.getInt("phone"));
+                oder.setStatus(rs.getString("status"));
                 orders.add(oder);
             }
         } catch (Exception e) {
@@ -45,17 +45,17 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         String sql = "SELECT * FROM orders WHERE status = 'shipped'";
         List<Orders> orders = new ArrayList<Orders>();
         try {
-            Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            ResultSet resultSet = pStatement.executeQuery();
-            while(resultSet.next()) {
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
                 Orders oder = new Orders();
-                oder.setUserId(resultSet.getLong("userId"));
-                oder.setStoreId(resultSet.getLong("storeId"));
-                oder.setDeliveryId(resultSet.getLong("deliveryId"));
-                oder.setAddress(resultSet.getString("address"));
-                oder.setPhone(resultSet.getInt("phone"));
-                oder.setStatus(resultSet.getString("status"));
+//                oder.setUserId(rs.getLong("userId"));
+//                oder.setStoreId(rs.getLong("storeId"));
+//                oder.setDeliveryId(rs.getLong("deliveryId"));
+                oder.setAddress(rs.getString("address"));
+                oder.setPhone(rs.getInt("phone"));
+                oder.setStatus(rs.getString("status"));
                 orders.add(oder);
             }
         } catch (Exception e) {
@@ -69,29 +69,14 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         String sql = "UPDATE user SET status = ?";
         List<User> users = new ArrayList<User>();
         try {
-            Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            pStatement.setString(1, orders.getStatus());
-            pStatement.executeUpdate();
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, orders.getStatus());
+            ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public int totalOder() {
-        String sql = "select count(*) from orders";
-        int total = 0;
-        try {
-            conn = getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                total = rs.getInt(1);
-            }
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return total;
-    }
+
 }

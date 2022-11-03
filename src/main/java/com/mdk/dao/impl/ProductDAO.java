@@ -23,16 +23,16 @@ public class ProductDAO extends DBConnection implements IProductDAO {
         String sql = "SELECT * FROM product WHERE isActive = 'false'";
         List<Product> products = new ArrayList<Product>();
         try {
-            Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            ResultSet resultSet = pStatement.executeQuery();
-            while(resultSet.next()) {
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
                 Product product = new Product();
-                product.setName(resultSet.getString("name"));
-                product.setDescription(resultSet.getString("description"));
-                product.setPrice(resultSet.getBigDecimal("price"));
-                product.setQuantity(resultSet.getInt("quantity"));
-                product.setSold(resultSet.getInt("sold"));
+//                product.setName(rs.getString("name"));
+//                product.setDescription(rs.getString("description"));
+//                product.setPrice(rs.getBigDecimal("price"));
+//                product.setQuantity(rs.getInt("quantity"));
+//                product.setSold(rs.getInt("sold"));
                 products.add(product);
             }
         } catch (Exception e) {
@@ -46,16 +46,16 @@ public class ProductDAO extends DBConnection implements IProductDAO {
         String sql = "SELECT * FROM product WHERE isActive = 'true'";
         List<Product> products = new ArrayList<Product>();
         try {
-            Connection getConnection = super.getConnection();
-            PreparedStatement pStatement = getConnection.prepareStatement(sql);
-            ResultSet resultSet = pStatement.executeQuery();
-            while(resultSet.next()) {
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
                 Product product = new Product();
-                product.setName(resultSet.getString("name"));
-                product.setDescription(resultSet.getString("description"));
-                product.setPrice(resultSet.getBigDecimal("price"));
-                product.setQuantity(resultSet.getInt("quantity"));
-                product.setSold(resultSet.getInt("sold"));
+//                product.setName(rs.getString("name"));
+//                product.setDescription(rs.getString("description"));
+//                product.setPrice(rs.getBigDecimal("price"));
+//                product.setQuantity(rs.getInt("quantity"));
+//                product.setSold(rs.getInt("sold"));
                 products.add(product);
             }
         } catch (Exception e) {
@@ -64,44 +64,5 @@ public class ProductDAO extends DBConnection implements IProductDAO {
         return products;
     }
 
-    @Override
-    public void update(Product product) {
-        StringBuilder sql = new StringBuilder("update product set name = ?, description = ?, ");
-        sql.append("price = ?, promotionalPrice = ?, quantity = ?, sold = ?, categoryId = ? where _id = ?");
-        try {
-            conn = getConnection();
-            ps = Objects.requireNonNull(conn).prepareStatement(String.valueOf(sql));
-            ps.setString(1, product.getName());
-            ps.setString(2, product.getDescription());
-            ps.setBigDecimal(3, product.getPrice());
-            ps.setBigDecimal(4, product.getPromotionalPrice());
-            ps.setInt(5, product.getQuantity());
-            ps.setInt(6, product.getSold());
-            ps.setLong(7, product.getCategoryId());
-            ps.setLong(8, product.getId());
-
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public int totalProductByStore(long storeId) {
-        String sql = "select count(*), storeId from product where storeId = ? group by(storeId)";
-        int total = 0;
-        try {
-            conn = getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setLong(1, storeId);
-            rs = ps.executeQuery();
-            while (rs.next()){
-                total = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return total;
-    }
 
 }
