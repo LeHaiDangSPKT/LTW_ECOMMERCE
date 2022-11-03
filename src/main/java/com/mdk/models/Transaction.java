@@ -1,26 +1,25 @@
 package com.mdk.models;
 
-import java.math.BigDecimal;
 
 public class Transaction extends AbstractModel<Transaction>{
-    private Long userId ;
-    private Long storeId;
+    private int userId ;
+    private int storeId;
     private Boolean isUp   ;
-    private BigDecimal amount ;
+    private Double amount ;
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public Long getStoreId() {
+    public int getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(Long storeId) {
+    public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
 
@@ -32,11 +31,11 @@ public class Transaction extends AbstractModel<Transaction>{
         isUp = up;
     }
 
-    public BigDecimal getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 }

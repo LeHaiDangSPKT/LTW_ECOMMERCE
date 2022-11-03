@@ -8,8 +8,4 @@ public interface IOrdersDAO {
     List<Orders> findAll();
     List<Orders> findDelivering();
     void updateStatus(Orders orders);
-
-    int totalOder();
-
-
 }

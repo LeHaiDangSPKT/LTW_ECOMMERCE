@@ -3,47 +3,38 @@ package com.mdk.models;
 import java.math.BigDecimal;
 
 public class Orders extends AbstractModel<Orders> {
-    private Long userId;
-    private Long storeId;
-    private Long deliveryId;
-    private Long commissionId;
+    private int userId;
+    private int storeId;
+    private int deliveryId;
     private String address;
     private int phone;
     private String status;
-    private Boolean isPaidBefore;
-    private BigDecimal amountFromUser;
-    private BigDecimal amountFromStore;
+    private Double amountFromUser;
+    private Double amountToStore;
+    private Double amountToGD;
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public Long getStoreId() {
+    public int getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(Long storeId) {
+    public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
 
-    public Long getDeliveryId() {
+    public int getDeliveryId() {
         return deliveryId;
     }
 
-    public void setDeliveryId(Long deliveryId) {
+    public void setDeliveryId(int deliveryId) {
         this.deliveryId = deliveryId;
-    }
-
-    public Long getCommissionId() {
-        return commissionId;
-    }
-
-    public void setCommissionId(Long commissionId) {
-        this.commissionId = commissionId;
     }
 
     public String getAddress() {
@@ -70,46 +61,27 @@ public class Orders extends AbstractModel<Orders> {
         this.status = status;
     }
 
-    public Boolean getPaidBefore() {
-        return isPaidBefore;
-    }
-
-    public void setPaidBefore(Boolean paidBefore) {
-        isPaidBefore = paidBefore;
-    }
-
-    public BigDecimal getAmountFromUser() {
+    public Double getAmountFromUser() {
         return amountFromUser;
     }
 
-    public void setAmountFromUser(BigDecimal amountFromUser) {
+    public void setAmountFromUser(Double amountFromUser) {
         this.amountFromUser = amountFromUser;
     }
 
-    public BigDecimal getAmountFromStore() {
-        return amountFromStore;
-    }
-
-    public void setAmountFromStore(BigDecimal amountFromStore) {
-        this.amountFromStore = amountFromStore;
-    }
-
-    public BigDecimal getAmountToStore() {
+    public Double getAmountToStore() {
         return amountToStore;
     }
 
-    public void setAmountToStore(BigDecimal amountToStore) {
+    public void setAmountToStore(Double amountToStore) {
         this.amountToStore = amountToStore;
     }
 
-    public BigDecimal getAmountToGD() {
+    public Double getAmountToGD() {
         return amountToGD;
     }
 
-    public void setAmountToGD(BigDecimal amountToGD) {
+    public void setAmountToGD(Double amountToGD) {
         this.amountToGD = amountToGD;
     }
-
-    private BigDecimal amountToStore;
-    private BigDecimal amountToGD;
 }

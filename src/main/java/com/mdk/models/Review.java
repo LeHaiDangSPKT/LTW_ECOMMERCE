@@ -1,42 +1,42 @@
 package com.mdk.models;
 
 public class Review extends AbstractModel<Review>{
-    private Long userId  ;
-    private Long productId;
-    private Long storeId ;
-    private Long ordersId;
+    private int userId  ;
+    private int productId;
+    private int storeId ;
+    private int ordersId;
     private String content;
     private int stars;
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public Long getProductI() {
+    public int getProductI() {
         return productId;
     }
 
-    public void setProductI(Long productId) {
+    public void setProductI(int productId) {
         this.productId = productId;
     }
 
-    public Long getStoreId() {
+    public int getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(Long storeId) {
+    public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
 
-    public Long getOrdersId() {
+    public int getOrdersId() {
         return ordersId;
     }
 
-    public void setOrdersId(Long ordersId) {
+    public void setOrdersId(int ordersId) {
         this.ordersId = ordersId;
     }
 

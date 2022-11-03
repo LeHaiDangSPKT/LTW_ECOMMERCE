@@ -1,31 +1,31 @@
 package com.mdk.models;
 
 public class CartItem extends AbstractModel<CartItem>{
-    public Long getCartId() {
+    public int getCartId() {
         return cartId;
     }
 
-    public void setCartId(Long cartId) {
+    public void setCartId(int cartId) {
         this.cartId = cartId;
     }
 
-    public Long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
-    public Long getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(Long count) {
+    public void setCount(int count) {
         this.count = count;
     }
 
-    private Long cartId    ;
-    private Long productId ;
-    private Long count     ;
+    private int cartId    ;
+    private int productId ;
+    private int count     ;
 }

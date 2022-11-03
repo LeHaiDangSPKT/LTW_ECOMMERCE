@@ -1,23 +1,23 @@
 package com.mdk.models;
 
 public class OrdersItem extends AbstractModel<OrdersItem> {
-    private Long ordersId ;
-    private Long productId;
+    private int ordersId ;
+    private int productId;
     private int count;
 
-    public Long getOrdersId() {
+    public int getOrdersId() {
         return ordersId;
     }
 
-    public void setOrdersId(Long ordersId) {
+    public void setOrdersId(int ordersId) {
         this.ordersId = ordersId;
     }
 
-    public Long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

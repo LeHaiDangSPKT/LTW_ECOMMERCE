@@ -12,12 +12,4 @@ public interface IStoreService {
     List<Store_1000> find1000StoresLatestCreationTime();
     int totalStores();
     List<Store> topStores();
-    Long createStore (Store store);
-    Store findStoreById(long id);
-    void updateStore (Store store);
-    User findOwnerInfo(long id);
-    List<User> findAllStaff(long id);
-    void insertStaff(long storeId, long userId);
-    void deleteStore(long id);
-    List<Product> findAllProductOfStore(long id);
 }

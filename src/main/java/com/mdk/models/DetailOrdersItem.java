@@ -1,17 +1,13 @@
 package com.mdk.models;
 
-import java.math.BigDecimal;
-
 public class DetailOrdersItem {
-    private Long productId;
-    private String name;
-    private int count;
+    private int productId;
 
-    public Long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
@@ -31,22 +27,6 @@ public class DetailOrdersItem {
         this.count = count;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    private BigDecimal price;
-    private String status;
+    private String name;
+    private int count;
 }
