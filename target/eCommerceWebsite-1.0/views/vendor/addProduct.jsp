@@ -50,6 +50,9 @@
                             <br>
                             <label>Ảnh thứ 3:</label>
                             <input type="file" name="file1">
+                            <br>
+                            <label>Ảnh thứ 3:</label>
+                            <input type="file" name="file1">
 
                         </div>
                         <div class="form-group">

@@ -15,7 +15,7 @@
                 <li>
                     <a href="<c:url value="/vendor/home" />">
                         <i class="fa-solid fa-book-open"></i>
-                        Sản phẩm
+                        Cửa hàng
                     </a>
                 </li>
                 <li>
