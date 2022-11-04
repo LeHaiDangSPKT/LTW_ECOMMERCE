@@ -5,6 +5,9 @@
     <decorator name="admin" page="admin.jsp">
         <pattern>/admin*</pattern>
     </decorator>
+    <decorator name="vendor" page="vendor.jsp">
+        <pattern>/vendor*</pattern>
+    </decorator>
     <decorator name="web" page="web.jsp">
         <pattern>/web*</pattern>
     </decorator>
