@@ -19,7 +19,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
     public ResultSet rs = null;
     @Override
     public List<User> findAll() {
-        String sql = "SELECT * FROM user";
+        String sql = "SELECT * FROM user WHERE role = 'user'";
         List<User> users = new ArrayList<User>();
         try {
             conn = super.getConnection();
@@ -65,7 +65,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
     @Override
     public int totalUsers() {
-        String sql = "SELECT COUNT(_id) as total FROM user";
+        String sql = "SELECT COUNT(_id) as total FROM user WHERE role = user";
         int result = 0;
         try {
             Connection getConnection = super.getConnection();

@@ -19,17 +19,9 @@
           <ul id="user" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
             <li><a href="<c:url value='/admin/user/all'/>">Tất cả</a></li>
             <li><a href="<c:url value='/admin/user/new'/>">Người dùng mới</a></li>
-            <li><a href="<c:url value='/admin/user/level'/>">Cấp độ người dùng</a></li>
           </ul>
         </li>
-        <li>
-          <a href="#store" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
-                  class="ripple rippleEffect"></span><i class="fa-solid fa-store"></i><span>Cửa hàng</span><i
-                  class="fa-solid fa-chevron-right iq-arrow-right"></i></a>
-          <ul id="store" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-            <li><a href="<c:url value='/admin/store/all'/>">Tất cả</a></li>
-          </ul>
-        </li>
+          <li><a href="<c:url value='/admin/store'/>"><i class="fa-solid fa-store"></i>Cửa hàng</a></li>
         <li>
           <a href="#product" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
                   class="ripple rippleEffect"></span><i class="fa-brands fa-product-hunt"></i><span>Sản phẩm</span><i
@@ -37,9 +29,6 @@
           <ul id="product" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
             <li><a href="<c:url value='/admin/product/permit'/>">Sản phẩm được cho phép</a></li>
             <li><a href="<c:url value='/admin/product/prohibit'/>">Sản phẩm bị cấm</a></li>
-            <li><a href="<c:url value='/admin/product/type'/>">Loại sản phẩm</a></li>
-            <li><a href="<c:url value='/admin/product/attribute'/>">Thuộc tính sản phẩm</a></li>
-
           </ul>
         </li>
         <li>

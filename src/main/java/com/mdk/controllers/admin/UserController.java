@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/admin/user/all", "/admin/user/level", "/admin/user/new"})
+@WebServlet(urlPatterns = {"/admin/user/all", "/admin/user/new"})
 public class UserController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -23,10 +23,6 @@ public class UserController extends HttpServlet{
 		if (url.contains("user/new")) {
 			req.getRequestDispatcher("/views/admin/user/new.jsp").forward(req, resp);
 		}
-		if (url.contains("user/level")) {
-			req.getRequestDispatcher("/views/admin/user/level.jsp").forward(req, resp);
-		}
-
 
 	}
 }

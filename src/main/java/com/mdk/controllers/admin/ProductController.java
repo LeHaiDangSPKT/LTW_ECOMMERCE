@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/admin/product/permit", "/admin/product/prohibit", "/admin/product/type", "/admin/product/attribute"})
+@WebServlet(urlPatterns = {"/admin/product/permit", "/admin/product/prohibit"})
 public class ProductController extends HttpServlet{
 
     private static final long serialVersionUID = 1L;
@@ -23,11 +23,6 @@ public class ProductController extends HttpServlet{
         if (url.contains("product/prohibit")) {
             req.getRequestDispatcher("/views/admin/product/prohibit.jsp").forward(req, resp);
         }
-        if (url.contains("product/type")) {
-            req.getRequestDispatcher("/views/admin/product/type.jsp").forward(req, resp);
-        }
-        if (url.contains("product/attribute")) {
-            req.getRequestDispatcher("/views/admin/product/attribute.jsp").forward(req, resp);
-        }
+
     }
 }
