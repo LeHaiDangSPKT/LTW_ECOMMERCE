@@ -3,7 +3,7 @@
     <a href="index-2.html" class="header-logo">
       <img src="template/web/images/logo.png" class="img-fluid rounded-normal" alt="">
       <div class="logo-title">
-        <span class="text-primary text-uppercase">Booksto</span>
+        <span class="text-primary text-uppercase">Bookstore</span>
       </div>
     </a>
   </div>

@@ -3,10 +3,15 @@
 <%@include file="/common/taglib.jsp"%>
 <html>
 <head>
-    <title>admin</title>
+    <title>Admin</title>
     <%@include file="/common/link-css-js.jsp"%>
 </head>
 <body>
-
+<div class="wrapper">
+    <%@include file="/common/admin/navbar.jsp"%>
+    <%@include file="/common/admin/sidebar.jsp"%>
+    <dec:body/>
+    <%@include file="/common/footer.jsp"%>
+</div>
 </body>
 </html>

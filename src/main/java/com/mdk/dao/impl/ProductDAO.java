@@ -22,6 +22,21 @@ public class ProductDAO extends DBConnection implements IProductDAO {
                 "quantity, sold, isActive, categoryId, storeId, rating, image1, image2, image3)\n" +
                 "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
+<<<<<<< HEAD
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                Product product = new Product();
+//                product.setName(rs.getString("name"));
+//                product.setDescription(rs.getString("description"));
+//                product.setPrice(rs.getBigDecimal("price"));
+//                product.setQuantity(rs.getInt("quantity"));
+//                product.setSold(rs.getInt("sold"));
+                products.add(product);
+            }
+        } catch (Exception e) {
+=======
             conn = getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1,product.getName());
@@ -69,6 +84,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
             ps.setInt(14, product.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
+>>>>>>> origin/master
             e.printStackTrace();
         }
     }
@@ -77,6 +93,18 @@ public class ProductDAO extends DBConnection implements IProductDAO {
     public void delete(int id) {
         String sql = "delete from product where id = ?";
         try {
+<<<<<<< HEAD
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                Product product = new Product();
+//                product.setName(rs.getString("name"));
+//                product.setDescription(rs.getString("description"));
+//                product.setPrice(rs.getBigDecimal("price"));
+//                product.setQuantity(rs.getInt("quantity"));
+//                product.setSold(rs.getInt("sold"));
+=======
             conn = getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
@@ -117,6 +145,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
                 product.setCreatedAt(rs.getTimestamp("createdAt"));
                 product.setUpdatedAt(rs.getTimestamp("updatedAt"));
 
+>>>>>>> origin/master
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -125,6 +154,9 @@ public class ProductDAO extends DBConnection implements IProductDAO {
         return products;
     }
 
+<<<<<<< HEAD
+
+=======
     @Override
     public List<Product> findAll() {
         String sql = "select * from product";
@@ -198,4 +230,5 @@ public class ProductDAO extends DBConnection implements IProductDAO {
         }
         return products;
     }
+>>>>>>> origin/master
 }

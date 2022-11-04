@@ -1,5 +1,8 @@
 package com.mdk.models;
 
+<<<<<<< HEAD
+public class Product {
+=======
 import java.util.List;
 
 public class Product extends AbstractModel<Product> {
@@ -130,4 +133,5 @@ public class Product extends AbstractModel<Product> {
         this.rating = rating;
     }
 
+>>>>>>> origin/master
 }

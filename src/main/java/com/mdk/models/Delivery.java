@@ -1,5 +1,8 @@
 package com.mdk.models;
 
+<<<<<<< HEAD
+public class Delivery {
+=======
 public class Delivery extends AbstractModel<Delivery>{
     private String name;
     private String description;
@@ -37,4 +40,5 @@ public class Delivery extends AbstractModel<Delivery>{
     public void setIdDeleted(boolean idDeleted) {
         this.idDeleted = idDeleted;
     }
+>>>>>>> origin/master
 }

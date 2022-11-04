@@ -7,9 +7,9 @@
         </div>
         <div class="iq-navbar-logo d-flex justify-content-between">
           <a href="index-2.html" class="header-logo">
-            <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
+            <img src="/images/logo.png" class="img-fluid rounded-normal" alt="">
             <div class="logo-title">
-              <span class="text-primary text-uppercase">Booksto</span>
+              <span class="text-primary text-uppercase">Bookstoretttttttttt</span>
             </div>
           </a>
         </div>
