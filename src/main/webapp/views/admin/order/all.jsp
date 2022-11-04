@@ -24,6 +24,7 @@
                        aria-describedby="user-list-page-info">
                   <thead>
                   <tr>
+                    <th>STT</th>
                     <th>Tên sản phẩm</th>
                     <th>Mô tả</th>
                     <th>Giá</th>
@@ -33,14 +34,15 @@
                   </thead>
                   <tbody>
                   <tr>
+                    <td>1</td>
                     <td>Lê Hải</td>
                     <td>Đăng</td>
                     <td>111111111111</td>
                     <td>annasthesia@gmail.com</td>
                     <td><a href="details" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
-
                   </tr>
                   <tr>
+                    <td>2</td>
                     <td>Anna Sthesia</td>
                     <td>Anna Sthesia</td>
                     <td>(760) 756 7568</td>
@@ -48,12 +50,12 @@
                     <td><a href="details" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
                   </tr>
                   <tr>
+                    <td>3</td>
                     <td>Anna Sthesia</td>
                     <td>Anna Sthesia</td>
                     <td>(760) 756 7568</td>
                     <td>annasthesia@gmail.com</td>
                     <td><a href="details" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
-
                   </tr>
                   </tbody>
                 </table>

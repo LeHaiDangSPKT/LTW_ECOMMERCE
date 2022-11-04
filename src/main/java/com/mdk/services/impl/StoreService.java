@@ -6,7 +6,6 @@ import com.mdk.dao.impl.StoreDAO;
 import com.mdk.dao.impl.UserDAO;
 import com.mdk.models.Product;
 import com.mdk.models.Store;
-import com.mdk.models.Store_1000;
 import com.mdk.models.User;
 import com.mdk.services.IStoreService;
 
@@ -21,10 +20,10 @@ public class StoreService implements IStoreService {
         return storeDAO.findAll();
     }
 
-    @Override
+    /*@Override
     public List<Store_1000> find1000StoresLatestCreationTime() {
         return storeDAO.find1000StoresLatestCreationTime();
-    }
+    }*/
 
     @Override
     public int totalStores() {

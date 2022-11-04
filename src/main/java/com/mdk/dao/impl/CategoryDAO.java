@@ -3,7 +3,6 @@ package com.mdk.dao.impl;
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.ICategoryDAO;
 import com.mdk.models.Category;
-import com.mdk.models.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +15,7 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
     public PreparedStatement ps = null;
     public ResultSet rs = null;
     @Override
-    public List<Category> findALL() {
+    public List<Category> findAll() {
         String sql = "SELECT name, image FROM category";
         List<Category> categories = new ArrayList<Category>();
         try {
@@ -34,6 +33,7 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
         }
         return categories;
     }
+
 
     @Override
     public void insert(Category category) {

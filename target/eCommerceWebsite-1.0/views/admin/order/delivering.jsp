@@ -37,21 +37,21 @@
                     <td>Đăng</td>
                     <td>111111111111</td>
                     <td>annasthesia@gmail.com</td>
-                    <td><a href="<c:url value='/admin/order/details'/>" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
+                    <td><a href="details" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
                   </tr>
                   <tr>
                     <td>Anna Sthesia</td>
                     <td>Anna Sthesia</td>
                     <td>(760) 756 7568</td>
                     <td>annasthesia@gmail.com</td>
-                    <td><a href="<c:url value='/admin/order/details'/>" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
+                    <td><a href="details" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
                   </tr>
                   <tr>
                     <td>Anna Sthesia</td>
                     <td>Anna Sthesia</td>
                     <td>(760) 756 7568</td>
                     <td>annasthesia@gmail.com</td>
-                    <td><a href="<c:url value='/admin/order/details'/>" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
+                    <td><a href="details" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
 
                   </tr>
                   </tbody>

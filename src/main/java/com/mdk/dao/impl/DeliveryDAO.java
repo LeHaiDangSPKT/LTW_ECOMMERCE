@@ -15,7 +15,7 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
     public PreparedStatement ps = null;
     public ResultSet rs = null;
     @Override
-    public List<Delivery> findALL() {
+    public List<Delivery> findAll() {
         String sql = "SELECT name, description, price FROM delivery";
         List<Delivery> deliveries = new ArrayList<Delivery>();
         try {
@@ -92,5 +92,15 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Delivery> findDelivering() {
+        return null;
+    }
+
+    @Override
+    public void updateStatus(Delivery delivery) {
+
     }
 }

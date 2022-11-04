@@ -4,7 +4,6 @@ package com.mdk.dao.impl;
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IUserDAO;
 import com.mdk.models.User;
-import com.mdk.models.User_1000;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +41,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
     }
 
-    @Override
+    /*@Override
     public List<User_1000> find1000UsersLatestCreationTime() {
         String sql = "SELECT COUNT(_id) as quantity, point FROM (" +
                 "SELECT TOP 1000 * FROM user) GROUP BY point ORDER BY createdAt DESC";
@@ -61,7 +60,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
             e.printStackTrace();
         }
         return users_1000;
-    }
+    }*/
 
     @Override
     public int totalUsers() {

@@ -3,7 +3,6 @@ package com.mdk.services.impl;
 import com.mdk.dao.IUserDAO;
 import com.mdk.dao.impl.UserDAO;
 import com.mdk.models.User;
-import com.mdk.models.User_1000;
 import com.mdk.services.IUserService;
 
 import java.util.List;
@@ -16,10 +15,10 @@ public class UserService implements IUserService {
         return userDao.findAll();
     }
 
-    @Override
+    /*@Override
     public List<User_1000> find1000UsersLatestCreationTime() {
         return userDao.find1000UsersLatestCreationTime();
-    }
+    }*/
 
     @Override
     public int totalUsers() {

@@ -17,28 +17,70 @@ public class ProductDAO extends DBConnection implements IProductDAO {
     ResultSet rs = null;
 
     @Override
-    public void insert(Product product) {
-        String sql = "insert into product(name, description, price, promotionalPrice, \n" +
-                "quantity, sold, isActive, categoryId, storeId, rating, image1, image2, image3)\n" +
-                "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public List<Product> findAllProductProhibited() {
+        String sql = "SELECT * FROM product WHERE isActive = 'false'";
+        List<Product> products = new ArrayList<Product>();
         try {
-<<<<<<< HEAD
             conn = super.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()) {
                 Product product = new Product();
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setPrice(rs.getDouble("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setSold(rs.getInt("sold"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> findAllProductPermited() {
+        String sql = "SELECT * FROM product WHERE isActive = 'true'";
+        List<Product> products = new ArrayList<Product>();
+        try {
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                Product product = new Product();
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setPrice(rs.getDouble("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setSold(rs.getInt("sold"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    @Override
+    public void insert(Product product) {
+        /*String sql = "insert into product(name, description, price, promotionalPrice, \n" +
+                "quantity, sold, isActive, categoryId, storeId, rating, image1, image2, image3)\n" +
+                "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+        try {
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                //Product product = new Product();
 //                product.setName(rs.getString("name"));
 //                product.setDescription(rs.getString("description"));
 //                product.setPrice(rs.getBigDecimal("price"));
 //                product.setQuantity(rs.getInt("quantity"));
 //                product.setSold(rs.getInt("sold"));
-                products.add(product);
+//                products.add(product);
             }
         } catch (Exception e) {
-=======
-            conn = getConnection();
-            ps = conn.prepareStatement(sql);
             ps.setString(1,product.getName());
             ps.setString(2, product.getDescription());
             ps.setDouble(3, product.getPrice());
@@ -55,7 +97,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
@@ -84,16 +126,14 @@ public class ProductDAO extends DBConnection implements IProductDAO {
             ps.setInt(14, product.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
->>>>>>> origin/master
             e.printStackTrace();
         }
     }
 
     @Override
     public void delete(int id) {
-        String sql = "delete from product where id = ?";
+        /*String sql = "delete from product where id = ?";
         try {
-<<<<<<< HEAD
             conn = super.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -104,14 +144,13 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 //                product.setPrice(rs.getBigDecimal("price"));
 //                product.setQuantity(rs.getInt("quantity"));
 //                product.setSold(rs.getInt("sold"));
-=======
             conn = getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
@@ -144,8 +183,6 @@ public class ProductDAO extends DBConnection implements IProductDAO {
                 product.setImage4(rs.getString("image4"));
                 product.setCreatedAt(rs.getTimestamp("createdAt"));
                 product.setUpdatedAt(rs.getTimestamp("updatedAt"));
-
->>>>>>> origin/master
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -154,12 +191,10 @@ public class ProductDAO extends DBConnection implements IProductDAO {
         return products;
     }
 
-<<<<<<< HEAD
-
-=======
     @Override
     public List<Product> findAll() {
-        String sql = "select * from product";
+        List<Product> products = new ArrayList<>();
+        /*String sql = "select * from product";
         List<Product> products = new ArrayList<>();
         try {
             conn = getConnection();
@@ -189,13 +224,15 @@ public class ProductDAO extends DBConnection implements IProductDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         return products;
     }
 
     @Override
     public List<Product> findByCategoryId(int categoryId) {
-        String sql = "select * from product\n" +
+        List<Product> products = new ArrayList<>();
+        return products;
+    /*    String sql = "select * from product\n" +
                 "where categoryId = ?";
         List<Product> products = new ArrayList<>();
         try {
@@ -229,6 +266,6 @@ public class ProductDAO extends DBConnection implements IProductDAO {
             e.printStackTrace();
         }
         return products;
+        }*/
     }
->>>>>>> origin/master
 }

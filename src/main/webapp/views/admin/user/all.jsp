@@ -24,7 +24,9 @@
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
+
                   <tr>
+                    <th>STT</th>
                     <th>Họ và tên đệm</th>
                     <th>Tên</th>
                     <th>CMND/CCCD</th>
@@ -34,6 +36,7 @@
                   </thead>
                   <tbody>
                   <tr>
+                    <td>1</td>
                     <td>Lê Hải</td>
                     <td>Đăng</td>
                     <td>111111111111</td>
@@ -41,6 +44,7 @@
                     <td>0868366694</td>
                   </tr>
                   <tr>
+                    <td>2</td>
                     <td>Anna Sthesia</td>
                     <td>Anna Sthesia</td>
                     <td>(760) 756 7568</td>
@@ -48,6 +52,7 @@
                     <td>USA</td>
                   </tr>
                   <tr>
+                    <td>3</td>
                     <td>Anna Sthesia</td>
                     <td>Anna Sthesia</td>
                     <td>(760) 756 7568</td>

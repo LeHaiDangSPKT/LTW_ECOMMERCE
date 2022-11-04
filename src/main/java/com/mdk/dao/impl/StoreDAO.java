@@ -5,7 +5,6 @@ import com.mdk.connection.DBConnection;
 import com.mdk.dao.IStoreDAO;
 import com.mdk.models.Product;
 import com.mdk.models.Store;
-import com.mdk.models.Store_1000;
 import com.mdk.models.User;
 import com.mdk.services.IStoreService;
 import com.mdk.services.impl.StoreService;
@@ -44,7 +43,7 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
         return stores;
     }
 
-    @Override
+    /*@Override
     public List<Store_1000> find1000StoresLatestCreationTime() {
         String sql = "SELECT COUNT(_id) as quantity, point FROM (" +
                 "SELECT TOP 1000 * FROM store) GROUP BY point ORDER BY createdAt DESC";
@@ -63,7 +62,7 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
             e.printStackTrace();
         }
         return stores_1000;
-    }
+    }*/
 
     @Override
     public int totalStores() {
