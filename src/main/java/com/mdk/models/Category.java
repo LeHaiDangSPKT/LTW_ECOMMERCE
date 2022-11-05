@@ -1,6 +1,6 @@
 package com.mdk.models;
 
-public class Category extends AbstractModel<Delivery> {
+public class Category extends AbstractModel<Category> {
 	private String name;
 	private boolean isDelete;
 

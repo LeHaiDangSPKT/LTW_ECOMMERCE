@@ -1,10 +1,5 @@
 package com.mdk.models;
 
-<<<<<<< HEAD
-public class Product {
-=======
-import java.util.List;
-
 public class Product extends AbstractModel<Product> {
     private String name;
     private String description;
@@ -24,7 +19,6 @@ public class Product extends AbstractModel<Product> {
     public String getImage4() {
         return image4;
     }
-
     public void setImage4(String image4) {
         this.image4 = image4;
     }
@@ -133,5 +127,5 @@ public class Product extends AbstractModel<Product> {
         this.rating = rating;
     }
 
->>>>>>> origin/master
+
 }
