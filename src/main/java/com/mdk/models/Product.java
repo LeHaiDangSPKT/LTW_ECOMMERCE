@@ -15,7 +15,14 @@ public class Product extends AbstractModel<Product> {
     private String image2;
     private String image3;
     private String image4;
+    private Category category;
+    public Category getCategory() {
+        return category;
+    }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
     public String getImage4() {
         return image4;
     }

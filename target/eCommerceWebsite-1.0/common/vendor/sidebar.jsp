@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<c:url value="/vendor/list-store" />">
+                    <a href="<c:url value="/vendor/store" />">
                         <i class="fa-solid fa-store"></i>
                         Quản lý cửa hàng
                     </a>

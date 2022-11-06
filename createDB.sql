@@ -31,6 +31,7 @@ create table user_address
     constraint fk_user foreign key (userId) references user (id),
     constraint fk_address foreign key (addressId) references address (id)
 );
+
 create table store
 (
     id 			int   auto_increment,
@@ -41,17 +42,15 @@ create table store
     avatar       varchar(100),
     rating       int       default 3,
     eWallet     double   default 0,
+	image1			varchar(255) default '',
+    image2			varchar(255) default '',
+    image3			varchar(255) default '',
+    image4			varchar(255) default '',
     createdAt    timestamp default now(),
     updateAt     timestamp default now() on update now(),
     constraint pk_store primary key (id),
     constraint fk_owner foreign key (id) references user (id),
     constraint check_store_rating check (0 <= rating <= 5)
-);
-create table store_featured_images
-(
-    storeId         int,
-    featured_images varchar(100) not null,
-    constraint fk_images_store foreign key (storeId) references store (id)
 );
 
 create table category
@@ -78,6 +77,10 @@ create table product
     categoryId       int  not null,
     storeId          int  not null,
     rating           int     default 3,
+    image1			varchar(255) default '',
+    image2			varchar(255) default '',
+    image3			varchar(255) default '',
+    image4			varchar(255) default '',
     createdAt        timestamp default now(),
     updatedAt        timestamp default now() on update now(),
 
@@ -90,15 +93,6 @@ create table product
     constraint check_product_promotionalPrice check (promotionalPrice > 0),
     constraint check_product_price check (price > 0),
     constraint check_product_name check (length(name) <= 100)
-);
-
-create table image_product
-(
-    id int auto_increment,
-    pid int,
-    url        varchar(255),
-    constraint fk_image_product foreign key(pid) references product(id),
-    constraint pk_image primary key (id)
 );
 
 create table delivery
@@ -115,6 +109,7 @@ create table delivery
     constraint check_delivery_price check (price > 0),
     constraint check_delivery_name check (length(name) <= 100)
 );
+
 
 create table userfollowstore
 (
@@ -149,7 +144,7 @@ create table orders
     storeId         int  not null,
     deliveryId      int  not null,
     address         varchar(255) not null,
-    phone           int not null,
+    phone           varchar(10) not null,
     status          varchar(50) default 'not processed',
     amountFromUser  double not null,
     amountToStore   double not null,

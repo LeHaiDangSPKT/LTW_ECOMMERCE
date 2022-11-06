@@ -2,7 +2,10 @@ package com.mdk.dao.impl;
 
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IProductDAO;
+import com.mdk.models.Category;
 import com.mdk.models.Product;
+import com.mdk.services.ICategoryService;
+import com.mdk.services.impl.CategoryService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -142,12 +145,15 @@ public class ProductDAO extends DBConnection implements IProductDAO {
     public List<Product> findAll() {
         StringBuilder sql = new StringBuilder("select * from product");
         List<Product> products = new ArrayList<>();
+        ICategoryService categoryService = new CategoryService();
         try {
             conn = getConnection();
             ps = conn.prepareStatement(String.valueOf(sql));
             rs = ps.executeQuery();
+
             while (rs.next()) {
                 Product product = new Product();
+                Category category = categoryService.findById(rs.getInt("categoryId"));
                 product.setId(rs.getInt("id"));
                 product.setName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -165,7 +171,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
                 product.setImage4(rs.getString("image4"));
                 product.setCreatedAt(rs.getTimestamp("createdAt"));
                 product.setUpdatedAt(rs.getTimestamp("updatedAt"));
-
+                product.setCategory(category);
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -179,6 +185,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
         StringBuilder sql = new StringBuilder("select * from product\n" +
                 "where categoryId = ?");
         List<Product> products = new ArrayList<>();
+        ICategoryService categoryService = new CategoryService();
         try {
             conn = getConnection();
             ps = conn.prepareStatement(String.valueOf(sql));
@@ -186,6 +193,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Product product = new Product();
+                Category category = categoryService.findById(rs.getInt("categoryId"));
                 product.setId(rs.getInt("id"));
                 product.setName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -203,7 +211,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
                 product.setImage4(rs.getString("image4"));
                 product.setCreatedAt(rs.getTimestamp("createdAt"));
                 product.setUpdatedAt(rs.getTimestamp("updatedAt"));
-
+                product.setCategory(category);
                 products.add(product);
             }
         } catch (SQLException e) {

@@ -4,7 +4,6 @@ package com.mdk.dao.impl;
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IUserDAO;
 import com.mdk.models.User;
-import com.mdk.models.User_1000;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,25 +42,41 @@ public class UserDAO extends DBConnection implements IUserDAO {
     }
 
     @Override
-    public List<User_1000> find1000UsersLatestCreationTime() {
-        String sql = "SELECT COUNT(_id) as quantity, point FROM (" +
-                "SELECT TOP 1000 * FROM user) GROUP BY point ORDER BY createdAt DESC";
-        List<User_1000> users_1000 = new ArrayList<User_1000>();
+    public User findById(int id) {
+        String sql = "select * from user where id = ?";
         try {
-            Connection getConnection = super.getConnection();
-            ps = getConnection.prepareStatement(sql);
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()) {
-                User_1000 user = new User_1000();
-                user.setQuatity_group(rs.getInt("quantity"));
-                user.setPoint(rs.getInt("point"));
-                users_1000.add(user);
+
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (SQLException e){
+
         }
-        return users_1000;
+        return null;
     }
+
+//    @Override
+//    public List<User_1000> find1000UsersLatestCreationTime() {
+//        String sql = "SELECT COUNT(_id) as quantity, point FROM (" +
+//                "SELECT TOP 1000 * FROM user) GROUP BY point ORDER BY createdAt DESC";
+//        List<User_1000> users_1000 = new ArrayList<User_1000>();
+//        try {
+//            Connection getConnection = super.getConnection();
+//            ps = getConnection.prepareStatement(sql);
+//            rs = ps.executeQuery();
+//            while(rs.next()) {
+//                User_1000 user = new User_1000();
+//                user.setQuatity_group(rs.getInt("quantity"));
+//                user.setPoint(rs.getInt("point"));
+//                users_1000.add(user);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return users_1000;
+//    }
 
     @Override
     public int totalUsers() {

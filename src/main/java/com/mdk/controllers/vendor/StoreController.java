@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/vendor/home", "/vendor/list-store", "/vendor/create-store", "/vendor/edit-store",
+@WebServlet(urlPatterns = {"/vendor/home", "/vendor/store", "/vendor/create-store", "/vendor/edit-store",
 "/vendor/statistic"})
 public class StoreController extends HttpServlet {
     @Override
@@ -17,8 +17,8 @@ public class StoreController extends HttpServlet {
             req.getRequestDispatcher("/views/vendor/home.jsp").forward(req, resp);
         } else if (url.contains("create-store")) {
             req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
-        } else if (url.contains("list-store")) {
-            req.getRequestDispatcher("/views/vendor/listStore.jsp").forward(req, resp);
+        } else if (url.contains("store")) {
+            req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         } else if (url.contains("edit-store")) {
             req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         } else if (url.contains("statistic")) {

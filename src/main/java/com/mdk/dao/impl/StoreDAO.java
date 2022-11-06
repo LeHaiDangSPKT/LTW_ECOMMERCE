@@ -3,104 +3,103 @@ package com.mdk.dao.impl;
 
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IStoreDAO;
-import com.mdk.models.Product;
 import com.mdk.models.Store;
-import com.mdk.models.Store_1000;
-import com.mdk.models.User;
-import com.mdk.services.IStoreService;
-import com.mdk.services.impl.StoreService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class StoreDAO extends DBConnection implements IStoreDAO {
     public Connection conn = null;
     public PreparedStatement ps = null;
     public ResultSet rs = null;
+
     @Override
-    public List<Store> findAll() {
-        String sql = "SELECT * FROM store";
-        List<Store> stores = new ArrayList<Store>();
+    public void insert(Store store) {
+        String sql = "insert into store(name, bio, ownerId, avatar, image1, image2, image3, image4) \n" +
+                "values(?, ?, ?, ?, ?, ?, ?, ?)";
         try {
-            conn = super.getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                Store store = new Store();
-//                store.setName(rs.getString("name"));
-//                store.setBio(rs.getString("bio"));
-//                store.setOwnerID(rs.getLong("ownerId"));
-//                store.setPoint(rs.getInt("point"));
-//                store.setRating(rs.getInt("rating"));
-                stores.add(store);
-            }
-        } catch (Exception e) {
+            ps.setString(1, store.getName());
+            ps.setString(2, store.getBio());
+            ps.setInt(3, store.getOwnerID());
+            ps.setString(4, store.getAvatar());
+            ps.setString(5, store.getImage1());
+            ps.setString(6, store.getImage2());
+            ps.setString(7, store.getImage3());
+            ps.setString(8, store.getImage4());
+            ps.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return stores;
     }
 
     @Override
-    public List<Store_1000> find1000StoresLatestCreationTime() {
-        String sql = "SELECT COUNT(_id) as quantity, point FROM (" +
-                "SELECT TOP 1000 * FROM store) GROUP BY point ORDER BY createdAt DESC";
-        List<Store_1000> stores_1000 = new ArrayList<Store_1000>();
+    public void update(Store store) {
+        String sql = "update store set name = ?, bio = ?, ownerId = ?, isOpen = ?, \n" +
+                "eWallet = ?, avatar = ?, image1 = ?, image2 = ?, image3 = ?, image4 = ?\n" +
+                "where id = ?";
         try {
-            conn = super.getConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                Store_1000 store = new Store_1000();
-                store.setQuatity_group(rs.getInt("quantity"));
-                store.setPoint(rs.getInt("point"));
-                stores_1000.add(store);
-            }
-        } catch (Exception e) {
+            ps.setString(1, store.getName());
+            ps.setString(2, store.getBio());
+            ps.setInt(3, store.getOwnerID());
+            ps.setBoolean(4, store.isOpen());
+            ps.setDouble(5, store.geteWallet());
+            ps.setString(6, store.getAvatar());
+            ps.setString(7, store.getImage1());
+            ps.setString(8, store.getImage2());
+            ps.setString(9, store.getImage3());
+            ps.setString(10, store.getImage4());
+            ps.setInt(11, store.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return stores_1000;
+    }
+
+    @Override
+    public Store findById(int id) {
+        String sql = "select * from store where id = ?";
+        Store store = new Store();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                store.setName(rs.getString("name"));
+                store.setBio(rs.getString("bio"));
+                store.setOwnerID(rs.getInt("ownerId"));
+                store.setOpen(rs.getBoolean("isOpen"));
+                store.setAvatar(rs.getString("avatar"));
+                store.setRating(rs.getInt("rating"));
+                store.seteWallet(rs.getDouble("eWallet"));
+                store.setImage1(rs.getString("image1"));
+                store.setImage2(rs.getString("image2"));
+                store.setImage3(rs.getString("image3"));
+                store.setImage4(rs.getString("image4"));
+                store.setCreatedAt(rs.getTimestamp("createdAt"));
+                store.setUpdatedAt(rs.getTimestamp("updateAt"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public int totalStores() {
-        String sql = "SELECT COUNT(_id) as total FROM store";
-        int result = 0;
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            result = ps.executeUpdate();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+        return 0;
     }
 
     @Override
     public List<Store> topStores() {
-        String sql = "SELECT TOP 10 * FROM store ORDER BY point DESC";
-        List<Store> stores = new ArrayList<Store>();
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                Store store = new Store();
-//                store.setName(rs.getString("name"));
-//                store.setBio(rs.getString("bio"));
-//                store.setOwnerID(rs.getLong("ownerId"));
-//                store.setPoint(rs.getInt("point"));
-//                store.setRating(rs.getInt("rating"));
-                stores.add(store);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return stores;
+        return null;
     }
 }
 

@@ -11,7 +11,7 @@
     <div id="content-page" class="content-page">
         <div class="container-fluid">
             <div class="row">
-                <h1>DETAILS ORDER</h1>
+                <h1>DETAIL ORDER</h1>
             </div>
         </div>
     </div>
