@@ -8,6 +8,5 @@ public interface IUserService {
     List<User> findAll();
 //    List<User_1000> find1000UsersLatestCreationTime();
     int totalUsers();
-    List<User> topUsers();
-
+    List<User> top10Users_Orders();
 }

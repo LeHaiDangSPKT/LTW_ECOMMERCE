@@ -6,6 +6,14 @@ public class Transaction extends AbstractModel<Transaction>{
     private int storeId;
     private Boolean isUp   ;
     private Double amount ;
+    private String isUpString;
+    public String getIsUpString() {
+        return isUpString;
+    }
+
+    public void setIsUpString(String isUpString) {
+        this.isUpString = isUpString;
+    }
 
     public int getUserId() {
         return userId;

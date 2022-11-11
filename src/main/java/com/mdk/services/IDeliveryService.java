@@ -10,7 +10,5 @@ public interface IDeliveryService {
     void edit(Delivery delivery);
     void deleteSoft(Delivery delivery);
     void restore(Delivery delivery);
-
-    List<Delivery> findDelivering();
     void updateStatus(Delivery delivery);
 }

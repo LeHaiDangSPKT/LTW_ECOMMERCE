@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-
+<%@include file="/common/taglib.jsp"%>
 <div id="loading">
   <div id="loading-center">
   </div>
@@ -15,16 +15,15 @@
           <div class="iq-card">
             <div class="iq-card-header d-flex justify-content-center">
               <div class="iq-header-title">
-                <h4 class="card-title">Quản lý tất cả người dùng</h4>
+                <h4 class="card-title">QUẢN LÝ TẤT CẢ NGƯỜI DÙNG</h4>
               </div>
             </div>
             <div class="iq-card-body">
               <div class="table-responsive">
-                <h6>Tổng người dùng: 35</h6>
+                <h6>Tổng người dùng: ${userList.size()} / ${total}</h6>
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
-
                   <tr>
                     <th>STT</th>
                     <th>Họ và tên đệm</th>
@@ -35,30 +34,16 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Lê Hải</td>
-                    <td>Đăng</td>
-                    <td>111111111111</td>
-                    <td>annasthesia@gmail.com</td>
-                    <td>0868366694</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Anna Sthesia</td>
-                    <td>Anna Sthesia</td>
-                    <td>(760) 756 7568</td>
-                    <td>annasthesia@gmail.com</td>
-                    <td>USA</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Anna Sthesia</td>
-                    <td>Anna Sthesia</td>
-                    <td>(760) 756 7568</td>
-                    <td>annasthesia@gmail.com</td>
-                    <td>USA</td>
-                  </tr>
+                  <c:forEach items="${userList}" var="users" varStatus="STT" >
+                    <tr>
+                      <td>${STT.index + 1 }</td>
+                      <td>${users.lastname }</td>
+                      <td>${users.firstname }</td>
+                      <td>${users.id_card }</td>
+                      <td>${users.email }</td>
+                      <td>${users.phone }</td>
+                    </tr>
+                  </c:forEach>
                   </tbody>
                 </table>
               </div>

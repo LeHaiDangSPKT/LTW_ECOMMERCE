@@ -18,7 +18,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
     @Override
     public List<Product> findAllProductProhibited() {
-        String sql = "SELECT * FROM product WHERE isActive = 'false'";
+        String sql = "SELECT * FROM product WHERE isActive = false";
         List<Product> products = new ArrayList<Product>();
         try {
             conn = super.getConnection();
@@ -40,8 +40,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
     }
 
     @Override
-    public List<Product> findAllProductPermited() {
-        String sql = "SELECT * FROM product WHERE isActive = 'true'";
+    public List<Product> findAllProductPermitted() {
+        String sql = "SELECT * FROM product WHERE isActive = true";
         List<Product> products = new ArrayList<Product>();
         try {
             conn = super.getConnection();

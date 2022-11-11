@@ -16,6 +16,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
     public Connection conn = null;
     public PreparedStatement ps = null;
     public ResultSet rs = null;
+
     @Override
     public List<User> findAll() {
         String sql = "SELECT * FROM user WHERE role = 'user'";
@@ -24,14 +25,13 @@ public class UserDAO extends DBConnection implements IUserDAO {
             conn = super.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 User user = new User();
-//                user.setFirstname(rs.getString("firstname"));
-//                user.setLastname(rs.getString("lastname"));
-//                user.setId_card(rs.getLong("id_card"));
-//                user.setEmail(rs.getString("email"));
-//                user.setPhone(rs.getString("phone"));
-//                user.setPoint(rs.getInt("point"));
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setId_card(rs.getString("id_card"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
                 users.add(user);
             }
         } catch (Exception e) {
@@ -64,13 +64,15 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
     @Override
     public int totalUsers() {
-        String sql = "SELECT COUNT(_id) as total FROM user WHERE role = user";
+        String sql = "SELECT COUNT(id) as total FROM user WHERE role = 'user'";
         int result = 0;
         try {
-            Connection getConnection = super.getConnection();
-            ps = getConnection.prepareStatement(sql);
-            result = ps.executeUpdate();
-
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt("total");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,21 +80,21 @@ public class UserDAO extends DBConnection implements IUserDAO {
     }
 
     @Override
-    public List<User> topUsers() {
-        String sql = "SELECT TOP 10 * FROM user ORDER BY point DESC";
+    public List<User> top10Users_Orders() {
+        String sql = "select user.id, user.firstname, user.lastname, user.id_card, user.email, user.phone, total from (select userId, count(userId) as total from orders group by userId order by total desc limit 10) as tb join user on tb.userId = user.id";
         List<User> users = new ArrayList<User>();
         try {
-            Connection getConnection = super.getConnection();
-            ps = getConnection.prepareStatement(sql);
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 User user = new User();
-//                user.setFirstname(rs.getString("firstname"));
-//                user.setLastname(rs.getString("lastname"));
-//                user.setId_card(rs.getLong("id_card"));
-//                user.setEmail(rs.getString("email"));
-//                user.setPhone(rs.getString("phone"));
-//                user.setPoint(rs.getInt("point"));
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setId_card(rs.getString("id_card"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setTotalOrders(rs.getInt("total"));
                 users.add(user);
             }
         } catch (Exception e) {
@@ -101,3 +103,4 @@ public class UserDAO extends DBConnection implements IUserDAO {
         return users;
     }
 }
+

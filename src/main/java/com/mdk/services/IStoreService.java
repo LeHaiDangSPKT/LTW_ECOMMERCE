@@ -7,8 +7,6 @@ import com.mdk.models.User;
 import java.util.List;
 
 public interface IStoreService {
-    List<Store> findAll();
-//    List<Store_1000> find1000StoresLatestCreationTime();
     int totalStores();
-    List<Store> topStores();
+    List<Store> top10Store_Orders();
 }

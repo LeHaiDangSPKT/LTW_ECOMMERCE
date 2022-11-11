@@ -35,10 +35,6 @@ public class DeliveryService implements IDeliveryService {
         deliveryDAO.restore(delivery);
     }
 
-    @Override
-    public List<Delivery> findDelivering() {
-        return deliveryDAO.findDelivering();
-    }
 
     @Override
     public void updateStatus(Delivery delivery) {

@@ -16,7 +16,7 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
     public ResultSet rs = null;
     @Override
     public List<Delivery> findAll() {
-        String sql = "SELECT name, description, price FROM delivery";
+        String sql = "SELECT * FROM delivery";
         List<Delivery> deliveries = new ArrayList<Delivery>();
         try {
             conn = super.getConnection();
@@ -24,9 +24,10 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
             rs = ps.executeQuery();
             while(rs.next()) {
                 Delivery delivery = new Delivery();
-//                delivery.setName(rs.getString("name"));
-//                delivery.setDescription(rs.getString("description"));
-//                delivery.setPrice(rs.getBigDecimal("price"));
+                delivery.setName(rs.getString("name"));
+                delivery.setDescription(rs.getString("description"));
+                delivery.setPrice(rs.getDouble("price"));
+                delivery.setDeleted(rs.getBoolean("isDeleted"));
                 deliveries.add(delivery);
             }
         } catch (Exception e) {
@@ -94,10 +95,6 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
         }
     }
 
-    @Override
-    public List<Delivery> findDelivering() {
-        return null;
-    }
 
     @Override
     public void updateStatus(Delivery delivery) {

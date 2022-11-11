@@ -26,12 +26,12 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
             rs = ps.executeQuery();
             while(rs.next()) {
                 Orders oder = new Orders();
-//                oder.setUserId(rs.getLong("userId"));
-//                oder.setStoreId(rs.getLong("storeId"));
-//                oder.setDeliveryId(rs.getLong("deliveryId"));
+                oder.setUserId(rs.getInt("userId"));
+                oder.setStoreId(rs.getInt("storeId"));
+                oder.setDeliveryId(rs.getInt("deliveryId"));
                 oder.setAddress(rs.getString("address"));
                 oder.setPhone(rs.getInt("phone"));
-                oder.setStatus(rs.getString("status"));
+                oder.setAmountFromUser(rs.getDouble("amountFromUser"));
                 orders.add(oder);
             }
         } catch (Exception e) {
@@ -50,12 +50,12 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
             rs = ps.executeQuery();
             while(rs.next()) {
                 Orders oder = new Orders();
-//                oder.setUserId(rs.getLong("userId"));
-//                oder.setStoreId(rs.getLong("storeId"));
-//                oder.setDeliveryId(rs.getLong("deliveryId"));
+                oder.setUserId(rs.getInt("userId"));
+                oder.setStoreId(rs.getInt("storeId"));
+                oder.setDeliveryId(rs.getInt("deliveryId"));
                 oder.setAddress(rs.getString("address"));
                 oder.setPhone(rs.getInt("phone"));
-                oder.setStatus(rs.getString("status"));
+                oder.setAmountFromUser(rs.getDouble("amountFromUser"));
                 orders.add(oder);
             }
         } catch (Exception e) {

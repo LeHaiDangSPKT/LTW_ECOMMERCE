@@ -15,7 +15,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> findAllProductPermited() {
-        return productDAO.findAllProductPermited();
+    public List<Product> findAllProductPermitted() {
+        return productDAO.findAllProductPermitted();
     }
+
+
 }

@@ -26,9 +26,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> topUsers() {
-        return userDao.topUsers();
+    public List<User> top10Users_Orders() {
+        return userDao.top10Users_Orders();
     }
-
 
 }

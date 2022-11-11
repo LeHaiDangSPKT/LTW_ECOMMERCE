@@ -16,7 +16,7 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
     public ResultSet rs = null;
     @Override
     public List<Category> findAll() {
-        String sql = "SELECT name, image FROM category";
+        String sql = "SELECT * FROM category";
         List<Category> categories = new ArrayList<Category>();
         try {
             conn = super.getConnection();
@@ -24,8 +24,8 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
             rs = ps.executeQuery();
             while(rs.next()) {
                 Category category = new Category();
-//                category.setName(rs.getString("name"));
-//                category.setImage(rs.getString("image"));
+                category.setName(rs.getString("name"));
+                category.setDelete(rs.getBoolean("isDeleted"));
                 categories.add(category);
             }
         } catch (Exception e) {

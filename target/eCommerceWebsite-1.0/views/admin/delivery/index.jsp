@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-
+<%@include file="/common/taglib.jsp"%>
 <div id="loading">
   <div id="loading-center">
   </div>
@@ -15,11 +15,15 @@
           <div class="iq-card">
             <div class="iq-card-header d-flex justify-content-center">
               <div class="iq-header-title">
-                <h4 class="card-title">Quản lý tất cả đơn vị vận chuyển</h4>
+                <h4 class="card-title">QUẢN LÝ TẤT CẢ ĐƠN VỊ VẬN CHUYỂN</h4>
               </div>
             </div>
             <div class="iq-card-body">
               <div class="table-responsive">
+                <select class="form-control w-25">
+                  <option value=false>Đang hoạt động</option>
+                  <option value=true>Tạm ngưng hoạt động</option>
+                </select>
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
@@ -32,45 +36,35 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Lê Hải</td>
-                    <td>Đăng</td>
-                    <td>111111111111</td>
-                    <td>
-                      <div class="d-flex align-items-center list-user-action justify-content-around">
-                        <a href="delivery/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Anna Sthesia</td>
-                    <td>Anna Sthesia</td>
-                    <td>(760) 756 7568</td>
-                    <td>
-                      <div class="d-flex align-items-center list-user-action justify-content-around">
-                        <a href="delivery/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Anna Sthesia</td>
-                    <td>Anna Sthesia</td>
-                    <td>(760) 756 7568</td>
-                    <td>
-                      <div class="d-flex align-items-center list-user-action justify-content-around">
-                        <a href="delivery/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
-                      </div>
-                    </td>
-                  </tr>
+                  <c:forEach items="${deliveryListNotDelete}" var="deliveryListNotDelete" varStatus="STT" >
+                    <tr>
+                      <td>${STT.index + 1}</td>
+                      <td>${deliveryListNotDelete.name}</td>
+                      <td>${deliveryListNotDelete.description}</td>
+                      <td>${deliveryListNotDelete.price}</td>
+                      <td>
+                        <div class="d-flex align-items-center list-user-action justify-content-around">
+                          <a href="delivery/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          <a class="bg-primary p-3"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
+                        </div>
+                      </td>
+                    </tr>
+                  </c:forEach>
+                  <c:forEach items="${deliveryListDeleted}" var="deliveryListDeleted" varStatus="STT" >
+                    <tr>
+                      <td>${STT.index + 1}</td>
+                      <td>${deliveryListDeleted.name}</td>
+                      <td>${deliveryListDeleted.description}</td>
+                      <td>${deliveryListDeleted.price}</td>
+                      <td>
+                        <div class="d-flex align-items-center list-user-action justify-content-around">
+                          <a href="delivery/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          <a class="bg-primary p-3"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
+                        </div>
+                      </td>
+                    </tr>
+                  </c:forEach>
                   </tbody>
                 </table>
               </div>

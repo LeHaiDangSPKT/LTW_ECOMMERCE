@@ -3,16 +3,11 @@ package com.mdk.dao.impl;
 
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IStoreDAO;
-import com.mdk.models.Product;
 import com.mdk.models.Store;
-import com.mdk.models.User;
-import com.mdk.services.IStoreService;
-import com.mdk.services.impl.StoreService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,57 +16,16 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
     public PreparedStatement ps = null;
     public ResultSet rs = null;
     @Override
-    public List<Store> findAll() {
-        String sql = "SELECT * FROM store";
-        List<Store> stores = new ArrayList<Store>();
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                Store store = new Store();
-//                store.setName(rs.getString("name"));
-//                store.setBio(rs.getString("bio"));
-//                store.setOwnerID(rs.getLong("ownerId"));
-//                store.setPoint(rs.getInt("point"));
-//                store.setRating(rs.getInt("rating"));
-                stores.add(store);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return stores;
-    }
-
-    /*@Override
-    public List<Store_1000> find1000StoresLatestCreationTime() {
-        String sql = "SELECT COUNT(_id) as quantity, point FROM (" +
-                "SELECT TOP 1000 * FROM store) GROUP BY point ORDER BY createdAt DESC";
-        List<Store_1000> stores_1000 = new ArrayList<Store_1000>();
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                Store_1000 store = new Store_1000();
-                store.setQuatity_group(rs.getInt("quantity"));
-                store.setPoint(rs.getInt("point"));
-                stores_1000.add(store);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return stores_1000;
-    }*/
-
-    @Override
     public int totalStores() {
-        String sql = "SELECT COUNT(_id) as total FROM store";
+        String sql = "SELECT COUNT(id) as total FROM store";
         int result = 0;
         try {
             conn = super.getConnection();
             ps = conn.prepareStatement(sql);
-            result = ps.executeUpdate();
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt("total");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,20 +34,19 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
     }
 
     @Override
-    public List<Store> topStores() {
-        String sql = "SELECT TOP 10 * FROM store ORDER BY point DESC";
+    public List<Store> top10Store_Orders() {
+        String sql = "select store.id, store.name, store.bio, store.ownerId, total from (select storeId, count(storeId) as total from orders group by storeId order by total desc limit 10) as tb join store on tb.storeId = store.id";
         List<Store> stores = new ArrayList<Store>();
         try {
             conn = super.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 Store store = new Store();
-//                store.setName(rs.getString("name"));
-//                store.setBio(rs.getString("bio"));
-//                store.setOwnerID(rs.getLong("ownerId"));
-//                store.setPoint(rs.getInt("point"));
-//                store.setRating(rs.getInt("rating"));
+                store.setName(rs.getString("name"));
+                store.setBio(rs.getString("bio"));
+                store.setOwnerId(rs.getInt("ownerId"));
+                store.setTotal(rs.getInt("total"));
                 stores.add(store);
             }
         } catch (Exception e) {
@@ -101,6 +54,7 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
         }
         return stores;
     }
+
 }
 
 

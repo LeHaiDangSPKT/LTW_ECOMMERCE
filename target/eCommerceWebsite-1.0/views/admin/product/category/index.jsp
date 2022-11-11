@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-
+<%@include file="/common/taglib.jsp"%>
 <div id="loading">
   <div id="loading-center">
   </div>
@@ -15,11 +15,15 @@
           <div class="iq-card">
             <div class="iq-card-header d-flex justify-content-center">
               <div class="iq-header-title">
-                <h4 class="card-title">Quản lý tất cả loại sản phẩm</h4>
+                <h4 class="card-title">QUẢN LÝ TẤT CẢ LOẠI SẢN PHẨM</h4>
               </div>
             </div>
             <div class="iq-card-body">
               <div class="table-responsive">
+                <select class="form-control w-25">
+                  <option value=false>Chưa bị xoá</option>
+                  <option value=true>Đã bị xoá</option>
+                </select>
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
@@ -30,39 +34,31 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Lê Hải</td>
-                    <td>
-                      <div class="d-flex align-items-center list-user-action justify-content-around">
-                        <a href="category/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Anna Sthesia</td>
-                    <td>
-                      <div class="d-flex align-items-center list-user-action justify-content-around">
-                        <a href="category/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Anna Sthesia</td>
-                    <td>
-                      <div class="d-flex align-items-center list-user-action justify-content-around">
-                        <a href="category/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
-                      </div>
-                    </td>
-                  </tr>
+                  <c:forEach items="${categoryListNotDelete}" var="categoryListNotDelete" varStatus="STT" >
+                    <tr>
+                      <td>${STT.index + 1}</td>
+                      <td>${categoryListNotDelete.name}</td>
+                      <td>
+                        <div class="d-flex align-items-center list-user-action justify-content-around">
+                          <a href="category/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          <a class="bg-primary p-3" data-toggle="modal" data-target="#deleteModal"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
+                        </div>
+                      </td>
+                    </tr>
+                  </c:forEach>
+                  <c:forEach items="${categoryListDeleted}" var="categoryListDeleted" varStatus="STT" >
+                    <tr>
+                      <td>${STT.index + 1}</td>
+                      <td>${categoryListDeleted.name}</td>
+                      <td>
+                        <div class="d-flex align-items-center list-user-action justify-content-around">
+                          <a href="category/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          <a class="bg-primary p-3" data-toggle="modal" data-target="#deleteModal"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
+                        </div>
+                      </td>
+                    </tr>
+                  </c:forEach>
                   </tbody>
                 </table>
               </div>
@@ -87,6 +83,26 @@
       </div>
       <div class="iq-card-header-toolbar d-flex align-items-center flex-row-reverse">
         <a href="category/add" class="btn btn-primary">Thêm mới</a>
+      </div>
+<%--      Modal Delete--%>
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Bạn có thực sự muốn xoá không?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+              <button type="button" class="btn btn-primary">Chắc chắn</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
