@@ -1,11 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ADMIN
-  Date: 11/01/2022
-  Time: 5:48 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/common/taglib.jsp" %>
 <html>
 <head>
     <title>Title</title>
@@ -24,7 +19,7 @@
                                 </div>
                             </div>
                             <div class="iq-card-body">
-                                <form>
+                                <form action="<c:url value="/vendor/create-store"/>" method="post" enctype="multipart/form-data">
                                     <div class="form-group row align-items-center">
                                         <div class="col-md-12">
                                             <div class="profile-img-edit">
@@ -42,21 +37,24 @@
                                             <br>
                                             <label>Thêm ảnh:</label>
                                             <br>
-                                            <input type="file" name="file1">
+                                            <input type="file" name="image1">
 
-                                            <input type="file" name="file2">
+                                            <input type="file" name="image2">
 
-                                            <input type="file" name="file3">
+                                            <input type="file" name="image3">
                                         </div>
                                     </div>
                                     <div class=" row align-items-center">
+                                        <c:if test="${action == 'add'}">
+                                            <input type="hidden" class="form-control" name="id" value="${count + 1}">
+                                        </c:if>
                                         <div class="form-group col-sm-6">
                                             <label for="name">Tên cửa hàng:</label>
-                                            <input type="text" class="form-control" id="name" value="Shop sách cũ">
+                                            <input type="text" class="form-control" id="name" name="name" value="">
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label for="owner">Chủ cửa hàng:</label>
-                                            <input type="text" class="form-control" id="owner" value="Trần Minh Mẫn">
+                                            <input type="text" class="form-control" name="ownerId" id="owner" value="">
                                         </div>
                                         <div class="form-group col-sm-12">
                                             <label>Mô tả:</label>

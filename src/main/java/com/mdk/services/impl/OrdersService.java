@@ -9,9 +9,14 @@ import java.util.List;
 
 public class OrdersService implements IOrdersService {
     IOrdersDAO ordersDAO = new OrdersDAO();
+//    @Override
+//    public List<Orders> findAll() {
+//        return ordersDAO.findAll();
+//    }
+
     @Override
     public List<Orders> findAll() {
-        return ordersDAO.findAll();
+        return null;
     }
 
     @Override

@@ -47,9 +47,6 @@ public class ProductDAO extends DBConnection implements IProductDAO {
             ps.setInt(8, product.getCategoryId());
             ps.setInt(9, product.getStoreId());
             ps.setInt(10, product.getRating());
-            ps.setString(11, product.getImage1());
-            ps.setString(12, product.getImage2());
-            ps.setString(13, product.getImage3());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,9 +73,6 @@ public class ProductDAO extends DBConnection implements IProductDAO {
             ps.setInt(8, product.getCategoryId());
             ps.setInt(9, product.getStoreId());
             ps.setInt(10, product.getRating());
-            ps.setString(11, product.getImage1());
-            ps.setString(12, product.getImage2());
-            ps.setString(13, product.getImage3());
             ps.setInt(14, product.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -126,10 +120,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
                 product.setCategoryId(rs.getInt("categoryId"));
                 product.setStoreId(rs.getInt("storeId"));
                 product.setRating(rs.getInt("rating"));
-                product.setImage1(rs.getString("image1"));
-                product.setImage2(rs.getString("image2"));
-                product.setImage3(rs.getString("image3"));
-                product.setImage4(rs.getString("image4"));
+
                 product.setCreatedAt(rs.getTimestamp("createdAt"));
                 product.setUpdatedAt(rs.getTimestamp("updatedAt"));
 
@@ -165,10 +156,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
                 product.setCategoryId(rs.getInt("categoryId"));
                 product.setStoreId(rs.getInt("storeId"));
                 product.setRating(rs.getInt("rating"));
-                product.setImage1(rs.getString("image1"));
-                product.setImage2(rs.getString("image2"));
-                product.setImage3(rs.getString("image3"));
-                product.setImage4(rs.getString("image4"));
+
                 product.setCreatedAt(rs.getTimestamp("createdAt"));
                 product.setUpdatedAt(rs.getTimestamp("updatedAt"));
                 product.setCategory(category);
@@ -205,10 +193,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
                 product.setCategoryId(rs.getInt("categoryId"));
                 product.setStoreId(rs.getInt("storeId"));
                 product.setRating(rs.getInt("rating"));
-                product.setImage1(rs.getString("image1"));
-                product.setImage2(rs.getString("image2"));
-                product.setImage3(rs.getString("image3"));
-                product.setImage4(rs.getString("image4"));
+
                 product.setCreatedAt(rs.getTimestamp("createdAt"));
                 product.setUpdatedAt(rs.getTimestamp("updatedAt"));
                 product.setCategory(category);

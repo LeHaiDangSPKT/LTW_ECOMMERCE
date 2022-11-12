@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
 <html>
 <head>
     <title>HomePage</title>
@@ -9,15 +10,20 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height rounded">
-                <div class="newrealease-contens">
-                    <ul id="newrealease-slider" class="list-inline p-0 m-0 d-flex align-items-center">
-                        <li class="item">
-                            <a href="javascript:void(0);">
-                                <img src="../template/images/small/img-1.jpg" class="img-fluid w-100 rounded"
-                                     alt="">
-                            </a>
-                        </li>
-                    </ul>
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../template/images/browse-books/01.jpg" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -38,9 +44,9 @@
                                 <div class="iq-card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                            <a href="javascript:void();">
+                                            <a href="">
                                                 <img class="img-fluid rounded w-100"
-                                                     src="../template/images/browse-books/01.jpg"
+                                                     src="/uploads/1668214044958.jpg"
                                                      alt="">
                                             </a>
                                             <div class="view-book">

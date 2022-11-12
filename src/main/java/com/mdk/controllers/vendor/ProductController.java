@@ -15,9 +15,31 @@ public class ProductController extends HttpServlet {
         if (url.contains("list-product")) {
             req.getRequestDispatcher("/views/vendor/listProduct.jsp").forward(req,resp);
         } else if (url.contains("add-product")) {
+
             String action = req.getParameter("action").toString();
             req.setAttribute("action", req.getParameter("action").toString());
             req.getRequestDispatcher("/views/vendor/addProduct.jsp").forward(req,resp);
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
+    }
+
+    protected void findAll(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
+    protected void insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
+    protected  void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
+    protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
     }
 }
