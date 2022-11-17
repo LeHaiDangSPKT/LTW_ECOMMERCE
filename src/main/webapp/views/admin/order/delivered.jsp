@@ -16,7 +16,7 @@
           <div class="iq-card">
             <div class="iq-card-header d-flex justify-content-center">
               <div class="iq-header-title">
-                <h4 class="card-title">QUẢN LÝ TẤT CẢ CÁC ĐƠN HÀNG</h4>
+                <h4 class="card-title">QUẢN LÝ TẤT CẢ CÁC ĐƠN HÀNG ĐÃ GIAO</h4>
               </div>
             </div>
             <div class="iq-card-body">
@@ -45,7 +45,7 @@
                       <td>${ordersList.address}</td>
                       <td>${ordersList.phone}</td>
                       <td>${ordersList.amountFromUser}</td>
-                      <td><a href="details" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
+                      <td><a href="details?id=${ordersList.id}" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
                     </tr>
                   </c:forEach>
                   </tbody>

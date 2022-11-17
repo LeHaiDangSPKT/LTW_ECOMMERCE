@@ -52,7 +52,6 @@
                       <td>${categoryListDeleted.name}</td>
                       <td>
                         <div class="d-flex align-items-center list-user-action justify-content-around">
-                          <a href="category/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
                           <a class="bg-primary p-3" data-toggle="modal" data-target="#deleteModal"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
                           <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
                         </div>

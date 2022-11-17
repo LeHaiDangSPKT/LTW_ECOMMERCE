@@ -10,8 +10,8 @@ import java.util.List;
 public class OrdersService implements IOrdersService {
     IOrdersDAO ordersDAO = new OrdersDAO();
     @Override
-    public List<Orders> findAll() {
-        return ordersDAO.findAll();
+    public List<Orders> findDelivered() {
+        return ordersDAO.findDelivered();
     }
 
     @Override
@@ -20,7 +20,8 @@ public class OrdersService implements IOrdersService {
     }
 
     @Override
-    public void updateStatus(Orders orders) {
-        ordersDAO.updateStatus(orders);
+    public Orders findOneById(int id) {
+        return ordersDAO.findOneById(id);
     }
+
 }

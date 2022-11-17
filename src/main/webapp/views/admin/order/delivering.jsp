@@ -45,7 +45,7 @@
                       <td>${ordersList.address}</td>
                       <td>${ordersList.phone}</td>
                       <td>${ordersList.amountFromUser}</td>
-                      <td><a href="details" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
+                      <td><a href="details?id=${ordersList.id}" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
                     </tr>
                   </c:forEach>
                   </tbody>

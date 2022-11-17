@@ -2,6 +2,7 @@ package com.mdk.dao.impl;
 
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IOrdersDAO;
+import com.mdk.models.Delivery;
 import com.mdk.models.Orders;
 import com.mdk.models.User;
 
@@ -17,22 +18,25 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     public PreparedStatement ps = null;
     public ResultSet rs = null;
     @Override
-    public List<Orders> findAll() {
-        String sql = "SELECT * FROM orders";
+    public List<Orders> findDelivered() {
+        String sql = "SELECT * FROM orders WHERE status = 'delivered'";
         List<Orders> orders = new ArrayList<Orders>();
         try {
             conn = super.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()) {
-                Orders oder = new Orders();
-                oder.setUserId(rs.getInt("userId"));
-                oder.setStoreId(rs.getInt("storeId"));
-                oder.setDeliveryId(rs.getInt("deliveryId"));
-                oder.setAddress(rs.getString("address"));
-                oder.setPhone(rs.getInt("phone"));
-                oder.setAmountFromUser(rs.getDouble("amountFromUser"));
-                orders.add(oder);
+                Orders order = new Orders();
+                order.setId(rs.getInt("id"));
+                order.setUserId(rs.getInt("userId"));
+                order.setStoreId(rs.getInt("storeId"));
+                order.setDeliveryId(rs.getInt("deliveryId"));
+                order.setAddress(rs.getString("address"));
+                order.setPhone(rs.getInt("phone"));
+                order.setAmountFromUser(rs.getDouble("amountFromUser"));
+                order.setAmountToStore(rs.getDouble("amountToStore"));
+                order.setAmountToGD(rs.getDouble("amountToGD"));
+                orders.add(order);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,14 +53,17 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()) {
-                Orders oder = new Orders();
-                oder.setUserId(rs.getInt("userId"));
-                oder.setStoreId(rs.getInt("storeId"));
-                oder.setDeliveryId(rs.getInt("deliveryId"));
-                oder.setAddress(rs.getString("address"));
-                oder.setPhone(rs.getInt("phone"));
-                oder.setAmountFromUser(rs.getDouble("amountFromUser"));
-                orders.add(oder);
+                Orders order = new Orders();
+                order.setId(rs.getInt("id"));
+                order.setUserId(rs.getInt("userId"));
+                order.setStoreId(rs.getInt("storeId"));
+                order.setDeliveryId(rs.getInt("deliveryId"));
+                order.setAddress(rs.getString("address"));
+                order.setPhone(rs.getInt("phone"));
+                order.setAmountFromUser(rs.getDouble("amountFromUser"));
+                order.setAmountToStore(rs.getDouble("amountToStore"));
+                order.setAmountToGD(rs.getDouble("amountToGD"));
+                orders.add(order);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,17 +72,31 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     }
 
     @Override
-    public void updateStatus(Orders orders) {
-        String sql = "UPDATE user SET status = ?";
-        List<User> users = new ArrayList<User>();
+    public Orders findOneById(int id) {
+        String sql = "SELECT * FROM orders WHERE id = ?";
         try {
             conn = super.getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setString(1, orders.getStatus());
-            ps.executeUpdate();
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                Orders order = new Orders();
+                order.setId(rs.getInt("id"));
+                order.setUserId(rs.getInt("userId"));
+                order.setStoreId(rs.getInt("storeId"));
+                order.setDeliveryId(rs.getInt("deliveryId"));
+                order.setAddress(rs.getString("address"));
+                order.setStatus(rs.getString("status"));
+                order.setPhone(rs.getInt("phone"));
+                order.setAmountFromUser(rs.getDouble("amountFromUser"));
+                order.setAmountToStore(rs.getDouble("amountToStore"));
+                order.setAmountToGD(rs.getDouble("amountToGD"));
+                return  order;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 

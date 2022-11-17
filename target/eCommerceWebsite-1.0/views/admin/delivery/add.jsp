@@ -19,18 +19,18 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <form action="">
+                            <form method="POST" action="add">
                                 <div class="form-group">
                                     <label>Tên đơn vị vận chuyển:</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="name">
                                 </div>
                                 <div class="form-group">
                                     <label>Mô tả:</label>
-                                    <textarea class="form-control" rows="4"></textarea>
+                                    <textarea class="form-control" rows="4" name="description"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Giá:</label>
-                                    <input type="number" min=0 class="form-control">
+                                    <input type="number" min=0 class="form-control" name="price">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Xác nhận</button>
                                 <button type="reset" class="btn btn-danger">Dọn dẹp</button>

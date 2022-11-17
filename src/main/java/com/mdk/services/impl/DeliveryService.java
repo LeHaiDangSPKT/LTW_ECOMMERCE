@@ -16,6 +16,11 @@ public class DeliveryService implements IDeliveryService {
     }
 
     @Override
+    public Delivery getOneById(int id) {
+        return deliveryDAO.getOneById(id);
+    }
+
+    @Override
     public void insert(Delivery delivery) {
         deliveryDAO.insert(delivery);
     }
@@ -26,13 +31,18 @@ public class DeliveryService implements IDeliveryService {
     }
 
     @Override
-    public void deleteSoft(Delivery delivery) {
-        deliveryDAO.deleteSoft(delivery);
+    public void restore(int id) {
+        deliveryDAO.restore(id);
     }
 
     @Override
-    public void restore(Delivery delivery) {
-        deliveryDAO.restore(delivery);
+    public void deleteSoft(int id) {
+        deliveryDAO.deleteSoft(id);
+    }
+
+    @Override
+    public void delete(int id) {
+        deliveryDAO.delete(id);
     }
 
 

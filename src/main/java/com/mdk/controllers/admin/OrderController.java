@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/admin/order/all", "/admin/order/delivering", "/admin/order/details"})
+@WebServlet(urlPatterns = {"/admin/order/delivered", "/admin/order/delivering", "/admin/order/details"})
 public class OrderController extends HttpServlet{
 
     private static final long serialVersionUID = 1L;
@@ -23,17 +23,20 @@ public class OrderController extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
 
-        if (url.contains("admin/order/all")) {
-            List<Orders> ordersList = ordersService.findAll();
+        if (url.contains("admin/order/delivered")) {
+            List<Orders> ordersList = ordersService.findDelivered();
             req.setAttribute("ordersList", ordersList);
-            req.getRequestDispatcher("/views/admin/order/all.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/admin/order/delivered.jsp").forward(req, resp);
         }
-        if (url.contains("admin/order/delivering")) {
+        else if (url.contains("admin/order/delivering")) {
             List<Orders> ordersList = ordersService.findDelivering();
             req.setAttribute("ordersList", ordersList);
             req.getRequestDispatcher("/views/admin/order/delivering.jsp").forward(req, resp);
         }
-        if (url.contains("admin/order/details")) {
+        else if (url.contains("admin/order/details")) {
+            String id = req.getParameter("id");
+            Orders orders = ordersService.findOneById(Integer.valueOf(id));
+            req.setAttribute("orders", orders);
             req.getRequestDispatcher("/views/admin/order/details.jsp").forward(req, resp);
         }
 
