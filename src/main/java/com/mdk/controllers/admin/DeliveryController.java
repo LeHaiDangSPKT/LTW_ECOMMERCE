@@ -1,7 +1,5 @@
 package com.mdk.controllers.admin;
 
-import com.mdk.dao.IDeliveryDAO;
-import com.mdk.models.Category;
 import com.mdk.models.Delivery;
 import com.mdk.services.IDeliveryService;
 import com.mdk.services.impl.DeliveryService;
@@ -86,7 +84,8 @@ public class DeliveryController extends HttpServlet{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (url.contains("delivery/edit")) {
+        }
+        else if (url.contains("delivery/edit")) {
             Delivery delivery = new Delivery();
             try {
                 delivery.setId(Integer.valueOf(req.getParameter("id")));

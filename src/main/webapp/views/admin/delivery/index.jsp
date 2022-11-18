@@ -56,7 +56,6 @@
                       <td>${deliveryListNotDelete.name}</td>
                       <td>${deliveryListNotDelete.description}</td>
                       <td>${deliveryListNotDelete.price}</td>
-                      <td>${deliveryListNotDelete.id}</td>
                       <td>
                         <div class="d-flex align-items-center list-user-action justify-content-around">
                           <a href="delivery/edit?id=${deliveryListNotDelete.id}"  class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
@@ -71,8 +70,6 @@
                       <td>${deliveryListDeleted.name}</td>
                       <td>${deliveryListDeleted.description}</td>
                       <td>${deliveryListDeleted.price}</td>
-                      <td>${deliveryListDeleted.id}</td>
-
                       <td>
                         <div class="d-flex align-items-center list-user-action justify-content-around">
                           <a href="" onclick="ClickIcon(event, 'delete')" data-toggle="modal" data-target="#deleteModal" class="bg-primary p-3"><i id="${deliveryListDeleted.id}" class="fa-solid fa-trash" style="padding: 10px; transform: translate(-50%, -50%); color: white"></i></a>

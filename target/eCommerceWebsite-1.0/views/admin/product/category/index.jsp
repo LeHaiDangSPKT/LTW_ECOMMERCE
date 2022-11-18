@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp"%>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
 <div id="loading">
   <div id="loading-center">
   </div>
@@ -34,14 +44,17 @@
                   </tr>
                   </thead>
                   <tbody>
+                  <%--                  Hide--%>
+                  <input type="hidden" id="id" value="">
+                  <input type="hidden" id="state" value="">
                   <c:forEach items="${categoryListNotDelete}" var="categoryListNotDelete" varStatus="STT" >
                     <tr>
                       <td>${STT.index + 1}</td>
                       <td>${categoryListNotDelete.name}</td>
                       <td>
                         <div class="d-flex align-items-center list-user-action justify-content-around">
-                          <a href="category/edit" class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
-                          <a class="bg-primary p-3" data-toggle="modal" data-target="#deleteModal"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          <a href="category/edit?id=${categoryListNotDelete.id}"  class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          <a href="" onclick="ClickIcon(event, 'delete-soft' )" data-toggle="modal" data-target="#deleteModal" class="bg-primary p-3"><i id="${categoryListNotDelete.id}" class="fa-solid fa-trash" style="padding: 10px; transform: translate(-50%, -50%); color: white"></i></a>
                         </div>
                       </td>
                     </tr>
@@ -52,8 +65,8 @@
                       <td>${categoryListDeleted.name}</td>
                       <td>
                         <div class="d-flex align-items-center list-user-action justify-content-around">
-                          <a class="bg-primary p-3" data-toggle="modal" data-target="#deleteModal"><i class="fa-solid fa-trash" style="transform: translate(-50%, -50%); color: white"></i></a>
-                          <a class="bg-primary p-3"><i class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          <a href="" onclick="ClickIcon(event, 'delete')" data-toggle="modal" data-target="#deleteModal" class="bg-primary p-3"><i id="${categoryListDeleted.id}" class="fa-solid fa-trash" style="padding: 10px; transform: translate(-50%, -50%); color: white"></i></a>
+                          <a href="" onclick="ClickIcon(event, 'restore')" data-toggle="modal" data-target="#deleteModal"  class="bg-primary p-3"><i id="${categoryListDeleted.id}" class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
                         </div>
                       </td>
                     </tr>
@@ -83,22 +96,22 @@
       <div class="iq-card-header-toolbar d-flex align-items-center flex-row-reverse">
         <a href="category/add" class="btn btn-primary">Thêm mới</a>
       </div>
-<%--      Modal Delete--%>
+      <%--      MODAL DELETE--%>
       <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="deleteModalLabel"></h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="deleteModalBody">
               Bạn có thực sự muốn xoá không?
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-              <button type="button" class="btn btn-primary">Chắc chắn</button>
+              <button type="button" onclick="Action()" class="btn btn-primary" data-dismiss="modal">Chắc chắn</button>
             </div>
           </div>
         </div>
@@ -106,4 +119,37 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  function ClickIcon(e, state) {
+    e.preventDefault();
+    const id = e.target.id;
+    console.log(id)
+    document.getElementById('id').value = id;
+    document.getElementById('state').value = state;
+
+    if (state == 'delete-soft') {
+      document.getElementById('deleteModalLabel').innerText = 'Xoá loại sản phẩm';
+      document.getElementById('deleteModalBody').innerText = 'Bạn có thực sự muốn xoá không?'
+    } else if (state == 'delete'){
+      document.getElementById('deleteModalLabel').innerText = 'Xoá vĩnh viễn loại sản phẩm';
+      document.getElementById('deleteModalBody').innerText = 'Bạn có thực sự muốn xoá không?'
+    } else {
+      document.getElementById('deleteModalLabel').innerText = 'Hoàn tác loại sản phẩm';
+      document.getElementById('deleteModalBody').innerText = 'Bạn có thực sự muốn hoàn tác không?'
+    }
+  }
+  function Action() {
+    const state = document.getElementById('state').value;
+    const id = document.getElementById('id').value;
+    if (state == 'delete-soft') {
+      window.location.href = 'category/delete-soft?id='+id.toString();
+    } else if (state == 'delete'){
+      window.location.href = 'category/delete?id='+id.toString();
+    } else {
+      window.location.href = 'category/restore?id='+id.toString();
+    }
+  }
+</script>
+</body>
+</html>
 

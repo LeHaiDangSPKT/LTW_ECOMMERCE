@@ -16,6 +16,11 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
+    public Category getOneById(int id) {
+        return categoryDAO.getOneById(id);
+    }
+
+    @Override
     public void insert(Category category) {
         categoryDAO.insert(category);
     }
@@ -26,12 +31,17 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public void deleteSoft(Category category) {
-        categoryDAO.deleteSoft(category);
+    public void delete(int id) {
+        categoryDAO.delete(id);
     }
 
     @Override
-    public void restore(Category category) {
-        categoryDAO.restore(category);
+    public void deleteSoft(int id) {
+        categoryDAO.deleteSoft(id);
+    }
+
+    @Override
+    public void restore(int id) {
+        categoryDAO.restore(id);
     }
 }
