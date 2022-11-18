@@ -31,7 +31,15 @@ public class ImageStoreDAO extends DBConnection implements IImageStoreDAO {
 
     @Override
     public void delete(int storeId) {
-
+        String sql = "delete from image_store where storeId = ?";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, storeId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -46,7 +54,6 @@ public class ImageStoreDAO extends DBConnection implements IImageStoreDAO {
             while (rs.next()) {
                 ImageStore image = new ImageStore();
                 image.setId(rs.getInt("id"));
-                image.setStoreId(rs.getInt("id"));
                 image.setName(rs.getString("name"));
                 image.setStoreId(rs.getInt("storeId"));
                 images.add(image);

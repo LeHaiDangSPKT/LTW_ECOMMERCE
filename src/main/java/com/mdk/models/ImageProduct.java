@@ -3,7 +3,6 @@ package com.mdk.models;
 public class ImageProduct extends AbstractModel<ImageProduct>{
     private String name;
     private int productId;
-
     public String getName() {
         return name;
     }

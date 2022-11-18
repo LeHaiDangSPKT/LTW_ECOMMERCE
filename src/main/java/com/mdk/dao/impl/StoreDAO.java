@@ -51,11 +51,12 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
     }
 
     @Override
-    public int count() {
-        String sql = "select count(*) from store";
+    public int count(int userId) {
+        String sql = "select count(*) from store where ownerId = ?";
         try {
             conn = getConnection();
             ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
             rs = ps.executeQuery();
             while(rs.next()){
                 return rs.getInt(1);

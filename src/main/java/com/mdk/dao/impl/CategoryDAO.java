@@ -27,15 +27,39 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
             ps.setInt(1, id);
             rs = ps.executeQuery();
             while (rs.next()){
+                category.setId(rs.getInt("id"));
                 category.setName(rs.getString("name"));
                 category.setDelete(rs.getBoolean("isDeleted"));
                 category.setCreatedAt(rs.getTimestamp("createdAt"));
-                category.setUpdatedAt(rs.getTimestamp("updateAt"));
+                category.setUpdatedAt(rs.getTimestamp("updatedAt"));
             }
             return category;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<Category> findAll() {
+        String sql = "select * from category";
+        List<Category> categories = new ArrayList<>();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                Category category = new Category();
+                category.setId(rs.getInt("id"));
+                category.setName(rs.getString("name"));
+                category.setDelete(rs.getBoolean("isDeleted"));
+                category.setCreatedAt(rs.getTimestamp("createdAt"));
+                category.setUpdatedAt(rs.getTimestamp("updatedAt"));
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categories;
     }
 }

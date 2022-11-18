@@ -5,10 +5,17 @@ import com.mdk.dao.impl.CategoryDAO;
 import com.mdk.models.Category;
 import com.mdk.services.ICategoryService;
 
+import java.util.List;
+
 public class CategoryService implements ICategoryService {
     ICategoryDAO categoryDAO = new CategoryDAO();
     @Override
     public Category findById(int id) {
         return categoryDAO.findById(id);
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return categoryDAO.findAll();
     }
 }

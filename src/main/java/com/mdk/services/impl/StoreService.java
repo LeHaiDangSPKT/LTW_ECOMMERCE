@@ -33,8 +33,19 @@ public class StoreService implements IStoreService {
     }
 
     @Override
-    public int count() {
-        return storeDAO.count();
+    public void update(Store store) {
+        storeDAO.update(store);
+        int storeId = storeDAO.findByUserId(store.getOwnerID()).getId();
+        imageStoreService.delete(storeId);
+        for (ImageStore image : store.getImages()){
+            image.setStoreId(storeId);
+            imageStoreService.insert(image);
+        }
+    }
+
+    @Override
+    public int count(int userId) {
+        return storeDAO.count(userId);
     }
 
     @Override

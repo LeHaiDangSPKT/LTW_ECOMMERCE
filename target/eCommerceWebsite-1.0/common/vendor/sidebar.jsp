@@ -15,15 +15,15 @@
                 <li>
                     <a href="<c:url value="/vendor/home" />">
                         <i class="fa-solid fa-book-open"></i>
-                        Cửa hàng
+                        Trang chủ
                     </a>
                 </li>
-                <li>
-                    <a href="<c:url value="/vendor/create-store" />">
-                        <i class="fa-solid fa-circle-plus"></i>
-                        Tạo cửa hàng
-                    </a>
-                </li>
+<%--                <li>--%>
+<%--                    <a href="<c:url value="/vendor/create-store" />">--%>
+<%--                        <i class="fa-solid fa-circle-plus"></i>--%>
+<%--                        Tạo cửa hàng--%>
+<%--                    </a>--%>
+<%--                </li>--%>
                 <li>
                     <a href="<c:url value="/vendor/store" />">
                         <i class="fa-solid fa-store"></i>
@@ -31,7 +31,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<c:url value="/vendor/list-product"/> ">
+                    <a href="<c:url value="/vendor/product"/> ">
                         <i class="fa-solid fa-table-list"></i>
                         Quản lý sản phẩm
                     </a>

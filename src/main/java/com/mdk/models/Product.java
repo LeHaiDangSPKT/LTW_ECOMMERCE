@@ -1,5 +1,7 @@
 package com.mdk.models;
 
+import java.util.List;
+
 public class Product extends AbstractModel<Product> {
     private String name;
     private String description;
@@ -12,6 +14,15 @@ public class Product extends AbstractModel<Product> {
     private int storeId;
     private int rating;
     private Category category;
+    private List<ImageProduct> images;
+    public List<ImageProduct> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ImageProduct> images) {
+        this.images = images;
+    }
+
     public Category getCategory() {
         return category;
     }

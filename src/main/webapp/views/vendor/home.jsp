@@ -45,8 +45,10 @@
                                     <div class="d-flex align-items-center">
                                         <div class="col-6 p-0 position-relative image-overlap-shadow">
                                             <a href="">
+                                                <c:url
+                                                        value="/image?fname=${image!=null?image:'uploads/abc.jpg'}" var="imgUrl"></c:url>
                                                 <img class="img-fluid rounded w-100"
-                                                     src="/uploads/1668214044958.jpg"
+                                                     src="${imgUrl}"
                                                      alt="">
                                             </a>
                                             <div class="view-book">

@@ -18,4 +18,9 @@ public class ImageStoreService implements IImageStoreService {
     public List<ImageStore> findByStoreId(int id) {
         return imageStoreDAO.findByStoreId(id);
     }
+
+    @Override
+    public void delete(int storeId) {
+        imageStoreDAO.delete(storeId);
+    }
 }

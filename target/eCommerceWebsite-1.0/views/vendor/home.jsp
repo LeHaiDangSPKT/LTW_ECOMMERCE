@@ -45,8 +45,10 @@
                                     <div class="d-flex align-items-center">
                                         <div class="col-6 p-0 position-relative image-overlap-shadow">
                                             <a href="">
+                                                <c:url
+                                                        value="/image?fname=${image!=null?image:'uploads/abc.jpg'}" var="imgUrl"></c:url>
                                                 <img class="img-fluid rounded w-100"
-                                                     src="/uploads/1668214044958.jpg"
+                                                     src="${imgUrl}"
                                                      alt="">
                                             </a>
                                             <div class="view-book">
@@ -72,9 +74,9 @@
                                                 <h6><b>$89</b></h6>
                                             </div>
                                             <div class="iq-product-action">
-                                                <a href="javascript:void();"><i
+                                                <a href="#"><i
                                                         class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                                <a href="javascript:void();" class="ml-2"><i
+                                                <a href="#" class="ml-2"><i
                                                         class="ri-heart-fill text-danger"></i></a>
                                             </div>
                                         </div>
@@ -112,7 +114,7 @@
                 <div class="iq-card-body">
                     <div class="row align-items-center">
                         <div class="col-sm-5 pr-0">
-                            <a href="javascript:void();"><img class="img-fluid rounded w-100"
+                            <a href="#"><img class="img-fluid rounded w-100"
                                                               src="../template/images/page-img/featured-book.png"
                                                               alt=""></a>
                         </div>
@@ -162,7 +164,7 @@
                     <ul class="list-inline row mb-0 align-items-center iq-scrollable-block">
                         <li class="col-sm-6 d-flex mb-3 align-items-center">
                             <div class="icon iq-icon-box mr-3">
-                                <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                <a href="#"><img class="img-fluid avatar-60 rounded-circle"
                                                                   src="../template/images/user/01.jpg" alt=""></a>
                             </div>
                             <div class="mt-1">
@@ -172,7 +174,7 @@
                         </li>
                         <li class="col-sm-6 d-flex mb-3 align-items-center">
                             <div class="icon iq-icon-box mr-3">
-                                <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                <a href="#"><img class="img-fluid avatar-60 rounded-circle"
                                                                   src="../template/images/user/02.jpg" alt=""></a>
                             </div>
                             <div class="mt-1">
@@ -199,7 +201,7 @@
                         <li class="col-md-4">
                             <div class="d-flex align-items-center">
                                 <div class="col-5 p-0 position-relative">
-                                    <a href="javascript:void();">
+                                    <a href="#">
                                         <img src="../template/images/favorite/01.jpg" class="img-fluid rounded w-100" alt="">
                                     </a>
                                 </div>
