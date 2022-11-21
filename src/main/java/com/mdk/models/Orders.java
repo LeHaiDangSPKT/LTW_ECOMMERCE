@@ -7,11 +7,38 @@ public class Orders extends AbstractModel<Orders> {
     private int storeId;
     private int deliveryId;
     private String address;
-    private int phone;
+    private String phone;
     private String status;
     private Double amountFromUser;
     private Double amountToStore;
     private Double amountToGD;
+    private User user;
+    private Store store;
+    private Delivery delivery;
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 
     public int getUserId() {
         return userId;
@@ -45,11 +72,11 @@ public class Orders extends AbstractModel<Orders> {
         this.address = address;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

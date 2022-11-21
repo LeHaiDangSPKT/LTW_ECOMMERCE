@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
 <html>
 <head>
     <title>HomePage</title>
@@ -9,15 +10,20 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height rounded">
-                <div class="newrealease-contens">
-                    <ul id="newrealease-slider" class="list-inline p-0 m-0 d-flex align-items-center">
-                        <li class="item">
-                            <a href="javascript:void(0);">
-                                <img src="../template/images/small/img-1.jpg" class="img-fluid w-100 rounded"
-                                     alt="">
-                            </a>
-                        </li>
-                    </ul>
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../template/images/browse-books/01.jpg" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -38,9 +44,11 @@
                                 <div class="iq-card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                            <a href="javascript:void();">
+                                            <a href="">
+                                                <c:url
+                                                        value="/image?fname=${image!=null?image:'uploads/abc.jpg'}" var="imgUrl"></c:url>
                                                 <img class="img-fluid rounded w-100"
-                                                     src="../template/images/browse-books/01.jpg"
+                                                     src="${imgUrl}"
                                                      alt="">
                                             </a>
                                             <div class="view-book">
@@ -66,9 +74,9 @@
                                                 <h6><b>$89</b></h6>
                                             </div>
                                             <div class="iq-product-action">
-                                                <a href="javascript:void();"><i
+                                                <a href="#"><i
                                                         class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                                <a href="javascript:void();" class="ml-2"><i
+                                                <a href="#" class="ml-2"><i
                                                         class="ri-heart-fill text-danger"></i></a>
                                             </div>
                                         </div>
@@ -106,7 +114,7 @@
                 <div class="iq-card-body">
                     <div class="row align-items-center">
                         <div class="col-sm-5 pr-0">
-                            <a href="javascript:void();"><img class="img-fluid rounded w-100"
+                            <a href="#"><img class="img-fluid rounded w-100"
                                                               src="../template/images/page-img/featured-book.png"
                                                               alt=""></a>
                         </div>
@@ -156,7 +164,7 @@
                     <ul class="list-inline row mb-0 align-items-center iq-scrollable-block">
                         <li class="col-sm-6 d-flex mb-3 align-items-center">
                             <div class="icon iq-icon-box mr-3">
-                                <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                <a href="#"><img class="img-fluid avatar-60 rounded-circle"
                                                                   src="../template/images/user/01.jpg" alt=""></a>
                             </div>
                             <div class="mt-1">
@@ -166,7 +174,7 @@
                         </li>
                         <li class="col-sm-6 d-flex mb-3 align-items-center">
                             <div class="icon iq-icon-box mr-3">
-                                <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                <a href="#"><img class="img-fluid avatar-60 rounded-circle"
                                                                   src="../template/images/user/02.jpg" alt=""></a>
                             </div>
                             <div class="mt-1">
@@ -193,7 +201,7 @@
                         <li class="col-md-4">
                             <div class="d-flex align-items-center">
                                 <div class="col-5 p-0 position-relative">
-                                    <a href="javascript:void();">
+                                    <a href="#">
                                         <img src="../template/images/favorite/01.jpg" class="img-fluid rounded w-100" alt="">
                                     </a>
                                 </div>

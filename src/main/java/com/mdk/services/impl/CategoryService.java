@@ -9,15 +9,14 @@ import java.util.List;
 
 public class CategoryService implements ICategoryService {
     ICategoryDAO categoryDAO = new CategoryDAO();
+    @Override
+    public Category findById(int id) {
+        return categoryDAO.findById(id);
+    }
 
     @Override
     public List<Category> findAll() {
         return categoryDAO.findAll();
-    }
-
-    @Override
-    public Category getOneById(int id) {
-        return categoryDAO.getOneById(id);
     }
 
     @Override
@@ -44,4 +43,5 @@ public class CategoryService implements ICategoryService {
     public void restore(int id) {
         categoryDAO.restore(id);
     }
+
 }

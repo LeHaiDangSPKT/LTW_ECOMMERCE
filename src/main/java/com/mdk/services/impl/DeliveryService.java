@@ -4,7 +4,6 @@ import com.mdk.dao.IDeliveryDAO;
 import com.mdk.dao.impl.DeliveryDAO;
 import com.mdk.models.Delivery;
 import com.mdk.services.IDeliveryService;
-
 import java.util.List;
 
 public class DeliveryService implements IDeliveryService {
@@ -16,8 +15,8 @@ public class DeliveryService implements IDeliveryService {
     }
 
     @Override
-    public Delivery getOneById(int id) {
-        return deliveryDAO.getOneById(id);
+    public Delivery findById(int id) {
+        return deliveryDAO.findById(id);
     }
 
     @Override
@@ -50,4 +49,5 @@ public class DeliveryService implements IDeliveryService {
     public void updateStatus(Delivery delivery) {
         deliveryDAO.updateStatus(delivery);
     }
+
 }

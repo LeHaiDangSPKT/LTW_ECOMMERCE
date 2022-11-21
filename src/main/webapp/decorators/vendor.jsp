@@ -11,7 +11,7 @@
 <div class="wrapper">
     <%@include file="/common/vendor/navbar.jsp" %>
     <%@include file="/common/vendor/sidebar.jsp" %>
-    <div class="content-page" id="content-page">
+    <div class="content-page" id="content-page" style="margin-top: -40px">
         <dec:body/>
     </div>
 

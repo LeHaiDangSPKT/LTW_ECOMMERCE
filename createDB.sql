@@ -1,4 +1,4 @@
-use ecommercewebsite;
+use ecommerce_v2;
 create table address
 (
     id int auto_increment,
@@ -42,16 +42,19 @@ create table store
     rating       int       default 3,
     eWallet     double   default 0,
     createdAt    timestamp default now(),
-    updateAt     timestamp default now() on update now(),
+    updatedAt     timestamp default now() on update now(),
     constraint pk_store primary key (id),
-    constraint fk_owner foreign key (id) references user (id),
+    constraint fk_owner foreign key (ownerId) references user (id),
     constraint check_store_rating check (0 <= rating <= 5)
 );
-create table store_featured_images
+
+create table image_store
 (
-    storeId         int,
-    featured_images varchar(100) not null,
-    constraint fk_images_store foreign key (storeId) references store (id)
+	id int auto_increment,
+    name varchar(255),
+    storeId int,
+    constraint pk_image_store primary key(id),
+    constraint fk_image_store foreign key(storeId) references store(id)
 );
 
 create table category
@@ -60,10 +63,9 @@ create table category
     name       varchar(32) not null unique,
     isDeleted  boolean   default false,
     createdAt  timestamp default now(),
-    updateAt   timestamp default now() on update now(),
+    updatedAt   timestamp default now() on update now(),
     constraint pk_category primary key (id)
 );
-###########################
 
 create table product
 (
@@ -94,11 +96,11 @@ create table product
 
 create table image_product
 (
-    id int auto_increment,
-    pid int,
-    url        varchar(255),
-    constraint fk_image_product foreign key(pid) references product(id),
-    constraint pk_image primary key (id)
+	id int auto_increment,
+    name varchar(255),
+    productId int,
+    constraint pk_image_product primary key(id),
+    constraint fk_image_product foreign key(productId) references product(id)
 );
 
 create table delivery
@@ -107,7 +109,7 @@ create table delivery
     name        varchar(100) not null unique,
     description varchar(1000) not null,
     price       double not null,
-    idDeleted   boolean default false,
+    isDeleted   boolean default false,
     createdAt   timestamp default now(),
     updatedAt   timestamp default now() on update now(),
 
@@ -115,6 +117,7 @@ create table delivery
     constraint check_delivery_price check (price > 0),
     constraint check_delivery_name check (length(name) <= 100)
 );
+
 
 create table userfollowstore
 (
@@ -149,7 +152,7 @@ create table orders
     storeId         int  not null,
     deliveryId      int  not null,
     address         varchar(255) not null,
-    phone           int not null,
+    phone           varchar(10) not null,
     status          varchar(50) default 'not processed',
     amountFromUser  double not null,
     amountToStore   double not null,

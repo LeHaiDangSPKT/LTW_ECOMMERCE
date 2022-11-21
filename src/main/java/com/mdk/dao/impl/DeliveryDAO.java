@@ -7,6 +7,7 @@ import com.mdk.models.Delivery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,31 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
     public Connection conn = null;
     public PreparedStatement ps = null;
     public ResultSet rs = null;
+
+    @Override
+    public Delivery findById(int id) {
+        String sql = "select * from delivery where id = ?";
+        Delivery delivery = new Delivery();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                delivery.setId(rs.getInt("id"));
+                delivery.setName(rs.getString("name"));
+                delivery.setDescription(rs.getString("description"));
+                delivery.setPrice(rs.getDouble("price"));
+                delivery.setIdDeleted(rs.getBoolean("idDeleted"));
+                delivery.setCreatedAt(rs.getTimestamp("createdAt"));
+                delivery.setUpdatedAt(rs.getTimestamp("updatedAt"));
+            }
+            return delivery;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     public List<Delivery> findAll() {
         String sql = "SELECT * FROM delivery";
@@ -35,28 +61,6 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
             e.printStackTrace();
         }
         return deliveries;
-    }
-
-    @Override
-    public Delivery  getOneById(int id) {
-        String sql = "SELECT * FROM delivery WHERE id = ?";
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                Delivery delivery = new Delivery();
-                delivery.setId(rs.getInt("id"));
-                delivery.setName(rs.getString("name"));
-                delivery.setDescription(rs.getString("description"));
-                delivery.setPrice(rs.getDouble("price"));
-                return  delivery;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override
@@ -127,11 +131,5 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-
-    @Override
-    public void updateStatus(Delivery delivery) {
-
     }
 }

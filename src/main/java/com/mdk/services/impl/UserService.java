@@ -15,10 +15,10 @@ public class UserService implements IUserService {
         return userDao.findAll();
     }
 
-    /*@Override
-    public List<User_1000> find1000UsersLatestCreationTime() {
-        return userDao.find1000UsersLatestCreationTime();
-    }*/
+    @Override
+    public User findById(int id) {
+        return userDao.findById(id);
+    }
 
     @Override
     public int totalUsers() {

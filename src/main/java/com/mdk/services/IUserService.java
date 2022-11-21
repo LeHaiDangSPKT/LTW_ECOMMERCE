@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IUserService {
     List<User> findAll();
-//    List<User_1000> find1000UsersLatestCreationTime();
+    User findById(int id);
     int totalUsers();
     List<User> top10Users_Orders();
 }

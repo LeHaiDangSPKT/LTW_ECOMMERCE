@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface IDeliveryService {
     List<Delivery> findAll();
-    Delivery getOneById (int id);
     void insert(Delivery delivery);
     void edit(Delivery delivery);
     void deleteSoft(int id);
@@ -14,4 +13,5 @@ public interface IDeliveryService {
 
     void restore(int id);
     void updateStatus(Delivery delivery);
+    Delivery findById(int id);
 }

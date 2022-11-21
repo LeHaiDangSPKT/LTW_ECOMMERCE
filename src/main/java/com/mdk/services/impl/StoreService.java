@@ -1,24 +1,59 @@
 package com.mdk.services.impl;
 
 import com.mdk.dao.IStoreDAO;
-import com.mdk.dao.IUserDAO;
 import com.mdk.dao.impl.StoreDAO;
-import com.mdk.dao.impl.UserDAO;
-import com.mdk.models.Product;
+import com.mdk.models.ImageStore;
 import com.mdk.models.Store;
 import com.mdk.models.User;
+import com.mdk.services.IImageStoreService;
+
 import com.mdk.services.IStoreService;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 public class StoreService implements IStoreService {
     IStoreDAO storeDAO = new StoreDAO();
+    IImageStoreService imageStoreService = new ImageStoreService();
+
+    @Override
+    public Store findById(int id) {
+        return storeDAO.findById(id);
+    }
+
+    @Override
+    public void insert(Store store) {
+        storeDAO.insert(store);
+        int storeId = storeDAO.findByUserId(store.getOwnerID()).getId();
+        for (ImageStore image : store.getImages()){
+            image.setStoreId(storeId);
+            imageStoreService.insert(image);
+        }
+    }
+
+    @Override
+    public void update(Store store) {
+        storeDAO.update(store);
+        int storeId = storeDAO.findByUserId(store.getOwnerID()).getId();
+        imageStoreService.delete(storeId);
+        for (ImageStore image : store.getImages()){
+            image.setStoreId(storeId);
+            imageStoreService.insert(image);
+        }
+    }
+
+    @Override
+    public int count(int userId) {
+        return storeDAO.count(userId);
+    }
+
+    @Override
+    public Store findByUserId(int userId) {
+        return storeDAO.findByUserId(userId);
+    }
 
     @Override
     public int totalStores() {
-        return storeDAO.totalStores();
+        return 0;
     }
 
     @Override

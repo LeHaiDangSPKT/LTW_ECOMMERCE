@@ -1,5 +1,4 @@
 package com.mdk.models;
-
 public class Delivery extends AbstractModel<Delivery>{
     private String name;
     private String description;
@@ -37,5 +36,4 @@ public class Delivery extends AbstractModel<Delivery>{
     public void setPrice(double price) {
         this.price = price;
     }
-
 }
