@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="/common/taglib.jsp"%>
 <html>
 <head>
     <title>Title</title>
@@ -22,15 +22,33 @@
                             <input type="text" class="form-control" name="nameStore" required="">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div class="form-group">
                             <label>Tên người nhận: *</label>
                             <input type="text" class="form-control" name="name" required="">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label>Số điện thoại: *</label>
+                            <input type="text" class="form-control" name="mno" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label>Tên sản phẩm: *</label>
+                            <input type="text" class="form-control" name="mno" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Số lượng: *</label>
+                            <input type="text" class="form-control" name="mno" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Giá tiền: *</label>
                             <input type="text" class="form-control" name="mno" required="">
                         </div>
                     </div>

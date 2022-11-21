@@ -3,7 +3,7 @@ public class Delivery extends AbstractModel<Delivery>{
     private String name;
     private String description;
     private double price;
-    private boolean idDeleted;
+    private boolean isDeleted;
 
     public String getName() {
         return name;
@@ -29,11 +29,11 @@ public class Delivery extends AbstractModel<Delivery>{
         this.price = price;
     }
 
-    public boolean isIdDeleted() {
-        return idDeleted;
+    public boolean isIsDeleted() {
+        return isDeleted;
     }
 
-    public void setIdDeleted(boolean idDeleted) {
-        this.idDeleted = idDeleted;
+    public void setIsDeleted(boolean idDeleted) {
+        this.isDeleted = idDeleted;
     }
 }

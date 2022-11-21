@@ -98,17 +98,28 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
     @Override
     public Store findById(int id) {
         String sql = "select * from store where id = ?";
-
-        return null;
-    }
-
-    @Override
-    public int totalStores() {
-        return 0;
-    }
-
-    @Override
-    public List<Store> topStores() {
+        Store store = new Store();
+        IImageStoreService imageStoreService = new ImageStoreService();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                store.setId(rs.getInt("id"));
+                store.setName(rs.getString("name"));
+                store.setBio(rs.getString("bio"));
+                store.setOwnerID(rs.getInt("ownerId"));
+                store.setOpen(rs.getBoolean("isOpen"));
+                store.setAvatar(rs.getString("avatar"));
+                store.setRating(rs.getInt("rating"));
+                store.seteWallet(rs.getDouble("eWallet"));
+                store.setImages(imageStoreService.findByStoreId(rs.getInt("id")));
+                return store;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

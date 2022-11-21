@@ -27,7 +27,6 @@ public class LoadProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
         String categoryId = req.getParameter("categoryId");
-        System.out.println(categoryId);
         List<Product> products = new ArrayList<>();
         if (categoryId.isEmpty()) {
             products = productService.findAll();
@@ -39,8 +38,10 @@ public class LoadProductController extends HttpServlet {
         for (Product o : products) {
             count++;
             String urlImg = req.getContextPath() + "/image?fname="+o.getImages().get(0).getName()+"&type=product";
-            out.println("<tbody  id=\"list-product\">\n" +
-                    "                                    <tr>\n" +
+            String urlEdit =
+                    req.getContextPath() + "/vendor/product/edit?pname="+o.getName()+"&storeId="+o.getStoreId();
+            out.println(
+                    "                                    <tr class=\"item-product\">\n" +
                     "                                        <td>"+count+"</td>\n" +
                     "                                        <td>\n" +
                     "                                            <img class=\"img-fluid rounded\" src=\""+urlImg+"\" " +
@@ -52,22 +53,29 @@ public class LoadProductController extends HttpServlet {
                     "                                        <td>"+o.getPrice()+" vnd</td>\n" +
                     "                                        <td>"+o.getPromotionalPrice()+" vnd</td>\n" +
                     "                                        <td>"+o.getQuantity()+"</td>\n" +
+                    "                                        <td>"+o.getSold()+"</td>\n" +
                     "                                        <td>\n" +
                     "                                            <div class=\"flex align-items-center list-user-action\">\n" +
                     "                                                <a class=\"iq-bg-primary\" data-toggle=\"tooltip\"\n" +
                     "                                                   data-placement=\"center\"\n" +
                     "                                                   title=\"\" data-original-title=\"Edit\"\n" +
-                    "                                                   href=\"<c:url value=\"/vendor/store/edit\"/><i class=\"fa-solid fa-pen-to-square\"></i>\n" +
+                    "                                                   href=\""+urlEdit+"\">" +
+                    "                                                    <i class=\"fa-solid fa-pen-to-square\"></i>\n" +
                     "                                                </a>\n" +
-                    "                                                <a class=\"iq-bg-primary\" data-toggle=\"tooltip\" data-placement=\"center\"\n" +
+                    "                                                <a class=\"iq-bg-primary\" data-toggle=\"modal\" data-placement=\"center\"\n" +
+                    "                                                   data-target=\"#modal-delete\"\n" +
                     "                                                   title=\"\" data-original-title=\"Delete\"\n" +
-                    "                                                   href=\"#\">\n" +
-                    "                                                    <i class=\"fa-solid fa-trash\"></i>\n" +
+                    "                                                   href=\"#\"\n" +
+                    "                                                   onclick=\"GetIdProduct(event)\"\n" +
+                    "                                                >\n" +
+                    "                                                    <i class=\"fa-solid fa-trash\"\n" +
+                    "                                                       id=\""+o.getId()+"\"\n" +
+                    "                                                       style=\"padding: 10px; transform: translate(-17%, -18%);\"></i>\n" +
                     "                                                </a>\n" +
                     "                                            </div>\n" +
                     "                                        </td>\n" +
                     "                                    </tr>\n" +
-                    "                            </tbody>");
+                    "                                <input type=\"hidden\" id = \"productId\" value=\"\">\n");
 
         }
     }

@@ -1,15 +1,11 @@
 package com.mdk.services;
 
-import com.mdk.models.User;
 //import com.mdk.models.User_1000;
+
+import com.mdk.models.User;
 
 import java.util.List;
 
 public interface IUserService {
-    List<User> findAll();
     User findById(int id);
-//    List<User_1000> find1000UsersLatestCreationTime();
-    int totalUsers();
-    List<User> topUsers();
-
 }

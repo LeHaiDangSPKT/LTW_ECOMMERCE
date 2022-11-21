@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="/common/taglib.jsp"%>
 <html>
 <head>
     <title>Title</title>
@@ -14,27 +14,32 @@
                     <div class="iq-edit-list">
                         <ul class="iq-edit-profile d-flex nav nav-pills">
                             <li class="col-md-2 p-0">
-                                <a class="nav-link active" data-toggle="pill" href="#allorder">
+                                <a class="nav-link ${statusResp=='all'?'active':''}"
+                                   href="<c:url value="/vendor/order/manager?status=all"/>">
                                     Tất cả
                                 </a>
                             </li>
                             <li class="col-md-2 p-0">
-                                <a class="nav-link" data-toggle="pill" href="#processingorder">
+                                <a class="nav-link ${statusResp=='not-processed'?'active':''}"
+                                   href="<c:url value="/vendor/order/manager?status=not-processed"/> ">
                                     Chờ xử lý
                                 </a>
                             </li>
                             <li class="col-md-2 p-0">
-                                <a class="nav-link" data-toggle="pill" href="#shipped">
+                                <a class="nav-link ${statusResp=='delivered'?'active':''}"
+                                   href="<c:url value="/vendor/order/manager?status=delivered"/> ">
                                     Đang giao
                                 </a>
                             </li>
                             <li class="col-md-2 p-0">
-                                <a class="nav-link" data-toggle="pill" href="#delivered">
+                                <a class="nav-link ${statusResp=='shipped'?'active':''}"
+                                   href="<c:url value="/vendor/order/manager?status=shipped"/> ">
                                     Đã giao
                                 </a>
                             </li>
                             <li class="col-md-2 p-0">
-                                <a class="nav-link" data-toggle="pill" href="#cancelled">
+                                <a class="nav-link ${statusResp=='cancelled'?'active':''}"
+                                   href="<c:url value="/vendor/order/manager?status=cancelled"/> ">
                                     Đơn hủy
                                 </a>
                             </li>
@@ -72,7 +77,6 @@
                                            role="grid" aria-describedby="user-list-page-info">
                                         <thead>
                                         <tr>
-                                            <th>Sản phẩm</th>
                                             <th>Mã đơn hàng</th>
                                             <th>Người mua</th>
                                             <th>Vận chuyển</th>
@@ -81,261 +85,22 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>Sách văn học</td>
-                                            <td>01</td>
-                                            <td>Trần Minh Mẫn</td>
-                                            <td>Chuyển phát nhanh</td>
-                                            <td>Chờ xử lý</td>
-                                            <td>
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="center"
-                                                   title="" data-original-title="Edit"
-                                                   href="<c:url value="/vendor/order-detail?action=edit&id=1"/> ">
-                                                    Xem chi tiết
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="processingorder" role="tabpanel">
-                        <div class="iq-card">
-                            <div class="iq-card-header d-flex justify-content-between">
-                                <div class="iq-header-title">
-                                    <h4 class="card-title">Số lượng đơn hàng: 1</h4>
-                                </div>
-                            </div>
-                            <div class="iq-card-body">
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <div class="form-group">
-                                            <label>Chọn cửa hàng:</label>
-                                            <select class="form-control" id="">
-                                                <option selected="" disabled="">Cửa hàng</option>
-                                                <option>General Books</option>
-                                                <option>History Books</option>
-                                            </select>
-
-                                        </div>
-                                        <button type="submit" class="btn btn-primary search-data ml-2">
-                                            Xác nhận
-                                        </button>
-                                    </div>
-
-                                </div>
-                                <div class="table-responsive">
-                                    <table id="list-order-processing" class="table table-striped table-bordered mt-4"
-                                           role="grid" aria-describedby="user-list-page-info">
-                                        <thead>
-                                        <tr>
-                                            <th>Sản phẩm</th>
-                                            <th>Mã đơn hàng</th>
-                                            <th>Người mua</th>
-                                            <th>Vận chuyển</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thao tác</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Sách văn học</td>
-                                            <td>01</td>
-                                            <td>Trần Minh Mẫn</td>
-                                            <td>Chuyển phát nhanh</td>
-                                            <td>Chờ xử lý</td>
-                                            <td>
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="center"
-                                                   title="" data-original-title="Edit"
-                                                   href="<c:url value="/vendor/order-detail?action=edit&id=1"/> ">
-                                                    Xem chi tiết
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="shipped" role="tabpanel">
-                        <div class="iq-card">
-                            <div class="iq-card-header d-flex justify-content-between">
-                                <div class="iq-header-title">
-                                    <h4 class="card-title">Số lượng đơn hàng: 1</h4>
-                                </div>
-                            </div>
-                            <div class="iq-card-body">
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <div class="form-group">
-                                            <label>Chọn cửa hàng:</label>
-                                            <select class="form-control" id="">
-                                                <option selected="" disabled="">Cửa hàng</option>
-                                                <option>General Books</option>
-                                                <option>History Books</option>
-                                            </select>
-
-                                        </div>
-                                        <button type="submit" class="btn btn-primary search-data ml-2">
-                                            Xác nhận
-                                        </button>
-                                    </div>
-
-                                </div>
-                                <div class="table-responsive">
-                                    <table id="list-order-shipped" class="table table-striped table-bordered mt-4"
-                                           role="grid" aria-describedby="user-list-page-info">
-                                        <thead>
-                                        <tr>
-                                            <th>Sản phẩm</th>
-                                            <th>Mã đơn hàng</th>
-                                            <th>Người mua</th>
-                                            <th>Vận chuyển</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thao tác</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Sách văn học</td>
-                                            <td>01</td>
-                                            <td>Trần Minh Mẫn</td>
-                                            <td>Chuyển phát nhanh</td>
-                                            <td>Đang giao</td>
-                                            <td>
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="center"
-                                                   title="" data-original-title="Edit"
-                                                   href="<c:url value="/vendor/order-detail?action=edit&id=1"/> ">
-                                                    Xem chi tiết
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="delivered" role="tabpanel">
-                        <div class="iq-card">
-                            <div class="iq-card-header d-flex justify-content-between">
-                                <div class="iq-header-title">
-                                    <h4 class="card-title">Số lượng đơn hàng</h4>
-                                </div>
-                            </div>
-                            <div class="iq-card-body">
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <div class="form-group">
-                                            <label>Chọn cửa hàng:</label>
-                                            <select class="form-control" id="">
-                                                <option selected="" disabled="">Cửa hàng</option>
-                                                <option>General Books</option>
-                                                <option>History Books</option>
-                                            </select>
-
-                                        </div>
-                                        <button type="submit" class="btn btn-primary search-data ml-2">
-                                            Xác nhận
-                                        </button>
-                                    </div>
-
-                                </div>
-                                <div class="table-responsive">
-                                    <table id="list-order-delivered" class="table table-striped table-bordered mt-4"
-                                           role="grid" aria-describedby="user-list-page-info">
-                                        <thead>
-                                        <tr>
-                                            <th>Sản phẩm</th>
-                                            <th>Mã đơn hàng</th>
-                                            <th>Người mua</th>
-                                            <th>Vận chuyển</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thao tác</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Sách văn học</td>
-                                            <td>01</td>
-                                            <td>Trần Minh Mẫn</td>
-                                            <td>Chuyển phát nhanh</td>
-                                            <td>Đã giao</td>
-                                            <td>
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="center"
-                                                   title="" data-original-title="Edit"
-                                                   href="<c:url value="/vendor/order-detail?action=edit&id=1"/> ">
-                                                    Xem chi tiết
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="cancelled" role="tabpanel">
-                        <div class="iq-card">
-                            <div class="iq-card-header d-flex justify-content-between">
-                                <div class="iq-header-title">
-                                    <h4 class="card-title">Số lượng đơn hàng</h4>
-                                </div>
-                            </div>
-                            <div class="iq-card-body">
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        <div class="form-group">
-                                            <label>Chọn cửa hàng:</label>
-                                            <select class="form-control" id="">
-                                                <option selected="" disabled="">Cửa hàng</option>
-                                                <option>General Books</option>
-                                                <option>History Books</option>
-                                            </select>
-
-                                        </div>
-                                        <button type="submit" class="btn btn-primary search-data ml-2">
-                                            Xác nhận
-                                        </button>
-                                    </div>
-
-                                </div>
-                                <div class="table-responsive">
-                                    <table id="list-order-cancelled" class="table table-striped table-bordered mt-4"
-                                           role="grid" aria-describedby="user-list-page-info">
-                                        <thead>
-                                        <tr>
-                                            <th>Sản phẩm</th>
-                                            <th>Mã đơn hàng</th>
-                                            <th>Người mua</th>
-                                            <th>Vận chuyển</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thao tác</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Sách văn học</td>
-                                            <td>01</td>
-                                            <td>Trần Minh Mẫn</td>
-                                            <td>Chuyển phát nhanh</td>
-                                            <td>Chờ phản hồi</td>
-                                            <td>
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="center"
-                                                   title="" data-original-title="Edit"
-                                                   href="<c:url value="/vendor/order-detail?action=edit&id=1"/> ">
-                                                    Xem chi tiết
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        <c:forEach items="${orders}" var="order">
+                                            <tr>
+                                                <td>${order.id}</td>
+                                                <td>${order.user.firstname} ${order.user.lastname}</td>
+                                                <td>${order.delivery.name}</td>
+                                                <td>${order.status}</td>
+                                                <td>
+                                                    <a class="iq-bg-primary" data-toggle="tooltip"
+                                                       data-placement="center"
+                                                       title="" data-original-title="Edit"
+                                                       href="<c:url value="/vendor/order/detail?action=edit&id=1"/> ">
+                                                        Xem chi tiết
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>

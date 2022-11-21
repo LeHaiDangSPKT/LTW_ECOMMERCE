@@ -32,9 +32,10 @@
                                         <div class="form-group row align-items-center">
                                             <div class="col-md-12">
                                                 <div class="profile-img-edit">
+                                                    <label>Ảnh đại diện:</label>
                                                     <c:url value="/image?fname=${store.avatar}&type=store"
                                                            var="imgAvatar"></c:url>
-                                                    <img class="profile-pic" src="${imgAvatar}"
+                                                    <img class="img-thumbnail" src="${imgAvatar}"
                                                          alt="profile-pic">
                                                     <div class="p-image text-center">
                                                         <a href="#" class="upload-button btn iq-bg-primary">

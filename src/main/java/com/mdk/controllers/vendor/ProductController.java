@@ -158,10 +158,10 @@ public class ProductController extends HttpServlet {
                     image.setName(oldImage.get(flag).getName());
                     images.add(image);
                 } else {
+                    String fileNameImg = "";
                     if (oldImage.get(flag) != null) {
-                        String fileNameImg = oldImage.get(flag).getName();
-                        String storeFolder = UPLOAD_PRODUCT_DIRECTORY;
-                        DeleteImageUtil.processDelete(storeFolder, fileNameImg);
+                        fileNameImg = oldImage.get(flag).getName();
+                        DeleteImageUtil.processDelete(realPath, fileNameImg);
                     }
                     image.setName(UploadUtil.processUpload(filePart.getName(), req, realPath, fileName));
                     images.add(image);

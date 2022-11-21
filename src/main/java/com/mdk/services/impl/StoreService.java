@@ -12,10 +12,6 @@ import java.util.List;
 public class StoreService implements IStoreService {
     IStoreDAO storeDAO = new StoreDAO();
     IImageStoreService imageStoreService = new ImageStoreService();
-//    @Override
-//    public List<Store> findAll() {
-//        return null;
-//    }
 
     @Override
     public Store findById(int id) {

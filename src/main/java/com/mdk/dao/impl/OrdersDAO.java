@@ -28,8 +28,8 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     public List<Orders> findAll(String status) {
         StringBuilder sql = new StringBuilder("select * from orders ");
         if (!status.equals("all")) {
-            sql.append("where status like ");
-            sql.append(status);
+            sql.append("where status like \"");
+            sql.append(""+ status + "\"");
         }
         List<Orders> orders = new ArrayList<>();
         IUserService userService = new UserService();
@@ -45,6 +45,9 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
                 Store store = storeService.findById(rs.getInt("storeId"));
                 Delivery delivery = deliveryService.findById(rs.getInt("deliveryId"));
                 order.setId(rs.getInt("id"));
+                order.setUserId(rs.getInt("userId"));
+                order.setStoreId(rs.getInt("storeId"));
+                order.setDeliveryId(rs.getInt("deliveryId"));
                 order.setAddress(rs.getString("address"));
                 order.setPhone(rs.getString("phone"));
                 order.setStatus(rs.getString("status"));

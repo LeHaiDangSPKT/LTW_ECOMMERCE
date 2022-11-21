@@ -26,10 +26,11 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
             ps.setInt(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
+                delivery.setId(rs.getInt("id"));
                 delivery.setName(rs.getString("name"));
                 delivery.setDescription(rs.getString("description"));
                 delivery.setPrice(rs.getDouble("price"));
-                delivery.setIdDeleted(rs.getBoolean("idDeleted"));
+                delivery.setIsDeleted(rs.getBoolean("isDeleted"));
                 delivery.setCreatedAt(rs.getTimestamp("createdAt"));
                 delivery.setUpdatedAt(rs.getTimestamp("updatedAt"));
             }

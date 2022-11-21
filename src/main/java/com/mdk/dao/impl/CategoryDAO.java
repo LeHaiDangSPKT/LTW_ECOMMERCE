@@ -3,7 +3,6 @@ package com.mdk.dao.impl;
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.ICategoryDAO;
 import com.mdk.models.Category;
-import com.mdk.models.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

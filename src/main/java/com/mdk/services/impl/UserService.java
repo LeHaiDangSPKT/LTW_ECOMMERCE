@@ -11,29 +11,7 @@ public class UserService implements IUserService {
     IUserDAO userDao = new UserDAO();
 
     @Override
-    public List<User> findAll() {
-        return userDao.findAll();
-    }
-
-    @Override
     public User findById(int id) {
         return userDao.findById(id);
     }
-
-//    @Override
-//    public List<User_1000> find1000UsersLatestCreationTime() {
-//        return userDao.find1000UsersLatestCreationTime();
-//    }
-
-    @Override
-    public int totalUsers() {
-        return userDao.totalUsers();
-    }
-
-    @Override
-    public List<User> topUsers() {
-        return userDao.topUsers();
-    }
-
-
 }
