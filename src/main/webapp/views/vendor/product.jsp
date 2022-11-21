@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
+<c:url value="/vendor/product" var="urlCancel"/>
 <html>
 <head>
     <title>Title</title>
@@ -25,7 +26,7 @@
                         <div class="form-group">
                             <label>Chọn thể loại:</label>
                             <select class="form-control" id="exampleFormControlSelect1" name="categoryId">
-                                <option disabled>Thể loại</option>
+                                <option>Thể loại</option>
                                 <c:forEach items="${categorise}" var="category">
                                     <option value="${category.id}"
                                         ${category.id == product.categoryId ? "selected" : ""}>
@@ -53,7 +54,8 @@
                                 <c:forEach items="${images}" var="image">
                                     <div class="col-3">
                                         <div class="profile-img-edit" style="width: 100px; height: 100px">
-                                            <c:url value="/image?fname=${image.name}&type=product"
+                                            <c:url
+                                                    value="/image?fname=${image.name!=null?image.name:'upload/abc.jpg'}&type=product"
                                                    var="imgUrl"></c:url>
                                             <img class="img-thumbnail" style="width: 100%; height: 100%; object-fit: cover;"
                                                  src="${imgUrl}"
@@ -96,19 +98,24 @@
                             <button formaction="<c:url value="/vendor/product/edit?pname=${product.name}"/>"
                                     class="btn btn-warning">Update</button>
                         </c:if>
-                        <button formaction="<c:url value="/vendor/product"/>" class="btn
+                        <button onclick="Back(event)" class="btn
                                 btn-danger">Cancel</button>
+
                         <input type="hidden" name="id" value="${product.id}"/>
                         <input type="hidden" name="storeId" value="${product.storeId}">
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</body>
-<script>
+<script type="text/javascript">
     document.getElementById("quantity").setAttribute("value", document.getElementById("quantity").value);
+    function Back(e) {
+        e.preventDefault();
+        <%--alert("${urlCancel}");--%>
+        window.location.href = "${urlCancel}";
+    }
 </script>
+</body>
 </html>

@@ -73,7 +73,7 @@
                             </thead>
                             <tbody  id="list-product">
                                 <c:forEach items="${products}" var="product" varStatus="index">
-                                    <tr>
+                                    <tr class="item-product">
                                         <td>${index.index + 1}</td>
                                         <td>
                                             <c:url value="/image?fname=${product.getImages().get(0).getName()}&type=product"
@@ -156,8 +156,8 @@
                 categoryId
             },
             success: function (data) {
-                $("#list-product").remove();
-                $("#table-product").append(data);
+                $(".item-product").remove();
+                $("#list-product").append(data);
             },
             error: function (e) {
                 alert("Loi")

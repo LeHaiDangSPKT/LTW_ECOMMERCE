@@ -15,9 +15,10 @@ public class OrdersService implements IOrdersService {
         return ordersDAO.findDelivered();
     }
 
+
     @Override
-    public List<Orders> findAll() {
-        return null;
+    public List<Orders> findAll(String status) {
+        return ordersDAO.findAll(status);
     }
 
     @Override

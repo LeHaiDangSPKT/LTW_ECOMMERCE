@@ -11,11 +11,6 @@ public class UserService implements IUserService {
     IUserDAO userDao = new UserDAO();
 
     @Override
-    public List<User> findAll() {
-        return userDao.findAll();
-    }
-
-    @Override
     public User findById(int id) {
         return userDao.findById(id);
     }
@@ -29,5 +24,4 @@ public class UserService implements IUserService {
     public List<User> top10Users_Orders() {
         return userDao.top10Users_Orders();
     }
-
 }

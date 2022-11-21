@@ -37,7 +37,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<c:url value="/vendor/manager-order"/> ">
+                    <a href="<c:url value="/vendor/order/manager?status=all"/>">
                         <i class="fa-solid fa-truck-fast"></i>
                         Quản lý đơn hàng
                     </a>

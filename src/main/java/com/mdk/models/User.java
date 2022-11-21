@@ -1,4 +1,5 @@
 
+
 package com.mdk.models;
 
 public class User extends  AbstractModel<User>{
@@ -38,7 +39,6 @@ public class User extends  AbstractModel<User>{
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-
 
     public String getId_card() {
         return id_card;
@@ -111,5 +111,4 @@ public class User extends  AbstractModel<User>{
     public void seteWallet(Double eWallet) {
         this.eWallet = eWallet;
     }
-
 }
