@@ -1,3 +1,4 @@
+
 package com.mdk.models;
 
 public class User extends  AbstractModel<User>{
