@@ -5,7 +5,8 @@ import com.mdk.models.Orders;
 import java.util.List;
 
 public interface IOrdersService {
-    List<Orders> findAll();
+    List<Orders> findDelivered();
     List<Orders> findDelivering();
-    void updateStatus(Orders orders);
+    Orders findOneById(int id);
+
 }

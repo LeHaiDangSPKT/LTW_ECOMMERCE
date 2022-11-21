@@ -16,7 +16,7 @@ public class TransactionDAO extends DBConnection implements ITransactionDAO {
     public ResultSet rs = null;
     @Override
     public List<Transaction> findAll() {
-        String sql = "SELECT userId, storeId, isUp, amount FROM transaction";
+        String sql = "SELECT * FROM transaction";
         List<Transaction> transactions = new ArrayList<Transaction>();
         try {
             conn = super.getConnection();
@@ -24,10 +24,10 @@ public class TransactionDAO extends DBConnection implements ITransactionDAO {
             rs = ps.executeQuery();
             while(rs.next()) {
                 Transaction transaction = new Transaction();
-//                transaction.setUserId(rs.getLong("userId"));
-//                transaction.setStoreId(rs.getLong("storeId"));
-//                transaction.setUp(rs.getBoolean("isUp"));
-//                transaction.setAmount(rs.getBigDecimal("amount"));
+                transaction.setUserId(rs.getInt("userId"));
+                transaction.setStoreId(rs.getInt("storeId"));
+                transaction.setUp(rs.getBoolean("isUp"));
+                transaction.setAmount(rs.getDouble("amount"));
                 transactions.add(transaction);
             }
         } catch (Exception e) {

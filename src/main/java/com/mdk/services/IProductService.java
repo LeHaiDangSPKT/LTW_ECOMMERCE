@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IProductService {
     List<Product> findAllProductProhibited();
-    List<Product> findAllProductPermited();
+    List<Product> findAllProductPermitted();
 }

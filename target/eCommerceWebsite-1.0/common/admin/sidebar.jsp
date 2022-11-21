@@ -27,6 +27,7 @@
                   class="ripple rippleEffect"></span><i class="fa-brands fa-product-hunt"></i><span>Sản phẩm</span><i
                   class="fa-solid fa-chevron-right iq-arrow-right"></i></a>
           <ul id="product" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+            <li><a href="<c:url value='/admin/product/category'/>">Loại sản phẩm</a></li>
             <li><a href="<c:url value='/admin/product/permit'/>">Sản phẩm được cho phép</a></li>
             <li><a href="<c:url value='/admin/product/prohibit'/>">Sản phẩm bị cấm</a></li>
           </ul>
@@ -36,13 +37,12 @@
                   class="ripple rippleEffect"></span><i class="fa-solid fa-file-lines"></i><span>Đơn hàng</span><i
                   class="fa-solid fa-chevron-right iq-arrow-right"></i></a>
           <ul id="order" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-            <li><a href="<c:url value='/admin/order/all'/>">Tất cả</a></li>
+            <li><a href="<c:url value='/admin/order/delivered'/>">Đơn hàng đã giao</a></li>
             <li><a href="<c:url value='/admin/order/delivering'/>">Đơn hàng đang vận chuyển</a>
             </li>
           </ul>
         </li>
         <li><a href="<c:url value='/admin/delivery'/>"><i class="fa-solid fa-truck"></i>Đơn vị vận chuyển</a></li>
-        <li><a href="<c:url value='/admin/commission'/>"><i class="fa-solid fa-percent"></i>Chính sách hoa hồng</a></li>
         <li><a href="<c:url value='/admin/transaction'/>"><i class="fa-solid fa-handshake"></i>Giao dịch</a></li>
       </ul>
     </nav>

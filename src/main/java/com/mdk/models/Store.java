@@ -1,71 +1,88 @@
+
 package com.mdk.models;
 
-import java.math.BigDecimal;
 
-public class Store extends AbstractModel<Delivery> {
-	private String name;
-	private String bio;
-	private int ownerID;
-	private boolean isOpen;
-	private String avatar;
-	private String featured_images;
-	private int rating;
-	private BigDecimal e_wallet;
+public class Store extends AbstractModel<Store> {
+    private String name;
+    private String bio;
+    private int ownerId;
+    private boolean isOpen;
+    private String avatar;
+    private String featured_images;
+    private int rating;
+    private Double e_wallet;
+    private int total;
 
-	public String getName() {
-		return name;
-	}
+    public int getTotal() {
+        return total;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getBio() {
-		return bio;
-	}
-
-	public void setBio(String bio) {
-		this.bio = bio;
-	}
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
 
-	public int getOwnerID() {
-		return ownerID;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setOwnerID(int ownerID) {
-		this.ownerID = ownerID;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public boolean isOpen() {
-		return isOpen;
-	}
+    public String getBio() {
+        return bio;
+    }
 
-	public void setOpen(boolean isOpen) {
-		this.isOpen = isOpen;
-	}
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
-	public String getAvatar() {
-		return avatar;
-	}
+    public int getOwnerId() {
+        return ownerId;
+    }
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
 
-	public int getRating() {
-		return rating;
-	}
+    public boolean isOpen() {
+        return isOpen;
+    }
 
-	public void setRating(int raitng) {
-		this.rating = raitng;
-	}
+    public void setOpen(boolean open) {
+        isOpen = open;
+    }
 
-	public BigDecimal getE_wallet() {
-		return e_wallet;
-	}
+    public String getAvatar() {
+        return avatar;
+    }
 
-	public void setE_wallet(BigDecimal e_wallet) {
-		this.e_wallet = e_wallet;
-	}
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getFeatured_images() {
+        return featured_images;
+    }
+
+    public void setFeatured_images(String featured_images) {
+        this.featured_images = featured_images;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public Double getE_wallet() {
+        return e_wallet;
+    }
+
+    public void setE_wallet(Double e_wallet) {
+        this.e_wallet = e_wallet;
+    }
 }

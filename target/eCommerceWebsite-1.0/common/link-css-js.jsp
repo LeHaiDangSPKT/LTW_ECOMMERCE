@@ -2,7 +2,6 @@
 <link href="<c:url value='/template/css/typography.css' />" rel="stylesheet">
 <link href="<c:url value='/template/css/style.css' />" rel="stylesheet">
 <link href="<c:url value='/template/css/responsive.css' />" rel="stylesheet">
-<link href="<c:url value='/template/css/custom.css' />" rel="stylesheet">
 <link href="<c:url value='/template/images/favicon.ico' />" rel="shortcut icon">
 <link rel="stylesheet" href="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css' />" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -33,3 +32,4 @@
 <script src="<c:url value='/template/js/style-customizer.js'/>"></script>
 <script src="<c:url value='/template/js/chart-custom.js'/>"></script>
 <script src="<c:url value='/template/js/custom.js'/>"></script>
+<link href="<c:url value='/template/css/custom.css' />" rel="stylesheet">

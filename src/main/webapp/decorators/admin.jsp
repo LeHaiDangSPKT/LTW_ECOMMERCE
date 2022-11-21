@@ -5,6 +5,7 @@
 <head>
     <title>Admin</title>
     <%@include file="/common/link-css-js.jsp"%>
+    <%@include file="/common/link-css-js-chart.jsp"%>
 </head>
 <body>
 <div class="wrapper">

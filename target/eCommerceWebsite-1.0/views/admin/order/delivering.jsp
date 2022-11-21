@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
+<%@include file="/common/taglib.jsp"%>
 <div id="loading">
   <div id="loading-center">
   </div>
@@ -24,36 +25,29 @@
                        aria-describedby="user-list-page-info">
                   <thead>
                   <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Mô tả</th>
-                    <th>Giá</th>
-                    <th>Số lượng đã bán</th>
-                    <th></th>
+                    <th>STT</th>
+                    <th>Mã người mua hàng</th>
+                    <th>Mã cửa hàng</th>
+                    <th>Mã đơn vị vận chuyển</th>
+                    <th>Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th>Giá thành</th>
+                    <th>Chi tiết</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Lê Hải</td>
-                    <td>Đăng</td>
-                    <td>111111111111</td>
-                    <td>annasthesia@gmail.com</td>
-                    <td><a href="<c:url value='/admin/order/details'/>" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
-                  </tr>
-                  <tr>
-                    <td>Anna Sthesia</td>
-                    <td>Anna Sthesia</td>
-                    <td>(760) 756 7568</td>
-                    <td>annasthesia@gmail.com</td>
-                    <td><a href="<c:url value='/admin/order/details'/>" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
-                  </tr>
-                  <tr>
-                    <td>Anna Sthesia</td>
-                    <td>Anna Sthesia</td>
-                    <td>(760) 756 7568</td>
-                    <td>annasthesia@gmail.com</td>
-                    <td><a href="<c:url value='/admin/order/details'/>" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
-
-                  </tr>
+                  <c:forEach items="${ordersList}" var="ordersList" varStatus="STT" >
+                    <tr>
+                      <td>${STT.index + 1}</td>
+                      <td>${ordersList.userId}</td>
+                      <td>${ordersList.storeId}</td>
+                      <td>${ordersList.deliveryId}</td>
+                      <td>${ordersList.address}</td>
+                      <td>${ordersList.phone}</td>
+                      <td>${ordersList.amountFromUser}</td>
+                      <td><a href="details?id=${ordersList.id}" class="text-decoration-underline text-primary">Xem chi tiết</a></td>
+                    </tr>
+                  </c:forEach>
                   </tbody>
                 </table>
               </div>
