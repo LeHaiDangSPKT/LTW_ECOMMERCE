@@ -30,7 +30,7 @@ import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
         maxRequestSize = 1024 * 1024 * 50) // 50MB
 @WebServlet(urlPatterns = {"/vendor/home", "/vendor/store", "/vendor/store/create", "/vendor/store/edit",
 "/vendor/statistic"})
-public class StoreController extends HttpServlet {
+public class StoreVendorController extends HttpServlet {
     IStoreService storeService = new StoreService();
     IImageStoreService imageStoreService = new ImageStoreService();
     @Override

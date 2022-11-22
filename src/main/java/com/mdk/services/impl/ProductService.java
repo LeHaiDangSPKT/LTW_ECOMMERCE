@@ -5,6 +5,7 @@ import com.mdk.dao.impl.ProductDAO;
 import com.mdk.models.ImageProduct;
 import com.mdk.models.ImageStore;
 import com.mdk.models.Product;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IImageProductService;
 import com.mdk.services.IProductService;
 
@@ -19,7 +20,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> findAllProductPermitted() {
+    public List<Product> findAllProductPermited() {
         return productDAO.findAllProductPermitted();
     }
 
@@ -60,8 +61,18 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<Product> findAll(Pageble pageble, int categoryId) {
+        return productDAO.findAll(pageble, categoryId);
+    }
+
+    @Override
     public List<Product> findByCategoryId(int categoryId) {
         return productDAO.findByCategoryId(categoryId);
+    }
+
+    @Override
+    public int count(int categoryId) {
+        return productDAO.count(categoryId);
     }
 
 }

@@ -91,9 +91,11 @@
                                                 <textarea class="form-control" name="bio" rows="5"
                                                           style="line-height:22px;">${store.bio}</textarea>
                                             </div>
-                                            <button formaction="<c:url value="/vendor/store/create"/> "
-                                                    class="btn btn-primary ml-3 mr-2">Submit
-                                            </button>
+                                            <c:if test="${count == 0}">
+                                                <button formaction="<c:url value="/vendor/store/create"/> "
+                                                        class="btn btn-primary ml-3 mr-2">Submit
+                                                </button>
+                                            </c:if>
                                             <button formaction="<c:url value="/vendor/store/edit"/> "
                                                     class="btn btn-warning ml-3 mr-2">Update
                                             </button>

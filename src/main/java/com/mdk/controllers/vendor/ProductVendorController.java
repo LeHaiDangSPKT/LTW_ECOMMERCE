@@ -1,6 +1,8 @@
 package com.mdk.controllers.vendor;
 
 import com.mdk.models.*;
+import com.mdk.paging.PageRequest;
+import com.mdk.paging.Pageble;
 import com.mdk.services.ICategoryService;
 import com.mdk.services.IImageProductService;
 import com.mdk.services.IProductService;
@@ -18,7 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +32,7 @@ import static com.mdk.utils.MessageUtil.showMessage;
         maxFileSize = 1024 * 1024 * 50, // 50MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
 @WebServlet(urlPatterns = {"/vendor/product", "/vendor/product/create", "/vendor/product/edit", "/vendor/product/delete"})
-public class ProductController extends HttpServlet {
+public class ProductVendorController extends HttpServlet {
     ICategoryService categoryService = new CategoryService();
     IProductService productService = new ProductService();
     IImageProductService imageProductService = new ImageProductService();
@@ -51,7 +52,7 @@ public class ProductController extends HttpServlet {
             delete(req, resp);
         }
         else {
-            findAll(req, resp);
+            productPage(req, resp);
             showMessage(req, resp);
             req.getRequestDispatcher("/views/vendor/listProduct.jsp").forward(req, resp);
         }
@@ -81,6 +82,28 @@ public class ProductController extends HttpServlet {
         List<Product> products = new ArrayList<>();
         products = productService.findAll();
         loadCategory(req, resp);
+        req.setAttribute("DIR", UPLOAD_PRODUCT_DIRECTORY);
+        req.setAttribute("products", products);
+    }
+    protected void productPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        int totalItemInPage = TOTAL_ITEM_IN_PAGE;
+        String indexPage = req.getParameter("index");
+        if(indexPage == null) {
+            indexPage = "1";
+        }
+        int categoryId = req.getParameter("categoryId")==null ? 0 : Integer.parseInt(req.getParameter("categoryId"));
+        int countP = productService.count(categoryId);
+        int endP = (countP/totalItemInPage);
+        if (countP % totalItemInPage != 0) {
+            endP ++;
+        }
+
+        Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
+        List<Product> products = productService.findAll(pageble, categoryId);
+        loadCategory(req, resp);
+        req.setAttribute("count", countP);
+        req.setAttribute("endP", endP);
+        req.setAttribute("tag", indexPage);
         req.setAttribute("DIR", UPLOAD_PRODUCT_DIRECTORY);
         req.setAttribute("products", products);
     }

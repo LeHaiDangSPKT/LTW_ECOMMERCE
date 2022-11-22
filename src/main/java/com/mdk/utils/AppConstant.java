@@ -15,4 +15,7 @@ public class AppConstant {
 
     public static final String MESSAGE_ERROR_SYSTEM = "Có lỗi! Vui lòng kiểm tra lại.";
     public static final String ALERT_ERROR_SYSTEM = "danger";
+
+    // Paging
+    public static final int TOTAL_ITEM_IN_PAGE = 5;
 }

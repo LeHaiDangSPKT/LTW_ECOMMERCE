@@ -1,6 +1,7 @@
 package com.mdk.services;
 
 import com.mdk.models.Product;
+import com.mdk.paging.Pageble;
 
 import java.util.List;
 
@@ -12,5 +13,7 @@ public interface IProductService {
     void delete(int id);
     Product findOneByName(String name, int storeId);
     List<Product> findAll();
+    List<Product> findAll(Pageble pageble, int categoryId);
     List<Product> findByCategoryId(int categoryId);
+    int count(int categoryId);
 }

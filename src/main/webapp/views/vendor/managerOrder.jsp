@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@include file="/common/taglib.jsp"%>
+<%@include file="/common/taglib.jsp" %>
 <html>
 <head>
     <title>Title</title>
@@ -68,7 +68,7 @@
                         <div class="iq-card">
                             <div class="iq-card-header d-flex justify-content-between">
                                 <div class="iq-header-title">
-                                    <h4 class="card-title">Số đơn hàng: 1</h4>
+                                    <h4 class="card-title">Tổng số đơn hàng: ${count}</h4>
                                 </div>
                             </div>
                             <div class="iq-card-body">
@@ -80,6 +80,7 @@
                                             <th>Mã đơn hàng</th>
                                             <th>Người mua</th>
                                             <th>Vận chuyển</th>
+                                            <th>Ngày đặt</th>
                                             <th>Trạng thái</th>
                                             <th>Thao tác</th>
                                         </tr>
@@ -90,6 +91,7 @@
                                                 <td>${order.id}</td>
                                                 <td>${order.user.firstname} ${order.user.lastname}</td>
                                                 <td>${order.delivery.name}</td>
+                                                <td>${order.createdAt}</td>
                                                 <td>${order.status}</td>
                                                 <td>
                                                     <a class="iq-bg-primary" data-toggle="tooltip"
@@ -108,6 +110,32 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination">
+                    <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}">
+                        <a href="${pageContext.request.contextPath}/vendor/order/manager?status=${statusResp}&index=${tag - 1}"
+                           class="page-link">Previous
+                        </a>
+                    </li>
+                    <c:forEach begin="1" end="${endP}" var="i">
+                        <li class="paginate_button page-item ${i == tag ? "active" : ""}">
+                            <a href="${pageContext.request.contextPath}/vendor/order/manager?status=${statusResp}&index=${i}"
+                               class="page-link">${i}</a>
+                        </li>
+                    </c:forEach>
+                    <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}">
+                        <a href="${pageContext.request.contextPath}/vendor/order/manager?status=${statusResp}&index=${tag + 1}"
+                           class="page-link">Next</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
