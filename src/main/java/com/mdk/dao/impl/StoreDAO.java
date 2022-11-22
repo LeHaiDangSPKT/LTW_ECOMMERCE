@@ -52,8 +52,8 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
                 Store store = new Store();
                 store.setName(rs.getString("name"));
                 store.setBio(rs.getString("bio"));
-                store.setOwnerId(rs.getInt("ownerId"));
-                store.setTotal(rs.getInt("total"));
+                store.setOwnerID(rs.getInt("ownerId"));
+//                store.setTotal(rs.getInt("total"));
                 stores.add(store);
             }
         } catch (Exception e) {

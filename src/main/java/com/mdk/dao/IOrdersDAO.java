@@ -1,6 +1,7 @@
 package com.mdk.dao;
 
 import com.mdk.models.Orders;
+import com.mdk.paging.Pageble;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ public interface IOrdersDAO {
     void updateStatus(String status, int id);
     List<Orders> findDelivering();
     Orders findOneById(int id);
+    int count(String status);
+    List<Orders> findAll(String status, Pageble pageble);
 }

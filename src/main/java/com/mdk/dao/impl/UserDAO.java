@@ -97,7 +97,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
                 user.setId_card(rs.getString("id_card"));
                 user.setEmail(rs.getString("email"));
                 user.setPhone(rs.getString("phone"));
-                user.setEmailActive(rs.getBoolean("isEmailActive"));
+                user.setIsEmailActive(rs.getBoolean("isEmailActive"));
                 user.setPhoneActive(rs.getBoolean("isPhoneActive"));
                 user.setPassword(rs.getString("password"));
                 user.setRole(rs.getString("role"));

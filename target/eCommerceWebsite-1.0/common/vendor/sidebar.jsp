@@ -18,12 +18,6 @@
                         Trang chủ
                     </a>
                 </li>
-<%--                <li>--%>
-<%--                    <a href="<c:url value="/vendor/create-store" />">--%>
-<%--                        <i class="fa-solid fa-circle-plus"></i>--%>
-<%--                        Tạo cửa hàng--%>
-<%--                    </a>--%>
-<%--                </li>--%>
                 <li>
                     <a href="<c:url value="/vendor/store" />">
                         <i class="fa-solid fa-store"></i>

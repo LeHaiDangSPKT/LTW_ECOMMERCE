@@ -3,6 +3,7 @@ package com.mdk.services.impl;
 import com.mdk.dao.IOrdersDAO;
 import com.mdk.dao.impl.OrdersDAO;
 import com.mdk.models.Orders;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IOrdersService;
 
 import java.util.List;
@@ -29,6 +30,16 @@ public class OrdersService implements IOrdersService {
     @Override
     public Orders findOneById(int id) {
         return ordersDAO.findOneById(id);
+    }
+
+    @Override
+    public int count(String status) {
+        return ordersDAO.count(status);
+    }
+
+    @Override
+    public List<Orders> findAll(String status, Pageble pageble) {
+        return ordersDAO.findAll(status, pageble);
     }
 
 }
