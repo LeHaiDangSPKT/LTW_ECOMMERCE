@@ -14,6 +14,16 @@ public class Store extends AbstractModel<Store> {
 	private double eWallet;
 	private List<ImageStore> images;
 
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	private int total;
+
 	public List<ImageStore> getImages() {
 		return images;
 	}
