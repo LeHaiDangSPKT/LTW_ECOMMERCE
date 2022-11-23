@@ -53,7 +53,7 @@ public class StoreService implements IStoreService {
 
     @Override
     public int totalStores() {
-        return 0;
+        return storeDAO.totalStores();
     }
 
     @Override

@@ -32,15 +32,15 @@
                             <form method="POST" action="add">
                                 <div class="form-group">
                                     <label>Tên đơn vị vận chuyển:</label>
-                                    <input type="text" class="form-control" id="name">
+                                    <input type="text" class="form-control" id="name" name="name">
                                 </div>
                                 <div class="form-group">
                                     <label>Mô tả:</label>
-                                    <textarea class="form-control" rows="4" id="description"></textarea>
+                                    <textarea class="form-control" rows="4" id="description" name="description"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Giá:</label>
-                                    <input type="number" min=0 class="form-control" id="price">
+                                    <input type="number" min=0 class="form-control" id="price" name="price">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Xác nhận</button>
                                 <button type="button" id="reset" class="btn btn-danger">Dọn dẹp</button>
