@@ -23,51 +23,51 @@ public class ProductDAO extends DBConnection implements IProductDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    @Override
-    public List<Product> findAllProductProhibited() {
-        StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE isActive = false");
-        List<Product> products = new ArrayList<Product>();
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(String.valueOf(sql));
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setPrice(rs.getDouble("price"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setSold(rs.getInt("sold"));
-                products.add(product);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return products;
-    }
+//    @Override
+//    public List<Product> findAllProductProhibited() {
+//        StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE isActive = false");
+//        List<Product> products = new ArrayList<Product>();
+//        try {
+//            conn = super.getConnection();
+//            ps = conn.prepareStatement(String.valueOf(sql));
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                Product product = new Product();
+//                product.setName(rs.getString("name"));
+//                product.setDescription(rs.getString("description"));
+//                product.setPrice(rs.getDouble("price"));
+//                product.setQuantity(rs.getInt("quantity"));
+//                product.setSold(rs.getInt("sold"));
+//                products.add(product);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return products;
+//    }
 
-    @Override
-    public List<Product> findAllProductPermitted() {
-        StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE isActive = true");
-        List<Product> products = new ArrayList<Product>();
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(String.valueOf(sql));
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setPrice(rs.getDouble("price"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setSold(rs.getInt("sold"));
-                products.add(product);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return products;
-    }
+//    @Override
+//    public List<Product> findAllProductPermitted() {
+//        StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE isActive = true");
+//        List<Product> products = new ArrayList<Product>();
+//        try {
+//            conn = super.getConnection();
+//            ps = conn.prepareStatement(String.valueOf(sql));
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                Product product = new Product();
+//                product.setName(rs.getString("name"));
+//                product.setDescription(rs.getString("description"));
+//                product.setPrice(rs.getDouble("price"));
+//                product.setQuantity(rs.getInt("quantity"));
+//                product.setSold(rs.getInt("sold"));
+//                products.add(product);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return products;
+//    }
 
     @Override
     public void insert(Product product) {
@@ -217,7 +217,6 @@ public class ProductDAO extends DBConnection implements IProductDAO {
                 product.setCategoryId(rs.getInt("categoryId"));
                 product.setStoreId(rs.getInt("storeId"));
                 product.setRating(rs.getInt("rating"));
-
                 product.setCreatedAt(rs.getTimestamp("createdAt"));
                 product.setUpdatedAt(rs.getTimestamp("updatedAt"));
                 product.setCategory(categoryService.findById(rs.getInt("categoryId")));
@@ -330,6 +329,57 @@ public class ProductDAO extends DBConnection implements IProductDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @Override
+    public int count(String status) {
+        StringBuilder sql = new StringBuilder("select count(*) from product");
+        if(status != "") {
+            sql.append(" where isActive = " + status);
+        }
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Product> findAll(Pageble pageble, String status) {
+        StringBuilder sql = new StringBuilder("select * from product");
+        if (status != "") {
+            sql.append(" where isActive = " + status);
+        }
+        if (pageble.getSorter() != null) {
+            sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
+        }
+        if (pageble.getOffset() != null && pageble.getLimit() != null) {
+            sql.append(" limit " + pageble.getOffset() + ", " + pageble.getLimit() + "");
+        }
+        List<Product> products = new ArrayList<>();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setPrice(rs.getDouble("price"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setSold(rs.getInt("sold"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
     }
 }
 

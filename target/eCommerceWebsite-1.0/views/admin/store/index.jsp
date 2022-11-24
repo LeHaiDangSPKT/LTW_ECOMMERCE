@@ -70,7 +70,7 @@
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
-                  <tr>
+                  <tr class="text-center">
                     <th>STT</th>
                     <th>Tên cửa hàng</th>
                     <th>Mô tả</th>
@@ -80,7 +80,7 @@
                   </thead>
                   <tbody>
                   <c:forEach items="${storeList}" var="stores" varStatus="STT" >
-                    <tr>
+                    <tr class="text-center">
                       <td>${STT.index + 1 }</td>
                       <td>${stores.name}</td>
                       <td>${stores.bio}</td>

@@ -20,10 +20,11 @@
             </div>
             <div class="iq-card-body">
               <div class="table-responsive">
+                <h6>Tổng sản phẩm bị cấm bán: ${productList.size() + totalItemInPage*(tag-1)} / ${countP}</h6>
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
-                  <tr>
+                  <tr class="text-center">
                     <th>STT</th>
                     <th>Tên sản phẩm</th>
                     <th>Mô tả</th>
@@ -33,8 +34,8 @@
                   </thead>
                   <tbody>
                   <c:forEach items="${productList}" var="productList" varStatus="STT" >
-                    <tr>
-                      <td>${STT.index + 1}</td>
+                    <tr class="text-center">
+                      <td>${STT.index + 1 + totalItemInPage*(tag-1)}</td>
                       <td>${productList.name}</td>
                       <td>${productList.description}</td>
                       <td>${productList.price}</td>
@@ -44,20 +45,26 @@
                   </tbody>
                 </table>
               </div>
-              <div class="row mt-3 justify-content-center">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-end mb-0">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+              <div class="col-sm-12 col-md-4 mx-auto">
+                <div class="dataTables_paginate paging_simple_numbers">
+                  <ul class="pagination justify-content-center">
+                    <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}">
+                      <a href="${pageContext.request.contextPath}/admin/product/prohibit?index=${tag - 1}"
+                         class="page-link">Previous
+                      </a>
                     </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
+                    <c:forEach begin="1" end="${endP}" var="i">
+                      <li class="paginate_button page-item ${i == tag ? "active" : ""}">
+                        <a href="${pageContext.request.contextPath}/admin/product/prohibit?&index=${i}"
+                           class="page-link">${i}</a>
+                      </li>
+                    </c:forEach>
+                    <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}">
+                      <a href="${pageContext.request.contextPath}/admin/product/prohibit?index=${tag + 1}"
+                         class="page-link">Next</a>
                     </li>
                   </ul>
-                </nav>
+                </div>
               </div>
             </div>
           </div>

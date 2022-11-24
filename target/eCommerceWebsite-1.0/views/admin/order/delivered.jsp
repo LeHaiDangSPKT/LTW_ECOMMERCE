@@ -24,7 +24,7 @@
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
-                  <tr>
+                  <tr class="text-center">
                     <th>STT</th>
                     <th>Mã người mua hàng</th>
                     <th>Mã cửa hàng</th>
@@ -37,7 +37,7 @@
                   </thead>
                   <tbody>
                   <c:forEach items="${ordersList}" var="ordersList" varStatus="STT" >
-                    <tr>
+                    <tr class="text-center">
                       <td>${STT.index + 1}</td>
                       <td>${ordersList.userId}</td>
                       <td>${ordersList.storeId}</td>

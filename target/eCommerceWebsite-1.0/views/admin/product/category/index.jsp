@@ -37,7 +37,7 @@
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
-                  <tr>
+                  <tr class="text-center">
                     <th>STT</th>
                     <th>Tên loại sản phẩm</th>
                     <th>Hành động</th>
@@ -48,7 +48,7 @@
                   <input type="hidden" id="id" value="">
                   <input type="hidden" id="state" value="">
                   <c:forEach items="${categoryListNotDelete}" var="categoryListNotDelete" varStatus="STT" >
-                    <tr>
+                    <tr class="text-center">
                       <td>${STT.index + 1}</td>
                       <td>${categoryListNotDelete.name}</td>
                       <td>
