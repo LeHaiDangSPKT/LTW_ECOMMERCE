@@ -17,7 +17,7 @@
             <div class="iq-card-header d-flex justify-content-center align-items-center text-center">
               <div class="iq-header-title">
                 <h4>QUẢN LÝ NGƯỜI DÙNG MỚI</h4>
-                <h6>Tổng số người dùng: ${total}</h6>
+                <h6>Tổng số người dùng: ${countP}</h6>
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
-                  <tr>
+                  <tr class="text-center">
                     <th>STT</th>
                     <th>Họ và tên đệm</th>
                     <th>Tên</th>
@@ -83,7 +83,7 @@
                   </thead>
                   <tbody>
                   <c:forEach items="${userList}" var="users" varStatus="STT" >
-                    <tr>
+                    <tr class="text-center">
                       <td>${STT.index + 1 }</td>
                       <td>${users.lastname }</td>
                       <td>${users.firstname }</td>

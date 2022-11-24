@@ -14,15 +14,6 @@ import java.util.List;
 public class ProductService implements IProductService {
     IProductDAO productDAO = new ProductDAO();
     IImageProductService imageProductService = new ImageProductService();
-    @Override
-    public List<Product> findAllProductProhibited() {
-        return productDAO.findAllProductProhibited();
-    }
-
-    @Override
-    public List<Product> findAllProductPermited() {
-        return productDAO.findAllProductPermitted();
-    }
 
     @Override
     public void insert(Product product) {
@@ -56,6 +47,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<Product> getTopSeller(int index) {
+        return productDAO.getTopSeller(index);
+    }
+
+    @Override
     public List<Product> findAll() {
         return productDAO.findAll();
     }
@@ -73,6 +69,16 @@ public class ProductService implements IProductService {
     @Override
     public int count(int categoryId) {
         return productDAO.count(categoryId);
+    }
+
+    @Override
+    public int count(String status) {
+        return productDAO.count(status);
+    }
+
+    @Override
+    public List<Product> findAll(Pageble pageble, String status) {
+        return productDAO.findAll(pageble,status);
     }
 
 }

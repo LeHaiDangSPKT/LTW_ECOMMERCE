@@ -2,13 +2,12 @@ package com.mdk.dao;
 
 import com.mdk.models.Orders;
 import com.mdk.models.Product;
+import com.mdk.models.User;
 import com.mdk.paging.Pageble;
 
 import java.util.List;
 
 public interface IProductDAO {
-    List<Product> findAllProductProhibited();
-    List<Product> findAllProductPermitted();
     void insert(Product product);
     void update(Product product);
     void delete(int id);
@@ -18,5 +17,6 @@ public interface IProductDAO {
     List<Product> findAll(Pageble pageble, int categoryId);
     List<Product> findByCategoryId(int categoryId);
     int count(int categoryId);
-
+    int count(String status);
+    List<Product> findAll(Pageble pageble, String status);
 }

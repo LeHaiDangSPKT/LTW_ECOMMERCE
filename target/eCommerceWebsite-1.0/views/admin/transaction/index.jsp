@@ -20,44 +20,53 @@
             </div>
             <div class="iq-card-body">
               <div class="table-responsive">
+                <h6>Tổng giao dịch: ${ordersList.size() + totalItemInPage*(tag-1)} / ${countP}</h6>
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
-                  <tr>
+                  <tr class="text-center">
                     <th>STT</th>
                     <th>Mã khách hàng</th>
                     <th>Mã cửa hàng</th>
-                    <th>Trạng thái</th>
-                    <th>Số tiền</th>
+                    <th>Số tiền khách hàng trả</th>
+                    <th>Số tiền cửa hàng nhận được</th>
+                    <th>Thời gian</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <c:forEach items="${transactionList}" var="transactionList" varStatus="STT" >
-                    <tr>
-                      <td>${STT.index + 1}</td>
-                      <td>${transactionList.userId}</td>
-                      <td>${transactionList.storeId}</td>
-                      <td>${transactionList.isUpString}</td>
-                      <td>${transactionList.amount}</td>
+                  <c:forEach items="${ordersList}" var="ordersList" varStatus="STT" >
+                    <tr class="text-center">
+                      <td>${STT.index + 1 + totalItemInPage*(tag-1)}</td>
+                      <td>${ordersList.userId}</td>
+                      <td>${ordersList.storeId}</td>
+                      <td>${ordersList.amountFromUser}</td>
+                      <td>${ordersList.amountToStore}</td>
+                      <td>${ordersList.updatedAt.toString().substring(0,10)}</td>
                     </tr>
                   </c:forEach>
                   </tbody>
                 </table>
               </div>
-              <div class="row mt-3 justify-content-center">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-end mb-0">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+              <div class="col-sm-12 col-md-4 mx-auto">
+                <div class="dataTables_paginate paging_simple_numbers">
+                  <ul class="pagination justify-content-center">
+                    <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}">
+                      <a href="${pageContext.request.contextPath}/admin/transaction?index=${tag - 1}"
+                         class="page-link">Previous
+                      </a>
                     </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
+                    <c:forEach begin="1" end="${endP}" var="i">
+                      <li class="paginate_button page-item ${i == tag ? "active" : ""}">
+                        <a href="${pageContext.request.contextPath}/admin/transaction?&index=${i}"
+                           class="page-link">${i}</a>
+                      </li>
+                    </c:forEach>
+                    <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}">
+                      <a href="${pageContext.request.contextPath}/admin/transaction?index=${tag + 1}"
+                         class="page-link">Next</a>
                     </li>
                   </ul>
-                </nav>
+                </div>
               </div>
             </div>
           </div>

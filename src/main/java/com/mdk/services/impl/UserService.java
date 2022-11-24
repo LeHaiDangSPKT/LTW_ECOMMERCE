@@ -3,6 +3,7 @@ package com.mdk.services.impl;
 import com.mdk.dao.IUserDAO;
 import com.mdk.dao.impl.UserDAO;
 import com.mdk.models.User;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IUserService;
 
 import java.util.List;
@@ -21,12 +22,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int totalUsers() {
-        return userDao.totalUsers();
+    public List<User> top10Users_Orders() {
+        return userDao.top10Users_Orders();
     }
 
     @Override
-    public List<User> top10Users_Orders() {
-        return userDao.top10Users_Orders();
+    public int count() {
+        return userDao.count();
+    }
+
+    @Override
+    public List<User> findAll(Pageble pageble) {
+        return userDao.findAll(pageble);
     }
 }
