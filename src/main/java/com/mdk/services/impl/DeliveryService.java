@@ -3,6 +3,7 @@ package com.mdk.services.impl;
 import com.mdk.dao.IDeliveryDAO;
 import com.mdk.dao.impl.DeliveryDAO;
 import com.mdk.models.Delivery;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IDeliveryService;
 import java.util.List;
 
@@ -17,6 +18,16 @@ public class DeliveryService implements IDeliveryService {
     @Override
     public Delivery findById(int id) {
         return deliveryDAO.findById(id);
+    }
+
+    @Override
+    public int count(String state) {
+        return deliveryDAO.count(state);
+    }
+
+    @Override
+    public List<Delivery> findAll(Pageble pageble, String state) {
+        return deliveryDAO.findAll(pageble, state);
     }
 
     @Override

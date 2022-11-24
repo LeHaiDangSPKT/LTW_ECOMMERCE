@@ -1,6 +1,9 @@
 package com.mdk.controllers.admin;
 
+import com.mdk.models.Category;
 import com.mdk.models.Delivery;
+import com.mdk.paging.PageRequest;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IDeliveryService;
 import com.mdk.services.impl.DeliveryService;
 
@@ -13,6 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
 
 @WebServlet(urlPatterns = {"/admin/delivery", "/admin/delivery/add", "/admin/delivery/edit", "/admin/delivery/delete-soft", "/admin/delivery/restore", "/admin/delivery/delete"})
 public class DeliveryController extends HttpServlet{
@@ -40,7 +45,7 @@ public class DeliveryController extends HttpServlet{
         else if (url.contains("delivery/restore")) {
             String id = req.getParameter("id");
             deliveryService.restore(Integer.parseInt(id));
-            resp.sendRedirect(req.getContextPath() + "/admin/delivery");
+            resp.sendRedirect(req.getContextPath() + "/admin/delivery?state=true");
         }
         else if (url.contains("delivery/delete")) {
             String id = req.getParameter("id");
@@ -49,18 +54,7 @@ public class DeliveryController extends HttpServlet{
         }
 
         else if (url.contains("delivery")) {
-            List<Delivery> deliveryList = deliveryService.findAll();
-            List<Delivery> deliveryListDeleted = new ArrayList<Delivery>();
-            List<Delivery> deliveryListNotDelete = new ArrayList<Delivery>();
-            for (Delivery item: deliveryList) {
-                if (item.isDeleted()) {
-                    deliveryListDeleted.add(item);
-                } else {
-                    deliveryListNotDelete.add(item);
-                }
-            }
-            req.setAttribute("deliveryListDeleted", deliveryListDeleted);
-            req.setAttribute("deliveryListNotDelete", deliveryListNotDelete);
+            deliveryPage(req, resp);
             req.getRequestDispatcher("/views/admin/delivery/index.jsp").include(req, resp);
         }
 
@@ -98,5 +92,28 @@ public class DeliveryController extends HttpServlet{
                 e.printStackTrace();
             }
         }
+    }
+    protected void deliveryPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        int totalItemInPage = TOTAL_ITEM_IN_PAGE;
+        String indexPage = req.getParameter("index");
+        if(indexPage == null) {
+            indexPage = "1";
+        }
+        String state = req.getParameter("state") == null ? "false" : req.getParameter("state");
+        int countP = deliveryService.count(state);
+        int endP = (countP/totalItemInPage);
+        if (countP % totalItemInPage != 0) {
+            endP ++;
+        }
+
+        Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
+        List<Delivery> deliveries = deliveryService.findAll(pageble, state);
+
+        req.setAttribute("state", state);
+        req.setAttribute("countP", countP);
+        req.setAttribute("totalItemInPage", totalItemInPage);
+        req.setAttribute("endP", endP);
+        req.setAttribute("tag", indexPage);
+        req.setAttribute("deliveries", deliveries);
     }
 }

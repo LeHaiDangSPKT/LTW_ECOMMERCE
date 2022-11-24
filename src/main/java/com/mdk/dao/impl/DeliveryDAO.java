@@ -2,7 +2,9 @@ package com.mdk.dao.impl;
 
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IDeliveryDAO;
+import com.mdk.models.Category;
 import com.mdk.models.Delivery;
+import com.mdk.paging.Pageble;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,6 +42,59 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
         }
         return null;
     }
+
+    @Override
+    public int count(String state) {
+        StringBuilder sql = new StringBuilder("select count(*) from delivery");
+        if(state != "") {
+            sql.append(" where isDeleted = " + state);
+        }
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Delivery> findAll(Pageble pageble, String state) {
+        StringBuilder sql = new StringBuilder("select * from delivery");
+        if (state != "") {
+            sql.append(" where isDeleted = " + state);
+        }
+        if (pageble.getSorter() != null) {
+            sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
+        }
+        if (pageble.getOffset() != null && pageble.getLimit() != null) {
+            sql.append(" limit " + pageble.getOffset() + ", " + pageble.getLimit() + "");
+        }
+        List<Delivery> deliveries = new ArrayList<>();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Delivery delivery = new Delivery();
+                delivery.setId(rs.getInt("id"));
+                delivery.setName(rs.getString("name"));
+                delivery.setDescription(rs.getString("description"));
+                delivery.setPrice(rs.getDouble("price"));
+                delivery.setDeleted(rs.getBoolean("isDeleted"));
+                deliveries.add(delivery);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deliveries;
+
+    }
+
     @Override
     public List<Delivery> findAll() {
         String sql = "SELECT * FROM delivery";

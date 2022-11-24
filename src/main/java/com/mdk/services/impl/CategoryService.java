@@ -3,6 +3,7 @@ package com.mdk.services.impl;
 import com.mdk.dao.ICategoryDAO;
 import com.mdk.dao.impl.CategoryDAO;
 import com.mdk.models.Category;
+import com.mdk.paging.Pageble;
 import com.mdk.services.ICategoryService;
 
 import java.util.List;
@@ -12,6 +13,16 @@ public class CategoryService implements ICategoryService {
     @Override
     public Category findById(int id) {
         return categoryDAO.findById(id);
+    }
+
+    @Override
+    public int count(String state) {
+        return categoryDAO.count(state);
+    }
+
+    @Override
+    public List<Category> findAll(Pageble pageble, String state) {
+        return categoryDAO.findAll(pageble, state);
     }
 
     @Override
