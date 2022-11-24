@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp"%>
+<c:url value="/admin/delivery" var="urlList"/>
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,9 +31,10 @@
             </div>
             <div class="iq-card-body">
               <div class="table-responsive">
-                <select class="form-control w-25">
-                  <option value=false>Đang hoạt động</option>
-                  <option value=true>Tạm ngưng hoạt động</option>
+                <h6>Tổng đơn vị vận chuyển: ${deliveries.size() + totalItemInPage*(tag-1)} / ${countP}</h6>
+                <select class="form-control w-25" id="selectCate">
+                  <option value="false" ${state == "false" ? "selected" : ""}>Đang hoạt động</option>
+                  <option value="true" ${state == "true" ? "selected" : ""}>Tạm ngưng hoạt động</option>
                 </select>
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
@@ -49,52 +51,61 @@
                   <%--                  Hide--%>
                   <input type="hidden" id="id" value="">
                   <input type="hidden" id="state" value="">
-
-                  <c:forEach items="${deliveryListNotDelete}" var="deliveryListNotDelete" varStatus="STT" >
-                    <tr class="text-center">
-                      <td>${STT.index + 1}</td>
-                      <td>${deliveryListNotDelete.name}</td>
-                      <td>${deliveryListNotDelete.description}</td>
-                      <td>${deliveryListNotDelete.price}</td>
-                      <td>
-                        <div class="d-flex align-items-center list-user-action justify-content-around">
-                          <a href="delivery/edit?id=${deliveryListNotDelete.id}"  class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
-                          <a href="" onclick="ClickIcon(event, 'delete-soft' )" data-toggle="modal" data-target="#deleteModal" class="bg-primary p-3"><i id="${deliveryListNotDelete.id}" class="fa-solid fa-trash" style="padding: 10px; transform: translate(-50%, -50%); color: white"></i></a>
-                        </div>
-                      </td>
-                    </tr>
-                  </c:forEach>
-                  <c:forEach items="${deliveryListDeleted}" var="deliveryListDeleted" varStatus="STT" >
-                    <tr>
-                      <td>${STT.index + 1}</td>
-                      <td>${deliveryListDeleted.name}</td>
-                      <td>${deliveryListDeleted.description}</td>
-                      <td>${deliveryListDeleted.price}</td>
-                      <td>
-                        <div class="d-flex align-items-center list-user-action justify-content-around">
-                          <a href="" onclick="ClickIcon(event, 'delete')" data-toggle="modal" data-target="#deleteModal" class="bg-primary p-3"><i id="${deliveryListDeleted.id}" class="fa-solid fa-trash" style="padding: 10px; transform: translate(-50%, -50%); color: white"></i></a>
-                          <a href="" onclick="ClickIcon(event, 'restore')" data-toggle="modal" data-target="#deleteModal"  class="bg-primary p-3"><i id="${deliveryListDeleted.id}" class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
-                        </div>
-                      </td>
-                    </tr>
-                  </c:forEach>
+                  <c:if test="${state == 'false'}">
+                    <c:forEach items="${deliveries}" var="deliveries" varStatus="STT" >
+                      <tr class="text-center">
+                        <td>${STT.index + 1 + totalItemInPage*(tag-1)}</td>
+                        <td>${deliveries.name}</td>
+                        <td>${deliveries.description}</td>
+                        <td>${deliveries.price}</td>
+                        <td>
+                          <div class="d-flex align-items-center list-user-action justify-content-around">
+                            <a href="delivery/edit?id=${deliveries.id}"  class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
+                            <a href="" onclick="ClickIcon(event, 'delete-soft' )" data-toggle="modal" data-target="#deleteModal" class="bg-primary p-3"><i id="${deliveries.id}" class="fa-solid fa-trash" style="padding: 10px; transform: translate(-50%, -50%); color: white"></i></a>
+                          </div>
+                        </td>
+                      </tr>
+                    </c:forEach>
+                  </c:if>
+                  <c:if test="${state == 'true'}">
+                    <c:forEach items="${deliveries}" var="deliveries" varStatus="STT" >
+                      <tr>
+                        <td>${STT.index + 1 + totalItemInPage*(tag-1)}</td>
+                        <td>${deliveries.name}</td>
+                        <td>${deliveries.description}</td>
+                        <td>${deliveries.price}</td>
+                        <td>
+                          <div class="d-flex align-items-center list-user-action justify-content-around">
+                            <a href="" onclick="ClickIcon(event, 'delete')" data-toggle="modal" data-target="#deleteModal" class="bg-primary p-3"><i id="${deliveries.id}" class="fa-solid fa-trash" style="padding: 10px; transform: translate(-50%, -50%); color: white"></i></a>
+                            <a href="" onclick="ClickIcon(event, 'restore')" data-toggle="modal" data-target="#deleteModal"  class="bg-primary p-3"><i id="${deliveries.id}" class="fa-solid fa-window-restore" style="transform: translate(-50%, -50%); color: white"></i></a>
+                          </div>
+                        </td>
+                      </tr>
+                    </c:forEach>
+                  </c:if>
                   </tbody>
                 </table>
               </div>
-              <div class="row mt-3 justify-content-center">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-end mb-0">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+              <div class="col-sm-12 col-md-4 mx-auto">
+                <div class="dataTables_paginate paging_simple_numbers">
+                  <ul class="pagination justify-content-center">
+                    <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}">
+                      <a href="${pageContext.request.contextPath}/admin/delivery?state=${state}&index=${tag - 1}"
+                         class="page-link">Previous
+                      </a>
                     </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
+                    <c:forEach begin="1" end="${endP}" var="i">
+                      <li class="paginate_button page-item ${i == tag ? "active" : ""}">
+                        <a href="${pageContext.request.contextPath}/admin/delivery?state=${state}&index=${i}"
+                           class="page-link">${i}</a>
+                      </li>
+                    </c:forEach>
+                    <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}">
+                      <a href="${pageContext.request.contextPath}/admin/delivery?state=${state}&index=${tag + 1}"
+                         class="page-link">Next</a>
                     </li>
                   </ul>
-                </nav>
+                </div>
               </div>
             </div>
           </div>
@@ -155,6 +166,11 @@
       window.location.href = 'delivery/restore?id='+id.toString();
     }
   }
+
+  $('#selectCate').change(function () {
+    const state = $("#selectCate option:selected").val();
+    window.location.href = "${urlList}?state=" + state;
+  });
 </script>
 </body>
 </html>

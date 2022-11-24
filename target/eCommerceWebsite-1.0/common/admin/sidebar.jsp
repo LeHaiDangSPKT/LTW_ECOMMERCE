@@ -18,7 +18,7 @@
                   class="fa-solid fa-chevron-right iq-arrow-right"></i></a>
           <ul id="user" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
             <li><a href="<c:url value='/admin/user/all'/>">Tất cả</a></li>
-            <li><a href="<c:url value='/admin/user/new'/>">Người dùng mới</a></li>
+            <li><a href="<c:url value='/admin/user/closest'/>">Người dùng mới</a></li>
           </ul>
         </li>
           <li><a href="<c:url value='/admin/store'/>"><i class="fa-solid fa-store"></i>Cửa hàng</a></li>

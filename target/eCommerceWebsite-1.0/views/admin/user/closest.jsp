@@ -16,7 +16,7 @@
           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
             <div class="iq-card-header d-flex justify-content-center align-items-center text-center">
               <div class="iq-header-title">
-                <h4>QUẢN LÝ NGƯỜI DÙNG MỚI</h4>
+                <h4>QUẢN LÝ NGƯỜI DÙNG THÂN THIẾT</h4>
                 <h6>Tổng số người dùng: ${countP}</h6>
               </div>
             </div>
@@ -65,8 +65,7 @@
               <div class="iq-header-title">
                 <h4 class="card-title">Top 10 người dùng mua hàng nhiều nhất</h4>
               </div>
-            </div>
-            <div class="iq-card-body">
+            </div>            <div class="iq-card-body">
               <div class="table-responsive">
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">

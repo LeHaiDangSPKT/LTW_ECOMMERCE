@@ -52,21 +52,10 @@ public class ProductController extends HttpServlet{
         else if (url.contains("product/category/restore")) {
             String id = req.getParameter("id");
             categoryService.restore(Integer.parseInt(id));
-            resp.sendRedirect(req.getContextPath() + "/admin/product/category");
+            resp.sendRedirect(req.getContextPath() + "/admin/product/category?state=true");
         }
         else if (url.contains("product/category")) {
-            List<Category> categoryList = categoryService.findAll();
-            List<Category> categoryListDeleted = new ArrayList<Category>();
-            List<Category> categoryListNotDelete = new ArrayList<Category>();
-            for (Category item: categoryList) {
-                if (item.isDelete()) {
-                    categoryListDeleted.add(item);
-                } else {
-                    categoryListNotDelete.add(item);
-                }
-            }
-            req.setAttribute("categoryListDeleted", categoryListDeleted);
-            req.setAttribute("categoryListNotDelete", categoryListNotDelete);
+            categoryPage(req, resp);
             req.getRequestDispatcher("/views/admin/product/category/index.jsp").forward(req, resp);
         }
         else if (url.contains("product/permit")) {
@@ -128,5 +117,29 @@ public class ProductController extends HttpServlet{
         req.setAttribute("endP", endP);
         req.setAttribute("tag", indexPage);
         req.setAttribute("totalItemInPage", totalItemInPage);
+    }
+
+    protected void categoryPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        int totalItemInPage = TOTAL_ITEM_IN_PAGE;
+        String indexPage = req.getParameter("index");
+        if(indexPage == null) {
+            indexPage = "1";
+        }
+        String state = req.getParameter("state") == null ? "false" : req.getParameter("state");
+        int countP = categoryService.count(state);
+        int endP = (countP/totalItemInPage);
+        if (countP % totalItemInPage != 0) {
+            endP ++;
+        }
+
+        Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
+        List<Category> categories = categoryService.findAll(pageble, state);
+
+        req.setAttribute("state", state);
+        req.setAttribute("countP", countP);
+        req.setAttribute("totalItemInPage", totalItemInPage);
+        req.setAttribute("endP", endP);
+        req.setAttribute("tag", indexPage);
+        req.setAttribute("categories", categories);
     }
 }

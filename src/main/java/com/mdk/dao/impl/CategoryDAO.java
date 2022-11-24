@@ -4,6 +4,8 @@ import com.mdk.connection.DBConnection;
 import com.mdk.dao.ICategoryDAO;
 import com.mdk.models.Category;
 import com.mdk.models.Delivery;
+import com.mdk.models.Product;
+import com.mdk.paging.Pageble;
 
 
 import java.sql.Connection;
@@ -42,6 +44,58 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
     }
 
     @Override
+    public int count(String state) {
+        StringBuilder sql = new StringBuilder("select count(*) from category");
+        if(state != "") {
+            sql.append(" where isDeleted = " + state);
+        }
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Category> findAll(Pageble pageble, String state) {
+        StringBuilder sql = new StringBuilder("select * from category");
+        if (state != "") {
+            sql.append(" where isDeleted = " + state);
+        }
+        if (pageble.getSorter() != null) {
+            sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
+        }
+        if (pageble.getOffset() != null && pageble.getLimit() != null) {
+            sql.append(" limit " + pageble.getOffset() + ", " + pageble.getLimit() + "");
+        }
+        List<Category> categories = new ArrayList<>();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Category category = new Category();
+                category.setId(rs.getInt("id"));
+                category.setName(rs.getString("name"));
+                category.setDelete(rs.getBoolean("isDeleted"));
+                category.setCreatedAt(rs.getTimestamp("createdAt"));
+                category.setUpdatedAt(rs.getTimestamp("updatedAt"));
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categories;
+
+    }
+
+    @Override
     public List<Category> findAll() {
         String sql = "select * from category";
         List<Category> categories = new ArrayList<>();
@@ -64,25 +118,6 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
         return categories;
     }
 
-    @Override
-    public Category getOneById(int id) {
-        String sql = "SELECT * FROM category WHERE id = ?";
-        try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                Category category = new Category();
-                category.setId(rs.getInt("id"));
-                category.setName(rs.getString("name"));
-                return  category;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     @Override
     public void insert(Category category) {

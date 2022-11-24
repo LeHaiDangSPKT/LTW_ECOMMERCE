@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
 
-@WebServlet(urlPatterns = {"/admin/user/all", "/admin/user/new"})
+@WebServlet(urlPatterns = {"/admin/user/all", "/admin/user/closest"})
 public class UserController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	 IUserService userService = new UserService();
@@ -29,12 +29,12 @@ public class UserController extends HttpServlet{
 			usersPage(req, resp);
 			req.getRequestDispatcher("/views/admin/user/all.jsp").forward(req, resp);
 		}
-		else if (url.contains("user/new")) {
+		else if (url.contains("user/closest")) {
 			List<User> userList = userService.top10Users_Orders();
 			req.setAttribute("userList", userList);
 			int countP = userService.count();
 			req.setAttribute("countP", countP);
-			req.getRequestDispatcher("/views/admin/user/new.jsp").forward(req, resp);
+			req.getRequestDispatcher("/views/admin/user/closest.jsp").forward(req, resp);
 		}
 
 	}
