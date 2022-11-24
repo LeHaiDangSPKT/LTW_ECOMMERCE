@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<c:url value="/vendor/product"/> ">
+                    <a href="<c:url value="/vendor/product/category?categoryId=0"/> ">
                         <i class="fa-solid fa-table-list"></i>
                         Quản lý sản phẩm
                     </a>

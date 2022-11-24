@@ -43,7 +43,7 @@
                                             name="categoryId"
                                             id="selectCate"
                                     >
-                                        <option value="">Tất cả</option>
+                                        <option value="0">Tất cả</option>
                                         <c:forEach items="${categorise}" var="category">
                                             <option value="${category.id}"
                                                 ${category.id == categoryId ? "selected" : ""}
@@ -74,7 +74,7 @@
                             <tbody  id="list-product">
                                 <c:forEach items="${products}" var="product" varStatus="index">
                                     <tr class="item-product">
-                                        <td>${index.index + 1}</td>
+                                        <td>${index.index + 1 + total*(tag-1)}</td>
                                         <td>
                                             <c:url value="/image?fname=${product.getImages().get(0).getName()}&type=product"
                                                    var="imgUrl"></c:url>
@@ -116,7 +116,7 @@
                                 <input type="hidden" id = "maxPageItem" name="maxPageItem" value="">
                                 <input type="hidden" id = "sortBy" name="sortBy" value="">
                                 <input type="hidden" id = "sortName" name="sortName" value="">
-                                <button id="test">Test</button>
+
                             </tbody>
                         </table>
                     </div>
@@ -132,18 +132,20 @@
             <div class="dataTables_paginate paging_simple_numbers">
                 <ul class="pagination">
                     <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}">
-                        <a href="${pageContext.request.contextPath}/vendor/product?index=${tag - 1}"
+                        <a
+                                href="${pageContext.request.contextPath}/vendor/product/category?categoryId=${categoryId}&index=${tag - 1}"
                            class="page-link">Previous
                         </a>
                     </li>
                     <c:forEach begin="1" end="${endP}" var="i">
                         <li class="paginate_button page-item ${i == tag ? "active" : ""}">
-                            <a href="${pageContext.request.contextPath}/vendor/product?index=${i}"
+                            <a href="${pageContext.request.contextPath}/vendor/product/category?categoryId=${categoryId}&index=${i}"
                                class="page-link">${i}</a>
                         </li>
                     </c:forEach>
                     <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}">
-                        <a href="${pageContext.request.contextPath}/vendor/product?index=${tag + 1}"
+                        <a
+                                href="${pageContext.request.contextPath}/vendor/product/category?categoryId=${categoryId}&index=${tag + 1}"
                            class="page-link">Next</a>
                     </li>
                 </ul>
@@ -178,26 +180,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-    $('#selectCate').change(function () {
-        const categoryId = $("#selectCate option:selected").val();
-        $.ajax({
-            url: "${urlProc}",
-            type: "get",
-            data: {
-                categoryId
-            },
-            success: function (data) {
-                $(".item-product").remove();
-                $("#list-product").append(data);
-                $("#total").value = $(".item-product").length;
-            },
-            error: function (e) {
-                alert("Loi")
-            }
-        })
-    });
-</script>
-<script type="text/javascript">
     function GetIdProduct(e) {
         e.preventDefault();
         const id = e.target.id;
@@ -209,9 +191,10 @@
     }
 </script>
 <script type="text/javascript">
-    const count = document.getElementById("total").value
-
-    $("#test").click(function () {alert(count)})
+    $('#selectCate').change(function () {
+        const categoryId = $("#selectCate option:selected").val();
+        window.location.href = "${urlList}/category?categoryId="+categoryId;
+    });
 </script>
 </body>
 </html>
