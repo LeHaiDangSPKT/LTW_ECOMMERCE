@@ -60,4 +60,9 @@ public class StoreService implements IStoreService {
     public List<Store> top10Store_Orders() {
         return storeDAO.top10Store_Orders();
     }
+
+    @Override
+    public List<Store> findAll() {
+        return storeDAO.findAll();
+    }
 }

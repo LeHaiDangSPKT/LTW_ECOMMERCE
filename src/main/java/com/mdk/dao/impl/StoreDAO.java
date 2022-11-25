@@ -63,6 +63,28 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
     }
 
     @Override
+    public List<Store> findAll() {
+        String sql = "select * from store";
+        List<Store> stores = new ArrayList<Store>();
+        try {
+            conn = super.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Store store = new Store();
+                store.setId(rs.getInt("id"));
+                store.setName(rs.getString("name"));
+                store.setBio(rs.getString("bio"));
+                store.setOwnerID(rs.getInt("ownerId"));
+                stores.add(store);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stores;
+    }
+
+    @Override
     public void insert(Store store) {
         String sql = "insert into store(name, bio, ownerId, avatar) values(?, ?, ?, ?)";
         try {

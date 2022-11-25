@@ -14,4 +14,5 @@ public interface IStoreDAO {
     Store findById(int id);
     int totalStores();
     List<Store> top10Store_Orders();
+    List<Store> findAll();
 }

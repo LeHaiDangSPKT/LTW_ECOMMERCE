@@ -13,4 +13,5 @@ public interface IStoreService {
 
     int totalStores();
     List<Store> top10Store_Orders();
+    List<Store> findAll();
 }
