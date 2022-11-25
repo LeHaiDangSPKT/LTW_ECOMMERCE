@@ -2,10 +2,7 @@ package com.mdk.dao.impl;
 
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IOrdersDAO;
-import com.mdk.models.Delivery;
-import com.mdk.models.Orders;
-import com.mdk.models.Store;
-import com.mdk.models.User;
+import com.mdk.models.*;
 import com.mdk.paging.Pageble;
 import com.mdk.services.IDeliveryService;
 import com.mdk.services.IStoreService;
@@ -25,32 +22,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     public Connection conn = null;
     public PreparedStatement ps = null;
     public ResultSet rs = null;
-    @Override
-    public List<Orders> findDelivered() {
-        String sql = "SELECT * FROM orders WHERE status = 'delivered'";
-        List<Orders> orders = new ArrayList<Orders>();
-        try {
-            conn = getConnection();
-            ps = conn.prepareStatement(String.valueOf(sql));
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                Orders order = new Orders();
-                order.setId(rs.getInt("id"));
-                order.setUserId(rs.getInt("userId"));
-                order.setStoreId(rs.getInt("storeId"));
-                order.setDeliveryId(rs.getInt("deliveryId"));
-                order.setAddress(rs.getString("address"));
-                order.setPhone(rs.getString("phone"));
-                order.setAmountFromUser(rs.getDouble("amountFromUser"));
-                order.setAmountToStore(rs.getDouble("amountToStore"));
-                order.setAmountToGD(rs.getDouble("amountToGD"));
-                orders.add(order);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orders;
-    }
+
     public List<Orders> findAll(String status) {
         StringBuilder sql = new StringBuilder("select * from orders ");
         if (!status.equals("all")) {
@@ -143,30 +115,27 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     }
 
     @Override
-    public List<Orders> findDelivering() {
-        String sql = "SELECT * FROM orders WHERE status = 'shipped'";
-        List<Orders> orders = new ArrayList<Orders>();
+    public List<OrderDetails> findDetailByOrderId(int id) {
+        StringBuilder sql = new StringBuilder("select name, description, price, count from product inner join ordersItem on product.id = ordersItem.productId where ordersItem.ordersId = ?");
         try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            ps.setInt(1, id);
             rs = ps.executeQuery();
-            while(rs.next()) {
-                Orders order = new Orders();
-                order.setId(rs.getInt("id"));
-                order.setUserId(rs.getInt("userId"));
-                order.setStoreId(rs.getInt("storeId"));
-                order.setDeliveryId(rs.getInt("deliveryId"));
-                order.setAddress(rs.getString("address"));
-                order.setPhone(rs.getString("phone"));
-                order.setAmountFromUser(rs.getDouble("amountFromUser"));
-                order.setAmountToStore(rs.getDouble("amountToStore"));
-                order.setAmountToGD(rs.getDouble("amountToGD"));
-                orders.add(order);
+            List<OrderDetails> orderDetails = new ArrayList<>();
+            while (rs.next()){
+                OrderDetails orderDetail = new OrderDetails();
+                orderDetail.setName(rs.getString("name"));
+                orderDetail.setDescription(rs.getString("description"));
+                orderDetail.setPrice(rs.getDouble("price"));
+                orderDetail.setCount(rs.getInt("count"));
+                orderDetails.add(orderDetail);
             }
-        } catch (Exception e) {
+            return orderDetails;
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return orders;
+        return null;
     }
 
     @Override
@@ -223,6 +192,75 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         if (!status.equals("all")) {
             sql.append(" where status like \"");
             sql.append(""+ status + "\"");
+        }
+        if (pageble.getSorter() != null) {
+            sql.append(" order by "+pageble.getSorter().getSortName()+" "+pageble.getSorter().getSortBy()+"");
+        }
+        if (pageble.getOffset() != null && pageble.getLimit() != null) {
+            sql.append(" limit "+pageble.getOffset()+", "+pageble.getLimit()+"");
+        }
+        List<Orders> orders = new ArrayList<>();
+        IUserService userService = new UserService();
+        IStoreService storeService = new StoreService();
+        IDeliveryService deliveryService = new DeliveryService();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()){
+                Orders order = new Orders();
+                User user = userService.findById(rs.getInt("userId"));
+                Store store = storeService.findById(rs.getInt("storeId"));
+                Delivery delivery = deliveryService.findById(rs.getInt("deliveryId"));
+                order.setId(rs.getInt("id"));
+                order.setUserId(rs.getInt("userId"));
+                order.setStoreId(rs.getInt("storeId"));
+                order.setDeliveryId(rs.getInt("deliveryId"));
+                order.setAddress(rs.getString("address"));
+                order.setPhone(rs.getString("phone"));
+                order.setStatus(rs.getString("status"));
+                order.setAmountFromUser(rs.getDouble("amountFromUser"));
+                order.setAmountToStore(rs.getDouble("amountToStore"));
+                order.setAmountToGD(rs.getDouble("amountToGD"));
+                order.setCreatedAt(rs.getTimestamp("createdAt"));
+                order.setUpdatedAt(rs.getTimestamp("updatedAt"));
+                order.setUser(user);
+                order.setStore(store);
+                order.setDelivery(delivery);
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    @Override
+    public int countByStoreId(String status, int storeId) {
+        StringBuilder sql = new StringBuilder("select count(*) from orders");
+        if (!status.equals("all")) {
+            sql.append(" where status like \"");
+            sql.append(""+ status + "\" and storeId = " + storeId);
+        }
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Orders> findAllByStoreId(String status, int storeId, Pageble pageble) {
+        StringBuilder sql = new StringBuilder("select * from orders");
+        if (!status.equals("all")) {
+            sql.append(" where status like \"");
+            sql.append(""+ status + "\"" + " and storeId = "+ storeId);
         }
         if (pageble.getSorter() != null) {
             sql.append(" order by "+pageble.getSorter().getSortName()+" "+pageble.getSorter().getSortBy()+"");
