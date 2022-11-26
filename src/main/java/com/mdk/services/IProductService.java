@@ -14,6 +14,7 @@ public interface IProductService {
     List<Product> findAll();
     List<Product> findAll(Pageble pageble, int categoryId);
     List<Product> findByCategoryId(int categoryId);
+    Product findOneById(int id);
     int count(int categoryId);
     int count(String status);
     List<Product> findAll(Pageble pageble, String status);

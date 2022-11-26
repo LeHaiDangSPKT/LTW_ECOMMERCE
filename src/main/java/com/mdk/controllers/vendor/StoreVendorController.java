@@ -7,6 +7,7 @@ import com.mdk.services.IStoreService;
 import com.mdk.services.impl.ImageStoreService;
 import com.mdk.services.impl.StoreService;
 import com.mdk.utils.DeleteImageUtil;
+import com.mdk.utils.MessageUtil;
 import com.mdk.utils.SessionUtil;
 import com.mdk.utils.UploadUtil;
 
@@ -28,36 +29,36 @@ import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
-@WebServlet(urlPatterns = {"/vendor/home", "/vendor/store", "/vendor/store/create", "/vendor/store/edit",
-"/vendor/statistic"})
+@WebServlet(urlPatterns = {"/vendor/store", "/vendor/store/create", "/vendor/store/edit", "vendor/home"})
 public class StoreVendorController extends HttpServlet {
     IStoreService storeService = new StoreService();
     IImageStoreService imageStoreService = new ImageStoreService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
-        if (url.contains("home")) {
-            req.getRequestDispatcher("/views/vendor/home.jsp").forward(req, resp);
-        } else if (url.contains("create")) {
+        if (url.contains("create")) {
             req.setAttribute("ownerId", "1");
             req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         } else if (url.contains("edit")) {
             req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
+        } else if (url.contains("home")) {
+            req.getRequestDispatcher("/views/vendor/home.jsp").forward(req, resp);
+        } else {
+            checkStoreExist(req, resp);
+            MessageUtil.showMessage(req, resp);
+            req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         }
-        checkStoreExist(req, resp);
-        req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
     }
 
-    // do post
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
         if (url.contains("create")) {
             insert(req, resp);
-            resp.sendRedirect(req.getContextPath() + "/vendor/store");
+            resp.sendRedirect(req.getContextPath() + "/vendor/store?message=insert_success");
         } else if (url.contains("edit")) {
             update(req, resp);
-            resp.sendRedirect(req.getContextPath() + "/vendor/store");
+            resp.sendRedirect(req.getContextPath() + "/vendor/store?message=update_success");
         }
     }
 
@@ -75,7 +76,6 @@ public class StoreVendorController extends HttpServlet {
         }
         req.setAttribute("count", count);
     }
-    // Xử lý create store
     protected void insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
@@ -106,7 +106,6 @@ public class StoreVendorController extends HttpServlet {
         storeService.insert(store);
     }
 
-    // update store
     protected void update (HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 

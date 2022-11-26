@@ -9,6 +9,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
+            <%@include file="/common/info.jsp"%>
             <div class="iq-edit-list-data">
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="personal-information" role="tabpanel">

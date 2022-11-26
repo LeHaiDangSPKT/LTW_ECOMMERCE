@@ -113,8 +113,7 @@
     document.getElementById("quantity").setAttribute("value", document.getElementById("quantity").value);
     function Back(e) {
         e.preventDefault();
-        <%--alert("${urlCancel}");--%>
-        window.location.href = "${urlCancel}";
+        history.go(-1);
     }
 </script>
 </body>

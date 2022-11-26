@@ -9,25 +9,6 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height rounded">
-                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="../template/images/browse-books/01.jpg" class="d-block w-100" alt="...">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                 <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
                     <div class="iq-header-title">
@@ -115,8 +96,8 @@
                     <div class="row align-items-center">
                         <div class="col-sm-5 pr-0">
                             <a href="#"><img class="img-fluid rounded w-100"
-                                                              src="../template/images/page-img/featured-book.png"
-                                                              alt=""></a>
+                                             src="../template/images/page-img/featured-book.png"
+                                             alt=""></a>
                         </div>
                         <div class="col-sm-7 mt-3 mt-sm-0">
                             <h4 class="mb-2">Casey Christie night book into find...</h4>
@@ -165,7 +146,7 @@
                         <li class="col-sm-6 d-flex mb-3 align-items-center">
                             <div class="icon iq-icon-box mr-3">
                                 <a href="#"><img class="img-fluid avatar-60 rounded-circle"
-                                                                  src="../template/images/user/01.jpg" alt=""></a>
+                                                 src="../template/images/user/01.jpg" alt=""></a>
                             </div>
                             <div class="mt-1">
                                 <h6>Brandon Guidelines</h6>
@@ -175,7 +156,7 @@
                         <li class="col-sm-6 d-flex mb-3 align-items-center">
                             <div class="icon iq-icon-box mr-3">
                                 <a href="#"><img class="img-fluid avatar-60 rounded-circle"
-                                                                  src="../template/images/user/02.jpg" alt=""></a>
+                                                 src="../template/images/user/02.jpg" alt=""></a>
                             </div>
                             <div class="mt-1">
                                 <h6>Hugh Millie-Yate</h6>

@@ -127,7 +127,6 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         }
         return null;
     }
-
     @Override
     public void updateStatus(String status, int id) {
         String sql = "update orders set status = ? where id = ?";
@@ -141,7 +140,6 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
             e.printStackTrace();
         }
     }
-
     @Override
     public List<Orders> findDelivering() {
         String sql = "SELECT * FROM orders WHERE status = 'shipped'";
@@ -168,7 +166,6 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         }
         return orders;
     }
-
     @Override
     public Orders findOneById(int id) {
         String sql = "SELECT * FROM orders WHERE id = ?";
@@ -196,7 +193,6 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         }
         return null;
     }
-
     @Override
     public int count(String status) {
         StringBuilder sql = new StringBuilder("select count(*) from orders");
@@ -216,7 +212,6 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         }
         return 0;
     }
-
     @Override
     public List<Orders> findAll(String status, Pageble pageble) {
         StringBuilder sql = new StringBuilder("select * from orders");

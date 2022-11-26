@@ -12,6 +12,7 @@ public interface IProductDAO {
     void update(Product product);
     void delete(int id);
     Product findOneByName(String name, int storeId);
+    Product findOneById(int id);
     List<Product> getTopSeller(int index);
     List<Product> findAll();
     List<Product> findAll(Pageble pageble, int categoryId);

@@ -67,6 +67,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Product findOneById(int id) {
+        return productDAO.findOneById(id);
+    }
+
+    @Override
     public int count(int categoryId) {
         return productDAO.count(categoryId);
     }

@@ -9,6 +9,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
+            <%@include file="/common/info.jsp"%>
             <div class="iq-card">
                 <div class="iq-card-body p-0">
                     <div class="iq-edit-list">
@@ -97,7 +98,8 @@
                                                     <a class="iq-bg-primary" data-toggle="tooltip"
                                                        data-placement="center"
                                                        title="" data-original-title="Edit"
-                                                       href="<c:url value="/vendor/order/detail?action=edit&id=1"/> ">
+                                                       href="<c:url
+                                                       value="/vendor/order/detail?action=edit&orderId=${order.id}"/> ">
                                                         Xem chi tiết
                                                     </a>
                                                 </td>

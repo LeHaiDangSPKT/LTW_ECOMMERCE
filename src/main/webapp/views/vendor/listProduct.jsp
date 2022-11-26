@@ -11,17 +11,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
-            <c:if test="${not empty message}">
-                <div class="alert text-white bg-${alert}" role="alert">
-                    <div class="iq-alert-icon">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                    <div class="iq-alert-text">${message}</div>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <i class="fa-solid fa-circle-xmark"></i>
-                    </button>
-                </div>
-            </c:if>
+            <%@include file="/common/info.jsp"%>
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
@@ -75,10 +65,11 @@
                                 <c:forEach items="${products}" var="product" varStatus="index">
                                     <tr class="item-product">
                                         <td>${index.index + 1 + total*(tag-1)}</td>
-                                        <td>
+                                        <td style="width: 100px; min-height: 100px;">
                                             <c:url value="/image?fname=${product.getImages().get(0).getName()}&type=product"
                                                    var="imgUrl"></c:url>
-                                            <img class="img-fluid rounded" src="${imgUrl}" alt="pic">
+                                            <img class="img-fluid rounded" src="${imgUrl}" alt="pic"
+                                                 style="width: 100%; object-fit: cover;">
                                         </td>
                                         <td>${product.name}</td>
                                         <td>${product.category.name}</td>

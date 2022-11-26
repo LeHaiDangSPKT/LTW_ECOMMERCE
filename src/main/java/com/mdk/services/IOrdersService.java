@@ -10,7 +10,8 @@ public interface IOrdersService {
     List<Orders> findAll(String status);
     List<Orders> findDelivering();
     Orders findOneById(int id);
+    Orders findById(int id);
+    void updateStatus(String status, int id);
     int count(String status);
     List<Orders> findAll(String status, Pageble pageble);
-
 }
