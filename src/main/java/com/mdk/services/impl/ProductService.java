@@ -86,4 +86,9 @@ public class ProductService implements IProductService {
         return productDAO.findAll(pageble,status);
     }
 
+    @Override
+    public List<Product> findAllByStoreId(int id) {
+        return productDAO.findAllByStoreId(id);
+    }
+
 }

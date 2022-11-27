@@ -112,6 +112,32 @@ public class UserDAO extends DBConnection implements IUserDAO {
     }
 
     @Override
+    public User findOneByUsernameAndPassword(String username, String password) {
+        String sql = "select * from user where email = ? and password = ?";
+        User user = new User();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setId_card(rs.getString("id_card"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public User findById(int id) {
         String sql = "select * from user where id = ?";
         User user = new User();

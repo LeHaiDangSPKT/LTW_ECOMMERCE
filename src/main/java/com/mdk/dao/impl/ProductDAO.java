@@ -370,5 +370,41 @@ public class ProductDAO extends DBConnection implements IProductDAO {
         }
         return products;
     }
+
+    @Override
+    public List<Product> findAllByStoreId(int id) {
+        StringBuilder sql = new StringBuilder("select * from product\n" +
+                "where storeId = ?");
+        List<Product> products = new ArrayList<>();
+        IImageProductService imageProductService = new ImageProductService();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt("id"));
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setPrice(rs.getDouble("price"));
+                product.setPromotionalPrice(rs.getDouble("promotionalPrice"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setSold(rs.getInt("sold"));
+                product.setActive(rs.getBoolean("isActive"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setStoreId(rs.getInt("storeId"));
+                product.setRating(rs.getInt("rating"));
+                product.setCreatedAt(rs.getTimestamp("createdAt"));
+                product.setUpdatedAt(rs.getTimestamp("updatedAt"));
+//                product.setCategory(categoryService.findById(rs.getInt("categoryId")));
+                product.setImages(imageProductService.findByProductId(rs.getInt("id")));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
 }
 

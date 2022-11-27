@@ -13,4 +13,5 @@ public interface IUserDAO {
     List<User> top10Users_Orders();
     int count();
     List<User> findAll(Pageble pageble);
+    User findOneByUsernameAndPassword(String username, String password);
 }

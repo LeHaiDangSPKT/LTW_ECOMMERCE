@@ -35,4 +35,9 @@ public class UserService implements IUserService {
     public List<User> findAll(Pageble pageble) {
         return userDao.findAll(pageble);
     }
+
+    @Override
+    public User findOneByUsernameAndPassword(String username, String password) {
+        return userDao.findOneByUsernameAndPassword(username, password);
+    }
 }

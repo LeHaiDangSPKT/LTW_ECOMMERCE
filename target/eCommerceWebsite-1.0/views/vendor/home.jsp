@@ -9,10 +9,42 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="height: 250px;">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class=""></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2" class=""></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="3" class=""></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active h-100">
+                        <c:url value="/image?fname=${store.avatar}&type=store"
+                               var="imgAvatar"></c:url>
+                        <img src="${imgAvatar}" class="d-block w-100 h-100" alt="#" style="object-fit: cover;">
+                    </div>
+                    <c:forEach items="${images}" var="image">
+                        <div class="carousel-item h-100">
+                            <c:url value="/image?fname=${image}&type=store"
+                                   var="img"></c:url>
+                            <img src="${img}" class="d-block w-100 h-100" alt="#" style="object-fit: cover;">
+                        </div>
+                    </c:forEach>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-12">
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                 <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
                     <div class="iq-header-title">
-                        <h4 class="card-title mb-0">Browse Books</h4>
+                        <h4 class="card-title mb-0">Sản phẩm của Shop</h4>
                     </div>
                     <div class="iq-card-header-toolbar d-flex align-items-center">
                         <a href="category.html" class="btn btn-sm btn-primary view-more">View More</a>
@@ -20,27 +52,30 @@
                 </div>
                 <div class="iq-card-body">
                     <div class="row">
-                        <div class="col-sm-6 col-md-4 col-lg-3">
-                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
-                                <div class="iq-card-body p-0">
-                                    <div class="d-flex align-items-center">
-                                        <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                            <a href="">
-                                                <c:url
-                                                        value="/image?fname=${image!=null?image:'uploads/abc.jpg'}" var="imgUrl"></c:url>
-                                                <img class="img-fluid rounded w-100"
-                                                     src="${imgUrl}"
-                                                     alt="">
-                                            </a>
-                                            <div class="view-book">
-                                                <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
+                        <c:forEach items="${products}" var="product">
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
+                                    <div class="iq-card-body p-0">
+                                        <div class="d-flex align-items-center">
+                                            <div class="col-6 p-0 position-relative image-overlap-shadow"
+                                                 style="height: 150px;">
+                                                <a href="">
+                                                    <c:url value="/image?fname=${product.getImages().get(0).getName()}&type=product"
+                                                           var="imgUrl"></c:url>
+                                                    <img class="img-fluid rounded w-100 h-100"
+                                                         style="object-fit: contain;"
+                                                         src="${imgUrl}"
+                                                         alt="">
+                                                </a>
+                                                <div class="view-book">
+                                                    <a href="book-page.html" class="btn btn-sm btn-white">View Book</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-2">
-                                                <h6 class="mb-1">Reading on the World</h6>
-                                                <p class="font-size-13 line-height mb-1">Jhone Steben</p>
-                                                <div class="d-block line-height">
+                                            <div class="col-6">
+                                                <div class="mb-2">
+                                                    <h6 class="mb-1">${product.name}</h6>
+                                                    <p class="font-size-13 line-height mb-1">${product.description}</p>
+                                                    <div class="d-block line-height">
                                                    <span class="font-size-11 text-warning">
                                                       <i class="fa fa-star"></i>
                                                       <i class="fa fa-star"></i>
@@ -48,23 +83,19 @@
                                                       <i class="fa fa-star"></i>
                                                       <i class="fa fa-star"></i>
                                                    </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="price d-flex align-items-center">
-                                                <span class="pr-1 old-price">$100</span>
-                                                <h6><b>$89</b></h6>
-                                            </div>
-                                            <div class="iq-product-action">
-                                                <a href="#"><i
-                                                        class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                                <a href="#" class="ml-2"><i
-                                                        class="ri-heart-fill text-danger"></i></a>
+                                                <div class="price">
+                                                    <span class="pr-1 old-price">${product.price}</span>
+                                                    <br>
+                                                    <h6><b>${product.promotionalPrice}</b></h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>

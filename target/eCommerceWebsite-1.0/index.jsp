@@ -1,3 +1,3 @@
 <%@include file="/common/taglib.jsp"%>
 
-<c:redirect url = "/vendor/store"/>
+<c:redirect url = "/login"/>

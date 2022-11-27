@@ -1,10 +1,13 @@
 package com.mdk.controllers.vendor;
 
 import com.mdk.models.ImageStore;
+import com.mdk.models.Product;
 import com.mdk.models.Store;
 import com.mdk.services.IImageStoreService;
+import com.mdk.services.IProductService;
 import com.mdk.services.IStoreService;
 import com.mdk.services.impl.ImageStoreService;
+import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.StoreService;
 import com.mdk.utils.DeleteImageUtil;
 import com.mdk.utils.MessageUtil;
@@ -29,10 +32,11 @@ import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
-@WebServlet(urlPatterns = {"/vendor/store", "/vendor/store/create", "/vendor/store/edit", "vendor/home"})
+@WebServlet(urlPatterns = {"/vendor/store", "/vendor/store/create", "/vendor/store/edit", "/vendor/home"})
 public class StoreVendorController extends HttpServlet {
     IStoreService storeService = new StoreService();
     IImageStoreService imageStoreService = new ImageStoreService();
+    IProductService productService = new ProductService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
@@ -42,6 +46,8 @@ public class StoreVendorController extends HttpServlet {
         } else if (url.contains("edit")) {
             req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         } else if (url.contains("home")) {
+            checkStoreExist(req, resp);
+            findAllProduct(req, resp);
             req.getRequestDispatcher("/views/vendor/home.jsp").forward(req, resp);
         } else {
             checkStoreExist(req, resp);
@@ -105,7 +111,6 @@ public class StoreVendorController extends HttpServlet {
         // insert store
         storeService.insert(store);
     }
-
     protected void update (HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -167,5 +172,11 @@ public class StoreVendorController extends HttpServlet {
         }
         store.setImages(images);
         storeService.update(store);
+    }
+    protected void findAllProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
+        Store store = (Store) SessionUtil.getInstance().getValue(req,"STORE");
+        List<Product> products = productService.findAllByStoreId(store.getId());
+        req.setAttribute("products", products);
     }
 }

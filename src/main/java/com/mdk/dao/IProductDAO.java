@@ -20,4 +20,5 @@ public interface IProductDAO {
     int count(int categoryId);
     int count(String status);
     List<Product> findAll(Pageble pageble, String status);
+    List<Product> findAllByStoreId(int id);
 }
