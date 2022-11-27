@@ -25,13 +25,13 @@
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-center">
                             <div class="iq-header-title">
-                                <h4 class="card-title">Thêm mới loại sản phẩm</h4>
+                                <h4 class="card-title">THÊM MỚI THỂ LOẠI</h4>
                             </div>
                         </div>
                         <div class="iq-card-body">
                             <form method="POST" action="add">
                                 <div class="form-group">
-                                    <label>Tên loại sản phẩm:</label>
+                                    <label>Tên thể loại:</label>
                                     <input type="text" class="form-control" id="name" name="name" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Xác nhận</button>
