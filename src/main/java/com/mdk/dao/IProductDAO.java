@@ -1,8 +1,6 @@
 package com.mdk.dao;
 
-import com.mdk.models.Orders;
 import com.mdk.models.Product;
-import com.mdk.models.User;
 import com.mdk.paging.Pageble;
 
 import java.util.List;
