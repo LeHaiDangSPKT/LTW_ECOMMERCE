@@ -21,4 +21,6 @@ public interface IProductDAO {
     int count(String status);
     List<Product> findAll(Pageble pageble, String status);
     List<Product> findAllByStoreId(int id);
+    List<Product> findBySearching(String keyword, int categoryId, int storeId, int rating, double minPrice, double maxPrice);
+    List<Product> getTopRating(int index);
 }

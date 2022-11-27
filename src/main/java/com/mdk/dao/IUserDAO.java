@@ -8,6 +8,11 @@ import com.mdk.paging.Pageble;
 import java.util.List;
 
 public interface IUserDAO {
+	void insert(User user);
+	void update(User user);
+	void delete(int id);
+	List<User> findBySearching(String keyword);
+	
     List<User> findAll();
     User findById(int id);
     List<User> top10Users_Orders();
