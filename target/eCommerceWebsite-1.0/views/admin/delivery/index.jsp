@@ -57,7 +57,7 @@
                         <td>${STT.index + 1 + totalItemInPage*(tag-1)}</td>
                         <td>${deliveries.name}</td>
                         <td>${deliveries.description}</td>
-                        <td>${deliveries.price}</td>
+                        <td>${deliveries.price}</td>..
                         <td>
                           <div class="d-flex align-items-center list-user-action justify-content-around">
                             <a href="delivery/edit?id=${deliveries.id}"  class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>

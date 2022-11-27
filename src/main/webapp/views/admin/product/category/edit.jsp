@@ -25,14 +25,14 @@
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-center">
                             <div class="iq-header-title">
-                                <h4 class="card-title">Chỉnh sửa loại sản phẩm</h4>
+                                <h4 class="card-title">CHỈNH SỬA THỂ LOẠI</h4>
                             </div>
                         </div>
                         <div class="iq-card-body">
                             <form method="post" action="edit">
                                 <input type="hidden" class="form-control" name="id" value="${category.id}" >
                                 <div class="form-group">
-                                    <label>Tên loại sản phẩm:</label>
+                                    <label>Tên thể loại:</label>
                                     <input type="text" class="form-control" id="name" required name="name" value="${category.name}">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Xác nhận</button>
