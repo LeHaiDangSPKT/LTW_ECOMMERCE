@@ -72,6 +72,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<Product> findByStoreId(int storeId) {
+        return productDAO.findByStoreId(storeId);
+    }
+
+    @Override
     public int count(int categoryId) {
         return productDAO.count(categoryId);
     }
@@ -90,5 +95,26 @@ public class ProductService implements IProductService {
     public List<Product> findAllByStoreId(int id) {
         return productDAO.findAllByStoreId(id);
     }
+
+	@Override
+	public List<Product> findBySearching(String keyword, int categoryId, int storeId, int rating, double minPrice,
+			double maxPrice) {
+		return productDAO.findBySearching(keyword, categoryId, storeId, rating, minPrice, maxPrice);
+	}
+
+	@Override
+	public List<Product> getTopRating(int index) {
+		return productDAO.getTopRating(index);
+	}
+
+	@Override
+	public List<Product> findAllProductProhibited() {
+		return productDAO.findAllProductProhibited();
+	}
+
+	@Override
+	public List<Product> findAllProductPermitted() {
+		return productDAO.findAllProductPermitted();
+	}
 
 }

@@ -84,11 +84,14 @@
 											<div class="d-flex align-items-center">
 												<div
 													class="col-6 p-0 position-relative image-overlap-shadow">
-													<a href="#"><img class="img-fluid rounded w-100"
-														src="<c:url value ='./template/images/browse-books/01.jpg'/>"
-														alt=""></a>
+													<a href="#"> <c:url
+															value="/image?fname=${product.getImages().get(0).getName()}&type=product"
+															var="imgUrl"></c:url> <img
+														class="img-fluid rounded w-100" src="${imgUrl}" alt=""></a>
 													<div class="view-book">
-														<a href="<c:url value ='/web/book/detail?id=${product.id}'/>" class="btn btn-sm btn-white">Xem chi tiết</a>
+														<a
+															href="<c:url value ='/web/book/detail?id=${product.id}'/>"
+															class="btn btn-sm btn-white">Xem chi tiết</a>
 													</div>
 												</div>
 												<div class="col-6">
@@ -150,11 +153,14 @@
 								<li class="col-md-8">
 									<div class="d-flex align-items-center">
 										<div class="col-5 p-0 position-relative image-overlap-shadow">
-											<a href="javascript:void();"><img
-												class="img-fluid rounded w-100"
-												src="./template/images/trendy-books/01.jpg" alt=""></a>
+											<a href="javascript:void();"><c:url
+													value="/image?fname=${product.getImages().get(0).getName()}&type=product"
+													var="imgUrl"></c:url> <img class="img-fluid rounded w-100"
+												src="${imgUrl}" alt=""></a>
 											<div class="view-book">
-												<a href="<c:url value ='/web/book/detail?id=${product.id}'/>" class="btn btn-sm btn-white">Xem chi tiết</a>
+												<a
+													href="<c:url value ='/web/book/detail?id=${product.id}'/>"
+													class="btn btn-sm btn-white">Xem chi tiết</a>
 											</div>
 										</div>
 										<div class="col-7">
@@ -203,7 +209,8 @@
 							<h4 class="card-title mb-0">Sách được ưa thích</h4>
 						</div>
 						<div class="iq-card-header-toolbar d-flex align-items-center">
-							<a href="<c:url value ='/web/book/detail?id=${product.id}'/>"class="btn btn-sm btn-primary view-more">Xem chi tiết</a>
+							<a href="<c:url value ='/web/book/detail?id=${product.id}'/>"
+								class="btn btn-sm btn-primary view-more">Xem chi tiết</a>
 						</div>
 					</div>
 					<div class="iq-card-body favorites-contens">
@@ -212,9 +219,11 @@
 								<li class="col-md-8">
 									<div class="d-flex justify-content-between align-items-center">
 										<div class="col-5 p-0 position-relative">
-											<a href="javascript:void();"> <img
-												src="./template/images/favorite/05.jpg" class="img-fluid rounded w-100"
-												alt="">
+											<a href="javascript:void();"> <c:url value="/image?fname=${product.getImages().get(0).getName()}&type=product"
+                                                           var="imgUrl"></c:url>
+													<img class="img-fluid rounded w-100"
+														src="${imgUrl}"
+														alt="">
 											</a>
 										</div>
 										<div class="col-7">

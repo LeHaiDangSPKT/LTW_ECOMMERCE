@@ -65,4 +65,9 @@ public class StoreService implements IStoreService {
     public List<Store> findAll() {
         return storeDAO.findAll();
     }
+
+	@Override
+	public List<Store> findAllByName(String keyword) {
+		return storeDAO.findAllByName(keyword);
+	}
 }

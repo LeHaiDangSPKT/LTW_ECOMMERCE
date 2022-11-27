@@ -17,10 +17,13 @@ public interface IProductDAO {
     List<Product> findAll();
     List<Product> findAll(Pageble pageble, int categoryId);
     List<Product> findByCategoryId(int categoryId);
+    List<Product> findByStoreId(int storeId);
     int count(int categoryId);
     int count(String status);
     List<Product> findAll(Pageble pageble, String status);
     List<Product> findAllByStoreId(int id);
     List<Product> findBySearching(String keyword, int categoryId, int storeId, int rating, double minPrice, double maxPrice);
     List<Product> getTopRating(int index);
+    List<Product> findAllProductProhibited();
+    List<Product> findAllProductPermitted();
 }

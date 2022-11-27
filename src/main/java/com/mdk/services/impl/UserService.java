@@ -40,4 +40,24 @@ public class UserService implements IUserService {
     public User findOneByUsernameAndPassword(String username, String password) {
         return userDao.findOneByUsernameAndPassword(username, password);
     }
+
+	@Override
+	public void insert(User user) {
+		userDao.insert(user);
+	}
+
+	@Override
+	public void update(User user) {
+		userDao.update(user);
+	}
+
+	@Override
+	public void delete(int id) {
+		userDao.delete(id);
+	}
+
+	@Override
+	public List<User> findBySearching(String keyword) {
+		return userDao.findBySearching(keyword);
+	}
 }
