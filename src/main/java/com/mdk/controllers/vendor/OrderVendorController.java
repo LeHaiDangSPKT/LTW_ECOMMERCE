@@ -60,18 +60,6 @@ public class OrderVendorController extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String statusReq = req.getParameter("status");
-        String status = "";
-        if (statusReq.equals("all")) {
-            status = "all";
-        } else if (statusReq.equals("not-processed")) {
-            status = "Đang xử lý";
-        } else if (statusReq.equals("delivered")) {
-            status = "Đang giao";
-        } else if (statusReq.equals("shipped")) {
-            status = "Đã giao";
-        } else if (statusReq.equals("cancelled")) {
-            status = "Đã hủy";
-        }
 
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
         String indexPage = req.getParameter("index");
@@ -79,14 +67,14 @@ public class OrderVendorController extends HttpServlet {
             indexPage = "1";
         }
 
-        int countP = ordersService.count(status);
+        int countP = ordersService.count(statusReq);
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
         }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Orders> ordersList = ordersService.findAll(status, pageble);
+        List<Orders> ordersList = ordersService.findAll(statusReq, pageble);
         req.setAttribute("orders", ordersList);
         req.setAttribute("count", countP);
         req.setAttribute("endP", endP);
@@ -106,6 +94,7 @@ public class OrderVendorController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         String statusResp = req.getParameter("status");
+
         int orderId = Integer.parseInt(req.getParameter("orderId"));
         ordersService.updateStatus(statusResp, orderId);
     }

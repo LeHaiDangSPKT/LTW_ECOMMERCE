@@ -1,7 +1,6 @@
 package com.mdk.filter;
 
 import com.mdk.models.User;
-import com.mdk.models.UserLogin;
 import com.mdk.utils.SessionUtil;
 
 import javax.servlet.*;
