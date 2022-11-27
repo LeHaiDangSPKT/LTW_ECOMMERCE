@@ -19,27 +19,35 @@ public class AuthorizationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
 
         String url = req.getRequestURL().toString();
         if (url.contains("admin")) {
-            User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
-            if (user != null) {
-                if (user.getRole().equals("ADMIN")) {
-                    chain.doFilter(request, response);
-                } else {
-                    resp.sendRedirect(req.getContextPath() + "/login");
-                }
-            } else {
-                resp.sendRedirect((req.getContextPath() + "/login"));
-            }
+            checkAuthor(request, response, chain, "ADMIN");
+        } else if (url.equals("user") || url.contains("vendor")){
+            checkAuthor(request, response, chain, "USER");
         } else {
             chain.doFilter(request, response);
         }
     }
 
+    protected void checkAuthor(ServletRequest request, ServletResponse response, FilterChain chain, String role) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+        User model = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+        if (model != null) {
+            if (model.getRole().equals(role)) {
+                chain.doFilter(request,response);
+            } else {
+                // no permission
+                resp.sendRedirect(req.getContextPath() + "/login");
+            }
+        } else {
+            // request login
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+    }
+
     @Override
     public void destroy() {
-        Filter.super.destroy();
     }
 }

@@ -3,13 +3,11 @@
 <%@include file="/common/taglib.jsp"%>
 <html>
 <head>
-    <title>Title</title>
+    <title>Đăng nhập</title>
+    <%@include file="/common/link-css-js.jsp"%>
+    <%@include file="/common/link-css-js-chart.jsp"%>
 </head>
 <body>
-    <form action="login" method="post">
-        <input name="username" type="text" placeholder="usename"/>
-        <input name="password" type="text" placeholder="password"/>
-        <button type="submit">Login</button>
-    </form>
+<dec:body/>
 </body>
 </html>
