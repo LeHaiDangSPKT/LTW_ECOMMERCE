@@ -25,7 +25,7 @@
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-center">
                             <div class="iq-header-title">
-                                <h4 class="card-title">Chỉnh sửa đơn vị vận chuyển</h4>
+                                <h4 class="card-title">CHỈNH SỬA ĐƠN VỊ VẬN CHUYỂN</h4>
                             </div>
                         </div>
                         <div class="iq-card-body">
