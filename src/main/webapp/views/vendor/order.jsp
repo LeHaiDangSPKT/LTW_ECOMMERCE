@@ -104,12 +104,14 @@
                         <div class="form-group">
                             <label for="status">Trạng thái: *</label>
                             <select class="form-control" id="status" name="status">
-                                <option ${ordersDetail.status == "Chờ xử lý" ? "selected" : ""}>Chờ xử
-                                    lý</option>
-                                <option ${ordersDetail.status == "Đang giao" ? "selected" : ""}>Đang
-                                    giao</option>
-                                <option ${ordersDetail.status == "Đã giao" ? "selected" : ""}>Đã giao</option>
-                                <option ${ordersDetail.status == "Đã hủy" ? "selected" : ""}>Đã hủy</option>
+                                <option value="not-processed"
+                                ${ordersDetail.status == "not-processed" ? "selected" : ""}>Chờ xử lý</option>
+                                <option value="shipped"
+                                ${ordersDetail.status == "shipped" ? "selected" : ""}>Đang giao</option>
+                                <option value="delivered"
+                                ${ordersDetail.status == "delivered" ? "selected" : ""}>Đã giao</option>
+                                <option value="cancelled"
+                                ${ordersDetail.status == "cancelled" ? "selected" : ""}>Đã hủy</option>
                             </select>
                         </div>
                     </div>

@@ -27,14 +27,14 @@
                                 </a>
                             </li>
                             <li class="col-md-2 p-0">
-                                <a class="nav-link ${statusResp=='delivered'?'active':''}"
-                                   href="<c:url value="/vendor/order/manager?status=delivered"/> ">
+                                <a class="nav-link ${statusResp=='shipped'?'active':''}"
+                                   href="<c:url value="/vendor/order/manager?status=shipped"/> ">
                                     Đang giao
                                 </a>
                             </li>
                             <li class="col-md-2 p-0">
-                                <a class="nav-link ${statusResp=='shipped'?'active':''}"
-                                   href="<c:url value="/vendor/order/manager?status=shipped"/> ">
+                                <a class="nav-link ${statusResp=='delivered'?'active':''}"
+                                   href="<c:url value="/vendor/order/manager?status=delivered"/> ">
                                     Đã giao
                                 </a>
                             </li>
@@ -93,7 +93,18 @@
                                                 <td>${order.user.firstname} ${order.user.lastname}</td>
                                                 <td>${order.delivery.name}</td>
                                                 <td>${order.createdAt}</td>
-                                                <td>${order.status}</td>
+                                                <c:if test="${order.status == 'not-processed'}">
+                                                    <td>Chờ xử lý</td>
+                                                </c:if>
+                                                <c:if test="${order.status == 'shipped'}">
+                                                    <td>Đang giao</td>
+                                                </c:if>
+                                                <c:if test="${order.status == 'delivered'}">
+                                                    <td>Đã giao</td>
+                                                </c:if>
+                                                <c:if test="${order.status == 'cancelled'}">
+                                                    <td>Đã hủy</td>
+                                                </c:if>
                                                 <td>
                                                     <a class="iq-bg-primary" data-toggle="tooltip"
                                                        data-placement="center"
@@ -142,5 +153,19 @@
         </div>
     </div>
 </div>
+<script>
+    const status = $("#statusOrder").innerText;
+    var newStatus = "";
+    if (status == "not-processed") {
+        newStatus = "Chờ xử lý";
+    } else if (status == "shipped") {
+        newStatus = "Đang giao";
+    } else if (status == "delivered") {
+        newStatus = "Đã giao";
+    } else if (status == "cancelled") {
+        newStatus = "Đã hủy";
+    }
+    $("#statusOrder").innerText = newStatus;
+</script>
 </body>
 </html>

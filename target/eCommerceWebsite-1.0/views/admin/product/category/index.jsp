@@ -26,12 +26,12 @@
           <div class="iq-card">
             <div class="iq-card-header d-flex justify-content-center">
               <div class="iq-header-title">
-                <h4 class="card-title">QUẢN LÝ TẤT CẢ LOẠI SẢN PHẨM</h4>
+                <h4 class="card-title">QUẢN LÝ TẤT CẢ THỂ LOẠI</h4>
               </div>
             </div>
             <div class="iq-card-body">
               <div class="table-responsive">
-                <h6>Tổng loại sản phẩm: ${categories.size() + totalItemInPage*(tag-1)} / ${countP}</h6>
+                <h6>Tổng thể loại: ${categories.size() + totalItemInPage*(tag-1)} / ${countP}</h6>
                 <select class="form-control w-25" id="selectCate">
                   <option value="false" ${state == "false" ? "selected" : ""}>Chưa bị xoá</option>
                   <option value="true" ${state == "true" ? "selected" : ""}>Đã bị xoá</option>
@@ -41,7 +41,7 @@
                   <thead>
                   <tr class="text-center">
                     <th>STT</th>
-                    <th>Tên loại sản phẩm</th>
+                    <th>Tên thể loại</th>
                     <th>Hành động</th>
                   </tr>
                   </thead>
