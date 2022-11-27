@@ -107,7 +107,6 @@
                                 <input type="hidden" id = "maxPageItem" name="maxPageItem" value="">
                                 <input type="hidden" id = "sortBy" name="sortBy" value="">
                                 <input type="hidden" id = "sortName" name="sortName" value="">
-
                             </tbody>
                         </table>
                     </div>

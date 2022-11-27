@@ -26,46 +26,32 @@
                 </div>
             </div>
             <div class="iq-card-body">
-                <form>
-                    <div class="row justify-content-center">
-                        <input type="hidden" class="form-control" name="id">
-                        <div class="form-group col-lg-6">
-                            <label>Mã khách hàng</label>
-                            <input type="text" class="form-control" name="userId" readonly value="${orders.userId}">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label>Mã cửa hàng</label>
-                            <input type="text" class="form-control" name="storeId" readonly value="${orders.storeId}">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label>Mã đơn vị vận chuyển</label>
-                            <input type="text" class="form-control" name="deliveryId" readonly value="${orders.deliveryId}">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label>Địa chỉ</label>
-                            <input type="text" class="form-control" name="address" readonly value="${orders.address}">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label>Số điện thoại</label>
-                            <input type="text" class="form-control" name="phone" readonly value="${orders.phone}">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label>Số tiền người dùng trả</label>
-                            <input type="text" class="form-control" name="amountFromUser" readonly value="${orders.amountFromUser}">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label>Số tiền cửa hàng nhận được</label>
-                            <input type="text" class="form-control" name="amountToStore" readonly value="${orders.amountToStore}">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label>Số tiền hệ thống nhận được</label>
-                            <input type="text" class="form-control" name="amountToGD" readonly value="${orders.amountToGD}">
-                        </div>
-                        <div class="btn btn-secondary w-50" id="back">
-                            Quay lại
-                        </div>
-                    </div>
-                </form>
+                <div class="table-responsive">
+                    <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
+                           aria-describedby="user-list-page-info">
+                        <thead>
+                        <tr class="text-center">
+                            <th>STT</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Mô tả</th>
+                            <th>Giá/đơn vị</th>
+                            <th>Số lượng</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${orderDetailsList}" var="orderDetailsList" varStatus="STT" >
+                            <tr class="text-center">
+                                <td>${STT.index + 1}</td>
+                                <td>${orderDetailsList.name}</td>
+                                <td>${orderDetailsList.description}</td>
+                                <td>${orderDetailsList.price}</td>
+                                <td>${orderDetailsList.count}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                        <h6>Tổng tiền: ${orders.amountFromUser} đồng</h6>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

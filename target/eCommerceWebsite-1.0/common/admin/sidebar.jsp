@@ -18,7 +18,7 @@
                   class="fa-solid fa-chevron-right iq-arrow-right"></i></a>
           <ul id="user" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
             <li><a href="<c:url value='/admin/user/all'/>">Tất cả</a></li>
-            <li><a href="<c:url value='/admin/user/new'/>">Người dùng mới</a></li>
+            <li><a href="<c:url value='/admin/user/closest'/>">Người dùng mới</a></li>
           </ul>
         </li>
           <li><a href="<c:url value='/admin/store'/>"><i class="fa-solid fa-store"></i>Cửa hàng</a></li>
@@ -37,8 +37,8 @@
                   class="ripple rippleEffect"></span><i class="fa-solid fa-file-lines"></i><span>Đơn hàng</span><i
                   class="fa-solid fa-chevron-right iq-arrow-right"></i></a>
           <ul id="order" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-            <li><a href="<c:url value='/admin/order/delivered'/>">Đơn hàng đã giao</a></li>
-            <li><a href="<c:url value='/admin/order/delivering'/>">Đơn hàng đang vận chuyển</a>
+            <li><a href="<c:url value='/admin/order?state=delivered'/>">Đơn hàng đã giao</a></li>
+            <li><a href="<c:url value='/admin/order?state=shipped'/>">Đơn hàng đang vận chuyển</a>
             </li>
           </ul>
         </li>

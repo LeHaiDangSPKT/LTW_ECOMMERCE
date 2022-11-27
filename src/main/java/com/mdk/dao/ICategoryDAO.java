@@ -1,13 +1,13 @@
 package com.mdk.dao;
 
 import com.mdk.models.Category;
+import com.mdk.models.Product;
+import com.mdk.paging.Pageble;
 
 import java.util.List;
 
 public interface ICategoryDAO {
 
-    List<Category> findAll();
-    Category getOneById (int id);
     void insert(Category category);
     void edit(Category category);
     void deleteSoft(int id);
@@ -15,5 +15,8 @@ public interface ICategoryDAO {
     void delete(int id);
 
     Category findById(int id);
+    int count(String state);
+    List<Category> findAll(Pageble pageble, String state);
+    List<Category> findAll();
 
 }
