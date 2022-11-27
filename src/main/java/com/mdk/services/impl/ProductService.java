@@ -104,12 +104,12 @@ public class ProductService implements IProductService {
 
 	@Override
 	public List<Product> findAllProductProhibited() {
-		return productDAO.findAllProductPermitted();
+		return productDAO.findAllProductProhibited();
 	}
 
 	@Override
 	public List<Product> findAllProductPermitted() {
-		return productDAO.findAllProductProhibited();
+		return productDAO.findAllProductPermitted();
 	}
 
 }
