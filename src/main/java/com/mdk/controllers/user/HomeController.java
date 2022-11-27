@@ -29,7 +29,7 @@ public class HomeController extends HttpServlet {
 
 		if(url.contains("/web")) {
 			User user = userService.findById(1);
-			List<Product> productList = productService.findAllProductPermited();
+			List<Product> productList = productService.findAllProductPermitted();
 			List<Product> topSellerList = productService.getTopSeller(10);
 			List<Product> topRatingList = productService.getTopRating(10);
 			

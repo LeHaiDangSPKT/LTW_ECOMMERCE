@@ -23,4 +23,6 @@ public interface IProductDAO {
     List<Product> findAllByStoreId(int id);
     List<Product> findBySearching(String keyword, int categoryId, int storeId, int rating, double minPrice, double maxPrice);
     List<Product> getTopRating(int index);
+    List<Product> findAllProductProhibited();
+    List<Product> findAllProductPermitted();
 }

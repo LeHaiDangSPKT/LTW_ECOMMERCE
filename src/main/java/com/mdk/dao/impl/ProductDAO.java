@@ -24,6 +24,53 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	ResultSet rs = null;
 
 	@Override
+	public List<Product> findAllProductProhibited() {
+		String sql = "SELECT * FROM product WHERE isActive = false";
+		List<Product> products = new ArrayList<Product>();
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setName(rs.getString("name"));
+				product.setDescription(rs.getString("description"));
+				product.setPrice(rs.getDouble("price"));
+				product.setQuantity(rs.getInt("quantity"));
+				product.setSold(rs.getInt("sold"));
+				products.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return products;
+	}
+
+	@Override
+	public List<Product> findAllProductPermitted() {
+		String sql = "SELECT * FROM product WHERE isActive = true";
+		List<Product> products = new ArrayList<Product>();
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setName(rs.getString("name"));
+				product.setDescription(rs.getString("description"));
+				product.setPrice(rs.getDouble("price"));
+				product.setQuantity(rs.getInt("quantity"));
+				product.setSold(rs.getInt("sold"));
+				products.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return products;
+	}
+	
+	@Override
 	public void insert(Product product) {
 		StringBuilder sql = new StringBuilder(
 				"insert into product(name, description, price, promotionalPrice, quantity, sold, categoryId, storeId)\n"
