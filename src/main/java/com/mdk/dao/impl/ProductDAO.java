@@ -25,11 +25,11 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
 	@Override
 	public List<Product> findAllProductProhibited() {
-		String sql = "SELECT * FROM product WHERE isActive = false";
+		StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE isActive = false");
 		List<Product> products = new ArrayList<Product>();
 		try {
 			conn = super.getConnection();
-			ps = conn.prepareStatement(sql);
+			ps = conn.prepareStatement(String.valueOf(sql));
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Product product = new Product();
@@ -48,11 +48,11 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
 	@Override
 	public List<Product> findAllProductPermitted() {
-		String sql = "SELECT * FROM product WHERE isActive = true";
+		StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE isActive = true");
 		List<Product> products = new ArrayList<Product>();
 		try {
 			conn = super.getConnection();
-			ps = conn.prepareStatement(sql);
+			ps = conn.prepareStatement(String.valueOf(sql));
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Product product = new Product();
@@ -338,6 +338,40 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
 				product.setCategory(categoryService.findById(rs.getInt("categoryId")));
 				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
+				products.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return products;
+	}
+
+	@Override
+	public List<Product> findByStoreId(int storeId) {
+		StringBuilder sql = new StringBuilder("select * from product where storeId = ?");
+		List<Product> products = new ArrayList<>();
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setInt(1, storeId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setName(rs.getString("name"));
+				product.setDescription(rs.getString("description"));
+				product.setPrice(rs.getDouble("price"));
+				product.setPromotionalPrice(rs.getDouble("promotionalPrice"));
+				product.setQuantity(rs.getInt("quantity"));
+				product.setSold(rs.getInt("sold"));
+				product.setActive(rs.getBoolean("isActive"));
+				product.setCategoryId(rs.getInt("categoryId"));
+				product.setStoreId(rs.getInt("storeId"));
+				product.setRating(rs.getInt("rating"));
+
+				product.setCreatedAt(rs.getTimestamp("createdAt"));
+				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
+
 				products.add(product);
 			}
 		} catch (SQLException e) {
