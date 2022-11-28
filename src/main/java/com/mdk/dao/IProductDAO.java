@@ -11,6 +11,7 @@ public interface IProductDAO {
     void insert(Product product);
     void update(Product product);
     void delete(int id);
+    void ban(int id, String state);
     Product findOneByName(String name, int storeId);
     Product findOneById(int id);
     List<Product> getTopSeller(int index);

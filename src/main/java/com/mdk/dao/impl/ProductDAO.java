@@ -128,6 +128,16 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 
 	@Override
+	public void ban(int id, String state) {
+		try {
+			StringBuilder sql = new StringBuilder("update product set isActive = ");
+			sql.append(state);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public Product findOneByName(String name, int storeId) {
 		StringBuilder sql = new StringBuilder("select * from product where name like ? and storeId = ?");
 		Product product = new Product();
