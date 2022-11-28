@@ -31,12 +31,12 @@ public class OrdersService implements IOrdersService {
     }
 
     @Override
-    public int count(String status) {
-        return ordersDAO.count(status);
+    public int count(String status, int storeId) {
+        return ordersDAO.count(status, storeId);
     }
     @Override
-    public List<Orders> findAll(String status, Pageble pageble) {
-        return ordersDAO.findAll(status, pageble);
+    public List<Orders> findAll(String status, Pageble pageble, int storeId) {
+        return ordersDAO.findAll(status, pageble, storeId);
     }
 
     @Override
@@ -52,6 +52,11 @@ public class OrdersService implements IOrdersService {
     @Override
     public List<OrderDetails> findDetailByOrderId(int id) {
         return ordersDAO.findDetailByOrderId(id);
+    }
+
+    @Override
+    public List<Orders> ordersNew(int storeId) {
+        return ordersDAO.ordersNew(storeId);
     }
 
 }

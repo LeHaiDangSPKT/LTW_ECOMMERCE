@@ -25,7 +25,9 @@
                         <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                             <img src="../template/images/user/1.jpg" class="img-fluid rounded-circle mr-3" alt="user">
                             <div class="caption">
-                                <h6 class="mb-1 line-height">Welcom Man</h6>
+                                <h6 class="mb-1 line-height">
+                                    ${sessionScope.USERMODEL.firstname} ${sessionScope.USERMODEL.lastname}
+                                </h6>
                             </div>
                         </a>
                         <div class="iq-sub-dropdown iq-user-dropdown">
@@ -41,7 +43,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <a href="#" class="iq-sub-card iq-bg-primary-hover">
+                                    <a href="<c:url value="/logout"/> " class="iq-sub-card iq-bg-primary-hover">
                                         <div class="media align-items-center">
                                             <div class="rounded iq-card-icon iq-bg-primary d-flex justify-content-center align-items-center">
                                                 <i class="fa-solid fa-right-from-bracket"></i>

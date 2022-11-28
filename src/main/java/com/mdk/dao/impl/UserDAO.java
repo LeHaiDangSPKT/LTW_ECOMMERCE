@@ -122,6 +122,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 			ps.setString(2, password);
 			rs = ps.executeQuery();
 			while (rs.next()) {
+				user.setId(rs.getInt("id"));
 				user.setFirstname(rs.getString("firstname"));
 				user.setLastname(rs.getString("lastname"));
 				user.setId_card(rs.getString("id_card"));

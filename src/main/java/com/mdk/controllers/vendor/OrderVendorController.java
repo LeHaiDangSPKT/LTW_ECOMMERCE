@@ -2,6 +2,7 @@ package com.mdk.controllers.vendor;
 
 import com.mdk.models.Orders;
 import com.mdk.models.OrdersDetail;
+import com.mdk.models.Store;
 import com.mdk.paging.PageRequest;
 import com.mdk.paging.Pageble;
 import com.mdk.services.IOrdersDetailService;
@@ -10,6 +11,7 @@ import com.mdk.services.impl.OrdersDetailService;
 import com.mdk.services.impl.OrdersService;
 import com.mdk.sort.Sorter;
 import com.mdk.utils.MessageUtil;
+import com.mdk.utils.SessionUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,6 +62,7 @@ public class OrderVendorController extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String statusReq = req.getParameter("status");
+        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
 
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
         String indexPage = req.getParameter("index");
@@ -67,14 +70,14 @@ public class OrderVendorController extends HttpServlet {
             indexPage = "1";
         }
 
-        int countP = ordersService.count(statusReq);
+        int countP = ordersService.count(statusReq, store.getId());
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
         }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Orders> ordersList = ordersService.findAll(statusReq, pageble);
+        List<Orders> ordersList = ordersService.findAll(statusReq, pageble, store.getId());
         req.setAttribute("orders", ordersList);
         req.setAttribute("count", countP);
         req.setAttribute("endP", endP);

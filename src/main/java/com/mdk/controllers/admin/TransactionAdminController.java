@@ -41,17 +41,17 @@ public class TransactionAdminController extends HttpServlet{
         if(indexPage == null) {
             indexPage = "1";
         }
-        int countP = ordersService.count(status);
-        int endP = (countP/totalItemInPage);
-        if (countP % totalItemInPage != 0) {
-            endP ++;
-        }
+//        int countP = ordersService.count(status);
+//        int endP = (countP/totalItemInPage);
+//        if (countP % totalItemInPage != 0) {
+//            endP ++;
+//        }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Orders> ordersList = ordersService.findAll(status, pageble);
-        req.setAttribute("ordersList", ordersList);
-        req.setAttribute("countP", countP);
-        req.setAttribute("endP", endP);
+//        List<Orders> ordersList = ordersService.findAll(status, pageble);
+//        req.setAttribute("ordersList", ordersList);
+//        req.setAttribute("countP", countP);
+//        req.setAttribute("endP", endP);
         req.setAttribute("tag", indexPage);
         req.setAttribute("totalItemInPage", totalItemInPage);
     }

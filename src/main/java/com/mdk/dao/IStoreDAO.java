@@ -1,6 +1,7 @@
 
 package com.mdk.dao;
 
+import com.mdk.models.Product;
 import com.mdk.models.Store;
 
 import java.sql.SQLException;
@@ -11,6 +12,11 @@ public interface IStoreDAO {
     void update(Store store);
     int count(int userId);
     Store findByUserId(int userId);
+    int totalCustomer(int storeId);
+    int totalProduct(int storeId);
+    int totalOrders(int storeId);
+    int totalSale(int storeId);
+
     Store findById(int id);
     int totalStores();
     List<Store> top10Store_Orders();

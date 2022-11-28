@@ -57,8 +57,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> findAll(Pageble pageble, int categoryId) {
-        return productDAO.findAll(pageble, categoryId);
+    public List<Product> findAll(Pageble pageble, int categoryId, int storeId) {
+        return productDAO.findAll(pageble, categoryId, storeId);
     }
 
     @Override
@@ -82,8 +82,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public int count(int categoryId) {
-        return productDAO.count(categoryId);
+    public int count(int categoryId, int storeId) {
+        return productDAO.count(categoryId, storeId);
     }
 
     @Override
@@ -121,5 +121,10 @@ public class ProductService implements IProductService {
 	public List<Product> findAllProductPermitted() {
 		return productDAO.findAllProductPermitted();
 	}
+
+    @Override
+    public List<Product> topSeller(int storeId, int top) {
+        return productDAO.topSeller(storeId, top);
+    }
 
 }
