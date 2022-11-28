@@ -54,7 +54,11 @@
                       <td>${productList.description}</td>
                       <td>${productList.price}</td>
                       <td>${productList.sold}</td>
-                      <a href="" onclick="ClickIcon(event, 'false')" data-toggle="modal" data-target="#deleteModal"  class="bg-primary p-3"><i id="${productList.id}" class="fa-solid fa-ban" style="transform: translate(-50%, -50%); color: white"></i></a>
+                    <td>
+                        <div class="d-flex align-items-center list-user-action justify-content-center">
+                          <a href="" onclick="ClickIcon(event, 'false')" id="${productList.id}" data-toggle="modal" data-target="#deleteModal"  class="bg-primary p-3 d-flex justify-content-center align-items-center"><i id="${productList.id}" class="fa-solid fa-ban"></i></a>
+                        </div>
+                    </td>
                     </tr>
                   </c:forEach>
                   </tbody>
@@ -111,14 +115,14 @@
     function ClickIcon(e, state) {
         e.preventDefault();
         const id = e.target.id;
-        console.log(id)
+        console.log(id);
         document.getElementById('id').value = id;
         document.getElementById('state').value = state;
     }
     function Action() {
         const id = document.getElementById('id').value;
         const state = document.getElementById('state').value;
-        window.location.href = 'product/ban?id='+id.toString() + '&state='+ state;
+        window.location.href = 'ban?id='+id.toString() + '&state='+ state;
     }
 </script>
 </body>

@@ -31,12 +31,11 @@ public class ProductAdminController extends HttpServlet{
         if (url.contains("product/ban")) {
             String id = req.getParameter("id");
             String state = req.getParameter("state");
-            productService.ban(Integer.parseInt(id), state);
-            if (state == "true") {
-                req.getRequestDispatcher("/views/admin/product/prohibit.jsp").forward(req, resp);
+            productService.ban(Integer.parseInt(id), Boolean.parseBoolean(state));
+            if (state.equals("true")) {
+                resp.sendRedirect(req.getContextPath() + "/admin/product/prohibit");
             } else {
-                req.getRequestDispatcher("/views/admin/product/permit.jsp").forward(req, resp);
-
+                resp.sendRedirect(req.getContextPath() + "/admin/product/permit");
             }
         }
         else if (url.contains("product/category/edit")) {
