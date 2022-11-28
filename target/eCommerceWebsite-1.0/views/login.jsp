@@ -12,12 +12,12 @@
                             <form action="login" method="post" class="mt-4 form-text">
                                 <div class="form-group">
                                     <label>Địa chỉ email</label>
-                                    <input type="email" class="form-control mb-0" name="username"
+                                    <input type="email" class="form-control mb-0 bg-light text-black" name="username"
                                            placeholder="Nhập email">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="password" class="form-control mb-0" name="password"
+                                    <input type="password" class="form-control mb-0 bg-light text-black" name="password"
                                            placeholder="Nhập password">
                                 </div>
                                 <div class="sign-info text-center">

@@ -67,7 +67,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void ban(int id, String state) {
+    public void ban(int id, Boolean state) {
         productDAO.ban(id, state);
     }
 
