@@ -160,6 +160,76 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 	}
 
 	@Override
+	public int totalCustomer(int storeId) {
+		String sql = "select userId, count(*) from orders where storeId = ? group by userId";
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, storeId);
+			rs = ps.executeQuery();
+			List<Integer> user = new ArrayList<>();
+			while (rs.next()) {
+				user.add(rs.getInt("userId"));
+			}
+			return user.size();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int totalProduct(int storeId) {
+		String sql = "select sum(quantity) from product where storeId = ?";
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, storeId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int totalOrders(int storeId) {
+		String sql = "select count(*) from orders where storeId = ? group by storeId";
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, storeId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int totalSale(int storeId) {
+		String sql = "select sum(sold) from product where storeId = ?";
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, storeId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
 	public Store findById(int id) {
 		String sql = "select * from store where id = ?";
 		Store store = new Store();

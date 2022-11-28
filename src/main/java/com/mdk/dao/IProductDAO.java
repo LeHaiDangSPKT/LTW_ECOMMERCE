@@ -13,10 +13,10 @@ public interface IProductDAO {
     Product findOneById(int id);
     List<Product> getTopSeller(int index);
     List<Product> findAll();
-    List<Product> findAll(Pageble pageble, int categoryId);
+    List<Product> findAll(Pageble pageble, int categoryId, int storeId);
     List<Product> findByCategoryId(int categoryId);
     List<Product> findByStoreId(int storeId);
-    int count(int categoryId);
+    int count(int categoryId, int storeId);
     int count(String status);
     List<Product> findAll(Pageble pageble, String status);
     List<Product> findAllByStoreId(int id);
@@ -24,4 +24,5 @@ public interface IProductDAO {
     List<Product> getTopRating(int index);
     List<Product> findAllProductProhibited();
     List<Product> findAllProductPermitted();
+    List<Product> topSeller(int storeId, int top);
 }

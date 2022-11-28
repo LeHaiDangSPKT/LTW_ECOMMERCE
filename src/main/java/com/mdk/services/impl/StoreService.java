@@ -52,6 +52,26 @@ public class StoreService implements IStoreService {
     }
 
     @Override
+    public int totalCustomer(int storeId) {
+        return storeDAO.totalCustomer(storeId);
+    }
+
+    @Override
+    public int totalProduct(int storeId) {
+        return storeDAO.totalProduct(storeId);
+    }
+
+    @Override
+    public int totalOrders(int storeId) {
+        return storeDAO.totalOrders(storeId);
+    }
+
+    @Override
+    public int totalSale(int storeId) {
+        return storeDAO.totalSale(storeId);
+    }
+
+    @Override
     public int totalStores() {
         return storeDAO.totalStores();
     }

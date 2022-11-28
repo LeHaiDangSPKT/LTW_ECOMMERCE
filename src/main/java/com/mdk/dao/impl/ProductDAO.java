@@ -69,7 +69,45 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		}
 		return products;
 	}
-	
+
+	@Override
+	public List<Product> topSeller(int storeId, int top) {
+		StringBuilder sql = new StringBuilder("select * from product where storeId = ? order by sold DESC limit ?");
+		List<Product> products = new ArrayList<>();
+		ICategoryService categoryService = new CategoryService();
+		IImageProductService imageProductService = new ImageProductService();
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setInt(1, storeId);
+			ps.setInt(2, top);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setName(rs.getString("name"));
+				product.setDescription(rs.getString("description"));
+				product.setPrice(rs.getDouble("price"));
+				product.setPromotionalPrice(rs.getDouble("promotionalPrice"));
+				product.setQuantity(rs.getInt("quantity"));
+				product.setSold(rs.getInt("sold"));
+				product.setActive(rs.getBoolean("isActive"));
+				product.setCategoryId(rs.getInt("categoryId"));
+				product.setStoreId(rs.getInt("storeId"));
+				product.setRating(rs.getInt("rating"));
+				product.setCreatedAt(rs.getTimestamp("createdAt"));
+				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
+				product.setCategory(categoryService.findById(rs.getInt("categoryId")));
+				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
+				products.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return products;
+	}
+
 	@Override
 	public void insert(Product product) {
 		StringBuilder sql = new StringBuilder(
@@ -265,10 +303,13 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 
 	@Override
-	public List<Product> findAll(Pageble pageble, int categoryId) {
+	public List<Product> findAll(Pageble pageble, int categoryId, int storeId) {
 		StringBuilder sql = new StringBuilder("select * from product");
 		if (categoryId != 0) {
 			sql.append(" where categoryId = " + categoryId);
+			sql.append(" and storeId = " + storeId);
+		} else {
+			sql.append(" where storeId = " + storeId);
 		}
 		if (pageble.getSorter() != null) {
 			sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
@@ -381,10 +422,13 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 
 	@Override
-	public int count(int categoryId) {
+	public int count(int categoryId, int storeId) {
 		StringBuilder sql = new StringBuilder("select count(*) from product");
 		if (categoryId != 0) {
 			sql.append(" where categoryId = " + categoryId);
+			sql.append(" and storeId = " + storeId);
+		} else {
+			sql.append(" where storeId = " + storeId);
 		}
 		try {
 			conn = getConnection();

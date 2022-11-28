@@ -3,6 +3,7 @@ package com.mdk.controllers.vendor;
 import com.mdk.models.ImageStore;
 import com.mdk.models.Product;
 import com.mdk.models.Store;
+import com.mdk.models.User;
 import com.mdk.services.IImageStoreService;
 import com.mdk.services.IProductService;
 import com.mdk.services.IStoreService;
@@ -41,7 +42,8 @@ public class StoreVendorController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
         if (url.contains("create")) {
-            req.setAttribute("ownerId", "1");
+            User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+            req.setAttribute("ownerId", user.getId());
             req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         } else if (url.contains("edit")) {
             req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
@@ -69,14 +71,14 @@ public class StoreVendorController extends HttpServlet {
     }
 
     protected  void checkStoreExist(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int count = storeService.count(1);
-        if (count > 0) {
-            Store store = storeService.findByUserId(1);
+        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+        int count = 0;
+        if (store != null) {
+            count = 1;
             List<String> images = new ArrayList<>();
             for (ImageStore image : store.getImages()) {
                 images.add(image.getName());
             }
-            SessionUtil.getInstance().putValue(req, "STORE",store);
             req.setAttribute("store", store);
             req.setAttribute("images", images);
         }
@@ -88,7 +90,6 @@ public class StoreVendorController extends HttpServlet {
 
         Store store = new Store();
         List<ImageStore> images = new ArrayList<>();
-        // Lấy parameter từ form store
         store.setName(req.getParameter("name"));
         store.setBio(req.getParameter("bio"));
         store.setOwnerID(Integer.valueOf(req.getParameter("ownerId")));
@@ -108,8 +109,12 @@ public class StoreVendorController extends HttpServlet {
             }
         }
         store.setImages(images);
-        // insert store
-        storeService.insert(store);
+        try {
+            storeService.insert(store);
+            SessionUtil.getInstance().putValue(req, "STORE", store);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     protected void update (HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

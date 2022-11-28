@@ -57,6 +57,8 @@
             document.getElementById("order").setAttribute("aria-expanded", "true");
         } else if (url.includes("home")) {
             document.getElementById("home").setAttribute("aria-expanded", "true");
+        } else if (url.includes("statistic")) {
+            document.getElementById("statistic").setAttribute("aria-expanded", "true");
         }
     }
     window.onload = function () {

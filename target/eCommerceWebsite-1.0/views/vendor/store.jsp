@@ -22,6 +22,10 @@
                             <div class="iq-card-body">
                                 <c:if test="${count == 0 && action != 'add'}">
                                     <div class="text-center">
+                                        <h2>Bạn chưa có cửa hàng.</h2>
+                                        <br>
+                                        <h2>Vui lòng tạo của hàng !</h2>
+                                        <br>
                                         <a href="<c:url value="/vendor/store/create"/> " class="btn btn-primary btn-lg ">
                                             <i class="fa-solid fa-circle-plus"></i>
                                             Tạo của hàng
@@ -84,22 +88,31 @@
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 <label for="owner">Chủ cửa hàng:</label>
-                                                <input type="text" class="form-control" name="ownerId" id="owner"
-                                                       value="${ownerId!=null?ownerId:store.ownerID}" readonly>
+                                                <input type="hidden" class="form-control"
+                                                       name="ownerId" id="owner"
+                                                       value="${ownerId!=null?ownerId:store.ownerID}"
+                                                       readonly>
+                                                <input type="text" class="form-control"
+                                                       name="" id=""
+                                                       value="${sessionScope.USERMODEL.firstname} ${sessionScope.USERMODEL.lastname}"
+                                                       readonly>
                                             </div>
                                             <div class="form-group col-sm-12">
                                                 <label>Mô tả:</label>
                                                 <textarea class="form-control" name="bio" rows="5"
                                                           style="line-height:22px;">${store.bio}</textarea>
                                             </div>
-                                            <c:if test="${count == 0}">
+                                            <c:if test="${count == 0 || count == null}">
                                                 <button formaction="<c:url value="/vendor/store/create"/> "
                                                         class="btn btn-primary ml-3 mr-2">Submit
                                                 </button>
                                             </c:if>
-                                            <button formaction="<c:url value="/vendor/store/edit"/> "
-                                                    class="btn btn-warning ml-3 mr-2">Update
-                                            </button>
+                                            <c:if test="${count == 1}">
+                                                <button formaction="<c:url value="/vendor/store/edit"/> "
+                                                        class="btn btn-warning ml-3 mr-2">Update
+                                                </button>
+                                            </c:if>
+
                                             <button type="reset" class="btn btn-danger ml-3">Cancel</button>
                                         </div>
                                     </form>

@@ -83,19 +83,20 @@ public class ProductVendorController extends HttpServlet {
     }
     protected void productPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
+        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
         String indexPage = req.getParameter("index");
         if(indexPage == null) {
             indexPage = "1";
         }
         int categoryId = req.getParameter("categoryId") == null ? 0 : Integer.parseInt(req.getParameter("categoryId"));
-        int countP = productService.count(categoryId);
+        int countP = productService.count(categoryId, store.getId());
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
         }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Product> products = productService.findAll(pageble, categoryId);
+        List<Product> products = productService.findAll(pageble, categoryId, store.getId());
         loadCategory(req, resp);
         req.setAttribute("categoryId", categoryId);
         req.setAttribute("count", countP);

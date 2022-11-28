@@ -12,11 +12,11 @@ public interface IProductService {
     Product findOneByName(String name, int storeId);
     List<Product> getTopSeller(int index);
     List<Product> findAll();
-    List<Product> findAll(Pageble pageble, int categoryId);
+    List<Product> findAll(Pageble pageble, int categoryId, int storeId);
     List<Product> findByCategoryId(int categoryId);
     Product findOneById(int id);
     List<Product> findByStoreId(int storeId);
-    int count(int categoryId);
+    int count(int categoryId, int storeId);
     int count(String status);
     List<Product> findAll(Pageble pageble, String status);
     List<Product> findAllByStoreId(int id);
@@ -24,4 +24,5 @@ public interface IProductService {
     List<Product> getTopRating(int index);
     List<Product> findAllProductProhibited();
     List<Product> findAllProductPermitted();
+    List<Product> topSeller(int storeId, int top);
 }
