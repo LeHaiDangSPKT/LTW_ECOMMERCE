@@ -44,7 +44,7 @@
         </li>
         <li><a href="<c:url value='/admin/delivery'/>"><i class="fa-solid fa-truck"></i>Đơn vị vận chuyển</a></li>
         <li><a href="<c:url value='/admin/transaction'/>"><i class="fa-solid fa-handshake"></i>Giao dịch</a></li>
-        <li><a href="<c:url value='/web'/>"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a></li>
+        <li><a href="<c:url value='/logout'/>"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a></li>
       </ul>
     </nav>
   </div>
