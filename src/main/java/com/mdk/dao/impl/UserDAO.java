@@ -33,6 +33,8 @@ public class UserDAO extends DBConnection implements IUserDAO {
 				user.setId_card(rs.getString("id_card"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone(rs.getString("phone"));
+				user.setSex(rs.getBoolean("sex"));
+				user.setCreatedAt(rs.getTimestamp("createdAt"));
 				users.add(user);
 			}
 		} catch (Exception e) {
@@ -44,7 +46,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public List<User> top10Users_Orders() {
-		String sql = "select user.id, user.firstname, user.lastname, user.id_card, user.email, user.phone, total from (select userId, count(userId) as total from orders group by userId order by total desc limit 10) as tb join user on tb.userId = user.id";
+		String sql = "select user.id, user.firstname, user.lastname, user.id_card, user.email, user.phone, total from (select userId, count(userId) as total from orders group by userId order by total desc) as tb join user on tb.userId = user.id where user.role = 'user' limit 10";
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = super.getConnection();
