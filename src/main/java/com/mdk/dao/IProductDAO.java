@@ -10,6 +10,7 @@ public interface IProductDAO {
     void update(Product product);
     void delete(int id);
     void ban(int id, Boolean state);
+    String findOwnerEmailByProductId(int id);
     Product findOneByName(String name, int storeId);
     Product findOneById(int id);
     List<Product> getTopSeller(int index);

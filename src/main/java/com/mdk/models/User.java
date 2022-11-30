@@ -3,7 +3,7 @@
 package com.mdk.models;
 
 public class User extends  AbstractModel<User>{
-    private Boolean sex;
+    private boolean sex;
     private String firstname;
     private String lastname;
     private String id_card;
@@ -17,11 +17,11 @@ public class User extends  AbstractModel<User>{
     private Double eWallet;
     private int totalOrders;
 
-    public Boolean getSex() {
+    public boolean getSex() {
         return sex;
     }
 
-    public void setSex(Boolean sex) {
+    public void setSex(boolean sex) {
         this.sex = sex;
     }
 

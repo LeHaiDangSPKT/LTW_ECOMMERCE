@@ -180,6 +180,23 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 
 	@Override
+	public String findOwnerEmailByProductId(int id) {
+		StringBuilder sql = new StringBuilder("select user.email from product inner join store on product.storeId = store.id inner join user on store.ownerId = user.id where product.id = ?");
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				return  rs.getString("email");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
 	public Product findOneByName(String name, int storeId) {
 		StringBuilder sql = new StringBuilder("select * from product where name like ? and storeId = ?");
 		Product product = new Product();

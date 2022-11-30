@@ -127,7 +127,7 @@
         fontWeight: 700,
       },
       axisY: {
-        title: "Billions of Barrels",
+        title: "Số cửa hàng",
         titleFontColor: "#4F81BC",
         lineColor: "#4F81BC",
         labelFontColor: "#4F81BC",
