@@ -4,6 +4,8 @@ import com.mdk.models.ImageStore;
 import com.mdk.models.Product;
 import com.mdk.models.Store;
 import com.mdk.models.User;
+import com.mdk.paging.PageRequest;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IImageStoreService;
 import com.mdk.services.IProductService;
 import com.mdk.services.IStoreService;
@@ -48,8 +50,10 @@ public class StoreVendorController extends HttpServlet {
         } else if (url.contains("edit")) {
             req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         } else if (url.contains("home")) {
-            checkStoreExist(req, resp);
-            findAllProduct(req, resp);
+            int count = checkStoreExist(req, resp);
+            if (count == 1) {
+                findAllProduct(req, resp);
+            }
             req.getRequestDispatcher("/views/vendor/home.jsp").forward(req, resp);
         } else {
             checkStoreExist(req, resp);
@@ -70,7 +74,8 @@ public class StoreVendorController extends HttpServlet {
         }
     }
 
-    protected  void checkStoreExist(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected int checkStoreExist(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
         Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
         int count = 0;
         if (store != null) {
@@ -83,6 +88,7 @@ public class StoreVendorController extends HttpServlet {
             req.setAttribute("images", images);
         }
         req.setAttribute("count", count);
+        return count;
     }
     protected void insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -180,8 +186,13 @@ public class StoreVendorController extends HttpServlet {
     }
     protected void findAllProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
+        List<Product> products = new ArrayList<>();
         Store store = (Store) SessionUtil.getInstance().getValue(req,"STORE");
-        List<Product> products = productService.findAllByStoreId(store.getId());
+        if (store != null) {
+            Pageble pageble = new PageRequest(1, 4, null);
+//        List<Product> products = productService.findAllByStoreId(store.getId());
+            products = productService.findAll(pageble, 0, store.getId());
+        }
         req.setAttribute("products", products);
     }
 }

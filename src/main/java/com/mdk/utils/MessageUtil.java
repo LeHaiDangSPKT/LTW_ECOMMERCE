@@ -21,6 +21,15 @@ public class MessageUtil extends HttpServlet {
             } else if (message.equals("update_success")) {
                 messageResp = MESSAGE_UPDATE_SUCCESS;
                 alert = ALERT_UPDATE_SUCCESS;
+            } else if (message.equals("nostore_error")) {
+                messageResp = MESSAGE_NO_STORE;
+                alert = ALERT_ERROR_SYSTEM;
+            } else if (message.equals("login_error")) {
+                messageResp = MESSAGE_LOGIN_ERROR;
+                alert = ALERT_ERROR_SYSTEM;
+            } else if (message.contains("login_no_permission")) {
+                messageResp = MESSAGE_LOGIN_NO_PERMISSION;
+                alert = ALERT_ERROR_SYSTEM;
             }
             req.setAttribute("message", messageResp);
             req.setAttribute("alert", alert);

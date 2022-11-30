@@ -39,11 +39,11 @@ public class AuthorizationFilter implements Filter {
                 chain.doFilter(request,response);
             } else {
                 // no permission
-                resp.sendRedirect(req.getContextPath() + "/login");
+                resp.sendRedirect(req.getContextPath() + "/login?message=login_no_permission");
             }
         } else {
             // request login
-            resp.sendRedirect(req.getContextPath() + "/login");
+            resp.sendRedirect(req.getContextPath() + "/login?message=login_error");
         }
     }
 

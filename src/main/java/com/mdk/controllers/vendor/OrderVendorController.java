@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
 import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
 
 @WebServlet(urlPatterns = {"/vendor/order", "/vendor/order/manager", "/vendor/order/detail", "/vendor/order/update"})
@@ -33,14 +34,20 @@ public class OrderVendorController extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         String url = req.getRequestURL().toString();
         if (url.contains("manager")){
-            ordersPage(req, resp);
-            req.getRequestDispatcher("/views/vendor/managerOrder.jsp").forward(req, resp);
+            if (checkStoreExist(req, resp)) {
+                ordersPage(req, resp);
+                req.getRequestDispatcher("/views/vendor/managerOrder.jsp").forward(req, resp);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/vendor/order?message=nostore_error");
+            }
         } else if (url.contains("detail")) {
             orderDetail(req, resp);
             req.getRequestDispatcher("/views/vendor/order.jsp").forward(req, resp);
         }
         else {
-            ordersPage(req, resp);
+            if (checkStoreExist(req, resp)) {
+                ordersPage(req, resp);
+            }
             MessageUtil.showMessage(req, resp);
             req.getRequestDispatcher("/views/vendor/managerOrder.jsp").forward(req, resp);
         }

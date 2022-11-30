@@ -1,6 +1,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
+<c:url value="/LoginGoogleHandler" var="URL"/>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,7 +19,11 @@
             <div class="col-sm-12 align-self-center page-content rounded">
                 <div class="row m-0">
                     <div class="col-sm-12 sign-in-page-data">
+                        <div class="sign-in-from" style="padding: 0">
+                            <%@include file="/common/info.jsp"%>
+                        </div>
                         <div class="sign-in-from bg-primary rounded">
+
                             <h3 class="mb-0 text-center text-white">Đăng nhập</h3>
                             <form action="login" method="post" class="mt-4 form-text">
                                 <div class="form-group">
@@ -37,6 +42,10 @@
                                         khoản ? <a href="#" class="text-white">Đăng ký</a></span>
                                 </div>
                             </form>
+                            <a class="btn btn-danger"
+                               href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080${URL}&response_type=code&client_id=740094574805-pa2bc895e0nmd2h00b6njulev52331qg.apps.googleusercontent.com&approval_prompt=force">
+                                <i class="fa-brands fa-google"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
