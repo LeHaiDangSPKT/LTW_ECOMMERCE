@@ -303,13 +303,17 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 
 	@Override
-	public List<Product> findAll(Pageble pageble, int categoryId, int storeId) {
+	public List<Product> findAll(Pageble pageble, int categoryId, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select * from product");
 		if (categoryId != 0) {
 			sql.append(" where categoryId = " + categoryId);
 			sql.append(" and storeId = " + storeId);
 		} else {
 			sql.append(" where storeId = " + storeId);
+		}
+		if (searchKey != null) {
+			sql.append(" and name like ");
+			sql.append("\"%" + searchKey + "%\"");
 		}
 		if (pageble.getSorter() != null) {
 			sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
@@ -422,13 +426,17 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 
 	@Override
-	public int count(int categoryId, int storeId) {
+	public int count(int categoryId, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select count(*) from product");
 		if (categoryId != 0) {
 			sql.append(" where categoryId = " + categoryId);
 			sql.append(" and storeId = " + storeId);
 		} else {
 			sql.append(" where storeId = " + storeId);
+		}
+		if (searchKey != null) {
+			sql.append(" and name like ");
+			sql.append("\"%" + searchKey + "%\"");
 		}
 		try {
 			conn = getConnection();

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
 import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
@@ -189,9 +190,8 @@ public class StoreVendorController extends HttpServlet {
         List<Product> products = new ArrayList<>();
         Store store = (Store) SessionUtil.getInstance().getValue(req,"STORE");
         if (store != null) {
-            Pageble pageble = new PageRequest(1, 4, null);
-//        List<Product> products = productService.findAllByStoreId(store.getId());
-            products = productService.findAll(pageble, 0, store.getId());
+            Pageble pageble = new PageRequest(1, TOTAL_ITEM_IN_PAGE, null);
+            products = productService.findAll(pageble, 0, store.getId(), null);
         }
         req.setAttribute("products", products);
     }

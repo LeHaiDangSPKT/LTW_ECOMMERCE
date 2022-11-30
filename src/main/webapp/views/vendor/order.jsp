@@ -1,5 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/common/taglib.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
 <c:url value="/vendor/order/manager?status=all" var="urlBack"/>
 <html>
 <head>

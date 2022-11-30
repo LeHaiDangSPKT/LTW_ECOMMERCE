@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
+<c:url value="/vendor/order/manager?status=" var="UrlOrderManager"/>
+<c:url value="/vendor/order" var="UrlOrder"/>
 <html>
 <head>
     <title>Title</title>
@@ -54,11 +56,21 @@
                 <div class="d-block">
                     <div class="w-100 iq-search-filter">
                         <div class="iq-search-bar search-book d-flex align-items-center">
-                            <form action="#" class="searchbox">
-                                <input type="text" class="text search-input" placeholder="search here...">
-                                <a class="search-link" href="#"></a>
+                            <label>Ngày đặt hàng:</label>
+                            <form style="margin-left: 10px">
+                                <input type="date" class="search-input"
+                                    id="date-start" required value="${dateStart}"
+                                >
                             </form>
-                            <button type="submit" class="btn btn-primary search-data ml-2 mb-3">Search</button>
+                            <span style="height: 45px; font-size: 20px; margin-left: 10px;">-</span>
+                            <form style="margin-left: 10px">
+                                <input type="date" class="search-input"
+                                       id="date-end" required value="${dateEnd}"
+                                       onchange="CheckDate()"
+                                >
+                            </form>
+                            <button onclick="Search()" class="btn btn-warning search-data ml-2 mb-3">Tìm</button>
+                            <button class="btn btn-danger search-data ml-2 mb-3">Xuất</button>
                         </div>
                     </div>
                 </div>
@@ -166,6 +178,32 @@
         newStatus = "Đã hủy";
     }
     $("#statusOrder").innerText = newStatus;
+</script>
+<script>
+    // const now = new Date();
+    // const day = ("0" + now.getDate()).slice(-2);
+    // const month = ("0" + (now.getMonth() + 1)).slice(-2);
+    // const today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+    function Search() {
+        const dateStart = $("#date-start").val()
+        const dateEnd = $("#date-end").val();
+
+        if (CheckDate()) {
+            window.location.href = "${UrlOrderManager}" + "${statusResp}" + "&start=" + dateStart + "&end=" + dateEnd;
+        } else {
+            window.location.href = "${UrlOrder}?message=invalid_date"
+        }
+    }
+    function CheckDate() {
+        const dateStart = new Date($("#date-start").val())
+        const dateEnd = new Date($("#date-end").val());
+        if (dateStart == "Invalid Date" || dateEnd == "Invalid Date" || dateStart > dateEnd) {
+            return false;
+        }
+        return true;
+    }
+
 </script>
 </body>
 </html>

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
 <div class="iq-sidebar">
     <div class="iq-sidebar-logo d-flex justify-content-between">
         <a href="#" class="header-logo">
-            <img src="../template/images/logo.png" class="img-fluid rounded-normal" alt="">
+            <img src="<c:url value="/template/images/logo.png"/> " class="img-fluid rounded-normal" alt="">
             <div class="logo-title">
                 <span class="text-primary text-uppercase">MDK Shop</span>
             </div>

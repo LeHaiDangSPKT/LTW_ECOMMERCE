@@ -12,11 +12,11 @@ public interface IProductService {
     Product findOneByName(String name, int storeId);
     List<Product> getTopSeller(int index);
     List<Product> findAll();
-    List<Product> findAll(Pageble pageble, int categoryId, int storeId);
+    List<Product> findAll(Pageble pageble, int categoryId, int storeId, String searchKey);
     List<Product> findByCategoryId(int categoryId);
     Product findOneById(int id);
     List<Product> findByStoreId(int storeId);
-    int count(int categoryId, int storeId);
+    int count(int categoryId, int storeId, String searchKey);
     int count(String status);
     List<Product> findAll(Pageble pageble, String status);
     List<Product> findAllByStoreId(int id);

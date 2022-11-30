@@ -57,8 +57,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> findAll(Pageble pageble, int categoryId, int storeId) {
-        return productDAO.findAll(pageble, categoryId, storeId);
+    public List<Product> findAll(Pageble pageble, int categoryId, int storeId, String searchKey) {
+        return productDAO.findAll(pageble, categoryId, storeId, searchKey);
     }
 
     @Override
@@ -77,8 +77,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public int count(int categoryId, int storeId) {
-        return productDAO.count(categoryId, storeId);
+    public int count(int categoryId, int storeId, String searchKey) {
+        return productDAO.count(categoryId, storeId, searchKey);
     }
 
     @Override

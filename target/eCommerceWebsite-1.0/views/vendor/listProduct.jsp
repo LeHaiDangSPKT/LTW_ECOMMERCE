@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/common/taglib.jsp"%>
-<c:url value="/vendor/product/category" var="urlProc"/>
-<c:url value="/vendor/product" var="urlList"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
+<c:url value="/vendor/product/category?categoryId=" var="urlProc"/>
 <c:url value="/vendor/product/delete" var="urlDelete"/>
 <html>
 <head>
@@ -42,6 +42,27 @@
                                             </option>
                                         </c:forEach>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Tìm kiếm theo tên sách:</label>
+                                <div class="iq-card-transparent mb-0">
+                                    <div class="d-block">
+                                        <div class="w-100 iq-search-filter">
+                                            <div class="iq-search-bar search-book d-flex align-items-center">
+                                                <form action="#" class="searchbox">
+                                                    <input type="text" class="text search-input"
+                                                           placeholder="Nhập tên sản phẩm cần tìm..."
+                                                           id="input-search"
+                                                           name=""
+                                                           value="${search}"
+                                                    >
+                                                </form>
+                                                <button id="btn-search" onclick="Search()"
+                                                        class="btn btn-warning search-data ml-2 mb-3">Tìm</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -164,11 +185,6 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" type="text/javascript"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
     function GetIdProduct(e) {
         e.preventDefault();
@@ -183,8 +199,15 @@
 <script type="text/javascript">
     $('#selectCate').change(function () {
         const categoryId = $("#selectCate option:selected").val();
-        window.location.href = "${urlList}/category?categoryId="+categoryId;
+        window.location.href = "${urlProc}"+categoryId;
     });
+</script>
+<script type="text/javascript">
+    function Search() {
+        const key = $('#input-search').val();
+        const categoryId = $('#selectCate option:selected').val();
+        window.location.href = "${urlProc}"+categoryId+"&search="+key;
+    }
 </script>
 </body>
 </html>

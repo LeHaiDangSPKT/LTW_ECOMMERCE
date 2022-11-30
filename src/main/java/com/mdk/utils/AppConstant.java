@@ -15,10 +15,11 @@ public class AppConstant {
     public static final String MESSAGE_NO_STORE = "Bạn chưa có cửa hàng. Vui lòng tạo !!";
     public static final String MESSAGE_LOGIN_ERROR = "Đăng nhập thất bại !";
     public static final String MESSAGE_LOGIN_NO_PERMISSION = "Bạn không phải ADMIN !";
-
+    public static final String MESSAGE_LOGIN_NO = "Vui lòng đăng nhập !";
+    public static final String MESSAGE_INVALID_DATE = "Vui lòng kiểm tra lại ngày tìm kiếm !";
 
     // Paging
-    public static final int TOTAL_ITEM_IN_PAGE = 5;
+    public static final int TOTAL_ITEM_IN_PAGE = 4;
 
     // Google
     public static String GOOGLE_CLIENT_ID = "740094574805-pa2bc895e0nmd2h00b6njulev52331qg.apps.googleusercontent.com";

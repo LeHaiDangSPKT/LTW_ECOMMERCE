@@ -163,7 +163,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         return null;
     }
     @Override
-    public int count(String status, int storeId) {
+    public int count(String status, int storeId, String start, String end) {
         StringBuilder sql = new StringBuilder("select count(*) from orders");
         if (!status.equals("all")) {
             sql.append(" where status like \"");
@@ -171,6 +171,9 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
             sql.append(" and storeId = " + storeId);
         } else {
             sql.append(" where storeId = " + storeId);
+        }
+        if (start != null && end != null) {
+            sql.append(" and createdAt between " + "\"" + start + "\"" + " and " + "\"" + end + "\"");
         }
         try {
             conn = getConnection();
@@ -185,7 +188,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         return 0;
     }
     @Override
-    public List<Orders> findAll(String status, Pageble pageble, int storeId) {
+    public List<Orders> findAll(String status, Pageble pageble, int storeId, String start, String end) {
         StringBuilder sql = new StringBuilder("select * from orders");
         if (!status.equals("all")) {
             sql.append(" where status like \"");
@@ -193,6 +196,9 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
             sql.append(" and storeId = " + storeId);
         } else {
             sql.append(" where storeId = " + storeId);
+        }
+        if (start != null && end != null) {
+            sql.append(" and createdAt between " + "\"" + start + "\"" + " and " + "\"" + end + "\"");
         }
         if (pageble.getSorter() != null) {
             sql.append(" order by "+pageble.getSorter().getSortName()+" "+pageble.getSorter().getSortBy()+"");
