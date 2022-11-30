@@ -9,6 +9,7 @@ import com.mdk.services.IStoreService;
 import com.mdk.services.impl.OrdersService;
 import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.StoreService;
+import com.mdk.utils.MessageUtil;
 import com.mdk.utils.SessionUtil;
 
 import javax.servlet.ServletException;
@@ -19,21 +20,33 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/vendor/statistic"})
+import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
+
+@WebServlet(urlPatterns = {"/vendor/statistic", "/vendor/statistic/notification"})
 public class StatisticVendorController extends HttpServlet {
     IStoreService storeService = new StoreService();
     IProductService productService = new ProductService();
     IOrdersService ordersService = new OrdersService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
-        totalCustomer(req, resp, store);
-        totalProduct(req, resp, store);
-        totalOrder(req, resp, store);
-        totalSale(req, resp, store);
-        topSeller(req, resp, store);
-        ordersNew(req, resp, store);
-        req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
+        String url = req.getRequestURL().toString();
+        if (url.contains("notification")) {
+            MessageUtil.showMessage(req, resp);
+            req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
+        } else if (url.contains("statistic")){
+            if (checkStoreExist(req, resp)) {
+                Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+                totalCustomer(req, resp, store);
+                totalProduct(req, resp, store);
+                totalOrder(req, resp, store);
+                totalSale(req, resp, store);
+                topSeller(req, resp, store);
+                ordersNew(req, resp, store);
+                req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/vendor/statistic/notification?message=nostore_error");
+            }
+        }
     }
     protected void totalCustomer(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException,
             IOException {
@@ -57,7 +70,9 @@ public class StatisticVendorController extends HttpServlet {
     }
     protected void topSeller(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException,
             IOException {
-        List<Product> products = productService.topSeller(store.getId(), 4);
+        int top = req.getParameter("topseller") == null ? 4 : Integer.parseInt(req.getParameter("topseller"));
+        List<Product> products = productService.topSeller(store.getId(), top);
+        req.setAttribute("topseller", top);
         req.setAttribute("products", products);
     }
     protected void ordersNew(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException,

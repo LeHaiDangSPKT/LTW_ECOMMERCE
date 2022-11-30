@@ -80,7 +80,8 @@
                         <div class="form-group">
                             <label for="quantity">Số lượng:</label>
                             <button type="button" class="fa fa-minus qty-btn" id="btn-minus"></button>
-                            <input required type="text" id="quantity" value="${not empty product.quantity ?
+                            <input required style="width: 10%;" type="text" id="quantity" value="${not empty
+                            product.quantity ?
                             product.quantity : 0}"
                                    name="quantity">
                             <button type="button" class="fa fa-plus qty-btn" id="btn-plus"></button>

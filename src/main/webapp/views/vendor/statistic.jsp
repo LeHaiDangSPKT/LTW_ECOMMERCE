@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:url value="/vendor/statistic?topseller=" var="urlTop"/>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
 <div class="container-fluid">
+    <%@include file="/common/info.jsp"%>
     <div class="row">
         <div class="col-md-6 col-lg-3">
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
@@ -70,9 +72,19 @@
         </div>
         <div class="col-lg-12">
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                <div class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 similar-detail">
-                    <div class="iq-header-title">
-                        <h4 class="card-title mb-0">Top 4 sách bán chạy</h4>
+                <div class="iq-card-header position-relative mb-0 similar-detail">
+                    <div class="iq-header-title d-flex">
+                        <h4 class="card-title mb-0">Top sách bán chạy</h4>
+                        <div style="margin-left: 16px;">
+                            <select class="form-control"
+                                    name="topseller"
+                                    id="selectedTop"
+                            >
+                                <option ${topseller == 4 ? "selected" : ""} value="4">Top 4</option>
+                                <option ${topseller == 8 ? "selected" : ""} value="8">Top 8</option>
+                                <option ${topseller == 16 ? "selected" : ""} value="16">Top 16</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                     <div class="iq-card-body">
@@ -184,5 +196,12 @@
         </div>
     </div>
 </div>
+<script>
+
+    $("#selectedTop").change(function () {
+        const topseller = $("#selectedTop option:selected").val();
+        window.location.href = "${urlTop}" + topseller;
+    })
+</script>
 </body>
 </html>
