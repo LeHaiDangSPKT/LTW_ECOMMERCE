@@ -71,10 +71,12 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Store store = new Store();
+				store.setOpen(rs.getBoolean("isOpen"));
 				store.setId(rs.getInt("id"));
 				store.setName(rs.getString("name"));
 				store.setBio(rs.getString("bio"));
 				store.setOwnerID(rs.getInt("ownerId"));
+				store.setCreatedAt(rs.getTimestamp("createdAt"));
 				stores.add(store);
 			}
 		} catch (Exception e) {

@@ -7,6 +7,8 @@ import com.mdk.services.IUserService;
 import com.mdk.services.impl.UserService;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -30,10 +32,41 @@ public class UserAdminController extends HttpServlet{
 			req.getRequestDispatcher("/views/admin/user/all.jsp").forward(req, resp);
 		}
 		else if (url.contains("user/closest")) {
+			LocalDate localDate = LocalDate.now();
 			List<User> userList = userService.top10Users_Orders();
+			List<User> userListAll = userService.findAll();
+			List<Integer> arrEachMonth = new ArrayList<Integer>();
+			List<Integer> arrEachMonthInLastYear = new ArrayList<Integer>();
+
+			List<Integer> arr = new ArrayList<Integer>();
+			int total = userListAll.size();
+			int male = 0;
+			for (User item: userListAll)
+				if (item.getSex() == true)
+					male++;
+			int count = 0;
+			int totalUserByMonth = 0;
+
+			while (arrEachMonth.size() < 12) {
+				count++;
+				int totalEachMonth = 0;
+				int totalUserByMonthInLastYear = 0;
+				for (User item: userListAll)
+					if (Integer.parseInt(item.getCreatedAt().toString().substring(5,7)) == count && Integer.parseInt(item.getCreatedAt().toString().substring(0,4)) == localDate.getYear())
+						totalEachMonth++;
+					else if (Integer.parseInt(item.getCreatedAt().toString().substring(5,7)) == count && Integer.parseInt(item.getCreatedAt().toString().substring(0,4)) == (localDate.getYear()-1))
+						totalUserByMonthInLastYear++;
+				totalUserByMonth += totalEachMonth;
+				arr.add(totalUserByMonth);
+				arrEachMonth.add(totalEachMonth);
+				arrEachMonthInLastYear.add(totalUserByMonthInLastYear);
+			}
+			req.setAttribute("arrEachMonth", arrEachMonth);
+			req.setAttribute("arrEachMonthInLastYear", arrEachMonthInLastYear);
+			req.setAttribute("arrByMonth", arr);
+			req.setAttribute("total", total);
+			req.setAttribute("male", male);
 			req.setAttribute("userList", userList);
-			int countP = userService.count();
-			req.setAttribute("countP", countP);
 			req.getRequestDispatcher("/views/admin/user/closest.jsp").forward(req, resp);
 		}
 

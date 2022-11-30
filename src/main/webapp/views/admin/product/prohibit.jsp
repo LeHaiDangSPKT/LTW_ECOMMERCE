@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp"%>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
 <div id="loading">
   <div id="loading-center">
   </div>
@@ -30,8 +40,12 @@
                     <th>Mô tả</th>
                     <th>Giá</th>
                     <th>Số lượng đã bán</th>
+                    <th>Chuyển mở</th>
                   </tr>
                   </thead>
+<%--                  Hide--%>
+                  <input type="hidden" id="productId" value="">
+                  <input type="hidden" id="state" value="">
                   <tbody>
                   <c:forEach items="${productList}" var="productList" varStatus="STT" >
                     <tr class="text-center">
@@ -40,6 +54,11 @@
                       <td>${productList.description}</td>
                       <td>${productList.price}</td>
                       <td>${productList.sold}</td>
+                      <td>
+                        <div class="d-flex align-items-center list-user-action justify-content-center">
+                      <a href="" onclick="ClickIcon(event, 'true')" id="${productList.id}" data-toggle="modal" data-target="#deleteModal"  class="bg-primary p-3 d-flex justify-content-center align-items-center"><i id="${productList.id}" class="fa-solid fa-door-open"></i></a>
+                        </div>
+                      </td>
                     </tr>
                   </c:forEach>
                   </tbody>
@@ -70,6 +89,40 @@
           </div>
         </div>
       </div>
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Gỡ cấm bán sản phẩm</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="deleteModalBody">
+              Bạn có thực sự muốn gỡ cấm bán không?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+              <button type="button" onclick="Action()" class="btn btn-primary" data-dismiss="modal">Chắc chắn</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  function ClickIcon(e, state) {
+    e.preventDefault();
+    const productId = e.target.id;
+    document.getElementById('productId').value = productId;
+    document.getElementById('state').value = state;
+  }
+  function Action() {
+    const productId = document.getElementById('productId').value;
+    const state = document.getElementById('state').value;
+    window.location.href = 'ban?productId='+productId.toString() + '&state='+ state;
+  }
+</script>
+</body>
+</html>

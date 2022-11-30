@@ -67,6 +67,16 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public void ban(int id, Boolean state) {
+        productDAO.ban(id, state);
+    }
+
+    @Override
+    public String findOwnerEmailByProductId(int id) {
+        return productDAO.findOwnerEmailByProductId(id);
+    }
+
+    @Override
     public Product findOneById(int id) {
         return productDAO.findOneById(id);
     }
