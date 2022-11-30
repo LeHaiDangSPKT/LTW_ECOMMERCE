@@ -44,7 +44,7 @@
                   </tr>
                   </thead>
 <%--                    Hide--%>
-                    <input type="hidden" id="id" value="">
+                    <input type="hidden" id="productId" value="">
                     <input type="hidden" id="state" value="">
                     <tbody>
                   <c:forEach items="${productList}" var="productList" varStatus="STT" >
@@ -114,15 +114,14 @@
 <script type="text/javascript">
     function ClickIcon(e, state) {
         e.preventDefault();
-        const id = e.target.id;
-        console.log(id);
-        document.getElementById('id').value = id;
+        const productId = e.target.id;
+        document.getElementById('productId').value = productId;
         document.getElementById('state').value = state;
     }
     function Action() {
-        const id = document.getElementById('id').value;
+        const productId = document.getElementById('productId').value;
         const state = document.getElementById('state').value;
-        window.location.href = 'ban?id='+id.toString() + '&state='+ state;
+        window.location.href = 'ban?productId='+productId.toString() + '&state='+ state;
     }
 </script>
 </body>
