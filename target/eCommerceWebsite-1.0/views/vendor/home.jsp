@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
+<c:url value="/vendor/loadmore" var="UrlLoadMore"/>
 <html>
 <head>
     <title>HomePage</title>
@@ -50,12 +51,11 @@
                         <div class="iq-header-title">
                             <h4 class="card-title mb-0">Sản phẩm của Shop</h4>
                         </div>
-
                     </div>
                     <div class="iq-card-body">
-                        <div class="row">
+                        <div class="row" id="list-product">
                             <c:forEach items="${products}" var="product">
-                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                <div class="product col-sm-6 col-md-4 col-lg-3">
                                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
                                         <div class="iq-card-body p-0">
                                             <div>
@@ -103,9 +103,7 @@
                             </c:forEach>
                         </div>
                         <div class="iq-card-header-toolbar d-flex justify-content-center align-items-center">
-                            <a href=""
-                               class="btn btn-sm btn-primary view-more">View More
-                            </a>
+                            <button onclick="LoadMore()" class="btn btn-sm btn-primary view-more">View More</button>
                         </div>
                     </div>
                 </div>
@@ -113,8 +111,23 @@
         </div>
     </c:if>
 </div>
-</body>
 <script>
+    function LoadMore() {
+        const amount  = document.getElementsByClassName("product").length;
+        $.ajax({
+            url: "${UrlLoadMore}",
+            type: "get",
+            data: {
+                exist: amount
+            },
+            success: function (data) {
+                $("#list-product").append(data);
+            },
+            error: function (xhr) {
 
+            }
+        })
+    }
 </script>
+</body>
 </html>

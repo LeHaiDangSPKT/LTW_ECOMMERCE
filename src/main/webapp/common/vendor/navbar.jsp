@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
 <div class="iq-top-navbar">
     <div class="iq-navbar-custom">
         <nav class="navbar navbar-expand-lg navbar-light p-0">
@@ -9,7 +10,7 @@
                 </div>
                 <div class="iq-navbar-logo d-flex justify-content-between">
                     <a href="#" class="header-logo">
-                        <img src="../template/images/logo.png" class="img-fluid rounded-normal" alt="">
+                        <img src="<c:url value="/template/images/logo.png"/> " class="img-fluid rounded-normal" alt="">
                         <div class="logo-title">
                             <span class="text-primary text-uppercase">Booksto</span>
                         </div>
@@ -23,7 +24,8 @@
                 <ul class="navbar-nav ml-auto navbar-list">
                     <li class="line-height pt-3">
                         <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                            <img src="../template/images/user/1.jpg" class="img-fluid rounded-circle mr-3" alt="user">
+                            <img src="<c:url value="/template/images/user/1.jpg"/> "
+                                 class="img-fluid rounded-circle mr-3" alt="user">
                             <div class="caption">
                                 <h6 class="mb-1 line-height">
                                     ${sessionScope.USERMODEL.firstname} ${sessionScope.USERMODEL.lastname}

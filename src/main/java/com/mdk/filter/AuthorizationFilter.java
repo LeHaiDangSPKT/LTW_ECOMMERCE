@@ -43,7 +43,7 @@ public class AuthorizationFilter implements Filter {
             }
         } else {
             // request login
-            resp.sendRedirect(req.getContextPath() + "/login?message=login_error");
+            resp.sendRedirect(req.getContextPath() + "/login?message=login_no");
         }
     }
 

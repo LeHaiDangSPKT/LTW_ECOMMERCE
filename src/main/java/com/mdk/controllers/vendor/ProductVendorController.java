@@ -95,11 +95,12 @@ public class ProductVendorController extends HttpServlet {
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
         Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
         String indexPage = req.getParameter("index");
+        String searchKey = req.getParameter("search");
         if(indexPage == null) {
             indexPage = "1";
         }
         int categoryId = req.getParameter("categoryId") == null ? 0 : Integer.parseInt(req.getParameter("categoryId"));
-        int countP = productService.count(categoryId, store.getId());
+        int countP = productService.count(categoryId, store.getId(), searchKey);
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
@@ -107,7 +108,7 @@ public class ProductVendorController extends HttpServlet {
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
         List<Product> products = new ArrayList<>();
-        products = productService.findAll(pageble, categoryId, store.getId());
+        products = productService.findAll(pageble, categoryId, store.getId(), searchKey);
         loadCategory(req, resp);
         req.setAttribute("categoryId", categoryId);
         req.setAttribute("count", countP);
@@ -116,7 +117,7 @@ public class ProductVendorController extends HttpServlet {
         req.setAttribute("tag", indexPage);
         req.setAttribute("DIR", UPLOAD_PRODUCT_DIRECTORY);
         req.setAttribute("products", products);
-
+        req.setAttribute("search", searchKey);
     }
     protected void findOneByName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String pname = req.getParameter("pname");
