@@ -166,6 +166,20 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 
 	@Override
+	public void ban(int id, Boolean state) {
+		StringBuilder sql = new StringBuilder("UPDATE product SET isActive = ? WHERE id = ?");
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setBoolean(1, state);
+			ps.setInt(2, id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public Product findOneByName(String name, int storeId) {
 		StringBuilder sql = new StringBuilder("select * from product where name like ? and storeId = ?");
 		Product product = new Product();
@@ -481,6 +495,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Product product = new Product();
+				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
 				product.setDescription(rs.getString("description"));
 				product.setPrice(rs.getDouble("price"));

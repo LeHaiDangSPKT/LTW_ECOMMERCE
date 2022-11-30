@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
 
-@WebServlet(urlPatterns = {"/admin/product/permit", "/admin/product/prohibit", "/admin/product/category", "/admin/product/category/add", "/admin/product/category/edit", "/admin/product/category/delete-soft", "/admin/product/category/delete", "/admin/product/category/restore"})
+@WebServlet(urlPatterns = {"/admin/product/permit", "/admin/product/prohibit", "/admin/product/category", "/admin/product/category/add", "/admin/product/category/edit", "/admin/product/category/delete-soft", "/admin/product/category/delete", "/admin/product/category/restore", "/admin/product/ban"})
 public class ProductAdminController extends HttpServlet{
 
     private static final long serialVersionUID = 1L;
@@ -28,8 +28,17 @@ public class ProductAdminController extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
-
-        if (url.contains("product/category/edit")) {
+        if (url.contains("product/ban")) {
+            String id = req.getParameter("id");
+            String state = req.getParameter("state");
+            productService.ban(Integer.parseInt(id), Boolean.parseBoolean(state));
+            if (state.equals("true")) {
+                resp.sendRedirect(req.getContextPath() + "/admin/product/prohibit");
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/admin/product/permit");
+            }
+        }
+        else if (url.contains("product/category/edit")) {
             String id = req.getParameter("id");
             Category category = categoryService.findById(Integer.parseInt(id));
             req.setAttribute("category", category);

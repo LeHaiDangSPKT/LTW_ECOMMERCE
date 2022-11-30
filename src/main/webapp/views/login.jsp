@@ -2,7 +2,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url value="/LoginGoogleHandler" var="URL"/>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
 <section class="sign-in-page">
+
     <div class="container p-0">
         <div class="row no-gutters height-self-center">
             <div class="col-sm-12 align-self-center page-content rounded">
@@ -17,12 +28,12 @@
                             <form action="login" method="post" class="mt-4 form-text">
                                 <div class="form-group">
                                     <label>Địa chỉ email</label>
-                                    <input type="email" class="form-control mb-0" name="username"
+                                    <input type="email" class="form-control mb-0 bg-light text-black" name="username"
                                            placeholder="Nhập email">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="password" class="form-control mb-0" name="password"
+                                    <input type="password" class="form-control mb-0 bg-light text-black" name="password"
                                            placeholder="Nhập password">
                                 </div>
                                 <div class="sign-info text-center">
@@ -42,3 +53,5 @@
         </div>
     </div>
 </section>
+</body>
+</html>
