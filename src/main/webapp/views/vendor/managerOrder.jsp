@@ -3,6 +3,7 @@
 <%@include file="/common/taglib.jsp" %>
 <c:url value="/vendor/order/manager?status=" var="UrlOrderManager"/>
 <c:url value="/vendor/order" var="UrlOrder"/>
+<c:url value="/vendor/report-order?status=" var="UrlReport"/>
 <html>
 <head>
     <title>Title</title>
@@ -70,7 +71,14 @@
                                 >
                             </form>
                             <button onclick="Search()" class="btn btn-warning search-data ml-2 mb-3">Tìm</button>
-                            <button class="btn btn-danger search-data ml-2 mb-3">Xuất</button>
+                            <button onclick="Report()" class="btn btn-danger search-data ml-2 mb-3">Xuất</button>
+                            <c:if test="${not empty success}">
+                                <a href="<c:url value="/vendor/download-report"/> "
+                                   class="text-dark" style="display: block; margin-left: 10px; margin-bottom: 12px;">
+                                    Tải báo cáo
+                                    <i class="fa-solid fa-download"></i>
+                                </a>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -184,6 +192,16 @@
     // const day = ("0" + now.getDate()).slice(-2);
     // const month = ("0" + (now.getMonth() + 1)).slice(-2);
     // const today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    function Report() {
+        const dateStart = $("#date-start").val()
+        const dateEnd = $("#date-end").val();
+
+        if(CheckDate()) {
+            window.location.href = "${UrlReport}" + "${statusResp}" + "&start=" + dateStart + "&end=" + dateEnd;
+        } else {
+            window.location.href = "${UrlOrder}?message=invalid_date"
+        }
+    }
 
     function Search() {
         const dateStart = $("#date-start").val()
@@ -203,7 +221,6 @@
         }
         return true;
     }
-
 </script>
 </body>
 </html>
