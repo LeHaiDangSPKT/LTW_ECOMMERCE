@@ -36,6 +36,9 @@ public class MessageUtil extends HttpServlet {
             } else if (message.equals("invalid_date")) {
                 messageResp = MESSAGE_INVALID_DATE;
                 alert = ALERT_ERROR_SYSTEM;
+            } else if (message.equals("export_success")) {
+                messageResp = MESSAGE_EXPORT_SUCCESS;
+                alert = ALERT_UPDATE_SUCCESS;
             }
             req.setAttribute("message", messageResp);
             req.setAttribute("alert", alert);

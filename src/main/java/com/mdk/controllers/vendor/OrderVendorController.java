@@ -48,6 +48,7 @@ public class OrderVendorController extends HttpServlet {
             if (checkStoreExist(req, resp)) {
                 ordersPage(req, resp);
             }
+            req.setAttribute("success", req.getParameter("state"));
             MessageUtil.showMessage(req, resp);
             req.getRequestDispatcher("/views/vendor/managerOrder.jsp").forward(req, resp);
         }

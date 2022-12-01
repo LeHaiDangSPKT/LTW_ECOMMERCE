@@ -3,6 +3,7 @@ package com.mdk.utils;
 public class AppConstant {
     public static final String UPLOAD_STORE_DIRECTORY = "E:\\upload\\store";
     public static final String UPLOAD_PRODUCT_DIRECTORY = "E:\\upload\\product";
+    public static final String EXPORT_REPORT = "E:\\report.xls";
 
     // message
     public static final String ALERT_UPDATE_SUCCESS = "warning";
@@ -16,7 +17,9 @@ public class AppConstant {
     public static final String MESSAGE_LOGIN_ERROR = "Đăng nhập thất bại !";
     public static final String MESSAGE_LOGIN_NO_PERMISSION = "Bạn không phải ADMIN !";
     public static final String MESSAGE_LOGIN_NO = "Vui lòng đăng nhập !";
-    public static final String MESSAGE_INVALID_DATE = "Vui lòng kiểm tra lại ngày tìm kiếm !";
+    public static final String MESSAGE_INVALID_DATE = "Vui lòng kiểm tra lại ngày !";
+    public static final String MESSAGE_EXPORT_SUCCESS = "Xuất báo cáo thành công !";
+
 
     // Paging
     public static final int TOTAL_ITEM_IN_PAGE = 4;
