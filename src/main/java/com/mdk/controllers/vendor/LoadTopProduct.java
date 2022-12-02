@@ -2,8 +2,6 @@ package com.mdk.controllers.vendor;
 
 import com.mdk.models.Product;
 import com.mdk.models.Store;
-import com.mdk.paging.PageRequest;
-import com.mdk.paging.Pageble;
 import com.mdk.services.IProductService;
 import com.mdk.services.impl.ProductService;
 import com.mdk.utils.SessionUtil;
@@ -15,29 +13,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
-
-@WebServlet(urlPatterns = "/vendor/loadmore")
-public class LoadMoreProduct extends HttpServlet {
-    IProductService productService = new ProductService();
+@WebServlet(urlPatterns = "/vendor/loadTopProduct")
+public class LoadTopProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
-        int exist = Integer.parseInt(req.getParameter("exist"));
-        int indexPage = exist / TOTAL_ITEM_IN_PAGE + 1;
-        if (exist % TOTAL_ITEM_IN_PAGE != 0) {
-            indexPage++;
-        }
 
-        List<Product> products = new ArrayList<>();
-        Store store = (Store) SessionUtil.getInstance().getValue(req,"STORE");
-        if (store != null) {
-            Pageble pageble = new PageRequest(indexPage, TOTAL_ITEM_IN_PAGE, null);
-            products = productService.findAll(pageble, 0, store.getId(), null);
-        }
+        IProductService productService = new ProductService();
+        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+
+        int top = req.getParameter("top") == null ? 4 : Integer.parseInt(req.getParameter("top"));
+        List<Product> products = productService.topSeller(store.getId(), top);
+
         PrintWriter out = resp.getWriter();
         for (Product o : products) {
             String urlImage = req.getContextPath() + "/image?fname="+o.getImages().get(0).getName()+"&type=product";
