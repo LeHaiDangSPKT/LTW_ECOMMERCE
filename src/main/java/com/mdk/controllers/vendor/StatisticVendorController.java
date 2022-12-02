@@ -1,5 +1,6 @@
 package com.mdk.controllers.vendor;
 
+import com.google.gson.Gson;
 import com.mdk.models.Orders;
 import com.mdk.models.Product;
 import com.mdk.models.Store;
@@ -18,7 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
 
@@ -36,17 +38,22 @@ public class StatisticVendorController extends HttpServlet {
         } else if (url.contains("statistic")){
             if (checkStoreExist(req, resp)) {
                 Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
-                totalCustomer(req, resp, store);
-                totalProduct(req, resp, store);
-                totalOrder(req, resp, store);
-                totalSale(req, resp, store);
-                topSeller(req, resp, store);
-                ordersNew(req, resp, store);
+                mainStatistic(req, resp, store);
                 req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
             } else {
                 resp.sendRedirect(req.getContextPath() + "/vendor/statistic/notification?message=nostore_error");
             }
         }
+    }
+    protected void mainStatistic(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException,
+            IOException {
+        totalCustomer(req, resp, store);
+        totalProduct(req, resp, store);
+        totalOrder(req, resp, store);
+        totalSale(req, resp, store);
+        topSeller(req, resp, store);
+        ordersNew(req, resp, store);
+        chartRevenue(req, resp, store);
     }
     protected void totalCustomer(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException,
             IOException {
@@ -70,14 +77,16 @@ public class StatisticVendorController extends HttpServlet {
     }
     protected void topSeller(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException,
             IOException {
-        int top = req.getParameter("topseller") == null ? 4 : Integer.parseInt(req.getParameter("topseller"));
-        List<Product> products = productService.topSeller(store.getId(), top);
-        req.setAttribute("topseller", top);
-        req.setAttribute("products", products);
+        int top = req.getParameter("top") == null ? 4 : Integer.parseInt(req.getParameter("top"));
+        req.setAttribute("top", top);
     }
-    protected void ordersNew(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException,
-            IOException {
+    protected void ordersNew(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException, IOException {
         List<Orders> orders = ordersService.ordersNew(store.getId());
         req.setAttribute("orders", orders);
+    }
+    protected void chartRevenue(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException, IOException {
+        LocalDate localDate = LocalDate.now();
+        int year = localDate.getYear();
+        req.setAttribute("year", year);
     }
 }

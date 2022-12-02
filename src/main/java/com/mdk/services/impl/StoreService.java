@@ -72,6 +72,11 @@ public class StoreService implements IStoreService {
     }
 
     @Override
+    public double revenueOfMonth(int storeId, String month, String year) {
+        return storeDAO.revenueOfMonth(storeId, month, year);
+    }
+
+    @Override
     public int totalStores() {
         return storeDAO.totalStores();
     }

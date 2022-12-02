@@ -232,6 +232,26 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 	}
 
 	@Override
+	public double revenueOfMonth(int storeId, String month, String year) {
+		String sql = "select sum(amountToStore) from orders where status like 'delivered' and storeId = ? and month" +
+				"(createdAt) = ? and year(createdAt) = ?";
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, storeId);
+			ps.setString(2, month);
+			ps.setString(3, year);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
 	public Store findById(int id) {
 		String sql = "select * from store where id = ?";
 		Store store = new Store();
