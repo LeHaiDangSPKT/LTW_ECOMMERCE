@@ -3,6 +3,7 @@ package com.mdk.utils;
 public class AppConstant {
     public static final String UPLOAD_STORE_DIRECTORY = "E:\\upload\\store";
     public static final String UPLOAD_PRODUCT_DIRECTORY = "E:\\upload\\product";
+    public static final String UPLOAD_USER_DIRECTORY = "E:\\upload\\user";
     public static final String EXPORT_REPORT = "E:\\report.xls";
 
     // message

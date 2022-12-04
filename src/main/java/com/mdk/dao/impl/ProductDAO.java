@@ -22,6 +22,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	Connection conn = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
+	IImageProductService imageProductService = new ImageProductService();
 
 	@Override
 	public List<Product> findAllProductProhibited() {
@@ -38,6 +39,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				product.setPrice(rs.getDouble("price"));
 				product.setQuantity(rs.getInt("quantity"));
 				product.setSold(rs.getInt("sold"));
+				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
 				products.add(product);
 			}
 		} catch (SQLException e) {
@@ -60,8 +62,16 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				product.setName(rs.getString("name"));
 				product.setDescription(rs.getString("description"));
 				product.setPrice(rs.getDouble("price"));
+				product.setPromotionalPrice(rs.getDouble("promotionalPrice"));
 				product.setQuantity(rs.getInt("quantity"));
 				product.setSold(rs.getInt("sold"));
+				product.setActive(rs.getBoolean("isActive"));
+				product.setCategoryId(rs.getInt("categoryId"));
+				product.setStoreId(rs.getInt("storeId"));
+				product.setRating(rs.getInt("rating"));
+				product.setCreatedAt(rs.getTimestamp("createdAt"));
+				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
+				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
 				products.add(product);
 			}
 		} catch (SQLException e) {
@@ -220,6 +230,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				product.setRating(rs.getInt("rating"));
 				product.setCreatedAt(rs.getTimestamp("createdAt"));
 				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
+				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
 				return product;
 			}
 		} catch (SQLException e) {
@@ -288,6 +299,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
 				product.setCreatedAt(rs.getTimestamp("createdAt"));
 				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
+				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
 
 				products.add(product);
 			}
@@ -483,6 +495,40 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 
 	@Override
+	public List<Product> findByStoreId(int storeId) {
+		StringBuilder sql = new StringBuilder("select * from product where storeId = ?");
+		List<Product> products = new ArrayList<>();
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setInt(1, storeId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setName(rs.getString("name"));
+				product.setDescription(rs.getString("description"));
+				product.setPrice(rs.getDouble("price"));
+				product.setPromotionalPrice(rs.getDouble("promotionalPrice"));
+				product.setQuantity(rs.getInt("quantity"));
+				product.setSold(rs.getInt("sold"));
+				product.setActive(rs.getBoolean("isActive"));
+				product.setCategoryId(rs.getInt("categoryId"));
+				product.setStoreId(rs.getInt("storeId"));
+				product.setRating(rs.getInt("rating"));
+
+				product.setCreatedAt(rs.getTimestamp("createdAt"));
+				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
+				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
+				products.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return products;
+	}
+	
+	@Override
 	public int count(String status) {
 		StringBuilder sql = new StringBuilder("select count(*) from product");
 		if (status != "") {
@@ -614,7 +660,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
 				product.setCreatedAt(rs.getTimestamp("createdAt"));
 				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
-
+				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
 				products.add(product);
 			}
 		} catch (SQLException e) {
@@ -648,7 +694,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
 				product.setCreatedAt(rs.getTimestamp("createdAt"));
 				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
-
+				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
 				products.add(product);
 			}
 		} catch (SQLException e) {

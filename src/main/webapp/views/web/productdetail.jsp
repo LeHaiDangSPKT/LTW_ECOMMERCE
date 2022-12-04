@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
 
-<div id="content-page" class="content-page">
+<div id="content-page" class="content-page"
+	style="margin-left: 0; padding-left: 100px !important; padding-right: 100px !important; background-color: #efefef">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">
@@ -21,27 +22,25 @@
 											<div class="col-3">
 												<ul id="description-slider-nav"
 													class="list-inline p-0 m-0  d-flex align-items-center">
-													<li><a href="javascript:void(0);"> <img
-															src="<c:url value ='/template/images/browse-books/01.jpg'/>"
-															class="img-fluid rounded w-100" alt="">
-													</a></li>
-													<li><a href="javascript:void(0);"> <img
-															src="<c:url value ='/template/images/browse-books/01.jpg'/>"
-															class="img-fluid rounded w-100" alt="">
-													</a></li>
+													<c:forEach items="${product.images}" var="image">
+														<c:url value="/image?fname=${image.name}&type=product"
+															var="imgUrl"></c:url>
+														<li><a href="javascript:void(0);"> <img
+																src="${imgUrl}" class="img-fluid rounded w-100" alt="">
+														</a></li>
+													</c:forEach>
 												</ul>
 											</div>
 											<div class="col-9">
 												<ul id="description-slider"
 													class="list-inline p-0 m-0  d-flex align-items-center">
-													<li><a href="javascript:void(0);"> <img
-															src="<c:url value ='/template/images/browse-books/01.jpg'/>"
-															class="img-fluid w-100 rounded" alt="">
-													</a></li>
-													<li><a href="javascript:void(0);"> <img
-															src="<c:url value ='/template/images/browse-books/01.jpg'/>"
-															class="img-fluid w-100 rounded" alt="">
-													</a></li>
+													<c:forEach items="${product.images}" var="image">
+														<c:url value="/image?fname=${image.name}&type=product"
+															var="imgUrl"></c:url>
+														<li><a href="javascript:void(0);"> <img
+																src="${imgUrl}" class="img-fluid rounded w-100" alt="">
+														</a></li>
+													</c:forEach>
 												</ul>
 											</div>
 										</div>
@@ -49,40 +48,57 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div
-									class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
-									<div class="iq-card-body p-0">
-										<h3 class="mb-3">${product.name}</h3>
-										<div
-											class="price d-flex align-items-center font-weight-500 mb-2">
-											<!-- <span class="font-size-20 pr-2 old-price">99.000</span> -->
-											<span class="font-size-24 text-dark">${product.price}</span>
-										</div>
-										<div class="mb-3 d-block">
-											<span class="font-size-20 text-warning"> <c:forEach
-													var="i" begin="1" end="5">
-													<c:if test="${i <= product.rating }">
-														<i class="fa fa-star"></i>
-													</c:if>
+								<form method="post">
+									<div
+										class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
+										<div class="iq-card-body p-0">
+											<h3 class="mb-3">${product.name}</h3>
+											<div
+												class="price d-flex align-items-center font-weight-500 mb-2">
+												<!-- <span class="font-size-20 pr-2 old-price">99.000</span> -->
+												<span class="font-size-24 text-dark">${product.price}</span>
+											</div>
+											<div class="mb-3 d-block">
+												<span class="font-size-20 text-warning"> <c:forEach
+														var="i" begin="1" end="5">
+														<c:if test="${i <= product.rating }">
+															<i class="fa fa-star"></i>
+														</c:if>
 
-													<c:if test="${i > product.rating }">
-														<i class="fa fa-star-o"></i>
-													</c:if>
-												</c:forEach>
-											</span>
-										</div>
-										<span class="text-dark mb-4 pb-4 iq-border-bottom d-block">${product.description}</span>
-										<div class="mb-4 d-flex align-items-center">
-											<a href="#" class="btn btn-primary view-more mr-2">Thêm
-												vào giỏ hàng</a>
-										</div>
-										<div class="mb-3">
-											<a href="#" class="text-body text-center"><span
-												class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i
-													class="ri-heart-fill"></i></span><span>Theo dõi sản phẩm</span></a>
+														<c:if test="${i > product.rating }">
+															<i class="fa fa-star-o"></i>
+														</c:if>
+													</c:forEach>
+												</span>
+											</div>
+											<div class="mb-3 d-flex align-items-center">
+												<c:choose>
+													<c:when test="${product.quantity > 0}">
+														<label class="mr-3">Số lượng</label>
+														<input name="count" class="form-control"
+															style="max-width: 75px" type="number" min="1"
+															max="${product.quantity}" step="1" value="1">
+													</c:when>
+													<c:otherwise>
+														<label class="mr-3 text-danger">Hết hàng</label>
+													</c:otherwise>
+												</c:choose>
+											</div>
+											<span class="text-dark mb-4 pb-4 iq-border-bottom d-block">${product.description}</span>
+											<div class="mb-4 d-flex align-items-center">
+												<button
+													formaction="<c:url value='/web/cart/item/create?id=${product.id}'/>"
+													class="btn btn-primary view-more mr-2">Thêm vào
+													giỏ hàng</button>
+											</div>
+											<div class="mb-3">
+												<a href="#" class="text-body text-center"><span
+													class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i
+														class="ri-heart-fill"></i></span><span>Theo dõi sản phẩm</span></a>
+											</div>
 										</div>
 									</div>
-								</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -289,3 +305,4 @@
 		</div>
 	</div>
 </div>
+

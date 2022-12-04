@@ -174,8 +174,8 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public void insert(User user) {
-		String sql = "INSERT INTO user(firstname, lastname, id_card, email, phone, isEmailActive, isPhoneActive, password, role, avatar,  eWallet) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO user(firstname, lastname, id_card, email, phone, password, gender) "
+				+ "VALUES (?,?,?,?,?,?,?)";
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -184,12 +184,8 @@ public class UserDAO extends DBConnection implements IUserDAO {
 			ps.setString(3, user.getId_card());
 			ps.setString(4, user.getEmail());
 			ps.setString(5, user.getPhone());
-			ps.setBoolean(6, user.isIsEmailActive());
-			ps.setBoolean(7, user.isPhoneActive());
-			ps.setString(8, user.getPassword());
-			ps.setString(9, user.getRole());
-			ps.setString(10, user.getAvatar());
-			ps.setDouble(11, user.geteWallet());
+			ps.setString(6, user.getPassword());
+			ps.setInt(7, user.isGender() ? 1 : 0);
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,8 +194,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public void update(User user) {
-		String sql = "UPDATE user"
-				+ "SET firstname = ?, lastname = ?, id_card = ?, email = ?, phone = ?, isEmailActive = ?, isPhoneActive = ?, password = ?, role = ?, avatar = ?,  eWallet = ?) "
+		String sql = "UPDATE user " + "SET firstname = ?, lastname = ?, id_card = ?, email = ?, phone = ?, avatar = ? "
 				+ "WHERE id = ?";
 		try {
 			conn = super.getConnection();
@@ -209,13 +204,8 @@ public class UserDAO extends DBConnection implements IUserDAO {
 			ps.setString(3, user.getId_card());
 			ps.setString(4, user.getEmail());
 			ps.setString(5, user.getPhone());
-			ps.setBoolean(6, user.isIsEmailActive());
-			ps.setBoolean(7, user.isPhoneActive());
-			ps.setString(8, user.getPassword());
-			ps.setString(9, user.getRole());
-			ps.setString(10, user.getAvatar());
-			ps.setDouble(11, user.geteWallet());
-			ps.setInt(12, user.getId());
+			ps.setString(6, user.getAvatar());
+			ps.setInt(7, user.getId());
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -259,5 +249,21 @@ public class UserDAO extends DBConnection implements IUserDAO {
 			e.printStackTrace();
 		}
 		return users;
+	}
+
+	@Override
+	public void updateWallet(int id, double eWallet) {
+		String sql = "UPDATE user " 
+				+ "SET eWallet = ? "
+				+ "WHERE id = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setDouble(1, eWallet);
+			ps.setInt(2, id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

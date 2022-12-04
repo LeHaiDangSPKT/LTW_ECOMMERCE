@@ -11,6 +11,7 @@ public interface IUserDAO {
 	void insert(User user);
 	void update(User user);
 	void delete(int id);
+	void updateWallet(int id, double eWallet);
 	List<User> findBySearching(String keyword);
 	
     List<User> findAll();

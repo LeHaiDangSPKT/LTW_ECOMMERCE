@@ -2,6 +2,7 @@ package com.mdk.controllers.user;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,12 +11,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.mdk.models.ImageStore;
 import com.mdk.models.User;
 import com.mdk.services.IUserService;
 import com.mdk.services.impl.UserService;
+import com.mdk.utils.AppConstant;
+import com.mdk.utils.DeleteImageUtil;
 import com.mdk.utils.SessionUtil;
+import com.mdk.utils.UploadUtil;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
 		maxFileSize = 1024 * 1024 * 50, // 50MB
@@ -42,7 +47,8 @@ public class UserController extends HttpServlet {
 		} else if (url.contains("edit")) {
 			int id = ((User) SessionUtil.getInstance().getValue(req, "USER")).getId();
 			User user = userService.findById(id);
-			
+			SessionUtil.getInstance().putValue(req, "USER", user);
+
 			req.setAttribute("id", id);
 			req.setAttribute("user", user);
 			req.getRequestDispatcher("/views/web/editprofile.jsp").forward(req, resp);
@@ -61,37 +67,57 @@ public class UserController extends HttpServlet {
 			req.setAttribute("userListSearch", userListSearch);
 			req.getRequestDispatcher("/views/web/searchuser.jsp").forward(req, resp);
 		} else if (url.contains("update")) {
-			update(req,resp);
-			resp.sendRedirect(req.getContextPath() + "/web/user/edit?id=1");
+			update(req, resp);
+			resp.sendRedirect(req.getHeader("referer"));
 		}
 	}
 
 	protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		
+		int id = ((User) SessionUtil.getInstance().getValue(req, "USER")).getId();
 		User user = new User();
-        List<ImageStore> images = new ArrayList<>();
-        
-        
-        user.setFirstname(req.getParameter("firstname"));
-        user.setLastname(req.getParameter("lastname"));
-        user.setEmail(req.getParameter("email"));
-        user.setPhone(req.getParameter("phone"));
-        
-        
-        userService.update(user);
+		user.setId(id);
+		user.setFirstname(req.getParameter("firstname"));
+		user.setLastname(req.getParameter("lastname"));
+		user.setEmail(req.getParameter("email"));
+		user.setPhone(req.getParameter("phone"));
+		user.setId_card(req.getParameter("id_card"));
+
+		String image = new String();
+		String oldimage = userService.findById(id).getAvatar();
+
+		Collection<Part> parts = req.getParts();
+		for (Part filePart : parts) {
+			if (filePart.getHeader("content-disposition").contains("filename=")) {
+				String fileName = "" + System.currentTimeMillis();
+				String realPath = AppConstant.UPLOAD_USER_DIRECTORY;
+				if (filePart.getName().equals("avatar")) {
+					user.setAvatar(oldimage);
+				} else {
+					if (oldimage != null) {
+						String fileNameAvatar = oldimage;
+						String userFolder = AppConstant.UPLOAD_USER_DIRECTORY;
+						DeleteImageUtil.processDelete(userFolder, fileNameAvatar);
+					}
+					image = UploadUtil.processUpload(filePart.getName(), req, realPath, fileName);
+				}
+			}
+		}
+
+		user.setAvatar(image);
+		userService.update(user);
 	}
-	
-	protected void updatePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+	protected void updatePassword(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		
+
 		User user = new User();
-        List<ImageStore> images = new ArrayList<>();
-        
-        
-        user.setPassword(req.getParameter("password"));
-        userService.update(user);
+		List<ImageStore> images = new ArrayList<>();
+
+		user.setPassword(req.getParameter("password"));
+		userService.update(user);
 	}
 }

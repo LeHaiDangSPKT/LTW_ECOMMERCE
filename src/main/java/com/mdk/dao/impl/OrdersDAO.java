@@ -310,6 +310,41 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         }
         return orders;
     }
+	@Override
+	public int currentIndex() {
+		StringBuilder sql = new StringBuilder("SELECT MAX(id) FROM orders;");
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+	}
+	@Override
+	public void insert(Orders order) {
+		String sql = "INSERT INTO orders (userId, storeId, deliveryId, address, phone, amountFromUser, amountToStore, amountToGD) "
+				+ "VALUE (?,?,?,?,?,?,?,?)";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, order.getUserId());
+            ps.setInt(2, order.getStoreId());
+            ps.setInt(3, order.getDeliveryId());
+            ps.setString(4, order.getAddress());
+            ps.setString(5, order.getPhone());
+            ps.setDouble(6, order.getAmountFromUser());
+            ps.setDouble(7, order.getAmountToStore());
+            ps.setDouble(8, order.getAmountToGD());
+            ps.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+	}
 
     @Override
     public List<Orders> ordersNew(int storeId) {

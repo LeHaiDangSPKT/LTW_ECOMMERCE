@@ -2,27 +2,46 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
 
-<div id="content-page" class="content-page">
+<div id="content-page" class="content-page"
+	style="margin-left: 0; padding-left: 100px !important; padding-right: 100px !important; background-color: #efefef">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="iq-card-transparent mb-0">
 					<div class="d-block text-center">
-						<h2 class="mb-3">TRA CỨU SẢN PHẨM</h2>
+
 						<div class="w-100 iq-search-filter">
-							<form action="search" class="searchbox mt-3" method="post">
+							<form class="searchbox mt-3" method="post">
 								<ul
 									class="list-inline p-0 m-0 row justify-content-center search-menu-options">
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Danh mục</label> <select name = "categorySearch"
+												<label>Danh mục</label> <select name="categorySearch" onchange="this.form.submit()"
 													class="form-control form-search-control bg-white border-0"
 													id="exampleFormControlSelect1">
-													<option selected="" value="0">Tất cả</option>
+
+													<c:choose>
+														<c:when
+															test="${(empty categorySearch) || (categorySearch == 0)}">
+															<option selected value="0">Tất cả</option>
+														</c:when>
+														<c:otherwise>
+															<option value="0">Tất cả</option>
+														</c:otherwise>
+													</c:choose>
 													<c:forEach items="${categoryList}" var="category">
-														<option value="${category.id}">${category.name}</option>
+														<c:choose>
+															<c:when test="${categorySearch == category.id}">
+																<option selected value="${category.id}">${category.name}</option>
+															</c:when>
+															<c:otherwise>
+																<option value="${category.id}">${category.name}</option>
+															</c:otherwise>
+														</c:choose>
+
 													</c:forEach>
+
 
 												</select>
 											</div>
@@ -31,12 +50,28 @@
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Cửa hàng</label> <select name = "storeSearch"
+												<label>Cửa hàng</label> <select name="storeSearch" onchange="this.form.submit()"
 													class="form-control form-search-control bg-white border-0"
 													id="exampleFormControlSelect2">
-													<option selected="" value = "0">Tất cả</option>
+													<c:choose>
+														<c:when
+															test="${(empty storeSearch) || (storeSearch == 0)}">
+															<option selected value="0">Tất cả</option>
+														</c:when>
+														<c:otherwise>
+															<option value="0">Tất cả</option>
+														</c:otherwise>
+													</c:choose>
 													<c:forEach items="${storeList}" var="store">
-														<option value="${store.id}">${store.name}</option>
+														<c:choose>
+															<c:when test="${storeSearch == store.id}">
+																<option selected value="${store.id}">${store.name}</option>
+															</c:when>
+															<c:otherwise>
+																<option value="${store.id}">${store.name}</option>
+															</c:otherwise>
+														</c:choose>
+
 													</c:forEach>
 												</select>
 											</div>
@@ -45,16 +80,25 @@
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Rating</label> <select name = "ratingSearch"
+												<label>Rating</label> <select name="ratingSearch" onchange="this.form.submit()"
 													class="form-control form-search-control bg-white border-0"
 													id="exampleFormControlSelect3">
-													<option selected="" value="-1">Tất cả</option>
-													<option value="0">0</option>
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
+
+													<option
+														<c:if test="${(empty rating) || (rating == -1)}">selected</c:if>
+														value="-1">Tất cả</option>
+													<option <c:if test="${rating == 0}">selected</c:if>
+														value="0">0</option>
+													<option <c:if test="${rating == 1}">selected</c:if>
+														value="1">1</option>
+													<option <c:if test="${rating == 2}">selected</c:if>
+														value="2">2</option>
+													<option <c:if test="${rating == 3}">selected</c:if>
+														value="3">3</option>
+													<option <c:if test="${rating == 4}">selected</c:if>
+														value="4">4</option>
+													<option <c:if test="${rating == 5}">selected</c:if>
+														value="5">5</option>
 												</select>
 											</div>
 										</div>
@@ -62,14 +106,20 @@
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Giá tối thiểu</label> <select name ="minPriceSearch"
+												<label>Giá tối thiểu</label> <select name="minPriceSearch" onchange="this.form.submit()"
 													class="form-control form-search-control bg-white border-0"
 													id="exampleFormControlSelect4">
-													<option selected="" value="0">0</option>
-													<option value="100000">100.000 VNĐ</option>
-													<option value="200000">200.000 VNĐ</option>
-													<option value="500000">500.000 VNĐ</option>
-													<option value="800000">800.000 VNĐ</option>
+													<option
+														<c:if test="${(empty minPrice) || (minPrice == 0)}">selected</c:if>
+														value="0">0</option>
+													<option <c:if test="${minPrice == 100000}">selected</c:if>
+														value="100000">100.000 VNĐ</option>
+													<option <c:if test="${minPrice == 200000}">selected</c:if>
+														value="200000">200.000 VNĐ</option>
+													<option <c:if test="${minPrice == 500000}">selected</c:if>
+														value="500000">500.000 VNĐ</option>
+													<option <c:if test="${minPrice == 800000}">selected</c:if>
+														value="800000">800.000 VNĐ</option>
 												</select>
 											</div>
 										</div>
@@ -80,33 +130,37 @@
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Giá tối đa</label> <select name = "maxPriceSearch"
+												<label>Giá tối đa</label> <select name="maxPriceSearch" onchange="this.form.submit()"
 													class="form-control form-search-control bg-white border-0"
 													id="exampleFormControlSelect4">
-													<option value = "100000">100.000 VNĐ</option>
-													<option value = "200000">200.000 VNĐ</option>
-													<option value = "500000">500.000 VNĐ</option>
-													<option value = "800000">800.000 VNĐ</option>
-													<option selected="" value="1000000">1.000.000 VNĐ</option>
+													<option <c:if test="${maxPrice == 100000}">selected</c:if>
+														value="100000">100.000 VNĐ</option>
+													<option <c:if test="${maxPrice == 200000}">selected</c:if>
+														value="200000">200.000 VNĐ</option>
+													<option <c:if test="${maxPrice == 500000}">selected</c:if>
+														value="500000">500.000 VNĐ</option>
+													<option <c:if test="${maxPrice == 800000}">selected</c:if>
+														value="800000">800.000 VNĐ</option>
+													<option
+														<c:if test="${(empty maxPrice) || (maxPrice == 1000000)}">selected</c:if>
+														value="1000000">1.000.000 VNĐ</option>
 												</select>
 											</div>
 										</div>
 									</li>
 
-									<li class="search-menu-opt mt-3"">
-									<label>Tìm kiếm</label>
-										<div
-											class="iq-search-bar search-book d-flex">
-								
-											<input name="searchkeyword" type="text"
-												class="text search-input" placeholder="Tìm kiếm sách...">
-											<a class="search-link" href="#"><i class="ri-search-line"></i></a>
-											<button type="submit"
-												class="btn btn-primary search-data ml-2">Tìm kiếm</button>
+									<li class="search-menu-opt mt-3""><label>Tìm kiếm</label>
+										<div class="iq-search-bar search-book d-flex">
+
+											<input name="searchkeyword" type="text" oninput ="changeFormAction(this.value)"
+												class="text search-input" placeholder="Tìm kiếm sách..."
+												value="${searchkeyword}"> <a class="search-link"
+												href="#"></a>
+											<button id ="searchbutton" formaction="<c:url value='/web/book/search?search=${searchkeyword}'/>"
+												class="btn btn-primary search-data ml-2"><i class="ri-search-line"></i></button>
 
 
-										</div>
-									</li>
+										</div></li>
 								</ul>
 							</form>
 						</div>
@@ -123,12 +177,16 @@
 											<div class="d-flex align-items-center">
 												<div
 													class="col-6 p-0 position-relative image-overlap-shadow">
-													<a href="javascript:void();"><img
+													<a href="javascript:void();"><c:url
+															value="/image?fname=${product.getImages().get(0).getName()}&type=product"
+															var="imgUrl"></c:url> <img
 														class="img-fluid rounded w-100"
-														src="<c:url value ='/template/images/browse-books/01.jpg'/>" alt=""></a>
+														style="object-fit: contain; height: 25vh; width: 20vh"
+														src="${imgUrl}" alt=""></a>
 													<div class="view-book">
-														<a href="#" class="btn btn-sm btn-white">Xem
-															chi tiết</a>
+														<a
+															href="<c:url value ='/web/book/detail?id=${product.id}'/>"
+															class="btn btn-sm btn-white">Xem chi tiết</a>
 													</div>
 												</div>
 
@@ -156,10 +214,16 @@
 														</h6>
 													</div>
 													<div class="iq-product-action">
-														<a href="javascript:void();"><i
-															class="ri-shopping-cart-2-fill text-primary"></i></a> <a
-															href="javascript:void();" class="ml-2"><i
-															class="ri-heart-fill text-danger"></i></a>
+														<form method="post">
+															<button
+																style="border: none; background-color: transparent"
+																formaction="<c:url value='/web/cart/item/create?id=${product.id}'/>"
+																href="#">
+																<i class="ri-shopping-cart-2-fill text-primary"></i>
+															</button>
+															<a href="#" class="ml-2"><i
+																class="ri-heart-fill text-danger"></i></a>
+														</form>
 													</div>
 												</div>
 											</div>
@@ -172,7 +236,15 @@
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
+<script>
+const url = "<c:url value='/web/book/search?search='/>";
+
+function changeFormAction(searchkeyword)
+{	
+	document.getElementById("searchbutton").formAction = url + searchkeyword;
+}
+</script>

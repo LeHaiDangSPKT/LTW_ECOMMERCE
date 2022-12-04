@@ -32,8 +32,11 @@ public class ProductController extends HttpServlet {
 		if (url.contains("search")) {
 			List<Category> categoryList = categoryService.findAll();
 			List<Store> storeList = storeService.findAll();
+			List<Product> searchProductList = productService.findBySearching("", 0, 0, -1, 0.0, 1000000.0);
+			
 			req.setAttribute("categoryList", categoryList);
 			req.setAttribute("storeList", storeList);
+			req.setAttribute("searchProductList", searchProductList);
 			req.getRequestDispatcher("/views/web/searchbook.jsp").forward(req, resp);
 		}
 		else if (url.contains("detail")) {
@@ -42,6 +45,7 @@ public class ProductController extends HttpServlet {
 			
 			req.setAttribute("product", product);
 			req.getRequestDispatcher("/views/web/productdetail.jsp").forward(req, resp);
+			
 		}
 
 	}
@@ -54,17 +58,38 @@ public class ProductController extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			List<Category> categoryList = categoryService.findAll();
 			List<Store> storeList = storeService.findAll();
-			String searchkeyword = req.getParameter("searchkeyword");
-			int categorySearch = Integer.parseInt(req.getParameter("categorySearch"));
-			int storeSearch = Integer.parseInt(req.getParameter("storeSearch"));
-			int rating = Integer.parseInt(req.getParameter("ratingSearch"));
-			double minPrice = Double.parseDouble(req.getParameter("minPriceSearch"));
-			double maxPrice = Double.parseDouble(req.getParameter("maxPriceSearch"));
-			List<Product> searchProductList = productService.findBySearching(searchkeyword.trim(), categorySearch, storeSearch, rating, minPrice, maxPrice);
+			String searchkeyword = req.getParameter("search");
 			
+			int categorySearch = 0;
+			int storeSearch = 0;
+			int rating = -1;
+			double minPrice = 0;
+			double maxPrice = 1000000;
+			
+			if(req.getParameter("categorySearch")!=null)
+				categorySearch = Integer.parseInt(req.getParameter("categorySearch"));
+			if(req.getParameter("storeSearch")!=null)
+				storeSearch = Integer.parseInt(req.getParameter("storeSearch"));
+			if(req.getParameter("ratingSearch")!=null)
+				rating = Integer.parseInt(req.getParameter("ratingSearch"));
+			if(req.getParameter("minPriceSearch")!=null)
+				minPrice = Double.parseDouble(req.getParameter("minPriceSearch"));
+			if(req.getParameter("maxPriceSearch")!=null)	 
+				maxPrice = Double.parseDouble(req.getParameter("maxPriceSearch"));
+			
+			List<Product> searchProductList = productService.findBySearching(searchkeyword.trim(), categorySearch, storeSearch, rating, minPrice, maxPrice);
+				
 			req.setAttribute("categoryList", categoryList);
 			req.setAttribute("storeList", storeList);
 			req.setAttribute("searchProductList", searchProductList);
+			
+			req.setAttribute("searchkeyword", searchkeyword);
+			req.setAttribute("categorySearch", categorySearch);
+			req.setAttribute("storeSearch", storeSearch);
+			req.setAttribute("rating", rating);
+			req.setAttribute("minPrice", minPrice);
+			req.setAttribute("maxPrice", maxPrice);
+			
 			req.getRequestDispatcher("/views/web/searchbook.jsp").forward(req, resp);
 		}
 	}

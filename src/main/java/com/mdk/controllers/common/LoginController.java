@@ -39,7 +39,10 @@ public class LoginController extends HttpServlet {
             SessionUtil.getInstance().removeValue(req, "USERMODEL");
             SessionUtil.getInstance().removeValue(req, "STORE");
             resp.sendRedirect(req.getContextPath() + "/login");
-        } else {
+        } else if (url.contains("signup")) {
+			req.getRequestDispatcher("/views/signup.jsp").forward(req, resp);
+		} 
+        else {
             req.getRequestDispatcher("/views/home.jsp").forward(req, resp);;
         }
 
@@ -55,7 +58,12 @@ public class LoginController extends HttpServlet {
             user.setEmail(username);
             user.setPassword(password);
             ReqLogin(req, resp, user);
-        }
+        } else if (url.contains("create")) {
+			req.setCharacterEncoding("UTF-8");
+			resp.setCharacterEncoding("UTF-8");
+			insert(req,resp);
+			resp.sendRedirect(req.getContextPath() + "/signup");
+		}
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
@@ -106,4 +114,18 @@ public class LoginController extends HttpServlet {
         user.setPassword(userGoogle.getId());
         return user;
     }
+    protected void insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		User user = new User();
+		
+		user.setFirstname(req.getParameter("firstname"));
+		user.setLastname(req.getParameter("lastname"));
+		user.setId_card(req.getParameter("id_card"));
+		user.setEmail(req.getParameter("email"));
+		user.setPhone(req.getParameter("phone"));
+		user.setPassword(req.getParameter("password"));
+		user.setGender("1".equals(req.getParameter("gender")));
+		
+		userService.insert(user);
+		
+	}
 }
