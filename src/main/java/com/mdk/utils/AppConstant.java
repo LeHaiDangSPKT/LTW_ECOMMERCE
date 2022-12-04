@@ -3,8 +3,9 @@ package com.mdk.utils;
 import java.io.File;
 
 public class AppConstant {
-    public static final String UPLOAD_STORE_DIRECTORY = "E:\\upload\\store";
-    public static final String UPLOAD_PRODUCT_DIRECTORY = "E:\\upload\\product";
+    public static final String UPLOAD_STORE_DIRECTORY = "D:\\upload\\store";
+    public static final String UPLOAD_PRODUCT_DIRECTORY = "D:\\upload\\product";
+    public static final String UPLOAD_USER_DIRECTORY = "D:\\upload\\user";
 
     // message
     public static final String MESSAGE_INSERT_SUCCESS = "Thêm thành công !!";

@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import static com.mdk.utils.AppConstant.UPLOAD_PRODUCT_DIRECTORY;
 import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
+import static com.mdk.utils.AppConstant.UPLOAD_USER_DIRECTORY;
 
 @WebServlet(urlPatterns = "/image")
 public class DownloadImageController extends HttpServlet {
@@ -25,7 +26,8 @@ public class DownloadImageController extends HttpServlet {
             path = UPLOAD_STORE_DIRECTORY + "/" + fileName;
         } else if (type.equals("product")) {
             path = UPLOAD_PRODUCT_DIRECTORY + "/" + fileName;
-        }
+        } else if (type.equals("user"))
+        	path = UPLOAD_USER_DIRECTORY + "/" + fileName;
         File file = new File(path);
         resp.setContentType("image/*");
         if (file.exists()) {

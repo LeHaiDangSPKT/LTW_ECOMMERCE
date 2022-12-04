@@ -7,6 +7,7 @@ import com.mdk.paging.Pageble;
 import java.util.List;
 
 public interface IOrdersService {
+	void insert(Orders order);
     List<Orders> findAll(String status);
     Orders findOneById(int id);
     Orders findById(int id);
@@ -16,4 +17,5 @@ public interface IOrdersService {
     int countByStoreId(String status, int storeId);
     List<Orders> findAllByStoreId(String status, int storeId, Pageble pageble);
     List<OrderDetails> findDetailByOrderId(int id);
+	int currentIndex();
 }

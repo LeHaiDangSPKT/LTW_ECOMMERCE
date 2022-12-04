@@ -60,4 +60,9 @@ public class UserService implements IUserService {
 	public List<User> findBySearching(String keyword) {
 		return userDao.findBySearching(keyword);
 	}
+
+	@Override
+	public void updateWallet(int id, double eWallet) {
+		userDao.updateWallet(id, eWallet);
+	}
 }

@@ -88,8 +88,8 @@ create table product
     constraint fk_product_category foreign key (categoryId) references category (id),
     constraint check_product_rating check (0 <= rating <= 5),
     constraint check_product_sold check (sold > 0),
-    constraint check_product_quantity check (quantity > 0),
-    constraint check_product_promotionalPrice check (promotionalPrice > 0),
+    constraint check_product_quantity check (quantity >= 0),
+    constraint check_product_promotionalPrice check (promotionalPrice >= 0),
     constraint check_product_price check (price > 0),
     constraint check_product_name check (length(name) <= 100)
 );

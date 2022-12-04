@@ -15,6 +15,7 @@ public class User extends  AbstractModel<User>{
     private String avatar;
     private Double eWallet;
     private int totalOrders;
+    private boolean gender;
 
     public void setTotalOrders(int totalOrders) {
         this.totalOrders = totalOrders;
@@ -111,4 +112,12 @@ public class User extends  AbstractModel<User>{
     public void seteWallet(Double eWallet) {
         this.eWallet = eWallet;
     }
+
+	public boolean isGender() {
+		return gender;
+	}
+
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
 }

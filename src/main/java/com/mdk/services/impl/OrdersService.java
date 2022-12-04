@@ -53,5 +53,13 @@ public class OrdersService implements IOrdersService {
     public List<OrderDetails> findDetailByOrderId(int id) {
         return ordersDAO.findDetailByOrderId(id);
     }
+	@Override
+	public int currentIndex() {
+		return ordersDAO.currentIndex();
+	}
+	@Override
+	public void insert(Orders order) {
+		ordersDAO.insert(order);
+	}
 
 }
