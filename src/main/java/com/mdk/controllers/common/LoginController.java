@@ -37,8 +37,12 @@ public class LoginController extends HttpServlet {
             ReqLogin(req, resp, toUser(req, resp));
         } else if (url.contains("logout")) {
             SessionUtil.getInstance().removeValue(req, "USERMODEL");
+            SessionUtil.getInstance().removeValue(req, "CART");
+            SessionUtil.getInstance().removeValue(req, "CART_HEADER");
+            SessionUtil.getInstance().removeValue(req, "COUNT_CART_HEADER");
+            SessionUtil.getInstance().removeValue(req, "CARTUSER");
             SessionUtil.getInstance().removeValue(req, "STORE");
-            resp.sendRedirect(req.getContextPath() + "/login");
+            resp.sendRedirect(req.getContextPath() + "/web");
         } else if (url.contains("signup")) {
 			req.getRequestDispatcher("/views/signup.jsp").forward(req, resp);
 		} 
@@ -94,8 +98,8 @@ public class LoginController extends HttpServlet {
             SessionUtil.getInstance().putValue(req, "STORE", store);
             if (user.getRole().equals("ADMIN")) {
                 resp.sendRedirect(req.getContextPath() + "/admin/user/all");
-            } else if (user.getRole().equals("USER")) {
-                resp.sendRedirect(req.getContextPath() + "/vendor/home");
+            } else if (user.getRole().equals("user")) {
+                resp.sendRedirect(req.getContextPath() + "/web");
             } else {
                 resp.sendRedirect(req.getContextPath() + "/login?message=login_error");
             }

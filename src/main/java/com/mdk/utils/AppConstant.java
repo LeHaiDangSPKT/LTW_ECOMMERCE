@@ -1,10 +1,10 @@
 package com.mdk.utils;
 
 public class AppConstant {
-    public static final String UPLOAD_STORE_DIRECTORY = "E:\\upload\\store";
-    public static final String UPLOAD_PRODUCT_DIRECTORY = "E:\\upload\\product";
-    public static final String UPLOAD_USER_DIRECTORY = "E:\\upload\\user";
-    public static final String EXPORT_REPORT = "E:\\report.xls";
+    public static final String UPLOAD_STORE_DIRECTORY = "D:\\upload\\store";
+    public static final String UPLOAD_PRODUCT_DIRECTORY = "D:\\upload\\product";
+    public static final String UPLOAD_USER_DIRECTORY = "D:\\upload\\user";
+    public static final String EXPORT_REPORT = "D:\\report.xls";
 
     // message
     public static final String ALERT_UPDATE_SUCCESS = "warning";

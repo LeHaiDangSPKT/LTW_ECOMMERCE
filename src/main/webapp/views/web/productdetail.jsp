@@ -56,7 +56,7 @@
 											<div
 												class="price d-flex align-items-center font-weight-500 mb-2">
 												<!-- <span class="font-size-20 pr-2 old-price">99.000</span> -->
-												<span class="font-size-24 text-dark">${product.price}</span>
+												<span class="font-size-24 text-dark">${product.promotionalPrice}</span>
 											</div>
 											<div class="mb-3 d-block">
 												<span class="font-size-20 text-warning"> <c:forEach

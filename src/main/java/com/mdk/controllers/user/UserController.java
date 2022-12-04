@@ -1,5 +1,8 @@
 package com.mdk.controllers.user;
 
+import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,16 +42,14 @@ public class UserController extends HttpServlet {
 
 			req.getRequestDispatcher("/views/web/searchuser.jsp").forward(req, resp);
 		} else if (url.contains("profile")) {
-			int id = ((User) SessionUtil.getInstance().getValue(req, "USER")).getId();
+			int id = ((User) SessionUtil.getInstance().getValue(req, "USERMODEL")).getId();
 			User user = userService.findById(id);
 
 			req.setAttribute("user", user);
 			req.getRequestDispatcher("/views/web/userprofile.jsp").forward(req, resp);
-		} else if (url.contains("edit")) {
-			int id = ((User) SessionUtil.getInstance().getValue(req, "USER")).getId();
-			User user = userService.findById(id);
-			SessionUtil.getInstance().putValue(req, "USER", user);
-
+		} else if (url.contains("/web/user/edit")) {
+			User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+			int id = user.getId();
 			req.setAttribute("id", id);
 			req.setAttribute("user", user);
 			req.getRequestDispatcher("/views/web/editprofile.jsp").forward(req, resp);
@@ -68,14 +69,14 @@ public class UserController extends HttpServlet {
 			req.getRequestDispatcher("/views/web/searchuser.jsp").forward(req, resp);
 		} else if (url.contains("update")) {
 			update(req, resp);
-			resp.sendRedirect(req.getHeader("referer"));
+			resp.sendRedirect(req.getContextPath() + "/web/user/edit");
 		}
 	}
 
 	protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		int id = ((User) SessionUtil.getInstance().getValue(req, "USER")).getId();
+		int id = ((User) SessionUtil.getInstance().getValue(req, "USERMODEL")).getId();
 		User user = new User();
 		user.setId(id);
 		user.setFirstname(req.getParameter("firstname"));
@@ -93,20 +94,42 @@ public class UserController extends HttpServlet {
 				String fileName = "" + System.currentTimeMillis();
 				String realPath = AppConstant.UPLOAD_USER_DIRECTORY;
 				if (filePart.getName().equals("avatar")) {
-					user.setAvatar(oldimage);
-				} else {
-					if (oldimage != null) {
-						String fileNameAvatar = oldimage;
-						String userFolder = AppConstant.UPLOAD_USER_DIRECTORY;
-						DeleteImageUtil.processDelete(userFolder, fileNameAvatar);
+					if (filePart.getSize() == 0) {
+						user.setAvatar(oldimage);
+					} else {
+						if (oldimage != null) {
+							String fileNameAvatar = oldimage;
+							String userFolder = AppConstant.UPLOAD_USER_DIRECTORY;
+							DeleteImageUtil.processDelete(userFolder, fileNameAvatar);
+						}
+						image = UploadUtil.processUpload(filePart.getName(), req, realPath, fileName);
 					}
-					image = UploadUtil.processUpload(filePart.getName(), req, realPath, fileName);
+				} else {
+					if (filePart.getSize() == 0) {
+						image = oldimage ;
+					} else {
+						if (oldimage != null) {
+							// xoa anh cu
+							String fileNameImg = oldimage;
+							File file = new File(AppConstant.UPLOAD_USER_DIRECTORY + "\\" + fileNameImg);
+							if (file.delete()) {
+								System.out.println("Đã xóa");
+							} else {
+								System.out.println(AppConstant.UPLOAD_USER_DIRECTORY + "\\" + fileNameImg);
+							}
+						}
+						image = UploadUtil.processUpload(filePart.getName(), req, realPath, fileName);
+					}
 				}
 			}
 		}
 
 		user.setAvatar(image);
 		userService.update(user);
+
+		User newuser = userService.findById(id);
+		SessionUtil.getInstance().putValue(req, "USERMODEL", newuser);
+		req.setAttribute("user", newuser);
 	}
 
 	protected void updatePassword(HttpServletRequest req, HttpServletResponse resp)

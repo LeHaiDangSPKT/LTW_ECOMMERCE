@@ -54,6 +54,7 @@ public class OrderController extends HttpServlet {
 		if (url.contains("/web/order/create")) {
 			insert(req, resp);
 			insertItem(req, resp);
+			changeSessionCart(req, resp);
 			resp.sendRedirect(req.getContextPath() + "/web/cart");
 		}
 
@@ -63,8 +64,8 @@ public class OrderController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 
-		Cart cart = (Cart) SessionUtil.getInstance().getValue(req, "CART");
-		User user = (User) SessionUtil.getInstance().getValue(req, "USER");
+		Cart cart = (Cart) SessionUtil.getInstance().getValue(req, "CARTUSER");
+		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
 		Store store = cart.getStore();
 		int deliveryId = Integer.parseInt(req.getParameter("deliveryId"));
 		String address = req.getParameter("address");
@@ -78,9 +79,8 @@ public class OrderController extends HttpServlet {
 		order.setPhone(phone);
 
 		Double deliveryPrice = deliveryService.findById(deliveryId).getPrice();
-		Double amountFromUser = cart.getCartItems().stream()
-				.mapToDouble(o1 -> o1.getProduct().getPromotionalPrice()).sum()
-				+ deliveryPrice;
+		Double amountFromUser = cart.getCartItems().stream().mapToDouble(o1 -> o1.getProduct().getPromotionalPrice())
+				.sum() + deliveryPrice;
 		Double amountToStore = amountFromUser - 0.025 * amountFromUser;
 		Double amountToGD = amountFromUser * 0.025;
 
@@ -95,8 +95,8 @@ public class OrderController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 
-		User user = (User) SessionUtil.getInstance().getValue(req, "USER");
-		Cart cart = (Cart) SessionUtil.getInstance().getValue(req, "CART");
+		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+		Cart cart = (Cart) SessionUtil.getInstance().getValue(req, "CARTUSER");
 
 		List<CartItem> cartItemList = cartItemService.findAllByCart(cart.getId());
 		int currentIndex = ordersService.currentIndex();
@@ -112,6 +112,19 @@ public class OrderController extends HttpServlet {
 		}
 
 		cartService.delete(cart.getId());
-		userService.updateWallet(user.getId(), user.geteWallet() - ordersService.findById(currentIndex).getAmountFromUser());
+		userService.updateWallet(user.getId(),
+				user.geteWallet() - ordersService.findById(currentIndex).getAmountFromUser());
+	}
+
+	protected void changeSessionCart(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+		User newuser = userService.findById(user.getId());
+		List<Cart> carts = cartService.findByUserId(user.getId());
+		int countOfCarts = carts.stream().mapToInt(o1 -> o1.getCartItems().stream().mapToInt(o2 -> o2.getCount()).sum())
+				.sum();
+		SessionUtil.getInstance().putValue(req, "CART_HEADER", carts);
+		SessionUtil.getInstance().putValue(req, "COUNT_CART_HEADER", countOfCarts);
+		SessionUtil.getInstance().putValue(req, "USERMODEL", newuser);
 	}
 }
