@@ -96,18 +96,16 @@
 											class="text-dark">${user.eWallet}</span>
 									</div>
 								</div>
-								<div class="col-lg-12">
+								<div class="iq-card-body">
 									<c:choose>
 										<c:when test="${user.eWallet >= cartTotal }">
-											<button id="deliver-address"
-												formaction="<c:url value="/web/order/create"/>"
+											<button formaction="<c:url value="/web/order/create"/>"
 												class="btn btn-primary d-block mt-1 next col-lg-12">Thanh
 												toán</button>
 										</c:when>
 										<c:otherwise>
-											<span id="deliver-address"
-												class="d-block mt-1 next col-lg-12">Ví MKB không đủ
-												để thanh toán</span>
+											<div class="d-block mt-1 next col-lg-12">Ví MKB không đủ
+												để thanh toán</div>
 										</c:otherwise>
 									</c:choose>
 								</div>

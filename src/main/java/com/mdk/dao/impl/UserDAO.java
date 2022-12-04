@@ -132,6 +132,8 @@ public class UserDAO extends DBConnection implements IUserDAO {
 				user.setPhone(rs.getString("phone"));
 				user.setPassword(rs.getString("password"));
 				user.setRole(rs.getString("role"));
+				user.seteWallet(rs.getDouble("eWallet"));
+				user.setAvatar(rs.getString("avatar"));
 				return user;
 			}
 		} catch (SQLException e) {

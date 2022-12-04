@@ -164,7 +164,7 @@
 														<div class="media-body ml-3">
 															<h6 class="mb-0 ">${cartItem.product.name}-
 																x${cartItem.count}</h6>
-															<p class="mb-0">${cartItem.count*(cartItem.product.price - cartItem.product.promotionalPrice)}</p>
+															<p class="mb-0">${cartItem.count*cartItem.product.promotionalPrice}</p>
 														</div>
 														<div class="float-right font-size-24 text-danger">
 															<button
@@ -189,23 +189,23 @@
 							</div>
 						</div></li>
 					<li class="line-height pt-3 text-center"><c:choose>
-							<c:when test="${not empty sessionScope.USER}">
+							<c:when test="${not empty sessionScope.USERMODEL}">
 								<a href="#"
 									class="search-toggle iq-waves-effect d-flex align-items-center">
-									<c:if test="${sessionScope.USER.avatar == null }">
+									<c:if test="${(sessionScope.USERMODEL.avatar == null) || (sessionScope.USERMODEL.avatar == '')}">
 										<img
 											src="<c:url value='/template/images/default-avatar.png'/>"
 											class="img-fluid rounded-circle mr-3" alt="user">
-									</c:if> <c:if test="${sessionScope.USER.avatar != null }">
+									</c:if> <c:if test="${(sessionScope.USERMODEL.avatar != null) && (sessionScope.USERMODEL.avatar != '') }">
 										<c:url
-											value="/image?fname=${sessionScope.USER.avatar}&type=user"
+											value="/image?fname=${sessionScope.USERMODEL.avatar}&type=user"
 											var="imgAvatar"></c:url>
 										<img src="${imgAvatar}" class="img-fluid rounded-circle mr-3"
 											alt="user">
 									</c:if>
 									<div class="caption">
-										<h6 class="mb-1 line-height text-white">${sessionScope.USER.firstname}
-											${sessionScope.USER.lastname}</h6>
+										<h6 class="mb-1 line-height text-white">${sessionScope.USERMODEL.firstname}
+											${sessionScope.USERMODEL.lastname}</h6>
 									</div>
 								</a>
 								<div class="iq-sub-dropdown iq-user-dropdown">
@@ -213,8 +213,8 @@
 										<div class="iq-card-body p-0 ">
 											<div class="bg-primary p-3">
 												<h5 class="mb-0 text-white line-height">Hello
-													${sessionScope.USER.firstname}
-													${sessionScope.USER.lastname}</h5>
+													${sessionScope.USERMODEL.firstname}
+													${sessionScope.USERMODEL.lastname}</h5>
 												<span class="text-white font-size-12">Đang hoạt động</span>
 											</div>
 											<a href="<c:url value="/web/user/edit"/>"
@@ -258,8 +258,8 @@
 												</div>
 											</a>
 											<div class="d-inline-block w-100 text-center p-3">
-												<a class="bg-primary iq-sign-btn" href="sign-in.html"
-													role="button">Đăng xuất<i
+												<a class="bg-primary iq-sign-btn"
+													href="<c:url value="/logout"/>" role="button">Đăng xuất<i
 													class="ri-login-box-line ml-2"></i></a>
 											</div>
 										</div>
@@ -268,10 +268,12 @@
 							</c:when>
 
 							<c:otherwise>
-								<button type="submit"
-									class="btn w-75 btn-primary view-more mb-2">Log in</button>
-								<button type="submit"
-									class="btn w-75 btn-primary view-more mb-2">Sign in</button>
+
+								<div class="iq-waves-effect d-flex align-items-center h-100" style="width:160px; transform: translateY(-5px)">
+									<a href="<c:url value="/login"/>" class="w-50 d-block text-white">Đăng nhập</a> <a href="<c:url value="signup"/>"
+										class="w-50 d-block text-white">Đăng ký</a>
+								</div>
+
 							</c:otherwise>
 						</c:choose></li>
 					<%--            <li class="line-height pt-3">--%>

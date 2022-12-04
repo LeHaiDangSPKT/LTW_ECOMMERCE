@@ -24,7 +24,7 @@ public class AuthorizationFilter implements Filter {
         if (url.contains("admin")) {
             checkAuthor(request, response, chain, "ADMIN");
         } else if (url.contains("user") || url.contains("vendor")){
-            checkAuthor(request, response, chain, "USER");
+            checkAuthor(request, response, chain, "user");
         } else {
             chain.doFilter(request, response);
         }
