@@ -29,6 +29,14 @@ public class LoadTopProduct extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
         for (Product o : products) {
+            StringBuilder rating = new StringBuilder("");
+            for (int i = 1; i <= 5; i++) {
+                if (i <= o.getRating()) {
+                    rating.append("<i class=\"fa fa-star\"></i>");
+                } else {
+                    rating.append("<i class=\"fa fa-star-o\"></i>");
+                }
+            }
             String urlImage = req.getContextPath() + "/image?fname="+o.getImages().get(0).getName()+"&type=product";
             String urlView = req.getContextPath() + "/vendor/product/edit?pname="+o.getName()+"&storeId="+o.getStoreId();
             out.println("<div class=\"product col-sm-6 col-md-4 col-lg-3\">\n" +
@@ -59,11 +67,7 @@ public class LoadTopProduct extends HttpServlet {
                     "mb-1\">"+o.getDescription()+"</p>\n" +
                     "                                                        <div class=\"d-block line-height\">\n" +
                     "                                                   <span class=\"font-size-11 text-warning\">\n" +
-                    "                                                      <i class=\"fa fa-star\"></i>\n" +
-                    "                                                      <i class=\"fa fa-star\"></i>\n" +
-                    "                                                      <i class=\"fa fa-star\"></i>\n" +
-                    "                                                      <i class=\"fa fa-star\"></i>\n" +
-                    "                                                      <i class=\"fa fa-star\"></i>\n" +
+                                                                            rating +
                     "                                                   </span>\n" +
                     "                                                        </div>\n" +
                     "                                                    </div>\n" +
