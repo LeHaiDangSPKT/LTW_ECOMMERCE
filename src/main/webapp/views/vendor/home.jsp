@@ -81,12 +81,17 @@
                                                         <h6 class="mb-1">${product.name}</h6>
                                                         <p class="font-size-13 line-height mb-1">${product.description}</p>
                                                         <div class="d-block line-height">
-                                                   <span class="font-size-11 text-warning">
-                                                      <i class="fa fa-star"></i>
-                                                      <i class="fa fa-star"></i>
-                                                      <i class="fa fa-star"></i>
-                                                      <i class="fa fa-star"></i>
-                                                      <i class="fa fa-star"></i>
+                                                   <span id="rating" class="font-size-11 text-warning">
+                                                       <c:forEach
+                                                               var="i" begin="1" end="5">
+                                                           <c:if test="${i <= product.rating }">
+                                                               <i class="fa fa-star"></i>
+                                                           </c:if>
+
+                                                           <c:if test="${i > product.rating }">
+                                                               <i class="fa fa-star-o"></i>
+                                                           </c:if>
+                                                       </c:forEach>
                                                    </span>
                                                         </div>
                                                     </div>
