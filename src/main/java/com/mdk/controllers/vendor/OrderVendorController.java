@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
 import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
 
 @WebServlet(urlPatterns = {"/vendor/order", "/vendor/order/manager", "/vendor/order/detail", "/vendor/order/update"})
@@ -33,14 +34,21 @@ public class OrderVendorController extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         String url = req.getRequestURL().toString();
         if (url.contains("manager")){
-            ordersPage(req, resp);
-            req.getRequestDispatcher("/views/vendor/managerOrder.jsp").forward(req, resp);
+            if (checkStoreExist(req, resp)) {
+                ordersPage(req, resp);
+                req.getRequestDispatcher("/views/vendor/managerOrder.jsp").forward(req, resp);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/vendor/order?message=nostore_error");
+            }
         } else if (url.contains("detail")) {
             orderDetail(req, resp);
             req.getRequestDispatcher("/views/vendor/order.jsp").forward(req, resp);
         }
         else {
-            ordersPage(req, resp);
+            if (checkStoreExist(req, resp)) {
+                ordersPage(req, resp);
+            }
+            req.setAttribute("success", req.getParameter("state"));
             MessageUtil.showMessage(req, resp);
             req.getRequestDispatcher("/views/vendor/managerOrder.jsp").forward(req, resp);
         }
@@ -60,8 +68,10 @@ public class OrderVendorController extends HttpServlet {
     protected void ordersPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+        String dateStart = req.getParameter("start");
+        String dateEnd = req.getParameter("end");
 
-        String statusReq = req.getParameter("status");
+        String statusReq = req.getParameter("status") == null ? "all" : req.getParameter("status");
         Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
 
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
@@ -70,19 +80,21 @@ public class OrderVendorController extends HttpServlet {
             indexPage = "1";
         }
 
-        int countP = ordersService.count(statusReq, store.getId());
+        int countP = ordersService.count(statusReq, store.getId(), dateStart, dateEnd);
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
         }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Orders> ordersList = ordersService.findAll(statusReq, pageble, store.getId());
+        List<Orders> ordersList = ordersService.findAll(statusReq, pageble, store.getId(), dateStart, dateEnd);
         req.setAttribute("orders", ordersList);
         req.setAttribute("count", countP);
         req.setAttribute("endP", endP);
         req.setAttribute("tag", indexPage);
         req.setAttribute("statusResp",statusReq);
+        req.setAttribute("dateStart", dateStart);
+        req.setAttribute("dateEnd", dateEnd);
     }
     protected void orderDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         req.setCharacterEncoding("UTF-8");

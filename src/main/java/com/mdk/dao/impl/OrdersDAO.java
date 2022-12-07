@@ -163,7 +163,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         return null;
     }
     @Override
-    public int count(String status, int storeId) {
+    public int count(String status, int storeId, String start, String end) {
         StringBuilder sql = new StringBuilder("select count(*) from orders");
         if (!status.equals("all")) {
             sql.append(" where status like \"");
@@ -171,6 +171,9 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
             sql.append(" and storeId = " + storeId);
         } else {
             sql.append(" where storeId = " + storeId);
+        }
+        if (start != null && end != null) {
+            sql.append(" and createdAt between " + "\"" + start + "\"" + " and " + "\"" + end + "\"");
         }
         try {
             conn = getConnection();
@@ -206,7 +209,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     }
 
     @Override
-    public List<Orders> findAll(String status, Pageble pageble, int storeId) {
+    public List<Orders> findAll(String status, Pageble pageble, int storeId, String start, String end) {
         StringBuilder sql = new StringBuilder("select * from orders");
         if (!status.equals("all")) {
             sql.append(" where status like \"");
@@ -214,6 +217,9 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
             sql.append(" and storeId = " + storeId);
         } else {
             sql.append(" where storeId = " + storeId);
+        }
+        if (start != null && end != null) {
+            sql.append(" and createdAt between " + "\"" + start + "\"" + " and " + "\"" + end + "\"");
         }
         if (pageble.getSorter() != null) {
             sql.append(" order by "+pageble.getSorter().getSortName()+" "+pageble.getSorter().getSortBy()+"");
@@ -325,6 +331,41 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         }
         return orders;
     }
+	@Override
+	public int currentIndex() {
+		StringBuilder sql = new StringBuilder("SELECT MAX(id) FROM orders;");
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+	}
+	@Override
+	public void insert(Orders order) {
+		String sql = "INSERT INTO orders (userId, storeId, deliveryId, address, phone, amountFromUser, amountToStore, amountToGD) "
+				+ "VALUE (?,?,?,?,?,?,?,?)";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, order.getUserId());
+            ps.setInt(2, order.getStoreId());
+            ps.setInt(3, order.getDeliveryId());
+            ps.setString(4, order.getAddress());
+            ps.setString(5, order.getPhone());
+            ps.setDouble(6, order.getAmountFromUser());
+            ps.setDouble(7, order.getAmountToStore());
+            ps.setDouble(8, order.getAmountToGD());
+            ps.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+	}
 
     @Override
     public List<Orders> ordersNew(int storeId) {

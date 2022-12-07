@@ -15,9 +15,10 @@ public interface IStoreService {
     int totalProduct(int storeId);
     int totalOrders(int storeId);
     int totalSale(int storeId);
+    double revenueOfMonth(int storeId, String month, String year);
     int totalStores();
     List<Store> top10Store_Orders();
     List<Store> findAll();
     List<Store> findAllByName(String keyword);
-
+    void updateWallet(int id, double eWallet);
 }

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
 import static com.mdk.utils.AppConstant.*;
 import static com.mdk.utils.MessageUtil.showMessage;
 
@@ -41,9 +42,13 @@ public class ProductVendorController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
         if(url.contains("create")) {
-            loadCategory(req, resp);
-            req.setAttribute("action", "add");
-            req.getRequestDispatcher("/views/vendor/product.jsp").forward(req, resp);
+            if (checkStoreExist(req, resp)) {
+                loadCategory(req, resp);
+                req.setAttribute("action", "add");
+                req.getRequestDispatcher("/views/vendor/product.jsp").forward(req, resp);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/vendor/product/category?message=nostore_error");
+            }
         } else if (url.contains("edit")) {
             loadCategory(req, resp);
             findOneByName(req, resp);
@@ -52,11 +57,16 @@ public class ProductVendorController extends HttpServlet {
         } else if (url.contains("delete")) {
             delete(req, resp);
         } else if (url.contains("category")) {
-            productPage(req, resp);
+            if (checkStoreExist(req, resp)) {
+                productPage(req, resp);
+            }
+            showMessage(req, resp);
             req.getRequestDispatcher("/views/vendor/listProduct.jsp").forward(req, resp);
         }
         else {
-            productPage(req, resp);
+            if (checkStoreExist(req, resp)) {
+                productPage(req, resp);
+            }
             showMessage(req, resp);
             req.getRequestDispatcher("/views/vendor/listProduct.jsp").forward(req, resp);
         }
@@ -83,20 +93,22 @@ public class ProductVendorController extends HttpServlet {
     }
     protected void productPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
-        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
         String indexPage = req.getParameter("index");
+        String searchKey = req.getParameter("search");
         if(indexPage == null) {
             indexPage = "1";
         }
         int categoryId = req.getParameter("categoryId") == null ? 0 : Integer.parseInt(req.getParameter("categoryId"));
-        int countP = productService.count(categoryId, store.getId());
+        int countP = productService.count(categoryId, store.getId(), searchKey);
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
         }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Product> products = productService.findAll(pageble, categoryId, store.getId());
+        List<Product> products = new ArrayList<>();
+        products = productService.findAll(pageble, categoryId, store.getId(), searchKey);
         loadCategory(req, resp);
         req.setAttribute("categoryId", categoryId);
         req.setAttribute("count", countP);
@@ -105,6 +117,7 @@ public class ProductVendorController extends HttpServlet {
         req.setAttribute("tag", indexPage);
         req.setAttribute("DIR", UPLOAD_PRODUCT_DIRECTORY);
         req.setAttribute("products", products);
+        req.setAttribute("search", searchKey);
     }
     protected void findOneByName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String pname = req.getParameter("pname");
@@ -125,7 +138,7 @@ public class ProductVendorController extends HttpServlet {
 
         Product product = new Product();
         List<ImageProduct> images = new ArrayList<>();
-        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
 
         product.setName(req.getParameter("name"));
         product.setCategoryId(Integer.valueOf(req.getParameter("categoryId")));

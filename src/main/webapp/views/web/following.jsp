@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div id="content-page" class="content-page">
+<div id="content-page" class="content-page"
+	style="margin-left: 0; padding-left: 100px !important; padding-right: 100px !important; background-color: #efefef">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">

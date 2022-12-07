@@ -72,6 +72,11 @@ public class StoreService implements IStoreService {
     }
 
     @Override
+    public double revenueOfMonth(int storeId, String month, String year) {
+        return storeDAO.revenueOfMonth(storeId, month, year);
+    }
+
+    @Override
     public int totalStores() {
         return storeDAO.totalStores();
     }
@@ -90,4 +95,9 @@ public class StoreService implements IStoreService {
 	public List<Store> findAllByName(String keyword) {
 		return storeDAO.findAllByName(keyword);
 	}
+
+    @Override
+    public void updateWallet(int id, double eWallet) {
+        storeDAO.updateWallet(id, eWallet);
+    }
 }

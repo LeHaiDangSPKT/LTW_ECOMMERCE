@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url value="/vendor/product" var="urlCancel"/>
 <html>
@@ -80,7 +81,8 @@
                         <div class="form-group">
                             <label for="quantity">Số lượng:</label>
                             <button type="button" class="fa fa-minus qty-btn" id="btn-minus"></button>
-                            <input required type="text" id="quantity" value="${not empty product.quantity ?
+                            <input required style="width: 10%;" type="text" id="quantity" value="${not empty
+                            product.quantity ?
                             product.quantity : 0}"
                                    name="quantity">
                             <button type="button" class="fa fa-plus qty-btn" id="btn-plus"></button>

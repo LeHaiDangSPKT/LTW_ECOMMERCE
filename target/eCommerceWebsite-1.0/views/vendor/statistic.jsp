@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:url value="/vendor/statistic?topseller=" var="urlTop"/>
+<c:url value="/vendor/statistic/loadchart" var="urlLoadChart"/>
+<c:url value="/vendor/loadTopProduct" var="urlLoadTopProduct"/>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
 <div class="container-fluid">
+    <%@include file="/common/info.jsp"%>
     <div class="row">
         <div class="col-md-6 col-lg-3">
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
@@ -70,57 +74,67 @@
         </div>
         <div class="col-lg-12">
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                <div class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 similar-detail">
-                    <div class="iq-header-title">
-                        <h4 class="card-title mb-0">Top 4 sách bán chạy</h4>
+                <div class="iq-card-header position-relative mb-0 similar-detail">
+                    <div class="iq-header-title d-flex">
+                        <h4 class="card-title mb-0 d-flex align-items-center">Thống kê doanh thu</h4>
+                        <div style="margin-left: 16px;">
+                            <select class="form-control"
+                                    name=""
+                                    id="selectYear"
+                            >
+                                <c:forEach begin="0" end="2" var="i">
+                                    <option value="${year - i}">Năm: ${year - i}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="iq-card-body">
+                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                <div class="iq-card-header position-relative mb-0 similar-detail">
+                    <div class="iq-header-title d-flex">
+                        <h4 class="card-title mb-0 d-flex align-items-center">Chi tiết giao dịch</h4>
+                        <div style="margin-left: 16px;">
+                            <select class="form-control"
+                                    name=""
+                                    id=""
+                            >
+                                <c:forEach begin="0" end="2" var="i">
+                                    <option value="${year - i}">Năm: ${year - i}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="iq-card-body">
+                    <div style="height: 370px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                <div class="iq-card-header position-relative mb-0 similar-detail">
+                    <div class="iq-header-title d-flex">
+                        <h4 class="card-title mb-0 d-flex align-items-center">Top sách bán chạy</h4>
+                        <div style="margin-left: 16px;">
+                            <select class="form-control"
+                                    name="top"
+                                    id="selectedTop"
+                            >
+                                <option ${top == 4 ? "selected" : ""} value="4">Top 4</option>
+                                <option ${top == 8 ? "selected" : ""} value="8">Top 8</option>
+                                <option ${top == 16 ? "selected" : ""} value="16">Top 16</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                     <div class="iq-card-body">
-                        <div class="row">
-                            <c:forEach items="${products}" var="product">
-                                <div class="col-sm-6 col-md-4 col-lg-3">
-                                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height search-bookcontent">
-                                        <div class="iq-card-body p-0">
-                                            <div>
-                                                <div class="col-12 p-0 position-relative image-overlap-shadow"
-                                                     style="height: 150px;">
-                                                    <a href="#">
-                                                        <c:url value="/image?fname=${product.getImages().get(0).getName()}&type=product"
-                                                                       var="imgUrl"></c:url>
-                                                        <img class="img-fluid rounded w-100 h-100"
-                                                             style="object-fit: contain;"
-                                                             src="${imgUrl}"
-                                                             alt=""></a>
-                                                    <div class="view-book">
-                                                        <a href="<c:url
-                                                   value="/vendor/product/edit?pname=${product.name}&storeId=${product.storeId}"/> " class="btn btn-sm btn-white">View Book</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 mt-3">
-                                                    <div class="mb-2">
-                                                        <h6 class="mb-1">${product.name}</h6>
-                                                        <p class="font-size-13 line-height mb-1">${product.description}</p>
-                                                        <div class="d-block">
-                                                   <span class="font-size-11 text-warning">
-                                                      <i class="fa fa-star"></i>
-                                                      <i class="fa fa-star"></i>
-                                                      <i class="fa fa-star"></i>
-                                                      <i class="fa fa-star"></i>
-                                                      <i class="fa fa-star"></i>
-                                                   </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="price d-flex">
-                                                        <span
-                                                                class="pr-1 old-price font-size-13">${product.price}</span>
-                                                        <h6><b>${product.promotionalPrice}</b></h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:forEach>
+                        <div class="row" id="list-product">
                         </div>
                     </div>
             </div>
@@ -129,7 +143,7 @@
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                 <div class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 similar-detail">
                     <div class="iq-header-title">
-                        <h4 class="card-title mb-0">Đơn hàng mới nhất</h4>
+                        <h4 class="card-title mb-0 d-flex align-items-center">Đơn hàng mới nhất</h4>
                     </div>
                 </div>
                 <div class="iq-card-body">
@@ -184,5 +198,82 @@
         </div>
     </div>
 </div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+    function loadTopProduct(top) {
+        $.ajax({
+            url: "${urlLoadTopProduct}",
+            type: "get",
+            data: {
+                top
+            },
+            success: function (data) {
+                $("#list-product").empty();
+                $("#list-product").append(data);
+            },
+            error: function (xhr) {
+                console.log("Error")
+            }
+        })
+    }
+    function loadChartRevenue(data) {
+        const chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Thống kê doanh thu của năm",
+                fontFamily: "tahoma",
+            },
+            axisX: {
+                title: "Tháng"
+            },
+            axisY: {
+                title: "Doanh thu (VND)",
+                includeZero: true
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor:"pointer",
+            },
+            data: [{
+                type: "column",
+                yValueFormatString: "#,##0.0# VND",
+                dataPoints: data,
+            }]
+        });
+        chart.render();
+    }
+    function loadDataOfEachYear(year) {
+        $.ajax({
+            url: "${urlLoadChart}",
+            type: "get",
+            data: {
+                year
+            },
+            success: function (data) {
+                console.log(data);
+                loadChartRevenue(data);
+            },
+            error: function (xhr) {
+                console.log("Error")
+            }
+        })
+    }
+    window.onload = function() {
+        const year = $("#selectYear").val();
+        const top = $("#selectedTop option:selected").val();
+        loadDataOfEachYear(year);
+        loadTopProduct(top);
+    }
+    $("#selectedTop").change(function () {
+        const top = $("#selectedTop option:selected").val();
+        loadTopProduct(top);
+    })
+    $("#selectYear").change(function () {
+        const year = $("#selectYear").val();
+        loadDataOfEachYear(year);
+    })
+</script>
 </body>
 </html>

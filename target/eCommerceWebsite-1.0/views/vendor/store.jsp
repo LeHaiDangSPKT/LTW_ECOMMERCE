@@ -1,5 +1,5 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <html>
 <head>
@@ -22,9 +22,9 @@
                             <div class="iq-card-body">
                                 <c:if test="${count == 0 && action != 'add'}">
                                     <div class="text-center">
-                                        <h2>Bạn chưa có cửa hàng.</h2>
+                                        <h5>Bạn chưa có cửa hàng.</h5>
                                         <br>
-                                        <h2>Vui lòng tạo của hàng !</h2>
+                                        <h5>Ấn tạo của hàng để tạo cửa hàng</h5>
                                         <br>
                                         <a href="<c:url value="/vendor/store/create"/> " class="btn btn-primary btn-lg ">
                                             <i class="fa-solid fa-circle-plus"></i>
