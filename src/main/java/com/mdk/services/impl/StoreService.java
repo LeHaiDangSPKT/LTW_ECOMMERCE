@@ -95,4 +95,9 @@ public class StoreService implements IStoreService {
 	public List<Store> findAllByName(String keyword) {
 		return storeDAO.findAllByName(keyword);
 	}
+
+    @Override
+    public void updateWallet(int id, double eWallet) {
+        storeDAO.updateWallet(id, eWallet);
+    }
 }

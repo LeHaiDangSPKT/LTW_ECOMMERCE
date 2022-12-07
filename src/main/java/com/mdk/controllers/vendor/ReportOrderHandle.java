@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static com.mdk.utils.AppConstant.EXPORT_REPORT;
+import static com.mdk.utils.AppConstant.STORE_MODEL;
 
 @WebServlet(urlPatterns = "/vendor/report-order")
 public class ReportOrderHandle extends HttpServlet {
@@ -47,7 +48,7 @@ public class ReportOrderHandle extends HttpServlet {
     IReportOrderService reportOrderService = new ReportOrderService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
         String status = req.getParameter("status");
         String dateStart = req.getParameter("start");
         String dateEnd = req.getParameter("end");

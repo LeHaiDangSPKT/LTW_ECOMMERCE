@@ -39,6 +39,12 @@ public class MessageUtil extends HttpServlet {
             } else if (message.equals("export_success")) {
                 messageResp = MESSAGE_EXPORT_SUCCESS;
                 alert = ALERT_UPDATE_SUCCESS;
+            } else if (message.equals("transaction_error")) {
+                messageResp = MESSAGE_TRANSACTION_ERROR;
+                alert = ALERT_ERROR_SYSTEM;
+            } else if (message.equals("transaction_success")) {
+                messageResp = MESSAGE_TRANSACTION_SUCCESS;
+                alert = ALERT_INSERT_SUCCESS;
             }
             req.setAttribute("message", messageResp);
             req.setAttribute("alert", alert);

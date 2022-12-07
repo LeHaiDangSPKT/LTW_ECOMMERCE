@@ -30,8 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
-import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
+import static com.mdk.utils.AppConstant.*;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
@@ -45,7 +44,7 @@ public class StoreVendorController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
         if (url.contains("create")) {
-            User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+            User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
             req.setAttribute("ownerId", user.getId());
             req.getRequestDispatcher("/views/vendor/store.jsp").forward(req, resp);
         } else if (url.contains("edit")) {
@@ -77,7 +76,7 @@ public class StoreVendorController extends HttpServlet {
 
     protected int checkStoreExist(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
-        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
         int count = 0;
         if (store != null) {
             count = 1;
@@ -118,7 +117,7 @@ public class StoreVendorController extends HttpServlet {
         store.setImages(images);
         try {
             storeService.insert(store);
-            SessionUtil.getInstance().putValue(req, "STORE", store);
+            SessionUtil.getInstance().putValue(req, STORE_MODEL, store);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -188,7 +187,7 @@ public class StoreVendorController extends HttpServlet {
     protected void findAllProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
         List<Product> products = new ArrayList<>();
-        Store store = (Store) SessionUtil.getInstance().getValue(req,"STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req,STORE_MODEL);
         if (store != null) {
             Pageble pageble = new PageRequest(1, TOTAL_ITEM_IN_PAGE, null);
             products = productService.findAll(pageble, 0, store.getId(), null);

@@ -93,7 +93,7 @@ public class ProductVendorController extends HttpServlet {
     }
     protected void productPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
-        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
         String indexPage = req.getParameter("index");
         String searchKey = req.getParameter("search");
         if(indexPage == null) {
@@ -138,7 +138,7 @@ public class ProductVendorController extends HttpServlet {
 
         Product product = new Product();
         List<ImageProduct> images = new ArrayList<>();
-        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
 
         product.setName(req.getParameter("name"));
         product.setCategoryId(Integer.valueOf(req.getParameter("categoryId")));

@@ -3,12 +3,21 @@ package com.mdk.models;
 
 public class Transaction extends AbstractModel<Transaction>{
     private int userId ;
+    private String nameUser;
     private int storeId;
-    private Boolean isUp   ;
+    private boolean isUp   ;
     private Double amount ;
     private String isUpString;
     public String getIsUpString() {
         return isUpString;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
     }
 
     public void setIsUpString(String isUpString) {
@@ -31,11 +40,11 @@ public class Transaction extends AbstractModel<Transaction>{
         this.storeId = storeId;
     }
 
-    public Boolean getUp() {
+    public boolean getUp() {
         return isUp;
     }
 
-    public void setUp(Boolean up) {
+    public void setUp(boolean up) {
         isUp = up;
     }
 

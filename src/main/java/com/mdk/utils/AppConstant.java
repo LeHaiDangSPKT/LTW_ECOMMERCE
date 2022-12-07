@@ -1,10 +1,22 @@
 package com.mdk.utils;
 
 public class AppConstant {
-    public static final String UPLOAD_STORE_DIRECTORY = "D:\\upload\\store";
-    public static final String UPLOAD_PRODUCT_DIRECTORY = "D:\\upload\\product";
-    public static final String UPLOAD_USER_DIRECTORY = "D:\\upload\\user";
-    public static final String EXPORT_REPORT = "D:\\report.xls";
+
+    // role
+    public static final String ADMIN = "ADMIN";
+    public static final String USER = "USER";
+    public static final String UPLOAD_STORE_DIRECTORY = "E:\\upload\\store";
+    public static final String UPLOAD_PRODUCT_DIRECTORY = "E:\\upload\\product";
+    public static final String UPLOAD_USER_DIRECTORY = "E:\\upload\\user";
+    public static final String EXPORT_REPORT = "E:\\report.xls";
+
+    // Session
+    public static final String USER_MODEL = "USERMODEL";
+    public static final String STORE_MODEL = "STORE";
+    public static final String CART = "CART";
+    public static final String CART_HEADER = "CART_HEADER";
+    public static final String COUNT_CART_HEADER = "COUNT_CART_HEADER";
+    public static final String CART_USER = "CART_USER";
 
     // message
     public static final String ALERT_UPDATE_SUCCESS = "warning";
@@ -20,6 +32,8 @@ public class AppConstant {
     public static final String MESSAGE_LOGIN_NO = "Vui lòng đăng nhập !";
     public static final String MESSAGE_INVALID_DATE = "Vui lòng kiểm tra lại ngày !";
     public static final String MESSAGE_EXPORT_SUCCESS = "Xuất báo cáo thành công !";
+    public static final String MESSAGE_TRANSACTION_ERROR = "Ví không đủ tiền !";
+    public static final String MESSAGE_TRANSACTION_SUCCESS = "Rút tiền thành công !";
 
 
     // Paging

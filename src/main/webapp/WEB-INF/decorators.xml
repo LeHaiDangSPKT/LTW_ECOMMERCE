@@ -10,6 +10,7 @@
 	</decorator>
 	<decorator name="web" page="web.jsp">
 		<pattern>/web*</pattern>
+		<pattern>/home</pattern>
 	</decorator>
 	<decorator name="signup" page="signup.jsp">
 		<pattern>/signup*</pattern>

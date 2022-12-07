@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.mdk.utils.AppConstant.*;
+
 public class AuthorizationFilter implements Filter {
     private ServletContext context;
 
@@ -22,9 +24,9 @@ public class AuthorizationFilter implements Filter {
 
         String url = req.getRequestURL().toString();
         if (url.contains("admin")) {
-            checkAuthor(request, response, chain, "ADMIN");
-        } else if (url.contains("user") || url.contains("vendor")){
-            checkAuthor(request, response, chain, "user");
+            checkAuthor(request, response, chain, ADMIN);
+        } else if (url.contains("web") || url.contains("vendor")){
+            checkAuthor(request, response, chain, USER);
         } else {
             chain.doFilter(request, response);
         }
@@ -33,7 +35,7 @@ public class AuthorizationFilter implements Filter {
     protected void checkAuthor(ServletRequest request, ServletResponse response, FilterChain chain, String role) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        User model = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+        User model = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
         if (model != null) {
             if (model.getRole().equals(role)) {
                 chain.doFilter(request,response);

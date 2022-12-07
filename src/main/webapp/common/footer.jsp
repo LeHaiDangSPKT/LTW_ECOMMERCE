@@ -8,7 +8,7 @@
         </ul>
       </div>
       <div class="col-lg-6 text-right">
-        Copyright 2020 <a href="#">Booksto</a> All Rights Reserved.
+        Copyright MDK <a href="#">MDK Shop</a>
       </div>
     </div>
   </div>

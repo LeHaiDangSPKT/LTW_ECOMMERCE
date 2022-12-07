@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
 
-<div id="content-page" class="content-page">
+<div id="content-page" class="content-page"
+	style="margin-left: 0; padding-left: 100px !important; padding-right: 100px !important; background-color: #efefef">
 	<div class="container-fluid">
 		<div class="row profile-content">
 			<div class="col-12 col-md-12 col-lg-4">
