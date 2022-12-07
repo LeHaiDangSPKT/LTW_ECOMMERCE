@@ -12,6 +12,7 @@ public class Store extends AbstractModel<Store> {
 	private String avatar;
 	private int rating;
 	private double eWallet;
+	private User owner;
 	private List<ImageStore> images;
 
 	public int getTotal() {
@@ -87,6 +88,14 @@ public class Store extends AbstractModel<Store> {
 
 	public void setRating(int rating) {
 		this.rating = rating;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 }

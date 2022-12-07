@@ -1,25 +1,26 @@
 
 package com.mdk.dao.impl;
 
-import com.mdk.connection.DBConnection;
-import com.mdk.dao.IStoreDAO;
-
-import com.mdk.models.ImageStore;
-import com.mdk.models.Store;
-import com.mdk.services.IImageStoreService;
-import com.mdk.services.impl.ImageStoreService;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.mdk.connection.DBConnection;
+import com.mdk.dao.IStoreDAO;
+import com.mdk.models.Store;
+import com.mdk.services.IImageStoreService;
+import com.mdk.services.IUserService;
+import com.mdk.services.impl.ImageStoreService;
+import com.mdk.services.impl.UserService;
 
 public class StoreDAO extends DBConnection implements IStoreDAO {
 	public Connection conn = null;
 	public PreparedStatement ps = null;
 	public ResultSet rs = null;
+	
 
 	@Override
 	public int totalStores() {
@@ -256,6 +257,7 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 		String sql = "select * from store where id = ?";
 		Store store = new Store();
 		IImageStoreService imageStoreService = new ImageStoreService();
+		IUserService userService = new UserService();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(sql);
@@ -270,6 +272,7 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 				store.setAvatar(rs.getString("avatar"));
 				store.setRating(rs.getInt("rating"));
 				store.seteWallet(rs.getDouble("eWallet"));
+				store.setOwner(userService.findById(store.getOwnerID()));
 				store.setImages(imageStoreService.findByStoreId(rs.getInt("id")));
 				return store;
 			}

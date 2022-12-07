@@ -35,6 +35,7 @@ public class ProductAdminController extends HttpServlet{
     private static final long serialVersionUID = 1L;
     ICategoryService categoryService = new CategoryService();
     IProductService productService = new ProductService();
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();

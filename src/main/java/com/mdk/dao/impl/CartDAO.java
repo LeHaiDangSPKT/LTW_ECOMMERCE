@@ -19,8 +19,7 @@ public class CartDAO extends DBConnection implements ICartDAO {
 	public Connection conn = null;
 	public PreparedStatement ps = null;
 	public ResultSet rs = null;
-	ICartItemService cartItemService = new CartItemService();
-	IStoreService storeService = new StoreService();
+	
 
 	@Override
 	public void insert(Cart cart) {
@@ -88,6 +87,8 @@ public class CartDAO extends DBConnection implements ICartDAO {
 	@Override
 	public Cart findById(int id) {
 		String sql = "SELECT * FROM cart WHERE id = ?";
+		ICartItemService cartItemService = new CartItemService();
+		IStoreService storeService = new StoreService();
 		try {
 			Connection getConnection = super.getConnection();
 			PreparedStatement pStatement = getConnection.prepareStatement(sql);
@@ -112,6 +113,8 @@ public class CartDAO extends DBConnection implements ICartDAO {
 	public List<Cart> findByUserId(int userId) {
 		String sql = "SELECT DISTINCT Cart.* FROM Cart INNER JOIN CartItem ON Cart.id = CartItem.cartId WHERE Cart.userId = ?";
 		List<Cart> carts = new ArrayList<Cart>();
+		ICartItemService cartItemService = new CartItemService();
+		IStoreService storeService = new StoreService();
 		try {
 			Connection getConnection = super.getConnection();
 			PreparedStatement pStatement = getConnection.prepareStatement(sql);

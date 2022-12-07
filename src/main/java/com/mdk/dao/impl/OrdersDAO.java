@@ -1,16 +1,5 @@
 package com.mdk.dao.impl;
 
-import com.mdk.connection.DBConnection;
-import com.mdk.dao.IOrdersDAO;
-import com.mdk.models.*;
-import com.mdk.paging.Pageble;
-import com.mdk.services.IDeliveryService;
-import com.mdk.services.IStoreService;
-import com.mdk.services.IUserService;
-import com.mdk.services.impl.DeliveryService;
-import com.mdk.services.impl.StoreService;
-import com.mdk.services.impl.UserService;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +7,30 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mdk.connection.DBConnection;
+import com.mdk.dao.IOrdersDAO;
+import com.mdk.models.Delivery;
+import com.mdk.models.OrderDetails;
+import com.mdk.models.Orders;
+import com.mdk.models.OrdersItem;
+import com.mdk.models.Store;
+import com.mdk.models.User;
+import com.mdk.paging.Pageble;
+import com.mdk.services.IDeliveryService;
+import com.mdk.services.IOrdersItemService;
+import com.mdk.services.IStoreService;
+import com.mdk.services.IUserService;
+import com.mdk.services.impl.DeliveryService;
+import com.mdk.services.impl.OrdersItemService;
+import com.mdk.services.impl.StoreService;
+import com.mdk.services.impl.UserService;
+
 public class OrdersDAO extends DBConnection implements IOrdersDAO {
     public Connection conn = null;
     public PreparedStatement ps = null;
     public ResultSet rs = null;
+    
+
 
     public List<Orders> findAll(String status) {
         StringBuilder sql = new StringBuilder("select * from orders ");
@@ -67,19 +76,21 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     @Override
     public Orders findById(int id) {
         StringBuilder sql = new StringBuilder("select * from orders where id = ?");
-        IUserService userService = new UserService();
-        IStoreService storeService = new StoreService();
-        IDeliveryService deliveryService = new DeliveryService();
         try {
             conn = getConnection();
             ps = conn.prepareStatement(String.valueOf(sql));
             ps.setInt(1, id);
             rs = ps.executeQuery();
             Orders order = new Orders();
+            IUserService userService = new UserService();
+            IStoreService storeService = new StoreService();
+            IDeliveryService deliveryService = new DeliveryService();
+            IOrdersItemService ordersItemService = new OrdersItemService();
             while (rs.next()){
                 User user = userService.findById(rs.getInt("userId"));
                 Store store = storeService.findById(rs.getInt("storeId"));
                 Delivery delivery = deliveryService.findById(rs.getInt("deliveryId"));
+                List<OrdersItem> ordersItem = ordersItemService.findByOrdersId(rs.getInt("id"));
                 order.setId(rs.getInt("id"));
                 order.setAddress(rs.getString("address"));
                 order.setPhone(rs.getString("phone"));
@@ -92,6 +103,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
                 order.setUser(user);
                 order.setStore(store);
                 order.setDelivery(delivery);
+                order.setOrdersItem(ordersItem);
             }
             return order;
         } catch (SQLException e) {
@@ -354,6 +366,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         IUserService userService = new UserService();
         IStoreService storeService = new StoreService();
         IDeliveryService deliveryService = new DeliveryService();
+        
         try {
             conn = getConnection();
             ps = conn.prepareStatement(sql);
@@ -386,5 +399,47 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         }
         return orders;
     }
+	@Override
+	public List<Orders> findAllByUser(int userId) {
+		String sql = "select * from orders where userId = ?";
+        List<Orders> orders = new ArrayList<>();
+        IUserService userService = new UserService();
+        IStoreService storeService = new StoreService();
+        IDeliveryService deliveryService = new DeliveryService();
+        IOrdersItemService ordersItemService = new OrdersItemService();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                Orders order = new Orders();
+                User user = userService.findById(rs.getInt("userId"));
+                Store store = storeService.findById(rs.getInt("storeId"));
+                Delivery delivery = deliveryService.findById(rs.getInt("deliveryId"));
+                List<OrdersItem> ordersItem = ordersItemService.findByOrdersId(rs.getInt("id"));
+                order.setId(rs.getInt("id"));
+                order.setUserId(rs.getInt("userId"));
+                order.setStoreId(rs.getInt("storeId"));
+                order.setDeliveryId(rs.getInt("deliveryId"));
+                order.setAddress(rs.getString("address"));
+                order.setPhone(rs.getString("phone"));
+                order.setStatus(rs.getString("status"));
+                order.setAmountFromUser(rs.getDouble("amountFromUser"));
+                order.setAmountToStore(rs.getDouble("amountToStore"));
+                order.setAmountToGD(rs.getDouble("amountToGD"));
+                order.setCreatedAt(rs.getTimestamp("createdAt"));
+                order.setUpdatedAt(rs.getTimestamp("updatedAt"));
+                order.setUser(user);
+                order.setStore(store);
+                order.setDelivery(delivery);
+                order.setOrdersItem(ordersItem);
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+	}
 
 }

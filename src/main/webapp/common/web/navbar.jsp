@@ -42,11 +42,11 @@
 			<div class="iq-search-bar">
 				<form method="post" class="searchbox d-flex mt-3">
 					<input id="searchinput" name="searchkeyword" type="text"
-						oninput="changeFormAction(this.value)" class="text search-input"
+						oninput="changeFormAction()" class="text search-input"
 						placeholder="Tìm kiếm sách..." value="${searchkeyword}"> <a
 						class="search-link" href="#"><i class="ri-search-line"></i></a>
 					<button id="searchbutton"
-						formaction="<c:url value='/web/book/search?search=${searchkeyword}'/>"
+						formaction="<c:url value='/web/book/search?category=0&store=0&rating=-1&minPrice=0&maxPrice=1000000&search=${searchkeyword}'/>"
 						class="btn btn-primary search-data ml-2">
 						<i class="ri-search-line"></i>
 					</button>
@@ -192,11 +192,13 @@
 							<c:when test="${not empty sessionScope.USERMODEL}">
 								<a href="#"
 									class="search-toggle iq-waves-effect d-flex align-items-center">
-									<c:if test="${(sessionScope.USERMODEL.avatar == null) || (sessionScope.USERMODEL.avatar == '')}">
+									<c:if
+										test="${(sessionScope.USERMODEL.avatar == null) || (sessionScope.USERMODEL.avatar == '')}">
 										<img
 											src="<c:url value='/template/images/default-avatar.png'/>"
 											class="img-fluid rounded-circle mr-3" alt="user">
-									</c:if> <c:if test="${(sessionScope.USERMODEL.avatar != null) && (sessionScope.USERMODEL.avatar != '') }">
+									</c:if> <c:if
+										test="${(sessionScope.USERMODEL.avatar != null) && (sessionScope.USERMODEL.avatar != '') }">
 										<c:url
 											value="/image?fname=${sessionScope.USERMODEL.avatar}&type=user"
 											var="imgAvatar"></c:url>
@@ -240,7 +242,8 @@
 														<h6 class="mb-0 ">Cửa hàng của tôi</h6>
 													</div>
 												</div>
-											</a><a href="#" class="iq-sub-card iq-bg-primary-hover">
+											</a><a href="<c:url value='/web/order/list'/>"
+												class="iq-sub-card iq-bg-primary-hover">
 												<div class="media align-items-center">
 													<div class="rounded iq-card-icon iq-bg-primary">
 														<i class="ri-profile-line"></i>
@@ -249,7 +252,7 @@
 														<h6 class="mb-0 ">Đơn mua</h6>
 													</div>
 												</div>
-											</a> <a href="account-setting.html"
+											</a> <a href="<c:url value='/web/following'/>"
 												class="iq-sub-card iq-bg-primary-hover">
 												<div class="media align-items-center">
 													<div class="rounded iq-card-icon iq-bg-primary">
@@ -271,7 +274,6 @@
 							</c:when>
 
 							<c:otherwise>
-
 								<div class="iq-waves-effect d-flex align-items-center h-100" style="width:160px; transform: translateY(-5px)">
 									<a href="<c:url value="/login"/>" class="w-50 d-block text-white font-weight-bold">Đăng nhập</a>
 									<a href="<c:url value="signup"/>"
@@ -352,11 +354,3 @@
 
 	</div>
 </div>
-<script>
-	const url = "<c:url value='/web/book/search?search='/>";
-
-	function changeFormAction(searchkeyword) {
-		document.getElementById("searchbutton").formAction = url
-				+ searchkeyword;
-	}
-</script>

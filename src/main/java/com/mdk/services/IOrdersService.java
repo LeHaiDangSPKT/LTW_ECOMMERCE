@@ -18,5 +18,6 @@ public interface IOrdersService {
     List<Orders> findAllByStoreId(String status, int storeId, Pageble pageble);
     List<OrderDetails> findDetailByOrderId(int id);
     List<Orders> ordersNew(int storeId);
+    List<Orders> findAllByUser(int userId);
 	int currentIndex();
 }

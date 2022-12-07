@@ -64,7 +64,7 @@
 											Mô tả: <span class="text-body">${store.bio}</span>
 										</div>
 										<div class="mb-3">
-											<a href="#" class="text-body text-center"><span
+											<a href="<c:url value="/web/following/store/add?id=${store.id}"/>" class="text-body text-center"><span
 												class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i
 													class="ri-heart-fill"></i></span><span>Theo dõi cửa hàng</span></a>
 										</div>
