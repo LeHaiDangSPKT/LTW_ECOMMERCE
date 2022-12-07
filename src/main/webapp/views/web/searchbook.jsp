@@ -11,15 +11,15 @@
 					<div class="d-block text-center">
 
 						<div class="w-100 iq-search-filter">
-							<form class="searchbox mt-3" method="post">
+							<form id="searchBook" action="#" class="searchbox mt-3" method="post">
 								<ul
 									class="list-inline p-0 m-0 row justify-content-center search-menu-options">
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Danh mục</label> <select name="categorySearch" onchange="this.form.submit()"
-													class="form-control form-search-control bg-white border-0"
-													id="exampleFormControlSelect1">
+												<label>Danh mục</label> <select id="categorySearch"
+													onchange="changeFormAction();this.form.submit()"
+													class="form-control form-search-control bg-white border-0">
 
 													<c:choose>
 														<c:when
@@ -50,9 +50,9 @@
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Cửa hàng</label> <select name="storeSearch" onchange="this.form.submit()"
-													class="form-control form-search-control bg-white border-0"
-													id="exampleFormControlSelect2">
+												<label>Cửa hàng</label> <select id="storeSearch"
+													onchange="changeFormAction();this.form.submit()"
+													class="form-control form-search-control bg-white border-0">
 													<c:choose>
 														<c:when
 															test="${(empty storeSearch) || (storeSearch == 0)}">
@@ -80,9 +80,9 @@
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Rating</label> <select name="ratingSearch" onchange="this.form.submit()"
-													class="form-control form-search-control bg-white border-0"
-													id="exampleFormControlSelect3">
+												<label>Rating</label> <select id="ratingSearch"
+													onchange="changeFormAction();this.form.submit()"
+													class="form-control form-search-control bg-white border-0">
 
 													<option
 														<c:if test="${(empty rating) || (rating == -1)}">selected</c:if>
@@ -106,9 +106,9 @@
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Giá tối thiểu</label> <select name="minPriceSearch" onchange="this.form.submit()"
-													class="form-control form-search-control bg-white border-0"
-													id="exampleFormControlSelect4">
+												<label>Giá tối thiểu</label> <select id="minPriceSearch"
+													onchange="changeFormAction();this.form.submit()"
+													class="form-control form-search-control bg-white border-0">
 													<option
 														<c:if test="${(empty minPrice) || (minPrice == 0)}">selected</c:if>
 														value="0">0</option>
@@ -130,9 +130,9 @@
 									<li class="search-menu-opt mt-3">
 										<div class="iq-dropdown">
 											<div class="form-group mb-0">
-												<label>Giá tối đa</label> <select name="maxPriceSearch" onchange="this.form.submit()"
-													class="form-control form-search-control bg-white border-0"
-													id="exampleFormControlSelect4">
+												<label>Giá tối đa</label> <select id="maxPriceSearch" 
+													onchange="changeFormAction();this.form.submit()"
+													class="form-control form-search-control bg-white border-0">
 													<option <c:if test="${maxPrice == 100000}">selected</c:if>
 														value="100000">100.000 VNĐ</option>
 													<option <c:if test="${maxPrice == 200000}">selected</c:if>
@@ -148,19 +148,6 @@
 											</div>
 										</div>
 									</li>
-
-									<li class="search-menu-opt mt-3""><label>Tìm kiếm</label>
-										<div class="iq-search-bar search-book d-flex">
-
-											<input name="searchkeyword" type="text" oninput ="changeFormAction(this.value)"
-												class="text search-input" placeholder="Tìm kiếm sách..."
-												value="${searchkeyword}"> <a class="search-link"
-												href="#"></a>
-											<button id ="searchbutton" formaction="<c:url value='/web/book/search?search=${searchkeyword}'/>"
-												class="btn btn-primary search-data ml-2"><i class="ri-search-line"></i></button>
-
-
-										</div></li>
 								</ul>
 							</form>
 						</div>
@@ -224,7 +211,7 @@
 															<a href="#" class="ml-2"><i
 																class="ri-heart-fill text-danger"></i></a>
 														</form>
-													</div>
+													</div>				
 												</div>
 											</div>
 										</div>
@@ -240,11 +227,3 @@
 		</div>
 	</div>
 </div>
-<script>
-const url = "<c:url value='/web/book/search?search='/>";
-
-function changeFormAction(searchkeyword)
-{	
-	document.getElementById("searchbutton").formAction = url + searchkeyword;
-}
-</script>
