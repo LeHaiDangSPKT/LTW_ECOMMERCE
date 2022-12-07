@@ -20,5 +20,5 @@ public interface IStoreService {
     List<Store> top10Store_Orders();
     List<Store> findAll();
     List<Store> findAllByName(String keyword);
-
+    void updateWallet(int id, double eWallet);
 }

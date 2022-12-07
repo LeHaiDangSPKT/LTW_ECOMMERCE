@@ -11,9 +11,13 @@
 
 <!-- TOP Nav Bar END -->
 <!-- Page Content  -->
-<div id="content-page" class="content-page">
+<div id="content-page" class="content-page"
+	style="margin-left: 0; padding-top: 16p !important; padding: 100px !important; padding-right: 100px !important; background-color: #efefef">
 	<div class="container-fluid">
+
 		<div class="row">
+
+
 			<div class="col-lg-12">
 				<div
 					class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height rounded">
@@ -22,42 +26,39 @@
 							class="list-inline p-0 m-0 d-flex align-items-center">
 
 							<li class="item"><a href="javascript:void(0);"> <img
-									src="images/new_realeases/01.jpg"
+									src="<c:url value="/template/images/ads/1.jpg"/>"
 									class="img-fluid w-100 rounded" alt="">
 							</a></li>
 
 							<li class="item"><a href="javascript:void(0);"> <img
-									src="images/new_realeases/02.jpg"
+									src="<c:url value="/template/images/ads/6.jpg"/>"
 									class="img-fluid w-100 rounded" alt="">
 							</a></li>
 							<li class="item"><a href="javascript:void(0);"> <img
-									src="images/new_realeases/03.jpg"
+									src="<c:url value="/template/images/ads/6.jpg"/>"
 									class="img-fluid w-100 rounded" alt="">
 							</a></li>
 							<li class="item"><a href="javascript:void(0);"> <img
-									src="images/new_realeases/04.jpg"
+									src="<c:url value="/template/images/ads/6.jpg"/>"
 									class="img-fluid w-100 rounded" alt="">
 							</a></li>
 							<li class="item"><a href="javascript:void(0);"> <img
-									src="images/new_realeases/05.jpg"
+									src="<c:url value="/template/images/ads/6.jpg"/>"
 									class="img-fluid w-100 rounded" alt="">
 							</a></li>
 							<li class="item"><a href="javascript:void(0);"> <img
-									src="images/new_realeases/06.jpg"
+									src="<c:url value="/template/images/ads/1.jpg"/>"
 									class="img-fluid w-100 rounded" alt="">
 							</a></li>
 							<li class="item"><a href="javascript:void(0);"> <img
-									src="images/new_realeases/07.jpg"
+									src="<c:url value="/template/images/ads/1.jpg"/>"
 									class="img-fluid w-100 rounded" alt="">
 							</a></li>
 							<li class="item"><a href="javascript:void(0);"> <img
-									src="images/new_realeases/08.jpg"
+									src="<c:url value="/template/images/ads/1.jpg"/>"
 									class="img-fluid w-100 rounded" alt="">
 							</a></li>
-							<li class="item"><a href="javascript:void(0);"> <img
-									src="images/new_realeases/09.jpg"
-									class="img-fluid w-100 rounded" alt="">
-							</a></li>
+						
 						</ul>
 					</div>
 				</div>
@@ -77,29 +78,33 @@
 					<div class="iq-card-body">
 						<div class="row">
 							<c:forEach items="${productList}" var="product">
-								<div class="col-sm-6 col-md-4 col-lg-3">
+								<div class="product col-sm-6 col-md-4 col-lg-2">
 									<div
 										class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
 										<div class="iq-card-body p-0">
-											<div class="d-flex align-items-center">
+											<div>
 												<div
-													class="col-6 p-0 position-relative image-overlap-shadow">
-													<a href="#"> <c:url
+													class="col-12 p-0 position-relative image-overlap-shadow"
+													style="height: 150px;">
+													<a href=""> <c:url
 															value="/image?fname=${product.getImages().get(0).getName()}&type=product"
 															var="imgUrl"></c:url> <img
-														class="img-fluid rounded w-100" src="${imgUrl}" alt=""></a>
+														class="img-fluid rounded w-100 h-100"
+														style="object-fit: contain;" src="${imgUrl}" alt="">
+													</a>
 													<div class="view-book">
 														<a
 															href="<c:url value ='/web/book/detail?id=${product.id}'/>"
-															class="btn btn-sm btn-white">Xem chi tiết</a>
+															class="btn btn-sm btn-white"> View Book </a>
 													</div>
 												</div>
-												<div class="col-6">
+												<div class="col-12 mt-3">
 													<div class="mb-2">
 														<h6 class="mb-1">${product.name}</h6>
+														<p class="font-size-13 line-height mb-1">${product.description}</p>
 														<div class="d-block line-height">
-															<span class="font-size-11 text-warning"> <c:forEach
-																	var="i" begin="1" end="5">
+															<span id="rating" class="font-size-11 text-warning">
+																<c:forEach var="i" begin="1" end="5">
 																	<c:if test="${i <= product.rating }">
 																		<i class="fa fa-star"></i>
 																	</c:if>
@@ -109,20 +114,28 @@
 																	</c:if>
 																</c:forEach>
 															</span>
-
 														</div>
 													</div>
-													<div class="price d-flex align-items-center">
-														<%-- <span class="pr-1 old-price">${product.price}</span> --%>
+													<div class="price d-flex">
+														<span class="pr-1 old-price font-size-13">${product.price}</span>
+														<br>
 														<h6>
-															<b>${product.price}</b>
+															<b>${product.promotionalPrice}</b>
 														</h6>
 													</div>
+
+
 													<div class="iq-product-action">
-														<a href="#"><i
-															class="ri-shopping-cart-2-fill text-primary"></i></a> <a
-															href="#" class="ml-2"><i
-															class="ri-heart-fill text-danger"></i></a>
+														<form method="post">
+															<button
+																style="border: none; background-color: transparent"
+																formaction="<c:url value='/web/cart/item/create?id=${product.id}'/>"
+																href="#">
+																<i class="ri-shopping-cart-2-fill text-primary"></i>
+															</button>
+															<a href="#" class="ml-2"><i
+																class="ri-heart-fill text-danger"></i></a>
+														</form>
 													</div>
 												</div>
 											</div>
@@ -130,11 +143,13 @@
 									</div>
 								</div>
 							</c:forEach>
-
 						</div>
 					</div>
 				</div>
 			</div>
+
+
+
 			<div class="col-lg-12">
 				<div class="iq-card iq-card-block iq-card-stretch iq-card-height">
 					<div
@@ -152,11 +167,12 @@
 							<c:forEach items="${topSellerList}" var="product">
 								<li class="col-md-8">
 									<div class="d-flex align-items-center">
-										<div class="col-5 p-0 position-relative image-overlap-shadow">
+										<div class="col-6 p-0 position-relative image-overlap-shadow">
 											<a href="javascript:void();"><c:url
 													value="/image?fname=${product.getImages().get(0).getName()}&type=product"
 													var="imgUrl"></c:url> <img class="img-fluid rounded w-100"
-												src="${imgUrl}" alt=""></a>
+												style="object-fit: contain; height: 25vh" src="${imgUrl}"
+												alt=""></a>
 											<div class="view-book">
 												<a
 													href="<c:url value ='/web/book/detail?id=${product.id}'/>"
@@ -187,10 +203,15 @@
 												</h6>
 											</div>
 											<div class="iq-product-action">
-												<a href="javascript:void();"><i
-													class="ri-shopping-cart-2-fill text-primary"></i></a> <a
-													href="javascript:void();" class="ml-2"><i
-													class="ri-heart-fill text-danger"></i></a>
+												<form method="post">
+													<button style="border: none; background-color: transparent"
+														formaction="<c:url value='/web/cart/item/create?id=${product.id}'/>"
+														href="#">
+														<i class="ri-shopping-cart-2-fill text-primary"></i>
+													</button>
+													<a href="#" class="ml-2"><i
+														class="ri-heart-fill text-danger"></i></a>
+												</form>
 											</div>
 										</div>
 									</div>
@@ -217,14 +238,20 @@
 						<ul id="favorites-slider" class="list-inline p-0 mb-0 row">
 							<c:forEach items="${topRatingList}" var="product">
 								<li class="col-md-8">
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="col-5 p-0 position-relative">
-											<a href="javascript:void();"> <c:url value="/image?fname=${product.getImages().get(0).getName()}&type=product"
-                                                           var="imgUrl"></c:url>
-													<img class="img-fluid rounded w-100"
-														src="${imgUrl}"
-														alt="">
+									<div class="d-flex justify-content-between align-items-center ">
+										<div class="col-5 p-0 position-relative image-overlap-shadow">
+											<a href="javascript:void();"> <c:url
+													value="/image?fname=${product.getImages().get(0).getName()}&type=product"
+													var="imgUrl"></c:url> <img
+												class="img-fluid rounded w-100 img-responsive"
+												style="object-fit: contain; height: 25vh" src="${imgUrl}"
+												alt="">
 											</a>
+											<div class="view-book">
+												<a
+													href="<c:url value ='/web/book/detail?id=${product.id}'/>"
+													class="btn btn-sm btn-white">Xem chi tiết</a>
+											</div>
 										</div>
 										<div class="col-7">
 											<div class="mb-2">
@@ -250,10 +277,15 @@
 												</h6>
 											</div>
 											<div class="iq-product-action">
-												<a href="javascript:void();"><i
-													class="ri-shopping-cart-2-fill text-primary"></i></a> <a
-													href="javascript:void();" class="ml-2"><i
-													class="ri-heart-fill text-danger"></i></a>
+												<form method="post">
+													<button style="border: none; background-color: transparent"
+														formaction="<c:url value='/web/cart/item/create?id=${product.id}'/>"
+														href="#">
+														<i class="ri-shopping-cart-2-fill text-primary"></i>
+													</button>
+													<a href="#" class="ml-2"><i
+														class="ri-heart-fill text-danger"></i></a>
+												</form>
 											</div>
 										</div>
 									</div>
@@ -268,6 +300,7 @@
 		</div>
 	</div>
 </div>
+
 
 <!-- Wrapper END -->
 <!-- Footer -->

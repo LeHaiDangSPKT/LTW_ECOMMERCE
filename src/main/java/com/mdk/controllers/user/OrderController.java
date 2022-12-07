@@ -33,6 +33,8 @@ import com.mdk.services.impl.StoreService;
 import com.mdk.services.impl.UserService;
 import com.mdk.utils.SessionUtil;
 
+import static com.mdk.utils.AppConstant.*;
+
 @WebServlet(urlPatterns = { "/web/order/create" })
 public class OrderController extends HttpServlet {
 	/**
@@ -64,8 +66,8 @@ public class OrderController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 
-		Cart cart = (Cart) SessionUtil.getInstance().getValue(req, "CARTUSER");
-		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+		Cart cart = (Cart) SessionUtil.getInstance().getValue(req, CART_USER);
+		User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
 		Store store = cart.getStore();
 		int deliveryId = Integer.parseInt(req.getParameter("deliveryId"));
 		String address = req.getParameter("address");
@@ -95,8 +97,8 @@ public class OrderController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 
-		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
-		Cart cart = (Cart) SessionUtil.getInstance().getValue(req, "CARTUSER");
+		User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
+		Cart cart = (Cart) SessionUtil.getInstance().getValue(req, CART_USER);
 
 		List<CartItem> cartItemList = cartItemService.findAllByCart(cart.getId());
 		int currentIndex = ordersService.currentIndex();
@@ -118,13 +120,13 @@ public class OrderController extends HttpServlet {
 
 	protected void changeSessionCart(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+		User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
 		User newuser = userService.findById(user.getId());
 		List<Cart> carts = cartService.findByUserId(user.getId());
 		int countOfCarts = carts.stream().mapToInt(o1 -> o1.getCartItems().stream().mapToInt(o2 -> o2.getCount()).sum())
 				.sum();
-		SessionUtil.getInstance().putValue(req, "CART_HEADER", carts);
-		SessionUtil.getInstance().putValue(req, "COUNT_CART_HEADER", countOfCarts);
-		SessionUtil.getInstance().putValue(req, "USERMODEL", newuser);
+		SessionUtil.getInstance().putValue(req, CART_HEADER, carts);
+		SessionUtil.getInstance().putValue(req, COUNT_CART_HEADER, countOfCarts);
+		SessionUtil.getInstance().putValue(req, USER_MODEL, newuser);
 	}
 }

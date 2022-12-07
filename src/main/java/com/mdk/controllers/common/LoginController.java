@@ -23,7 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/login", "/logout", "/home", "/LoginGoogleHandler"})
+import static com.mdk.utils.AppConstant.*;
+
+@WebServlet(urlPatterns = {"/login", "/logout", "/LoginGoogleHandler"})
 public class LoginController extends HttpServlet {
     IUserService userService = new UserService();
     IStoreService storeService = new StoreService();
@@ -36,16 +38,14 @@ public class LoginController extends HttpServlet {
         } else if (url.contains("LoginGoogleHandler")) {
             ReqLogin(req, resp, toUser(req, resp));
         } else if (url.contains("logout")) {
-            SessionUtil.getInstance().removeValue(req, "USERMODEL");
-            SessionUtil.getInstance().removeValue(req, "CART");
-            SessionUtil.getInstance().removeValue(req, "CART_HEADER");
-            SessionUtil.getInstance().removeValue(req, "COUNT_CART_HEADER");
-            SessionUtil.getInstance().removeValue(req, "CARTUSER");
-            SessionUtil.getInstance().removeValue(req, "STORE");
-            resp.sendRedirect(req.getContextPath() + "/web");
-        } else if (url.contains("signup")) {
-			req.getRequestDispatcher("/views/signup.jsp").forward(req, resp);
-		} 
+            SessionUtil.getInstance().removeValue(req, USER_MODEL);
+            SessionUtil.getInstance().removeValue(req, CART);
+            SessionUtil.getInstance().removeValue(req, CART_HEADER);
+            SessionUtil.getInstance().removeValue(req, COUNT_CART_HEADER);
+            SessionUtil.getInstance().removeValue(req, CART_USER);
+            SessionUtil.getInstance().removeValue(req, STORE_MODEL);
+            resp.sendRedirect(req.getContextPath() + "/home");
+        }
         else {
             req.getRequestDispatcher("/views/home.jsp").forward(req, resp);;
         }
@@ -62,12 +62,7 @@ public class LoginController extends HttpServlet {
             user.setEmail(username);
             user.setPassword(password);
             ReqLogin(req, resp, user);
-        } else if (url.contains("create")) {
-			req.setCharacterEncoding("UTF-8");
-			resp.setCharacterEncoding("UTF-8");
-			insert(req,resp);
-			resp.sendRedirect(req.getContextPath() + "/signup");
-		}
+        }
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
@@ -90,21 +85,22 @@ public class LoginController extends HttpServlet {
         UserGoogle googlePojo = new Gson().fromJson(response, UserGoogle.class);
         return googlePojo;
     }
-    protected void ReqLogin(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
-        user = userService.findOneByUsernameAndPassword(user.getEmail(), user.getPassword());
+    protected void ReqLogin(HttpServletRequest req, HttpServletResponse resp, User userLogin) throws ServletException,
+            IOException {
+        User user = userService.findOneByUsernameAndPassword(userLogin.getEmail(), userLogin.getPassword());
         if (user != null) {
-            SessionUtil.getInstance().putValue(req, "USERMODEL", user);
+            SessionUtil.getInstance().putValue(req, USER_MODEL, user);
             Store store = storeService.findByUserId(user.getId());
-            SessionUtil.getInstance().putValue(req, "STORE", store);
-            if (user.getRole().equals("ADMIN")) {
+            SessionUtil.getInstance().putValue(req, STORE_MODEL, store);
+            if (user.getRole().equals(ADMIN)) {
                 resp.sendRedirect(req.getContextPath() + "/admin/user/all");
-            } else if (user.getRole().equals("user")) {
+            } else if (user.getRole().equals(USER)) {
                 resp.sendRedirect(req.getContextPath() + "/web");
             } else {
                 resp.sendRedirect(req.getContextPath() + "/login?message=login_error");
             }
         } else {
-            resp.sendRedirect(req.getContextPath() + "/login?message=login_error");
+            resp.sendRedirect(req.getContextPath() + "/signup?firstname=" + userLogin.getFirstname() + "&lastname=" + userLogin.getLastname() + "&email=" + userLogin.getEmail());
         }
     }
     protected User toUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -118,18 +114,4 @@ public class LoginController extends HttpServlet {
         user.setPassword(userGoogle.getId());
         return user;
     }
-    protected void insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user = new User();
-		
-		user.setFirstname(req.getParameter("firstname"));
-		user.setLastname(req.getParameter("lastname"));
-		user.setId_card(req.getParameter("id_card"));
-		user.setEmail(req.getParameter("email"));
-		user.setPhone(req.getParameter("phone"));
-		user.setPassword(req.getParameter("password"));
-		user.setGender("1".equals(req.getParameter("gender")));
-		
-		userService.insert(user);
-		
-	}
 }

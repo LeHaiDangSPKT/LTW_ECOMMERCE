@@ -1,6 +1,5 @@
 package com.mdk.controllers.vendor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.mdk.models.Store;
 import com.mdk.services.IStoreService;
@@ -14,19 +13,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.mdk.utils.AppConstant.STORE_MODEL;
+
 @WebServlet(urlPatterns = {"/vendor/statistic/loadchart"})
-public class LoadChart extends HttpServlet {
+public class LoadChartRevenue extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         IStoreService storeService = new StoreService();
-        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
 
         Gson gsonObj = new Gson();
         Map<Object, Object> map = null;

@@ -1,6 +1,7 @@
 package com.mdk.controllers.user;
 
 import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
+import static com.mdk.utils.AppConstant.USER_MODEL;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,13 +43,13 @@ public class UserController extends HttpServlet {
 
 			req.getRequestDispatcher("/views/web/searchuser.jsp").forward(req, resp);
 		} else if (url.contains("profile")) {
-			int id = ((User) SessionUtil.getInstance().getValue(req, "USERMODEL")).getId();
+			int id = ((User) SessionUtil.getInstance().getValue(req, USER_MODEL)).getId();
 			User user = userService.findById(id);
 
 			req.setAttribute("user", user);
 			req.getRequestDispatcher("/views/web/userprofile.jsp").forward(req, resp);
 		} else if (url.contains("/web/user/edit")) {
-			User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+			User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
 			int id = user.getId();
 			req.setAttribute("id", id);
 			req.setAttribute("user", user);
@@ -76,7 +77,7 @@ public class UserController extends HttpServlet {
 	protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		int id = ((User) SessionUtil.getInstance().getValue(req, "USERMODEL")).getId();
+		int id = ((User) SessionUtil.getInstance().getValue(req, USER_MODEL)).getId();
 		User user = new User();
 		user.setId(id);
 		user.setFirstname(req.getParameter("firstname"));
@@ -128,7 +129,7 @@ public class UserController extends HttpServlet {
 		userService.update(user);
 
 		User newuser = userService.findById(id);
-		SessionUtil.getInstance().putValue(req, "USERMODEL", newuser);
+		SessionUtil.getInstance().putValue(req, USER_MODEL, newuser);
 		req.setAttribute("user", newuser);
 	}
 

@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
+import static com.mdk.utils.AppConstant.STORE_MODEL;
 
 @WebServlet(urlPatterns = {"/vendor/statistic", "/vendor/statistic/notification"})
 public class StatisticVendorController extends HttpServlet {
@@ -37,7 +38,7 @@ public class StatisticVendorController extends HttpServlet {
             req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
         } else if (url.contains("statistic")){
             if (checkStoreExist(req, resp)) {
-                Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+                Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
                 mainStatistic(req, resp, store);
                 req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
             } else {

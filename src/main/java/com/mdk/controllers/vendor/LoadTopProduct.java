@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import static com.mdk.utils.AppConstant.STORE_MODEL;
+
 @WebServlet(urlPatterns = "/vendor/loadTopProduct")
 public class LoadTopProduct extends HttpServlet {
     @Override
@@ -22,7 +24,7 @@ public class LoadTopProduct extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         IProductService productService = new ProductService();
-        Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
 
         int top = req.getParameter("top") == null ? 4 : Integer.parseInt(req.getParameter("top"));
         List<Product> products = productService.topSeller(store.getId(), top);

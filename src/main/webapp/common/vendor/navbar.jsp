@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
-<div class="iq-top-navbar">
+<div class="iq-top-navbar" style="background-image: linear-gradient(#0dd6b8, #85e79a); padding: 0 25px;">
     <div class="iq-navbar-custom">
         <nav class="navbar navbar-expand-lg navbar-light p-0">
             <div class="iq-menu-bt d-flex align-items-center">
@@ -21,21 +21,32 @@
                 <h5 class="mb-0">Kênh người bán</h5>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto navbar-list">
-                    <li class="line-height pt-3">
+                <ul class="navbar-nav ml-auto navbar-list" style="padding-top: 6px">
+                    <li class="line-height">
                         <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                            <img src="<c:url value="/template/images/user/1.jpg"/> "
-                                 class="img-fluid rounded-circle mr-3" alt="user">
-                            <div class="caption">
+                            <c:if test="${(sessionScope.USERMODEL.avatar == null) || (sessionScope.USERMODEL.avatar == '')}">
+                                <img
+                                        src="<c:url value='/template/images/default-avatar.png'/>"
+                                        class="img-fluid rounded-circle mr-3" alt="user">
+                            </c:if> <c:if test="${(sessionScope.USERMODEL.avatar != null) && (sessionScope.USERMODEL.avatar != '') }">
+                            <c:url
+                                    value="/image?fname=${sessionScope.USERMODEL.avatar}&type=user"
+                                    var="imgAvatar"></c:url>
+                            <img src="${imgAvatar}" class="img-fluid rounded-circle mr-3"
+                                 alt="user">
+                        </c:if>
+                            <div class="caption" style="text-align: center">
                                 <h6 class="mb-1 line-height">
                                     ${sessionScope.USERMODEL.firstname} ${sessionScope.USERMODEL.lastname}
                                 </h6>
+                                <span class="font-size-14 text-danger font-weight-bold">(${sessionScope.USERMODEL.eWallet}
+                                    vnđ)</span>
                             </div>
                         </a>
                         <div class="iq-sub-dropdown iq-user-dropdown">
                             <div class="iq-card shadow-none m-0">
                                 <div class="iq-card-body p-0">
-                                    <a href="#" class="iq-sub-card iq-bg-primary-hover">
+                                    <a href="<c:url value="/web"/>" class="iq-sub-card iq-bg-primary-hover">
                                         <div class="media align-items-center">
                                             <div class="rounded iq-card-icon iq-bg-primary d-flex justify-content-center align-items-center">
                                                 <i class="fa-solid fa-cart-shopping"></i>

@@ -13,7 +13,6 @@ public interface IUserDAO {
 	void delete(int id);
 	void updateWallet(int id, double eWallet);
 	List<User> findBySearching(String keyword);
-	
     List<User> findAll();
     User findById(int id);
     List<User> top10Users_Orders();

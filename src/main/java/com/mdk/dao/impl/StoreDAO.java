@@ -305,4 +305,20 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 		}
 		return stores;
 	}
+
+	@Override
+	public void updateWallet(int id, double eWallet) {
+		String sql = "UPDATE store "
+				+ "SET eWallet = ? "
+				+ "WHERE id = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setDouble(1, eWallet);
+			ps.setInt(2, id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -98,6 +98,28 @@
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                 <div class="iq-card-header position-relative mb-0 similar-detail">
                     <div class="iq-header-title d-flex">
+                        <h4 class="card-title mb-0 d-flex align-items-center">Chi tiết giao dịch</h4>
+                        <div style="margin-left: 16px;">
+                            <select class="form-control"
+                                    name=""
+                                    id=""
+                            >
+                                <c:forEach begin="0" end="2" var="i">
+                                    <option value="${year - i}">Năm: ${year - i}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="iq-card-body">
+                    <div style="height: 370px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                <div class="iq-card-header position-relative mb-0 similar-detail">
+                    <div class="iq-header-title d-flex">
                         <h4 class="card-title mb-0 d-flex align-items-center">Top sách bán chạy</h4>
                         <div style="margin-left: 16px;">
                             <select class="form-control"

@@ -2,13 +2,19 @@
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
 <div class="iq-sidebar">
-    <div class="iq-sidebar-logo d-flex justify-content-between">
+    <div class="iq-sidebar-logo">
         <a href="#" class="header-logo">
             <img src="<c:url value="/template/images/logo.png"/> " class="img-fluid rounded-normal" alt="">
             <div class="logo-title">
                 <span class="text-primary text-uppercase">MDK Shop</span>
             </div>
         </a>
+        <div class="logo-title" style="margin-top: 5px">
+            <span style="margin-right: 5px">Số dư Ví:</span>
+            <span class="text-danger text-uppercase">
+                ${sessionScope.STORE.eWallet} vnđ
+            </span>
+        </div>
     </div>
     <div id="sidebar-scrollbar">
         <nav class="iq-sidebar-menu">
@@ -26,7 +32,8 @@
                     </a>
                 </li>
                 <li>
-                    <a id="product" aria-expanded="false" href="<c:url value="/vendor/product/category?categoryId=0"/> ">
+                    <a id="product" aria-expanded="false"
+                       href="<c:url value="/vendor/product/category?categoryId=0"/> ">
                         <i class="fa-solid fa-table-list"></i>
                         Quản lý sản phẩm
                     </a>
@@ -38,7 +45,13 @@
                     </a>
                 </li>
                 <li>
-                    <a id="statistic" aria-expanded="false" href="<c:url value="/vendor/statistic"/> ">
+                    <a id="transaction" aria-expanded="false" href="<c:url value="/vendor/transaction"/>">
+                        <i class="fa-solid fa-coins"></i>
+                        Giao dịch
+                    </a>
+                </li>
+                <li>
+                    <a id="statistic" aria-expanded="false" href="<c:url value="/vendor/statistic"/>">
                         <i class="fa-solid fa-chart-simple"></i>
                         Thống kê
                     </a>
@@ -47,7 +60,7 @@
         </nav>
     </div>
 </div>
-<script>
+<script type="text/javascript">
     function changeActive() {
         const url = window.location.pathname;
         if (url.includes("store")) {
@@ -60,8 +73,11 @@
             document.getElementById("home").setAttribute("aria-expanded", "true");
         } else if (url.includes("statistic")) {
             document.getElementById("statistic").setAttribute("aria-expanded", "true");
+        } else if (url.includes("transaction")) {
+            document.getElementById("transaction").setAttribute("aria-expanded", "true");
         }
     }
+
     window.onload = function () {
         changeActive();
     }

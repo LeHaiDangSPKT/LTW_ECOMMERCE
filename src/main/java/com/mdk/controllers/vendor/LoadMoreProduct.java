@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mdk.utils.AppConstant.STORE_MODEL;
 import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
 
 @WebServlet(urlPatterns = "/vendor/loadmore")
@@ -33,7 +34,7 @@ public class LoadMoreProduct extends HttpServlet {
         }
 
         List<Product> products = new ArrayList<>();
-        Store store = (Store) SessionUtil.getInstance().getValue(req,"STORE");
+        Store store = (Store) SessionUtil.getInstance().getValue(req,STORE_MODEL);
         if (store != null) {
             Pageble pageble = new PageRequest(indexPage, TOTAL_ITEM_IN_PAGE, null);
             products = productService.findAll(pageble, 0, store.getId(), null);

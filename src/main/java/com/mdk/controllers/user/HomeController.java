@@ -20,7 +20,9 @@ import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.UserService;
 import com.mdk.utils.SessionUtil;
 
-@WebServlet(urlPatterns = { "/web" })
+import static com.mdk.utils.AppConstant.*;
+
+@WebServlet(urlPatterns = { "/home", "/web" })
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	IProductService productService = new ProductService();
@@ -31,20 +33,20 @@ public class HomeController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 
-		if (url.contains("/web")) {
+		if (url.contains("/home") || url.contains("/web")) {
 			List<Product> productList = productService.findAllProductPermitted();
 			List<Product> topSellerList = productService.getTopSeller(10);
 			List<Product> topRatingList = productService.getTopRating(10);
 
-			if ((User) SessionUtil.getInstance().getValue(req, "USERMODEL") != null) {
-				User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+			if ((User) SessionUtil.getInstance().getValue(req, USER_MODEL) != null) {
+				User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
 
 				List<Cart> carts = cartService.findByUserId(user.getId());
 				int countOfCarts = carts.stream()
 						.mapToInt(o1 -> o1.getCartItems().stream().mapToInt(o2 -> o2.getCount()).sum()).sum();
 
-				SessionUtil.getInstance().putValue(req, "CART_HEADER", carts);
-				SessionUtil.getInstance().putValue(req, "COUNT_CART_HEADER", countOfCarts);
+				SessionUtil.getInstance().putValue(req, CART_HEADER, carts);
+				SessionUtil.getInstance().putValue(req, COUNT_CART_HEADER, countOfCarts);
 			}
 			
 			req.setAttribute("productList", productList);
@@ -57,7 +59,7 @@ public class HomeController extends HttpServlet {
 
 	protected void baseInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+		User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
 		req.setAttribute("user", user);
 		List<Cart> carts = cartService.findByUserId(user.getId());
 		int countOfCarts = carts.stream().mapToInt(o1 -> o1.getCartItems().stream().mapToInt(o2 -> o2.getCount()).sum())

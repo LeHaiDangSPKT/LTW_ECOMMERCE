@@ -203,9 +203,12 @@
 										<img src="${imgAvatar}" class="img-fluid rounded-circle mr-3"
 											alt="user">
 									</c:if>
-									<div class="caption">
+									<div class="caption" style="text-align: center">
 										<h6 class="mb-1 line-height text-white">${sessionScope.USERMODEL.firstname}
-											${sessionScope.USERMODEL.lastname}</h6>
+											${sessionScope.USERMODEL.lastname}
+										</h6>
+										<span class="font-size-14 text-danger font-weight-bold">(${sessionScope.USERMODEL.eWallet}
+											vnđ)</span>
 									</div>
 								</a>
 								<div class="iq-sub-dropdown iq-user-dropdown">
@@ -270,8 +273,9 @@
 							<c:otherwise>
 
 								<div class="iq-waves-effect d-flex align-items-center h-100" style="width:160px; transform: translateY(-5px)">
-									<a href="<c:url value="/login"/>" class="w-50 d-block text-white">Đăng nhập</a> <a href="<c:url value="signup"/>"
-										class="w-50 d-block text-white">Đăng ký</a>
+									<a href="<c:url value="/login"/>" class="w-50 d-block text-white font-weight-bold">Đăng nhập</a>
+									<a href="<c:url value="signup"/>"
+										class="w-50 d-block text-white font-weight-bold">Đăng ký</a>
 								</div>
 
 							</c:otherwise>

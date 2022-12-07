@@ -28,6 +28,8 @@ import com.mdk.services.impl.StoreService;
 import com.mdk.services.impl.UserService;
 import com.mdk.utils.SessionUtil;
 
+import static com.mdk.utils.AppConstant.*;
+
 @WebServlet(urlPatterns = { "/web/cart", "/web/cart/delivery", "/web/cart/item/create", "/web/cart/item/delete" })
 public class CartController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -64,7 +66,7 @@ public class CartController extends HttpServlet {
 			 */
 		} else if (url.contains("/web/cart")) {
 			baseInfo(req, resp);
-			User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+			User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
 			List<Cart> listCart = cartService.findByUserId(user.getId());
 			req.setAttribute("listCart", listCart);
 			req.getRequestDispatcher("/views/web/checkout.jsp").forward(req, resp);
@@ -80,7 +82,7 @@ public class CartController extends HttpServlet {
 			Cart cart = cartService.findById(Integer.parseInt(req.getParameter("cart")));
 			List<Delivery> listDelivery = deliveryService.findAll();
 
-			SessionUtil.getInstance().putValue(req, "CARTUSER", cart);
+			SessionUtil.getInstance().putValue(req, CART_USER, cart);
 
 			req.setAttribute("cart", cart);
 			req.setAttribute("listDelivery", listDelivery);
@@ -99,7 +101,7 @@ public class CartController extends HttpServlet {
 	protected void insertItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		Product product = productService.findOneById(Integer.parseInt(req.getParameter("id")));
-		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+		User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
 		Cart cart = cartService.findByUserAndStore(user.getId(), product.getStoreId());
 		if (cart == null) {
 			cart = new Cart();
@@ -146,7 +148,7 @@ public class CartController extends HttpServlet {
 
 	protected void baseInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+		User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
 		req.setAttribute("user", user);
 		List<Cart> carts = cartService.findByUserId(user.getId());
 		int countOfCarts = carts.stream().mapToInt(o1 -> o1.getCartItems().stream().mapToInt(o2 -> o2.getCount()).sum())
@@ -157,14 +159,14 @@ public class CartController extends HttpServlet {
 
 	protected void changeSessionCart(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
+		User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
 		User newuser = userService.findById(user.getId());
 		List<Cart> carts = cartService.findByUserId(user.getId());
 		int countOfCarts = carts.stream().mapToInt(o1 -> o1.getCartItems().stream().mapToInt(o2 -> o2.getCount()).sum())
 				.sum();
-		SessionUtil.getInstance().putValue(req, "CART_HEADER", carts);
-		SessionUtil.getInstance().putValue(req, "COUNT_CART_HEADER", countOfCarts);
-		SessionUtil.getInstance().putValue(req, "USERMODEL", newuser);
+		SessionUtil.getInstance().putValue(req, CART_HEADER, carts);
+		SessionUtil.getInstance().putValue(req, COUNT_CART_HEADER, countOfCarts);
+		SessionUtil.getInstance().putValue(req, USER_MODEL, newuser);
 	}
 
 }
