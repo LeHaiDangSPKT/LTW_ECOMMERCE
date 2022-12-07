@@ -184,6 +184,27 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
         }
         return 0;
     }
+
+    @Override
+    public int count(String status) {
+        StringBuilder sql = new StringBuilder("select count(*) from orders");
+        if (!status.equals("all")) {
+            sql.append(" where status like \"");
+            sql.append(""+ status + "\"");
+        }
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     @Override
     public List<Orders> findAll(String status, Pageble pageble, int storeId) {
         StringBuilder sql = new StringBuilder("select * from orders");

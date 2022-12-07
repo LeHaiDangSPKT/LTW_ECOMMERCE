@@ -20,7 +20,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public List<User> findAll() {
-		String sql = "SELECT * FROM user WHERE role = 'user'";
+		String sql = "SELECT * FROM user WHERE role = 'USER'";
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = super.getConnection();
@@ -46,7 +46,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public List<User> top10Users_Orders() {
-		String sql = "select user.id, user.firstname, user.lastname, user.id_card, user.email, user.phone, total from (select userId, count(userId) as total from orders group by userId order by total desc) as tb join user on tb.userId = user.id where user.role = 'user' limit 10";
+		String sql = "select user.id, user.firstname, user.lastname, user.id_card, user.email, user.phone, total from (select userId, count(userId) as total from orders group by userId order by total desc) as tb join user on tb.userId = user.id where user.role = 'USER' limit 10";
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = super.getConnection();
@@ -70,7 +70,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public int count() {
-		StringBuilder sql = new StringBuilder("select count(*) from user where role = 'user'");
+		StringBuilder sql = new StringBuilder("select count(*) from user where role = 'USER'");
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -86,7 +86,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public List<User> findAll(Pageble pageble) {
-		StringBuilder sql = new StringBuilder("select * from user");
+		StringBuilder sql = new StringBuilder("select * from user where role = 'USER'");
 		if (pageble.getSorter() != null) {
 			sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
 		}
@@ -237,7 +237,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public List<User> findBySearching(String keyword) {
-		String sql = "SELECT * FROM user WHERE role = 'user' and CONCAT(firstname, ' ', lastname) LIKE CONCAT('%', ?, '%')";
+		String sql = "SELECT * FROM user WHERE role = 'USER' and CONCAT(firstname, ' ', lastname) LIKE CONCAT('%', ?, '%')";
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = super.getConnection();

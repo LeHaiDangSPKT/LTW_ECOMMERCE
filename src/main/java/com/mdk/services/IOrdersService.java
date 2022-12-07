@@ -12,6 +12,7 @@ public interface IOrdersService {
     Orders findById(int id);
     void updateStatus(String status, int id);
     int count(String status, int storeId);
+    int count(String status);
     List<Orders> findAll(String status, Pageble pageble, int storeId);
     int countByStoreId(String status, int storeId);
     List<Orders> findAllByStoreId(String status, int storeId, Pageble pageble);
