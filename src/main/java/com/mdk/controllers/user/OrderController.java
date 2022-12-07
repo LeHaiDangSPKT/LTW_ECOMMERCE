@@ -33,11 +33,8 @@ import com.mdk.services.impl.StoreService;
 import com.mdk.services.impl.UserService;
 import com.mdk.utils.SessionUtil;
 
-@WebServlet(urlPatterns = { "/web/order/create" })
+@WebServlet(urlPatterns = { "/web/order/create", "/web/order/list", "/web/order/item/list" })
 public class OrderController extends HttpServlet {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	ICartService cartService = new CartService();
 	IStoreService storeService = new StoreService();
@@ -45,9 +42,27 @@ public class OrderController extends HttpServlet {
 	IProductService productService = new ProductService();
 	IDeliveryService deliveryService = new DeliveryService();
 	IOrdersService ordersService = new OrdersService();
-	IOrdersItemService ordersItemServide = new OrdersItemService();
+	IOrdersItemService ordersItemService = new OrdersItemService();
 	IUserService userService = new UserService();
 
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String url = req.getRequestURL().toString();
+
+		if (url.contains("/web/order/list")) {
+			int id = ((User) SessionUtil.getInstance().getValue(req, "USERMODEL")).getId();
+			List<Orders> ordersList = ordersService.findAllByUser(id);
+			req.setAttribute("ordersList", ordersList);
+			req.getRequestDispatcher("/views/web/orders.jsp").forward(req, resp);
+		} else if (url.contains("web/order/item/list")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			Orders orders =  ordersService.findById(id);
+			req.setAttribute("orders", orders);
+			req.getRequestDispatcher("/views/web/ordersitem.jsp").forward(req, resp);
+		}
+	}
+
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 
@@ -107,7 +122,7 @@ public class OrderController extends HttpServlet {
 			ordersItem.setOrdersId(currentIndex);
 			ordersItem.setProductId(cartItem.getProductId());
 			ordersItem.setCount(cartItem.getCount());
-			ordersItemServide.insert(ordersItem);
+			ordersItemService.insert(ordersItem);
 			cartItemService.delete(cartItem.getId());
 		}
 

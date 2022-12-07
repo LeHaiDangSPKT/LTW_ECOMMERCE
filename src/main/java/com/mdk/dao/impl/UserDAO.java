@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends DBConnection implements IUserDAO {
-	public Connection conn = null;
-	public PreparedStatement ps = null;
-	public ResultSet rs = null;
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
 
 	@Override
 	public List<User> findAll() {

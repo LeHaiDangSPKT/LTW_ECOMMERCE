@@ -16,7 +16,7 @@ public class CartItemDAO extends DBConnection implements ICartItemDAO {
 	public Connection conn = null;
 	public PreparedStatement ps = null;
 	public ResultSet rs = null;
-	IProductService productService = new ProductService();
+	
 
 	@Override
 	public void insert(CartItem cartItem) {
@@ -66,6 +66,7 @@ public class CartItemDAO extends DBConnection implements ICartItemDAO {
 	public List<CartItem> findAllByCart(int cartId) {
 		String sql = "SELECT * FROM CartItem WHERE cartId = ?";
 		List<CartItem> cartItems = new ArrayList<CartItem>();
+		IProductService productService = new ProductService();
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -89,6 +90,7 @@ public class CartItemDAO extends DBConnection implements ICartItemDAO {
 	@Override
 	public CartItem findOneById(int id) {
 		String sql = "SELECT * FROM cartItem WHERE id = ?";
+		IProductService productService = new ProductService();
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);

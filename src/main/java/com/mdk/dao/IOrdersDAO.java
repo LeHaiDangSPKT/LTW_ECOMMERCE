@@ -18,6 +18,7 @@ public interface IOrdersDAO {
     List<Orders> findAll(String status, Pageble pageble, int storeId, String start, String end);
     int countByStoreId(String status, int storeId);
     List<Orders> findAllByStoreId(String status, int storeId, Pageble pageble);
+    List<Orders> findAllByUser(int userId);
     List<Orders> ordersNew(int storeId);
     int currentIndex();
 }

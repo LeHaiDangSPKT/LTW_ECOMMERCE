@@ -66,5 +66,9 @@ public class OrdersService implements IOrdersService {
     public List<Orders> ordersNew(int storeId) {
         return ordersDAO.ordersNew(storeId);
     }
+	@Override
+	public List<Orders> findAllByUser(int userId) {
+		return ordersDAO.findAllByUser(userId);
+	}
 
 }
