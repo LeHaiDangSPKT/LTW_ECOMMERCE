@@ -1,9 +1,8 @@
 package com.mdk.dao;
 
-import com.mdk.models.ImageProduct;
-import com.mdk.models.ImageStore;
-
 import java.util.List;
+
+import com.mdk.models.ImageProduct;
 
 public interface IImageProductDAO {
     void insert (ImageProduct image);

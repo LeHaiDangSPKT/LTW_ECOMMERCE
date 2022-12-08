@@ -1,19 +1,16 @@
 package com.mdk.dao.impl;
 
-import com.mdk.connection.DBConnection;
-import com.mdk.dao.ICategoryDAO;
-import com.mdk.models.Category;
-import com.mdk.models.Delivery;
-import com.mdk.models.Product;
-import com.mdk.paging.Pageble;
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mdk.connection.DBConnection;
+import com.mdk.dao.ICategoryDAO;
+import com.mdk.models.Category;
+import com.mdk.paging.Pageble;
 
 public class CategoryDAO extends DBConnection implements ICategoryDAO {
     public Connection conn = null;

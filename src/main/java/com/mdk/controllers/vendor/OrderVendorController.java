@@ -1,5 +1,17 @@
 package com.mdk.controllers.vendor;
 
+import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
+import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.mdk.models.Orders;
 import com.mdk.models.OrdersDetail;
 import com.mdk.models.Store;
@@ -9,24 +21,16 @@ import com.mdk.services.IOrdersDetailService;
 import com.mdk.services.IOrdersService;
 import com.mdk.services.impl.OrdersDetailService;
 import com.mdk.services.impl.OrdersService;
-import com.mdk.sort.Sorter;
 import com.mdk.utils.MessageUtil;
 import com.mdk.utils.SessionUtil;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-
-import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
-import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
-
 @WebServlet(urlPatterns = {"/vendor/order", "/vendor/order/manager", "/vendor/order/detail", "/vendor/order/update"})
 public class OrderVendorController extends HttpServlet {
-    IOrdersService ordersService = new OrdersService();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	IOrdersService ordersService = new OrdersService();
     IOrdersDetailService ordersDetailService = new OrdersDetailService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

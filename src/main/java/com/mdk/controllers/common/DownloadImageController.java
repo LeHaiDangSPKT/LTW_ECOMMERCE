@@ -17,7 +17,12 @@ import static com.mdk.utils.AppConstant.UPLOAD_USER_DIRECTORY;
 
 @WebServlet(urlPatterns = "/image")
 public class DownloadImageController extends HttpServlet {
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String fileName = req.getParameter("fname");
         String type = req.getParameter("type");

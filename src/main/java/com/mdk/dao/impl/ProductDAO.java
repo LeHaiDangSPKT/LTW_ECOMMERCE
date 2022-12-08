@@ -1,22 +1,20 @@
 package com.mdk.dao.impl;
 
-import com.mdk.connection.DBConnection;
-import com.mdk.dao.IProductDAO;
-import com.mdk.models.Category;
-import com.mdk.models.Product;
-import com.mdk.paging.Pageble;
-import com.mdk.services.ICategoryService;
-import com.mdk.services.IImageProductService;
-import com.mdk.services.impl.CategoryService;
-import com.mdk.services.impl.ImageProductService;
-
-import java.lang.invoke.SwitchPoint;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mdk.connection.DBConnection;
+import com.mdk.dao.IProductDAO;
+import com.mdk.models.Product;
+import com.mdk.paging.Pageble;
+import com.mdk.services.ICategoryService;
+import com.mdk.services.IImageProductService;
+import com.mdk.services.impl.CategoryService;
+import com.mdk.services.impl.ImageProductService;
 
 public class ProductDAO extends DBConnection implements IProductDAO {
 	Connection conn = null;

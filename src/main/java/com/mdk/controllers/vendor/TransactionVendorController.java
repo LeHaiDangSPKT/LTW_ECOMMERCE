@@ -1,6 +1,20 @@
 package com.mdk.controllers.vendor;
 
-import com.mdk.models.Product;
+import static com.mdk.utils.AppConstant.STORE_MODEL;
+import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
+import static com.mdk.utils.AppConstant.USER_MODEL;
+import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.mdk.models.Store;
 import com.mdk.models.Transaction;
 import com.mdk.models.User;
@@ -15,36 +29,39 @@ import com.mdk.services.impl.UserService;
 import com.mdk.utils.MessageUtil;
 import com.mdk.utils.SessionUtil;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.mdk.utils.AppConstant.*;
-
-@WebServlet(urlPatterns = {"/vendor/transaction"})
+@WebServlet(urlPatterns = {"/vendor/transaction", "/vendor/transaction/notification"})
 public class TransactionVendorController extends HttpServlet {
-    ITransactionService transactionService =  new TransactionService();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	ITransactionService transactionService =  new TransactionService();
     IUserService userService = new UserService();
     IStoreService storeService = new StoreService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        transactionPage(req, resp);
-        getWallet(req, resp);
-        MessageUtil.showMessage(req, resp);
-        req.getRequestDispatcher("/views/vendor/transaction.jsp").forward(req, resp);
+        String url = req.getRequestURL().toString();
+        if (url.contains("notification")) {
+            MessageUtil.showMessage(req, resp);
+            req.getRequestDispatcher("/views/vendor/transaction.jsp").forward(req, resp);
+        } else if (url.contains("transaction")) {
+            if (checkStoreExist(req, resp)) {
+                transactionPage(req, resp);
+                getWallet(req, resp);
+                req.setAttribute("storeExist", "store");
+                req.getRequestDispatcher("/views/vendor/transaction.jsp").forward(req, resp);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/vendor/transaction/notification?message=nostore_error");
+            }
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (withDraw(req, resp)) {
-            resp.sendRedirect(req.getContextPath() + "/vendor/transaction?message=transaction_success");
+            resp.sendRedirect(req.getContextPath() + "/vendor/transaction/notification?message=transaction_success");
         } else {
-            resp.sendRedirect(req.getContextPath() + "/vendor/transaction?message=transaction_error");
+            resp.sendRedirect(req.getContextPath() + "/vendor/transaction/notification?message=transaction_error");
         }
     }
 
@@ -93,6 +110,7 @@ public class TransactionVendorController extends HttpServlet {
     protected boolean withDraw(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
         Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
+        if (store == null) return false;
         Double amount = Double.valueOf(req.getParameter("amount"));
         if (store.geteWallet() > amount) {
             Transaction transaction = new Transaction();

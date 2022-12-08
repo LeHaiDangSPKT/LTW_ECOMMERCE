@@ -35,7 +35,11 @@ import static com.mdk.utils.MessageUtil.showMessage;
 @WebServlet(urlPatterns = {"/vendor/product", "/vendor/product/create", "/vendor/product/edit",
         "/vendor/product/delete", "/vendor/product/category"})
 public class ProductVendorController extends HttpServlet {
-    ICategoryService categoryService = new CategoryService();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	ICategoryService categoryService = new CategoryService();
     IProductService productService = new ProductService();
     IImageProductService imageProductService = new ImageProductService();
     @Override

@@ -1,49 +1,59 @@
 package com.mdk.controllers.common;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.mdk.models.Store;
-import com.mdk.models.User;
-import com.mdk.models.UserGoogle;
-import com.mdk.services.IStoreService;
-import com.mdk.services.IUserService;
-import com.mdk.services.impl.StoreService;
-import com.mdk.services.impl.UserService;
-import com.mdk.utils.AppConstant;
-import com.mdk.utils.MessageUtil;
-import com.mdk.utils.SessionUtil;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
+import static com.mdk.utils.AppConstant.ADMIN;
+import static com.mdk.utils.AppConstant.CART;
+import static com.mdk.utils.AppConstant.CART_HEADER;
+import static com.mdk.utils.AppConstant.CART_USER;
+import static com.mdk.utils.AppConstant.COUNT_CART_HEADER;
+import static com.mdk.utils.AppConstant.STORE_MODEL;
+import static com.mdk.utils.AppConstant.USER;
+import static com.mdk.utils.AppConstant.USER_MODEL;
+import static com.mdk.utils.AppConstant.USER_LOGIN;
+
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-import static com.mdk.utils.AppConstant.*;
+import com.mdk.models.Store;
+import com.mdk.models.User;
+import com.mdk.services.IStoreService;
+import com.mdk.services.IUserService;
+import com.mdk.services.impl.StoreService;
+import com.mdk.services.impl.UserService;
+import com.mdk.utils.MessageUtil;
+import com.mdk.utils.SessionUtil;
 
-@WebServlet(urlPatterns = {"/login", "/logout", "/LoginGoogleHandler"})
+@WebServlet(urlPatterns = {"/login", "/logout"})
 public class LoginController extends HttpServlet {
-    IUserService userService = new UserService();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	IUserService userService = new UserService();
     IStoreService storeService = new StoreService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
+        String action = req.getParameter("action") == null ? "" : req.getParameter("action");
+        User user = (User) SessionUtil.getInstance().getValue(req, USER_LOGIN);
         if (url.contains("login")) {
-            MessageUtil.showMessage(req, resp);
-            req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
-        } else if (url.contains("LoginGoogleHandler")) {
-            ReqLogin(req, resp, toUser(req, resp));
+            if (user != null) {
+                if (action.equals("loginnow")) {
+                    ReqLogin(req, resp, user, false);
+                } else {
+                    ReqLogin(req, resp, user, true);
+                }
+            }
+            else {
+                MessageUtil.showMessage(req, resp);
+                req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
+            }
         } else if (url.contains("logout")) {
-            SessionUtil.getInstance().removeValue(req, USER_MODEL);
-            SessionUtil.getInstance().removeValue(req, CART);
-            SessionUtil.getInstance().removeValue(req, CART_HEADER);
-            SessionUtil.getInstance().removeValue(req, COUNT_CART_HEADER);
-            SessionUtil.getInstance().removeValue(req, CART_USER);
-            SessionUtil.getInstance().removeValue(req, STORE_MODEL);
+            removeSession(req);
             resp.sendRedirect(req.getContextPath() + "/home");
         }
         else {
@@ -61,34 +71,25 @@ public class LoginController extends HttpServlet {
             User user = new User();
             user.setEmail(username);
             user.setPassword(password);
-            ReqLogin(req, resp, user);
+            ReqLogin(req, resp, user, false);
         }
     }
-
-    public static String getToken(String code) throws ClientProtocolException, IOException {
-        // call api to get token
-        String response = Request.Post(AppConstant.GOOGLE_LINK_GET_TOKEN)
-                .bodyForm(Form.form().add("client_id", AppConstant.GOOGLE_CLIENT_ID)
-                        .add("client_secret", AppConstant.GOOGLE_CLIENT_SECRET)
-                        .add("redirect_uri", AppConstant.GOOGLE_REDIRECT_URI).add("code", code)
-                        .add("grant_type", AppConstant.GOOGLE_GRANT_TYPE).build())
-                .execute().returnContent().asString();
-
-        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
-        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
-        return accessToken;
+    
+    protected void removeSession(HttpServletRequest req) throws ServletException, IOException {
+        SessionUtil.getInstance().removeValue(req, USER_MODEL);
+        SessionUtil.getInstance().removeValue(req, CART);
+        SessionUtil.getInstance().removeValue(req, CART_HEADER);
+        SessionUtil.getInstance().removeValue(req, COUNT_CART_HEADER);
+        SessionUtil.getInstance().removeValue(req, CART_USER);
+        SessionUtil.getInstance().removeValue(req, STORE_MODEL);
     }
-    public static UserGoogle getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
-        String link = AppConstant.GOOGLE_LINK_GET_USER_INFO + accessToken;
-        String response = Request.Get(link).execute().returnContent().asString();
-        System.out.println(response);
-        UserGoogle googlePojo = new Gson().fromJson(response, UserGoogle.class);
-        return googlePojo;
-    }
-    protected void ReqLogin(HttpServletRequest req, HttpServletResponse resp, User userLogin) throws ServletException,
+    
+    protected void ReqLogin(HttpServletRequest req, HttpServletResponse resp, User userLogin, boolean isLoginGoogle) throws ServletException,
             IOException {
         User user = userService.findOneByUsernameAndPassword(userLogin.getEmail(), userLogin.getPassword());
+     
         if (user != null) {
+            SessionUtil.getInstance().removeValue(req, USER_LOGIN);
             SessionUtil.getInstance().putValue(req, USER_MODEL, user);
             Store store = storeService.findByUserId(user.getId());
             SessionUtil.getInstance().putValue(req, STORE_MODEL, store);
@@ -99,19 +100,11 @@ public class LoginController extends HttpServlet {
             } else {
                 resp.sendRedirect(req.getContextPath() + "/login?message=login_error");
             }
+        } else if (isLoginGoogle){
+            resp.sendRedirect(req.getContextPath() + "/signup?action=create&state=loginGoogle");
         } else {
-            resp.sendRedirect(req.getContextPath() + "/signup?firstname=" + userLogin.getFirstname() + "&lastname=" + userLogin.getLastname() + "&email=" + userLogin.getEmail());
+            resp.sendRedirect(req.getContextPath() + "/login?message=login_error");
         }
     }
-    protected User toUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = new User();
-        String code = req.getParameter("code");
-        String accessToken = getToken(code);
-        UserGoogle userGoogle = getUserInfo(accessToken);
-        user.setEmail(userGoogle.getEmail());
-        user.setFirstname(userGoogle.getGiven_name());
-        user.setLastname(userGoogle.getFamily_name());
-        user.setPassword(userGoogle.getId());
-        return user;
-    }
+    
 }

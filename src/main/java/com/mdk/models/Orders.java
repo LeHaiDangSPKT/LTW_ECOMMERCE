@@ -1,7 +1,5 @@
 package com.mdk.models;
 
-import java.math.BigDecimal;
-
 public class Orders extends AbstractModel<Orders> {
     private int userId;
     private int storeId;

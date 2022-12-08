@@ -1,8 +1,19 @@
 package com.mdk.controllers.vendor;
 
-import com.google.gson.Gson;
+import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
+import static com.mdk.utils.AppConstant.STORE_MODEL;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.mdk.models.Orders;
-import com.mdk.models.Product;
 import com.mdk.models.Store;
 import com.mdk.services.IOrdersService;
 import com.mdk.services.IProductService;
@@ -13,21 +24,13 @@ import com.mdk.services.impl.StoreService;
 import com.mdk.utils.MessageUtil;
 import com.mdk.utils.SessionUtil;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.*;
-
-import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
-import static com.mdk.utils.AppConstant.STORE_MODEL;
-
 @WebServlet(urlPatterns = {"/vendor/statistic", "/vendor/statistic/notification"})
 public class StatisticVendorController extends HttpServlet {
-    IStoreService storeService = new StoreService();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	IStoreService storeService = new StoreService();
     IProductService productService = new ProductService();
     IOrdersService ordersService = new OrdersService();
     @Override

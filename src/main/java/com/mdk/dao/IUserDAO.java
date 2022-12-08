@@ -1,11 +1,10 @@
 
 package com.mdk.dao;
 
-import com.mdk.models.Orders;
+import java.util.List;
+
 import com.mdk.models.User;
 import com.mdk.paging.Pageble;
-
-import java.util.List;
 
 public interface IUserDAO {
 	void insert(User user);
@@ -19,4 +18,5 @@ public interface IUserDAO {
     int count();
     List<User> findAll(Pageble pageble);
     User findOneByUsernameAndPassword(String username, String password);
+    int checkEmailExist(String email);
 }

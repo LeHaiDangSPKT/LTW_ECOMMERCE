@@ -1,33 +1,31 @@
 package com.mdk.controllers.admin;
 
-import com.mdk.models.*;
-import com.mdk.paging.PageRequest;
-import com.mdk.paging.Pageble;
-import com.mdk.services.ICategoryService;
-import com.mdk.services.IProductService;
-import com.mdk.services.impl.CategoryService;
-import com.mdk.services.impl.ProductService;
+import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
-import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
+import com.mdk.models.Category;
+import com.mdk.models.Product;
+import com.mdk.paging.PageRequest;
+import com.mdk.paging.Pageble;
+import com.mdk.services.ICategoryService;
+import com.mdk.services.IProductService;
+import com.mdk.services.impl.CategoryService;
+import com.mdk.services.impl.ProductService;
 
 @WebServlet(urlPatterns = {"/admin/product/permit", "/admin/product/prohibit", "/admin/product/category", "/admin/product/category/add", "/admin/product/category/edit", "/admin/product/category/delete-soft", "/admin/product/category/delete", "/admin/product/category/restore", "/admin/product/ban"})
 public class ProductAdminController extends HttpServlet{

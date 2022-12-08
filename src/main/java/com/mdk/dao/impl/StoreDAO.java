@@ -1,20 +1,18 @@
 
 package com.mdk.dao.impl;
 
-import com.mdk.connection.DBConnection;
-import com.mdk.dao.IStoreDAO;
-
-import com.mdk.models.ImageStore;
-import com.mdk.models.Store;
-import com.mdk.services.IImageStoreService;
-import com.mdk.services.impl.ImageStoreService;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.mdk.connection.DBConnection;
+import com.mdk.dao.IStoreDAO;
+import com.mdk.models.Store;
+import com.mdk.services.IImageStoreService;
+import com.mdk.services.impl.ImageStoreService;
 
 public class StoreDAO extends DBConnection implements IStoreDAO {
 	public Connection conn = null;
@@ -165,7 +163,8 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 	public int totalCustomer(int storeId) {
 		String sql = "select userId, count(*) from orders where storeId = ? group by userId";
 		try {
-			conn = getConnection();
+
+			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, storeId);
 			rs = ps.executeQuery();
@@ -241,6 +240,26 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 			ps.setInt(1, storeId);
 			ps.setString(2, month);
 			ps.setString(3, year);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public double transactionOfMonth(int storeId, boolean isUp, String month, String year) {
+		String sql = "select sum(amount) from transaction where storeId = ? and isUp = ? and month(createdAt) = ? and year(createdAt) = ?";
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, storeId);
+			ps.setBoolean(2, isUp);
+			ps.setString(3, month);
+			ps.setString(4, year);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				return rs.getInt(1);

@@ -1,10 +1,9 @@
 package com.mdk.dao;
 
-import com.mdk.models.Category;
+import java.util.List;
+
 import com.mdk.models.Delivery;
 import com.mdk.paging.Pageble;
-
-import java.util.List;
 
 public interface IDeliveryDAO {
     List<Delivery> findAll();
