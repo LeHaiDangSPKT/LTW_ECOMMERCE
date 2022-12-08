@@ -8,7 +8,7 @@
     <%@include file="/common/link-css-js.jsp"%>
     <script src="<c:url value="https://accounts.google.com/gsi/client"/>" async defer></script>
 </head>
-<body>
+<body style="background-image: linear-gradient(to right top, #0dd6b8, #85e79a, #fffefc)">
 <dec:body/>
 </body>
 </html>

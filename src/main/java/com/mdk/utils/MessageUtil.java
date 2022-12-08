@@ -10,7 +10,12 @@ import static com.mdk.utils.AppConstant.*;
 import static com.mdk.utils.AppConstant.ALERT_UPDATE_SUCCESS;
 
 public class MessageUtil extends HttpServlet {
-    public static void showMessage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static void showMessage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String message = req.getParameter("message");
         String messageResp = "";
         String alert = "";
@@ -45,6 +50,18 @@ public class MessageUtil extends HttpServlet {
             } else if (message.equals("transaction_success")) {
                 messageResp = MESSAGE_TRANSACTION_SUCCESS;
                 alert = ALERT_INSERT_SUCCESS;
+            } else if (message.equals("email_already_exist")) {
+                messageResp = MESSAGE_EMAIL_EXIST;
+                alert = ALERT_ERROR_SYSTEM;
+            } else if (message.equals("password_incorrect")) {
+                messageResp = MESSAGE_PASSWORD_INCORRECT;
+                alert = ALERT_ERROR_SYSTEM;
+            } else if (message.equals("signup_error")) {
+                messageResp = MESSAGE_SINGUP_ERROR;
+                alert = ALERT_ERROR_SYSTEM;
+            } else if (message.equals("verify_failed")) {
+                messageResp = MESSAGE_VERIFY_FAILED;
+                alert = ALERT_ERROR_SYSTEM;
             }
             req.setAttribute("message", messageResp);
             req.setAttribute("alert", alert);

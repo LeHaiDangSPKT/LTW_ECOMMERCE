@@ -1,11 +1,9 @@
 
 package com.mdk.dao;
 
-import com.mdk.models.Product;
-import com.mdk.models.Store;
-
-import java.sql.SQLException;
 import java.util.List;
+
+import com.mdk.models.Store;
 
 public interface IStoreDAO {
     void insert(Store store);
@@ -17,6 +15,7 @@ public interface IStoreDAO {
     int totalOrders(int storeId);
     int totalSale(int storeId);
     double revenueOfMonth(int storeId, String month, String year);
+    double transactionOfMonth(int storeId, boolean isUp, String month, String year);
     Store findById(int id);
     int totalStores();
     List<Store> top10Store_Orders();

@@ -1,10 +1,9 @@
 package com.mdk.dao;
 
-import com.mdk.models.Category;
-import com.mdk.models.Product;
-import com.mdk.paging.Pageble;
-
 import java.util.List;
+
+import com.mdk.models.Category;
+import com.mdk.paging.Pageble;
 
 public interface ICategoryDAO {
 

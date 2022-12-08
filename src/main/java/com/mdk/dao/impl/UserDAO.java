@@ -176,7 +176,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public void insert(User user) {
-		String sql = "INSERT INTO user(firstname, lastname, id_card, email, phone, password, gender) "
+		String sql = "INSERT INTO user(firstname, lastname, id_card, email, phone, password, sex) "
 				+ "VALUES (?,?,?,?,?,?,?)";
 		try {
 			conn = super.getConnection();
@@ -187,7 +187,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 			ps.setString(4, user.getEmail());
 			ps.setString(5, user.getPhone());
 			ps.setString(6, user.getPassword());
-			ps.setInt(7, user.isGender() ? 1 : 0);
+			ps.setInt(7, user.getSex() ? 1 : 0);
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -268,4 +268,21 @@ public class UserDAO extends DBConnection implements IUserDAO {
 			e.printStackTrace();
 		}
 	}
+
+    @Override
+    public int checkEmailExist(String email) {
+        String sql = "select count(*) from user where email like ?";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

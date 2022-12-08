@@ -2,7 +2,8 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:url value="/vendor/statistic?topseller=" var="urlTop"/>
-<c:url value="/vendor/statistic/loadchart" var="urlLoadChart"/>
+<c:url value="/vendor/statistic/loadchart" var="urlLoadChartRevenue"/>
+<c:url value="/vendor/transaction/loadchart" var="urlLoadChartTransaction"/>
 <c:url value="/vendor/loadTopProduct" var="urlLoadTopProduct"/>
 <html>
 <head>
@@ -102,7 +103,7 @@
                         <div style="margin-left: 16px;">
                             <select class="form-control"
                                     name=""
-                                    id=""
+                                    id="selectYearTransaction"
                             >
                                 <c:forEach begin="0" end="2" var="i">
                                     <option value="${year - i}">Năm: ${year - i}</option>
@@ -112,7 +113,7 @@
                     </div>
                 </div>
                 <div class="iq-card-body">
-                    <div style="height: 370px; width: 100%;"></div>
+                    <div id="chartTransaction" style="height: 370px; width: 100%;"></div>
                 </div>
             </div>
         </div>
@@ -216,6 +217,7 @@
             }
         })
     }
+    // chart revenue
     function loadChartRevenue(data) {
         const chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
@@ -244,9 +246,9 @@
         });
         chart.render();
     }
-    function loadDataOfEachYear(year) {
+    function loadDataRevenueOfEachYear(year) {
         $.ajax({
-            url: "${urlLoadChart}",
+            url: "${urlLoadChartRevenue}",
             type: "get",
             data: {
                 year
@@ -260,11 +262,56 @@
             }
         })
     }
-    window.onload = function() {
-        const year = $("#selectYear").val();
-        const top = $("#selectedTop option:selected").val();
-        loadDataOfEachYear(year);
-        loadTopProduct(top);
+    // chart transaction
+    function loadChartTransaction(data) {
+        const chart = new CanvasJS.Chart("chartTransaction", {
+            animationEnabled: true,
+            title: {
+                text: "Chi tiết các giao dịch",
+                fontFamily: "tahoma",
+            },
+            axisX: {
+                title: "Tháng"
+            },
+            axisY: {
+                title: "(VND)",
+                includeZero: true
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor:"pointer",
+            },
+            data: [{
+                type: "column",
+                name: "Nạp",
+                yValueFormatString: "#,##0.0# VND",
+                dataPoints: data[0],
+            },{
+                type: "column",
+                name: "Rút",
+                yValueFormatString: "#,##0.0# VND",
+                dataPoints: data[1],
+            }]
+        });
+        chart.render();
+    }
+    function loadDataTransactionOfEachYear(year) {
+        $.ajax({
+            url: "${urlLoadChartTransaction}",
+            type: "get",
+            data: {
+                year
+            },
+            success: function (data) {
+                console.log(data);
+                loadChartTransaction(data);
+            },
+            error: function (xhr) {
+                console.log("Error")
+            }
+        })
     }
     $("#selectedTop").change(function () {
         const top = $("#selectedTop option:selected").val();
@@ -272,8 +319,19 @@
     })
     $("#selectYear").change(function () {
         const year = $("#selectYear").val();
-        loadDataOfEachYear(year);
+        loadDataRevenueOfEachYear(year);
     })
+    $("#selectYearTransaction").change(function () {
+        const year = $("#selectYearTransaction").val();
+        loadDataTransactionOfEachYear(year);
+    })
+    window.onload = function() {
+        const year = $("#selectYear").val();
+        const top = $("#selectedTop option:selected").val();
+        loadDataRevenueOfEachYear(year);
+        loadDataTransactionOfEachYear(year);
+        loadTopProduct(top);
+    }
 </script>
 </body>
 </html>

@@ -19,7 +19,12 @@ import static com.mdk.utils.AppConstant.STORE_MODEL;
 
 @WebServlet(urlPatterns = "/vendor/loadTopProduct")
 public class LoadTopProduct extends HttpServlet {
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
 

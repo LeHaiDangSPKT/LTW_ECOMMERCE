@@ -1,6 +1,5 @@
 package com.mdk.controllers.user;
 
-import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
 import static com.mdk.utils.AppConstant.USER_MODEL;
 
 import java.io.File;

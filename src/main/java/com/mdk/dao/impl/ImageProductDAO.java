@@ -1,16 +1,15 @@
 package com.mdk.dao.impl;
 
-import com.mdk.connection.DBConnection;
-import com.mdk.dao.IImageProductDAO;
-import com.mdk.models.ImageProduct;
-import com.mdk.models.ImageStore;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mdk.connection.DBConnection;
+import com.mdk.dao.IImageProductDAO;
+import com.mdk.models.ImageProduct;
 
 public class ImageProductDAO extends DBConnection implements IImageProductDAO {
     Connection conn = null;

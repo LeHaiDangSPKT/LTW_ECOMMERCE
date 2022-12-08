@@ -22,7 +22,12 @@ import static com.mdk.utils.AppConstant.STORE_MODEL;
 
 @WebServlet(urlPatterns = {"/vendor/statistic/loadchart"})
 public class LoadChartRevenue extends HttpServlet {
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         IStoreService storeService = new StoreService();

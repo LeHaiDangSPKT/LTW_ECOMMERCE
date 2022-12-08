@@ -1,5 +1,4 @@
 package com.mdk.models;
-
 import java.util.List;
 
 public class Orders extends AbstractModel<Orders> {

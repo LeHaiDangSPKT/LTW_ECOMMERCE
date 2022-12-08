@@ -23,7 +23,11 @@ import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
 
 @WebServlet(urlPatterns = "/vendor/loadmore")
 public class LoadMoreProduct extends HttpServlet {
-    IProductService productService = new ProductService();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	IProductService productService = new ProductService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");

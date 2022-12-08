@@ -65,4 +65,9 @@ public class UserService implements IUserService {
 	public void updateWallet(int id, double eWallet) {
 		userDao.updateWallet(id, eWallet);
 	}
+
+    @Override
+    public int checkEmailExist(String email) {
+        return userDao.checkEmailExist(email);
+    }
 }

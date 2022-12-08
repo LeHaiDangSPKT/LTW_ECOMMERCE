@@ -1,9 +1,8 @@
 package com.mdk.services;
 
-import com.mdk.models.Orders;
-import com.mdk.models.Store;
-
 import java.util.List;
+
+import com.mdk.models.Store;
 
 public interface IStoreService {
     Store findById(int id);
@@ -16,6 +15,7 @@ public interface IStoreService {
     int totalOrders(int storeId);
     int totalSale(int storeId);
     double revenueOfMonth(int storeId, String month, String year);
+    double transactionOfMonth(int storeId, boolean isUp, String month, String year);
     int totalStores();
     List<Store> top10Store_Orders();
     List<Store> findAll();

@@ -16,6 +16,7 @@ import com.mdk.utils.DeleteImageUtil;
 import com.mdk.utils.MessageUtil;
 import com.mdk.utils.SessionUtil;
 import com.mdk.utils.UploadUtil;
+import com.mysql.cj.Session;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -35,11 +36,16 @@ import static com.mdk.utils.AppConstant.*;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
-@WebServlet(urlPatterns = {"/vendor/store", "/vendor/store/create", "/vendor/store/edit", "/vendor/home"})
+@WebServlet(urlPatterns = { "/vendor/store", "/vendor/store/create", "/vendor/store/edit", "/vendor/home" })
 public class StoreVendorController extends HttpServlet {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     IStoreService storeService = new StoreService();
     IImageStoreService imageStoreService = new ImageStoreService();
     IProductService productService = new ProductService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
@@ -67,15 +73,17 @@ public class StoreVendorController extends HttpServlet {
         String url = req.getRequestURL().toString();
         if (url.contains("create")) {
             insert(req, resp);
+            resetSessionStore(req);
             resp.sendRedirect(req.getContextPath() + "/vendor/store?message=insert_success");
         } else if (url.contains("edit")) {
             update(req, resp);
+            resetSessionStore(req);
             resp.sendRedirect(req.getContextPath() + "/vendor/store?message=update_success");
         }
     }
 
-    protected int checkStoreExist(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-            IOException {
+    protected int checkStoreExist(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
         int count = 0;
         if (store != null) {
@@ -90,6 +98,14 @@ public class StoreVendorController extends HttpServlet {
         req.setAttribute("count", count);
         return count;
     }
+    
+    protected void resetSessionStore(HttpServletRequest req) throws ServletException, IOException {
+        User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
+        SessionUtil.getInstance().removeValue(req, STORE_MODEL);
+        Store store = storeService.findByUserId(user.getId());
+        SessionUtil.getInstance().putValue(req, STORE_MODEL, store);
+    }
+
     protected void insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
@@ -101,11 +117,11 @@ public class StoreVendorController extends HttpServlet {
         store.setOwnerID(Integer.valueOf(req.getParameter("ownerId")));
         // xử lý ảnh
         Collection<Part> parts = req.getParts();
-        for(Part filePart : parts) {
-            if(filePart.getHeader("content-disposition").contains("filename=")){
+        for (Part filePart : parts) {
+            if (filePart.getHeader("content-disposition").contains("filename=")) {
                 String fileName = "" + System.currentTimeMillis();
                 String realPath = UPLOAD_STORE_DIRECTORY;
-                if(filePart.getName().equals("avatar")){
+                if (filePart.getName().equals("avatar")) {
                     store.setAvatar(UploadUtil.processUpload(filePart.getName(), req, realPath, fileName));
                 } else {
                     ImageStore image = new ImageStore();
@@ -117,18 +133,17 @@ public class StoreVendorController extends HttpServlet {
         store.setImages(images);
         try {
             storeService.insert(store);
-            SessionUtil.getInstance().putValue(req, STORE_MODEL, store);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    protected void update (HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+
+    protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
 
-        //Store moi
+        // Store moi
         Store store = new Store();
         List<ImageStore> images = new ArrayList<>();
 
@@ -142,11 +157,11 @@ public class StoreVendorController extends HttpServlet {
         int flag = 0;
         // Xử lý ảnh
         Collection<Part> parts = req.getParts();
-        for(Part filePart : parts) {
+        for (Part filePart : parts) {
             if (filePart.getHeader("content-disposition").contains("filename=")) {
                 String fileName = "" + System.currentTimeMillis();
                 String realPath = UPLOAD_STORE_DIRECTORY;
-                if(filePart.getName().equals("avatar")) {
+                if (filePart.getName().equals("avatar")) {
                     if (filePart.getSize() == 0) {
                         store.setAvatar(oldStore.getAvatar());
                     } else {
@@ -160,18 +175,18 @@ public class StoreVendorController extends HttpServlet {
                     }
                 } else {
                     ImageStore image = new ImageStore();
-                    if(filePart.getSize() == 0) {
+                    if (filePart.getSize() == 0) {
                         image.setName(oldImages.get(flag).getName());
                         images.add(image);
                     } else {
-                        if(oldImages.get(flag) != null) {
+                        if (oldImages.get(flag) != null) {
                             // xoa anh cu
                             String fileNameImg = oldImages.get(flag).getName();
-                            File file = new File(UPLOAD_STORE_DIRECTORY + "\\" +fileNameImg);
+                            File file = new File(UPLOAD_STORE_DIRECTORY + "\\" + fileNameImg);
                             if (file.delete()) {
                                 System.out.println("Đã xóa");
                             } else {
-                                System.out.println(UPLOAD_STORE_DIRECTORY + "\\" +fileNameImg);
+                                System.out.println(UPLOAD_STORE_DIRECTORY + "\\" + fileNameImg);
                             }
                         }
                         image.setName(UploadUtil.processUpload(filePart.getName(), req, realPath, fileName));
@@ -184,10 +199,11 @@ public class StoreVendorController extends HttpServlet {
         store.setImages(images);
         storeService.update(store);
     }
-    protected void findAllProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-            IOException {
+
+    protected void findAllProduct(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         List<Product> products = new ArrayList<>();
-        Store store = (Store) SessionUtil.getInstance().getValue(req,STORE_MODEL);
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
         if (store != null) {
             Pageble pageble = new PageRequest(1, TOTAL_ITEM_IN_PAGE, null);
             products = productService.findAll(pageble, 0, store.getId(), null);

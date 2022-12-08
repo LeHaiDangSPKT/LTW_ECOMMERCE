@@ -1,15 +1,13 @@
 package com.mdk.services.impl;
 
+import java.util.List;
+
 import com.mdk.dao.IStoreDAO;
 import com.mdk.dao.impl.StoreDAO;
 import com.mdk.models.ImageStore;
 import com.mdk.models.Store;
-import com.mdk.models.User;
 import com.mdk.services.IImageStoreService;
-
 import com.mdk.services.IStoreService;
-
-import java.util.List;
 
 public class StoreService implements IStoreService {
     IStoreDAO storeDAO = new StoreDAO();
@@ -74,6 +72,11 @@ public class StoreService implements IStoreService {
     @Override
     public double revenueOfMonth(int storeId, String month, String year) {
         return storeDAO.revenueOfMonth(storeId, month, year);
+    }
+
+    @Override
+    public double transactionOfMonth(int storeId, boolean isUp, String month, String year) {
+        return storeDAO.transactionOfMonth(storeId, isUp, month, year);
     }
 
     @Override
