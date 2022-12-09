@@ -22,18 +22,9 @@ public class DownloadAdminController extends HttpServlet {
         } else if (type.equals("store")){
             filename = "reportStore.xls";
             sendRedirect = "/admin/store";
-        } else if (type.equals("product-permit")){
-            filename = "reportProductPermit.xls";
-            sendRedirect = "/admin/product/permit";
-        } else if (type.equals("product-prohibit")){
-            filename = "reportProductProhibit.xls";
-            sendRedirect = "/admin/product/prohibit";
-        } else if (type.equals("order-delivered")){
-            filename = "reportOrderDelivered.xls";
+        } else if (type.equals("order")){
+            filename = "reportOrder.xls";
             sendRedirect = "/admin/order?state=delivered";
-        } else if (type.equals("order-shipped")) {
-            filename = "reportOrderShipped.xls";
-            sendRedirect = "/admin/order?state=shipped";
         } else if (type.equals("delivery")) {
             filename = "reportDelivery.xls";
             sendRedirect = "/admin/delivery";

@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-
 <%@include file="/common/taglib.jsp"%>
-<c:url value="/admin/order" var="urlList"/>
+<c:url value="/admin/order?state=delivered" var="urlList"/>
 <!doctype html>
 <html lang="en">
 <head>
@@ -27,11 +26,41 @@
           <div class="iq-card">
             <div class="iq-card-header d-flex justify-content-center">
               <div class="iq-header-title">
-                <h4 class="card-title">QUẢN LÝ TẤT CẢ CÁC ĐƠN HÀNG ${state == "delivered" ? "ĐÃ GIAO" : "ĐANG GIAO"}</h4>
+                <h4 class="card-title">QUẢN LÝ TẤT CẢ CÁC ĐƠN HÀNG ĐÃ GIAO</h4>
               </div>
             </div>
+
             <div class="iq-card-body">
               <div class="table-responsive">
+                <a href="<c:url value="/admin/download-report?type=order"/> "
+                   class="text-dark" style="display: block; margin-left: 10px; margin-bottom: 12px;">
+                  Tải báo cáo
+                  <i class="fa-solid fa-download"></i>
+                </a>
+                <div class="d-flex align-items-center justify-content-between">
+                  <h6>Tổng đơn hàng đã giao: ${ordersList.size() + totalItemInPage*(tag-1)} / ${countP}</h6>
+                  <div>
+                    <label>Tìm kiếm theo tên khách hàng:</label>
+                    <div class="iq-card-transparent mb-0">
+                      <div class="d-block">
+                        <div class="w-100 iq-search-filter">
+                          <div class="iq-search-bar search-book d-flex align-items-center">
+                            <form action="#" class="searchbox m-0">
+                              <input type="text" class="text search-input"
+                                     placeholder="Nhập tên khách hàng cần tìm..."
+                                     id="input-search"
+                                     name=""
+                                     value="${search}"
+                              >
+                            </form>
+                            <button id="btn-search" onclick="Search()"
+                                    class="btn btn-warning search-data ml-2">Tìm</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <select id="selectCate">
                   <c:forEach items="${storesList}" var="storesList">
                     <option value="${storesList.id}"
@@ -46,8 +75,8 @@
                   <thead>
                   <tr class="text-center">
                     <th>STT</th>
-                    <th>Mã người mua hàng</th>
-                    <th>Mã đơn vị vận chuyển</th>
+                    <th>Tên người mua hàng</th>
+                    <th>Tên đơn vị vận chuyển</th>
                     <th>Địa chỉ khách hàng</th>
                     <th>Số điện thoại</th>
                     <th>Giá thành</th>
@@ -58,8 +87,8 @@
                   <c:forEach items="${ordersList}" var="ordersList" varStatus="STT" >
                     <tr class="text-center">
                       <td>${STT.index + 1 + totalItemInPage*(tag-1)}</td>
-                      <td>${ordersList.userId}</td>
-                      <td>${ordersList.deliveryId}</td>
+                      <td>${ordersList.nameOwner}</td>
+                      <td>${ordersList.nameDelivery}</td>
                       <td>${ordersList.address}</td>
                       <td>${ordersList.phone}</td>
                       <td>${ordersList.amountFromUser}</td>
@@ -97,12 +126,18 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  $('#selectCate').change(function () {
-    const storeId = $("#selectCate option:selected").val();
-    window.location.href = "${urlList}?state=${state}&storeId=" + storeId;
+<script>
+  function Search() {
+    const key = $('#input-search').val();
+    window.location.href = "${urlList}&search=" + key;
+  }
+
+  $('#selectState').change(function () {
+    const storeId = $("#selectState option:selected").val();
+    window.location.href = "${urlList}&storeId=" + storeId;
   });
 </script>
 </body>
 </html>
+
 

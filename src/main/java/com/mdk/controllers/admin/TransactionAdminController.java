@@ -69,14 +69,14 @@ public class TransactionAdminController extends HttpServlet{
         });
         int storeId = req.getParameter("storeId") == null ? storesList.get(0).getId() : Integer.parseInt(req.getParameter("storeId"));
 
-        int countP = ordersService.countByStoreId(state, storeId);
+        int countP = ordersService.countByStoreId(state, storeId, null);
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
         }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Orders> ordersList = ordersService.findAllByStoreId(state, storeId, pageble);
+        List<Orders> ordersList = ordersService.findAllByStoreId(state, storeId, pageble, null);
         req.setAttribute("storeId", storeId);
         req.setAttribute("storesList", storesList);
         req.setAttribute("countP", countP);

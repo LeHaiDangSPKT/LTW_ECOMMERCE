@@ -243,11 +243,16 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     }
 
     @Override
-    public int countByStoreId(String status, int storeId) {
-        StringBuilder sql = new StringBuilder("select count(*) from orders");
+    public int countByStoreId(String status, int storeId, String keyword) {
+        StringBuilder sql = new StringBuilder("select count(*) from orders inner join user on orders.userId = user.id");
         if (!status.equals("all")) {
             sql.append(" where status like \"");
             sql.append(""+ status + "\" and storeId = " + storeId);
+        }
+        if (keyword != null) {
+            sql.append(" and (user.lastname like ");
+            sql.append("\"%" + keyword + "%\" or user.firstname like ");
+            sql.append("\"%" + keyword + "%\")");
         }
         try {
             conn = getConnection();
@@ -263,11 +268,16 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     }
 
     @Override
-    public List<Orders> findAllByStoreId(String status, int storeId, Pageble pageble) {
-        StringBuilder sql = new StringBuilder("select * from orders");
+    public List<Orders> findAllByStoreId(String status, int storeId, Pageble pageble, String keyword) {
+        StringBuilder sql = new StringBuilder("select * from orders inner join user on orders.userId = user.id");
         if (!status.equals("all")) {
             sql.append(" where status like \"");
             sql.append(""+ status + "\"" + " and storeId = "+ storeId);
+        }
+        if (keyword != null) {
+            sql.append(" and (user.lastname like ");
+            sql.append("\"%" + keyword + "%\" or user.firstname like ");
+            sql.append("\"%" + keyword + "%\")");
         }
         if (pageble.getSorter() != null) {
             sql.append(" order by "+pageble.getSorter().getSortName()+" "+pageble.getSorter().getSortBy()+"");
@@ -379,6 +389,33 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
                 order.setUser(user);
                 order.setStore(store);
                 order.setDelivery(delivery);
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Orders> findAllForReport() {
+        StringBuilder sql = new StringBuilder("select * from orders where status = 'delivered'");
+        List<Orders> orders = new ArrayList<>();
+        IUserService userService = new UserService();
+        IDeliveryService deliveryService = new DeliveryService();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()){
+                Orders order = new Orders();
+                User user = userService.findById(rs.getInt("userId"));
+                Delivery delivery = deliveryService.findById(rs.getInt("deliveryId"));
+                order.setNameOwner(user.getLastname() + " " + user.getFirstname());
+                order.setNameDelivery(delivery.getName());
+                order.setAddress(rs.getString("address"));
+                order.setPhone(rs.getString("phone"));
+                order.setAmountFromUser(rs.getDouble("amountFromUser"));
                 orders.add(order);
             }
         } catch (SQLException e) {

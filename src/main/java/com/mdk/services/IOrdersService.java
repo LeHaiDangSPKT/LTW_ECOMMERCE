@@ -14,9 +14,11 @@ public interface IOrdersService {
     void updateStatus(String status, int id);
     int count(String status, int storeId, String start, String end);
     List<Orders> findAll(String status, Pageble pageble, int storeId, String start, String end);
-    int countByStoreId(String status, int storeId);
-    List<Orders> findAllByStoreId(String status, int storeId, Pageble pageble);
+    int countByStoreId(String status, int storeId, String keyword);
+    List<Orders> findAllByStoreId(String status, int storeId, Pageble pageble, String keyword);
     List<OrderDetails> findDetailByOrderId(int id);
     List<Orders> ordersNew(int storeId);
+    List<Orders> findAllForReport();
 	int currentIndex();
+
 }

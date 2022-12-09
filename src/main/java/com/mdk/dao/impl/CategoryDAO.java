@@ -44,10 +44,14 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
     }
 
     @Override
-    public int count(String state) {
+    public int count(String state, String keyword) {
         StringBuilder sql = new StringBuilder("select count(*) from category");
         if(state != "") {
             sql.append(" where isDeleted = " + state);
+        }
+        if (keyword != null) {
+            sql.append(" and name like ");
+            sql.append("\"%" + keyword + "%\"");
         }
         try {
             conn = getConnection();
@@ -63,10 +67,14 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
     }
 
     @Override
-    public List<Category> findAll(Pageble pageble, String state) {
+    public List<Category> findAll(Pageble pageble, String state, String keyword) {
         StringBuilder sql = new StringBuilder("select * from category");
         if (state != "") {
             sql.append(" where isDeleted = " + state);
+        }
+        if (keyword != null) {
+            sql.append(" and name like ");
+            sql.append("\"%" + keyword + "%\"");
         }
         if (pageble.getSorter() != null) {
             sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");

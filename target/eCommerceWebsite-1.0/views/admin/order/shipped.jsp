@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp"%>
-<c:url value="/admin/order?state=delivered" var="urlList"/>
+<c:url value="/admin/order?state=shipped" var="urlList"/>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,17 +26,12 @@
           <div class="iq-card">
             <div class="iq-card-header d-flex justify-content-center">
               <div class="iq-header-title">
-                <h4 class="card-title">QUẢN LÝ TẤT CẢ CÁC ĐƠN HÀNG ĐÃ GIAO</h4>
+                <h4 class="card-title">QUẢN LÝ TẤT CẢ CÁC ĐƠN HÀNG ĐANG VẬN CHUỂN</h4>
               </div>
             </div>
 
             <div class="iq-card-body">
               <div class="table-responsive">
-                <a href="<c:url value="/admin/download-report?type=order"/> "
-                   class="text-dark" style="display: block; margin-left: 10px; margin-bottom: 12px;">
-                  Tải báo cáo
-                  <i class="fa-solid fa-download"></i>
-                </a>
                 <div class="d-flex align-items-center justify-content-between">
                   <h6>Tổng đơn hàng đã giao: ${ordersList.size() + totalItemInPage*(tag-1)} / ${countP}</h6>
                   <div>

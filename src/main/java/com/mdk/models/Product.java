@@ -13,6 +13,7 @@ public class Product extends AbstractModel<Product> {
     private int categoryId;
     private int storeId;
     private int rating;
+
     private Category category;
     private List<ImageProduct> images;
     public List<ImageProduct> getImages() {

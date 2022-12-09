@@ -19,8 +19,8 @@ public interface IProductService {
     Product findOneById(int id);
     List<Product> findByStoreId(int storeId);
     int count(int categoryId, int storeId, String searchKey);
-    int count(String status);
-    List<Product> findAll(Pageble pageble, String status);
+    int count(String status, int storeId, String searchKey);
+    List<Product> findAll(Pageble pageble, String status, int storeId, String searchKey);
     List<Product> findAllByStoreId(int id);
     List<Product> findBySearching(String keyword, int categoryId, int storeId, int rating, double minPrice, double maxPrice);
     List<Product> getTopRating(int index);

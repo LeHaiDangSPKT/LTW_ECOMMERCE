@@ -397,6 +397,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		return products;
 	}
 
+
+
 	@Override
 	public List<Product> findByCategoryId(int categoryId) {
 		StringBuilder sql = new StringBuilder("select * from product\n" + "where categoryId = ?");
@@ -529,10 +531,17 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 	
 	@Override
-	public int count(String status) {
+	public int count(String status, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select count(*) from product");
 		if (status != "") {
 			sql.append(" where isActive = " + status);
+		}
+		if (storeId != 0) {
+			sql.append(" and storeId = " + storeId);
+		}
+		if (searchKey != null) {
+			sql.append(" and name like ");
+			sql.append("\"%" + searchKey + "%\"");
 		}
 		try {
 			conn = getConnection();
@@ -546,12 +555,18 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		}
 		return 0;
 	}
-
 	@Override
-	public List<Product> findAll(Pageble pageble, String status) {
+	public List<Product> findAll(Pageble pageble, String status, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select * from product");
-		if (status != "") {
-			sql.append(" where isActive = " + status);
+		if (status != null) {
+			sql.append(" where isActive = " + Boolean.parseBoolean(status));
+		}
+		if (storeId != 0) {
+			sql.append(" and storeId = " + storeId);
+		}
+		if (searchKey != null) {
+			sql.append(" and name like ");
+			sql.append("\"%" + searchKey + "%\"");
 		}
 		if (pageble.getSorter() != null) {
 			sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
@@ -564,13 +579,13 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
 				Product product = new Product();
 				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
 				product.setDescription(rs.getString("description"));
 				product.setPrice(rs.getDouble("price"));
-				product.setQuantity(rs.getInt("quantity"));
 				product.setSold(rs.getInt("sold"));
 				products.add(product);
 			}
@@ -579,7 +594,6 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		}
 		return products;
 	}
-
 	@Override
 	public List<Product> findAllByStoreId(int id) {
 		StringBuilder sql = new StringBuilder("select * from product\n" + "where storeId = ?");
