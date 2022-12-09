@@ -12,8 +12,8 @@ public class TransactionService implements ITransactionService {
     ITransactionDAO transactionDAO = new TransactionDAO();
 
     @Override
-    public List<Transaction> findAll() {
-        return transactionDAO.findAll();
+    public List<Transaction> findAll(Pageble pageble, int userId) {
+        return transactionDAO.findAll(pageble, userId);
     }
 
     @Override
@@ -29,5 +29,10 @@ public class TransactionService implements ITransactionService {
     @Override
     public void insert(Transaction transaction) {
         transactionDAO.insert(transaction);
+    }
+
+    @Override
+    public int countByUserId(int userId) {
+        return transactionDAO.countByUserId(userId);
     }
 }

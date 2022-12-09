@@ -6,8 +6,9 @@ import com.mdk.paging.Pageble;
 import java.util.List;
 
 public interface ITransactionService {
-    List<Transaction> findAll();
+    List<Transaction> findAll(Pageble pageble, int userId);
     int count(int storeId, String dateStart, String dateEnd);
     List<Transaction> findAll(Pageble pageble, int storeId, String dateStart, String dateEnd);
     void insert(Transaction transaction);
+    int countByUserId(int userId);
 }

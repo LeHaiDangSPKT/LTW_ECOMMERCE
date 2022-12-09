@@ -20,22 +20,28 @@ public class TransactionDAO extends DBConnection implements ITransactionDAO {
     public PreparedStatement ps = null;
     public ResultSet rs = null;
     @Override
-    public List<Transaction> findAll() {
-        String sql = "SELECT * FROM transaction";
-        List<Transaction> transactions = new ArrayList<Transaction>();
+    public List<Transaction> findAll(Pageble pageble, int userId) {
+        StringBuilder sql = new StringBuilder("select * from transaction where storeId = " + userId);
+        List<Transaction> transactions = new ArrayList<>();
+        IUserService userService = new UserService();
         try {
-            conn = super.getConnection();
-            ps = conn.prepareStatement(sql);
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
             rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 Transaction transaction = new Transaction();
+                transaction.setId(rs.getInt("id"));
                 transaction.setUserId(rs.getInt("userId"));
+                User user = userService.findById(rs.getInt("userId"));
+                transaction.setNameUser(user.getFirstname() + " " + user.getLastname());
                 transaction.setStoreId(rs.getInt("storeId"));
                 transaction.setUp(rs.getBoolean("isUp"));
+                transaction.setIsUpString(rs.getBoolean("isUp") ? "Rút" : "Nạp");
                 transaction.setAmount(rs.getDouble("amount"));
+                transaction.setCreatedAt(rs.getTimestamp("createdAt"));
                 transactions.add(transaction);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return transactions;
@@ -111,5 +117,23 @@ public class TransactionDAO extends DBConnection implements ITransactionDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int countByUserId(int userId) {
+        StringBuilder sql = new StringBuilder("select count(*) from transaction");
+            sql.append(" where userId = " + userId);
+
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

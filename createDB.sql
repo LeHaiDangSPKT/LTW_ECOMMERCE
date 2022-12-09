@@ -8,15 +8,16 @@ create table address
 create table user
 (
     id int      auto_increment,
+    sex boolean null,  
     firstname       varchar(32) not null,
     lastname        varchar(32) not null,
     id_card         varchar(9) unique,
-    email           varchar(50) unique,
+    email           varchar(50) unique not null,
     phone           varchar(12) unique,
     isEmailActive   boolean   default false,
     isPhoneActive   boolean   default false,
     password 		varchar(50) not null,
-    role            varchar(50) not null default 'user',
+    role            varchar(50) not null default 'USER',
     avatar          varchar(100),
     eWallet        double  default 0,
     createdAt       timestamp default now(),
@@ -75,7 +76,7 @@ create table product
     price            double not null,
     promotionalPrice double not null,
     quantity         int     not null,
-    sold             int     not null,
+    sold             int     not null default 0,
     isActive         boolean default true,
     categoryId       int  not null,
     storeId          int  not null,
@@ -87,9 +88,9 @@ create table product
     constraint fk_product_store foreign key (storeId) references store (id),
     constraint fk_product_category foreign key (categoryId) references category (id),
     constraint check_product_rating check (0 <= rating <= 5),
-    constraint check_product_sold check (sold > 0),
+    constraint check_product_sold check (sold >= 0),
     constraint check_product_quantity check (quantity >= 0),
-    constraint check_product_promotionalPrice check (promotionalPrice >= 0),
+    constraint check_product_promotionalPrice check (promotionalPrice > 0),
     constraint check_product_price check (price > 0),
     constraint check_product_name check (length(name) <= 100)
 );
@@ -248,3 +249,8 @@ create table transaction
     constraint fk_transaction_store foreign key (storeId) references store (id)
 );
 
+select * from store;
+update store set eWallet = 100000 where id = 1;
+insert into user (firstname, lastname, email, password, role) values ('admin', 'admin', 'admin@admin', '12345', 'ADMIN');
+insert into user (sex, firstname, lastname, id_card, email, phone, password) values (true, 'Minh Mẫn', 'Trần', '123456789', 'mantm040702@gmail.com', '0964294799', '1234');
+insert into user (sex, firstname, lastname, id_card, email, phone, password, eWallet) values (true, 'Hải Đăng', 'Lê', '123456189', '0509dangle@gmail.com', '0968294799', '1234', 1500000);

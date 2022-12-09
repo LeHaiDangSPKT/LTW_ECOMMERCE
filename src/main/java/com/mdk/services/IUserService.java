@@ -13,12 +13,12 @@ public interface IUserService {
 	void delete(int id);
 	void updateWallet(int id, double eWallet);
 	List<User> findBySearching(String keyword);
-	
+	List<User> findAllForReport();
 	
 	List<User> findAll();
     User findById(int id);
     List<User> top10Users_Orders();
-    int count();
-    List<User> findAll(Pageble pageble);
+    int count(String keyword);
+	List<User> findAll(Pageble pageble, String keyword);
     User findOneByUsernameAndPassword(String username, String password);
 }

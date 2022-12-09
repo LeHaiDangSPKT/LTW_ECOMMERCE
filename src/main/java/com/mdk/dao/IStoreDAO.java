@@ -3,6 +3,8 @@ package com.mdk.dao;
 
 import com.mdk.models.Product;
 import com.mdk.models.Store;
+import com.mdk.models.User;
+import com.mdk.paging.Pageble;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,6 +13,7 @@ public interface IStoreDAO {
     void insert(Store store);
     void update(Store store);
     int count(int userId);
+    int count(String keyword, String state);
     Store findByUserId(int userId);
     int totalCustomer(int storeId);
     int totalProduct(int storeId);
@@ -21,6 +24,11 @@ public interface IStoreDAO {
     int totalStores();
     List<Store> top10Store_Orders();
     List<Store> findAll();
+    List<Store> findAll(Pageble pageble, String keyword, String state);
     List<Store> findAllByName(String keyword);
     void updateWallet(int id, double eWallet);
+    void deleteSoft(int id);
+    void delete(int id);
+    void restore(int id);
+    List<Store> findAllForReport();
 }

@@ -1,5 +1,7 @@
 package com.mdk.models;
 
+import org.apache.poi.ss.usermodel.Row;
+
 import java.sql.Timestamp;
 
 public class AbstractModel<T> {
@@ -29,5 +31,9 @@ public class AbstractModel<T> {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void writeReport(Row row) {
+
     }
 }

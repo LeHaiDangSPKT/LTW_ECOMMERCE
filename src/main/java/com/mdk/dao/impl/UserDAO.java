@@ -1,4 +1,3 @@
-
 package com.mdk.dao.impl;
 
 import com.mdk.connection.DBConnection;
@@ -20,7 +19,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public List<User> findAll() {
-		String sql = "SELECT * FROM user WHERE role = 'user'";
+		String sql = "SELECT * FROM user WHERE role = 'USER'";
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = super.getConnection();
@@ -45,8 +44,31 @@ public class UserDAO extends DBConnection implements IUserDAO {
 	}
 
 	@Override
+	public List<User> findAllForReport() {
+		String sql = "SELECT * FROM user WHERE role = 'USER'";
+		List<User> users = new ArrayList<User>();
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setLastname(rs.getString("lastname"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setId_card(rs.getString("id_card"));
+				user.setEmail(rs.getString("email"));
+				user.setPhone(rs.getString("phone"));
+				users.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	@Override
 	public List<User> top10Users_Orders() {
-		String sql = "select user.id, user.firstname, user.lastname, user.id_card, user.email, user.phone, total from (select userId, count(userId) as total from orders group by userId order by total desc) as tb join user on tb.userId = user.id where user.role = 'user' limit 10";
+		String sql = "select user.id, user.firstname, user.lastname, user.id_card, user.email, user.phone, total from (select userId, count(userId) as total from orders group by userId order by total desc) as tb join user on tb.userId = user.id where user.role = 'USER' limit 10";
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = super.getConnection();
@@ -69,8 +91,12 @@ public class UserDAO extends DBConnection implements IUserDAO {
 	}
 
 	@Override
-	public int count() {
-		StringBuilder sql = new StringBuilder("select count(*) from user where role = 'user'");
+	public int count(String keyword) {
+		StringBuilder sql = new StringBuilder("select count(*) from user where role = 'USER'");
+		if (keyword != null) {
+			sql.append(" and firstname like ");
+			sql.append("\"%" + keyword + "%\"");
+		}
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -85,14 +111,19 @@ public class UserDAO extends DBConnection implements IUserDAO {
 	}
 
 	@Override
-	public List<User> findAll(Pageble pageble) {
-		StringBuilder sql = new StringBuilder("select * from user");
+	public List<User> findAll(Pageble pageble, String keyword) {
+		StringBuilder sql = new StringBuilder("select * from user where role = 'USER'");
+		if (keyword != null) {
+			sql.append(" and firstname like ");
+			sql.append("\"%" + keyword + "%\"");
+		}
 		if (pageble.getSorter() != null) {
 			sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
 		}
 		if (pageble.getOffset() != null && pageble.getLimit() != null) {
 			sql.append(" limit " + pageble.getOffset() + ", " + pageble.getLimit() + "");
 		}
+
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = getConnection();
@@ -229,7 +260,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public List<User> findBySearching(String keyword) {
-		String sql = "SELECT * FROM user WHERE role = 'user' and CONCAT(firstname, ' ', lastname) LIKE CONCAT('%', ?, '%')";
+		String sql = "SELECT * FROM user WHERE role = 'USER' and CONCAT(firstname, ' ', lastname) LIKE CONCAT('%', ?, '%')";
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = super.getConnection();
@@ -255,7 +286,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public void updateWallet(int id, double eWallet) {
-		String sql = "UPDATE user " 
+		String sql = "UPDATE user "
 				+ "SET eWallet = ? "
 				+ "WHERE id = ?";
 		try {

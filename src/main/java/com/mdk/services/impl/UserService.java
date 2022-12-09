@@ -27,13 +27,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int count() {
-        return userDao.count();
+    public int count(String keyword) {
+        return userDao.count(keyword);
     }
 
     @Override
-    public List<User> findAll(Pageble pageble) {
-        return userDao.findAll(pageble);
+    public List<User> findAll(Pageble pageble, String keyword) {
+        return userDao.findAll(pageble, keyword);
     }
 
     @Override
@@ -61,7 +61,12 @@ public class UserService implements IUserService {
 		return userDao.findBySearching(keyword);
 	}
 
-	@Override
+    @Override
+    public List<User> findAllForReport() {
+        return userDao.findAllForReport();
+    }
+
+    @Override
 	public void updateWallet(int id, double eWallet) {
 		userDao.updateWallet(id, eWallet);
 	}

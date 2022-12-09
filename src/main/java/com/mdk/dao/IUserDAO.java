@@ -14,9 +14,10 @@ public interface IUserDAO {
 	void updateWallet(int id, double eWallet);
 	List<User> findBySearching(String keyword);
     List<User> findAll();
+    List<User> findAllForReport();
     User findById(int id);
     List<User> top10Users_Orders();
-    int count();
-    List<User> findAll(Pageble pageble);
+    int count(String keyword);
+    List<User> findAll(Pageble pageble, String keyword);
     User findOneByUsernameAndPassword(String username, String password);
 }
