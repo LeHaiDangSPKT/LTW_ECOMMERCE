@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp"%>
 <c:url value="/admin/transaction" var="urlList"/>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -60,7 +61,7 @@
                     </div>
                   </div>
                 </div>
-                <select id="selectCate">
+                <select id="selectCate" class="form-control w-25">
                   <c:forEach items="${storesList}" var="storesList">
                     <option value="${storesList.id}"
                       ${storesList.id == storeId ? "selected" : ""}
@@ -86,7 +87,7 @@
                       <td>${STT.index + 1 + totalItemInPage*(tag-1)}</td>
                       <td>${transactionList.nameUser}</td>
                       <td>${transactionList.amount}</td>
-                      <td>${transactionList.isUpString}</td>
+                      <td>${transactionList.isUpString == 'Nạp' ? 'Rút' : 'Nạp'}</td>
                       <td>${transactionList.createdAt.toString()}</td>
                     </tr>
                   </c:forEach>
@@ -97,18 +98,18 @@
                 <div class="dataTables_paginate paging_simple_numbers">
                   <ul class="pagination justify-content-center">
                     <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}">
-                      <a href="${pageContext.request.contextPath}/admin/transaction?index=${tag - 1}"
+                      <a href="${pageContext.request.contextPath}/admin/transaction?storeId=${storeId}index=${tag - 1}"
                          class="page-link">Previous
                       </a>
                     </li>
                     <c:forEach begin="1" end="${endP}" var="i">
                       <li class="paginate_button page-item ${i == tag ? "active" : ""}">
-                        <a href="${pageContext.request.contextPath}/admin/transaction?&index=${i}"
+                        <a href="${pageContext.request.contextPath}/admin/transaction?storeId=${storeId}&index=${i}"
                            class="page-link">${i}</a>
                       </li>
                     </c:forEach>
                     <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}">
-                      <a href="${pageContext.request.contextPath}/admin/transaction?index=${tag + 1}"
+                      <a href="${pageContext.request.contextPath}/admin/transaction?storeId=${storeId}index=${tag + 1}"
                          class="page-link">Next</a>
                     </li>
                   </ul>
@@ -130,7 +131,8 @@
   });
   function Search() {
     const key = $('#input-search').val();
-    window.location.href = "${urlList}?search=" + key;
+    const storeId = $("#selectCate option:selected").val();
+    window.location.href = "${urlList}?storeId=" + storeId + "&search=" + key;
   }
 </script>
 </body>
