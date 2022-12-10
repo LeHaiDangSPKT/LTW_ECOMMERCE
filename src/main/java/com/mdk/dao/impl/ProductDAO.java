@@ -368,6 +368,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			sql.append(" and name like ");
 			sql.append("\"%" + searchKey + "%\"");
 		}
+		sql.append(" and isActive = true");
 		if (pageble.getSorter() != null) {
 			sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
 		}
@@ -411,7 +412,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
 	@Override
 	public List<Product> findByCategoryId(int categoryId) {
-		StringBuilder sql = new StringBuilder("select * from product\n" + "where categoryId = ?");
+		StringBuilder sql = new StringBuilder("select * from product\n" + "where categoryId = ? and isActive = true");
 		List<Product> products = new ArrayList<>();
 		ICategoryService categoryService = new CategoryService();
 		IImageProductService imageProductService = new ImageProductService();
@@ -459,6 +460,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			sql.append(" and name like ");
 			sql.append("\"%" + searchKey + "%\"");
 		}
+		sql.append(" and isActive = true");
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));

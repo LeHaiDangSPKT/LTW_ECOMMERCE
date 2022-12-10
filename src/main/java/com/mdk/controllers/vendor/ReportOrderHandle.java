@@ -67,7 +67,9 @@ public class ReportOrderHandle extends HttpServlet {
         List<ReportOrder> reportOrder = reportOrderService.getReportOrder(store.getId(), status, dateStart, dateEnd);
         final String excelFilePath = EXPORT_REPORT;
         writeExcel(reportOrder, excelFilePath);
-        resp.sendRedirect(req.getContextPath() + "/vendor/order?status="+status+"&start="+dateStart+"&end="+dateEnd+"&message=export_success&state=success");
+        resp.sendRedirect(req.getContextPath() + 
+                "/vendor/order?status="+status+"&start=" + 
+                dateStart+"&end="+dateEnd+"&message=export_success&state=success");
     }
     public static void writeExcel(List<ReportOrder> reportOrders, String excelFilePath) throws IOException {
         Workbook workbook = getWorkbook(excelFilePath);

@@ -19,7 +19,8 @@ import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
 public class UploadUtil {
     private static final long serialVersionUID = 1L;
 
-    public static String processUpload(String fieldName, HttpServletRequest req, String storeFolder, String storeFilename) throws IOException, ServletException {
+    public static String processUpload(String fieldName, HttpServletRequest req, String storeFolder, String storeFilename) 
+            throws IOException, ServletException {
         Part filePart = req.getPart(fieldName);
         if(filePart == null || filePart.getSize()==0) {
             return "";

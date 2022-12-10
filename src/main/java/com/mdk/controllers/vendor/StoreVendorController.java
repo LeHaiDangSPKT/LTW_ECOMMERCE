@@ -1,5 +1,24 @@
 package com.mdk.controllers.vendor;
 
+import static com.mdk.utils.AppConstant.STORE_MODEL;
+import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
+import static com.mdk.utils.AppConstant.UPLOAD_STORE_DIRECTORY;
+import static com.mdk.utils.AppConstant.USER_MODEL;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
 import com.mdk.models.ImageStore;
 import com.mdk.models.Product;
 import com.mdk.models.Store;
@@ -16,22 +35,6 @@ import com.mdk.utils.DeleteImageUtil;
 import com.mdk.utils.MessageUtil;
 import com.mdk.utils.SessionUtil;
 import com.mdk.utils.UploadUtil;
-import com.mysql.cj.Session;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static com.mdk.utils.AppConstant.*;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
         maxFileSize = 1024 * 1024 * 50, // 50MB
