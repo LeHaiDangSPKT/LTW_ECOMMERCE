@@ -356,6 +356,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			sql.append(" and name like ");
 			sql.append("\"%" + searchKey + "%\"");
 		}
+		sql.append(" and isActive = true");
 		if (pageble.getSorter() != null) {
 			sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
 		}
@@ -397,7 +398,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
 	@Override
 	public List<Product> findByCategoryId(int categoryId) {
-		StringBuilder sql = new StringBuilder("select * from product\n" + "where categoryId = ?");
+		StringBuilder sql = new StringBuilder("select * from product\n" + "where categoryId = ? and isActive = true");
 		List<Product> products = new ArrayList<>();
 		ICategoryService categoryService = new CategoryService();
 		IImageProductService imageProductService = new ImageProductService();
@@ -432,40 +433,6 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		return products;
 	}
 
-//	@Override
-//	public List<Product> findByStoreId(int storeId) {
-//		StringBuilder sql = new StringBuilder("select * from product where storeId = ?");
-//		List<Product> products = new ArrayList<>();
-//		try {
-//			conn = getConnection();
-//			ps = conn.prepareStatement(String.valueOf(sql));
-//			ps.setInt(1, storeId);
-//			rs = ps.executeQuery();
-//			while (rs.next()) {
-//				Product product = new Product();
-//				product.setId(rs.getInt("id"));
-//				product.setName(rs.getString("name"));
-//				product.setDescription(rs.getString("description"));
-//				product.setPrice(rs.getDouble("price"));
-//				product.setPromotionalPrice(rs.getDouble("promotionalPrice"));
-//				product.setQuantity(rs.getInt("quantity"));
-//				product.setSold(rs.getInt("sold"));
-//				product.setActive(rs.getBoolean("isActive"));
-//				product.setCategoryId(rs.getInt("categoryId"));
-//				product.setStoreId(rs.getInt("storeId"));
-//				product.setRating(rs.getInt("rating"));
-//
-//				product.setCreatedAt(rs.getTimestamp("createdAt"));
-//				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
-//
-//				products.add(product);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return products;
-//	}
-
 	@Override
 	public int count(int categoryId, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select count(*) from product");
@@ -479,6 +446,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			sql.append(" and name like ");
 			sql.append("\"%" + searchKey + "%\"");
 		}
+		sql.append(" and isActive = true");
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));

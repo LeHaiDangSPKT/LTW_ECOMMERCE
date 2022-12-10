@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 public class DeleteImageUtil {
     public static void processDelete(String storeFolder, String storeFilename) {
         File file = new File(storeFolder +"\\" + storeFilename);
-        String path = storeFolder + "\\" + storeFilename;
         try {
             Files.delete(Paths.get(file.getPath()));
         } catch (Exception e) {

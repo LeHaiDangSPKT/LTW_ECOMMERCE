@@ -114,7 +114,9 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     }
     @Override
     public List<OrderDetails> findDetailByOrderId(int id) {
-        StringBuilder sql = new StringBuilder("select name, description, price, count from product inner join ordersItem on product.id = ordersItem.productId where ordersItem.ordersId = ?");
+        StringBuilder sql = new StringBuilder("select name, description, price, count "
+                + "from product inner join ordersItem on product.id = ordersItem.productId "
+                + "where ordersItem.ordersId = ?");
         try {
             conn = getConnection();
             ps = conn.prepareStatement(String.valueOf(sql));
