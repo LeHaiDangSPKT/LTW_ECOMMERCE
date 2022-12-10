@@ -1,6 +1,14 @@
 package com.mdk.models;
 
+
+import org.apache.poi.ss.usermodel.*;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Orders extends AbstractModel<Orders> {
+    private static CellStyle cellStyleFormatDouble = null;
     private int userId;
     private int storeId;
     private int deliveryId;
@@ -13,6 +21,25 @@ public class Orders extends AbstractModel<Orders> {
     private User user;
     private Store store;
     private Delivery delivery;
+    private List<OrdersItem> ordersItem;
+    private String nameOwner;
+    private String nameDelivery;
+
+    public String getNameOwner() {
+        return nameOwner;
+    }
+
+    public void setNameOwner(String nameOwner) {
+        this.nameOwner = nameOwner;
+    }
+
+    public String getNameDelivery() {
+        return nameDelivery;
+    }
+
+    public void setNameDelivery(String nameDelivery) {
+        this.nameDelivery = nameDelivery;
+    }
 
     public Delivery getDelivery() {
         return delivery;
@@ -109,4 +136,47 @@ public class Orders extends AbstractModel<Orders> {
     public void setAmountToGD(Double amountToGD) {
         this.amountToGD = amountToGD;
     }
+
+	public List<OrdersItem> getOrdersItem() {
+		return ordersItem;
+	}
+
+	public void setOrdersItem(List<OrdersItem> ordersItem) {
+		this.ordersItem = ordersItem;
+	}
+    public static List<HeaderElementExcel> getColumns() {
+        List<HeaderElementExcel> list = new ArrayList<>();
+        list.add(new HeaderElementExcel(0, "Tên người mua hàng"));
+        list.add(new HeaderElementExcel(1, "Tên đơn vị vận chuyển"));
+        list.add(new HeaderElementExcel(2, "Địa chỉ khách hàng"));
+        list.add(new HeaderElementExcel(3, "Số điện thoại"));
+        list.add(new HeaderElementExcel(4, "Giá thành"));
+        return list;
+    }
+
+    @Override
+    public void writeReport(Row row) {
+        if (cellStyleFormatDouble == null) {
+            Workbook workbook = row.getSheet().getWorkbook();
+            DataFormat format = workbook.createDataFormat();
+            cellStyleFormatDouble = workbook.createCellStyle();
+            cellStyleFormatDouble.setDataFormat(format.getFormat("#,##0.00"));
+        }
+
+        Cell cell = row.createCell(0);
+        cell.setCellValue(nameOwner);
+
+        cell = row.createCell(1);
+        cell.setCellValue(nameDelivery);
+
+        cell = row.createCell(2);
+        cell.setCellValue(address);
+
+        cell = row.createCell(3);
+        cell.setCellValue(phone);
+
+        cell = row.createCell(4);
+        cell.setCellValue(amountFromUser);
+    }
+
 }

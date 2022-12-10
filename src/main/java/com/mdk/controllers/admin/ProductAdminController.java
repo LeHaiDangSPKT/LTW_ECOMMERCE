@@ -33,6 +33,7 @@ public class ProductAdminController extends HttpServlet{
     private static final long serialVersionUID = 1L;
     ICategoryService categoryService = new CategoryService();
     IProductService productService = new ProductService();
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
@@ -118,46 +119,51 @@ public class ProductAdminController extends HttpServlet{
         resp.setCharacterEncoding("UTF-8");
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
         String indexPage = req.getParameter("index");
+        String keyword = req.getParameter("search");
+        int storeId = req.getParameter("storeId") == null ? 0 : Integer.parseInt(req.getParameter("storeId"));
+
         if(indexPage == null) {
             indexPage = "1";
         }
-        int countP = productService.count(status);
+        int countP = productService.count(status, storeId, keyword);
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
         }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Product> productList = productService.findAll(pageble, status);
+        List<Product> productList = productService.findAll(pageble, status, storeId, keyword);
         req.setAttribute("productList", productList);
         req.setAttribute("countP", countP);
         req.setAttribute("endP", endP);
         req.setAttribute("tag", indexPage);
         req.setAttribute("totalItemInPage", totalItemInPage);
+        req.setAttribute("search", keyword);
     }
 
     protected void categoryPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
         String indexPage = req.getParameter("index");
+        String keyword = req.getParameter("search");
         if(indexPage == null) {
             indexPage = "1";
         }
         String state = req.getParameter("state") == null ? "false" : req.getParameter("state");
-        int countP = categoryService.count(state);
+        int countP = categoryService.count(state, keyword);
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
         }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Category> categories = categoryService.findAll(pageble, state);
-
+        List<Category> categories = categoryService.findAll(pageble, state, keyword);
         req.setAttribute("state", state);
         req.setAttribute("countP", countP);
         req.setAttribute("totalItemInPage", totalItemInPage);
         req.setAttribute("endP", endP);
         req.setAttribute("tag", indexPage);
         req.setAttribute("categories", categories);
+        req.setAttribute("search", keyword);
     }
 
     protected void sendEmail(HttpServletRequest req, HttpServletResponse resp, String productId, String state) throws ServletException, IOException {

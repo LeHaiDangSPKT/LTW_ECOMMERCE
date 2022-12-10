@@ -41,7 +41,7 @@ public class StatisticVendorController extends HttpServlet {
             req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
         } else if (url.contains("statistic")){
             if (checkStoreExist(req, resp)) {
-                Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
+                Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
                 mainStatistic(req, resp, store);
                 req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
             } else {

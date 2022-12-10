@@ -1,5 +1,10 @@
 package com.mdk.services;
 
+
+import com.mdk.models.Orders;
+import com.mdk.models.Store;
+import com.mdk.paging.Pageble;
+
 import java.util.List;
 
 import com.mdk.models.Store;
@@ -9,6 +14,8 @@ public interface IStoreService {
     void insert(Store store);
     void update(Store store);
     int count(int userId);
+    void updateRating(int storeId, int rating);
+    int count(String keyword, String state);
     Store findByUserId(int userId);
     int totalCustomer(int storeId);
     int totalProduct(int storeId);
@@ -20,5 +27,10 @@ public interface IStoreService {
     List<Store> top10Store_Orders();
     List<Store> findAll();
     List<Store> findAllByName(String keyword);
+    List<Store> findAll(Pageble pageble, String keyword, String state);
     void updateWallet(int id, double eWallet);
+    void deleteSoft(int id);
+    void delete(int id);
+    void restore(int id);
+    List<Store> findAllForReport();
 }

@@ -91,13 +91,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public int count(String status) {
-        return productDAO.count(status);
+    public int count(String status, int storeId, String searchKey) {
+        return productDAO.count(status, storeId, searchKey);
     }
 
     @Override
-    public List<Product> findAll(Pageble pageble, String status) {
-        return productDAO.findAll(pageble,status);
+    public List<Product> findAll(Pageble pageble, String status, int storeId, String searchKey) {
+        return productDAO.findAll(pageble, status, storeId, searchKey);
     }
 
     @Override
@@ -130,5 +130,10 @@ public class ProductService implements IProductService {
     public List<Product> topSeller(int storeId, int top) {
         return productDAO.topSeller(storeId, top);
     }
+
+	@Override
+	public void updateRating(int productId, int rating) {
+		productDAO.updateRating(productId, rating);
+	}
 
 }

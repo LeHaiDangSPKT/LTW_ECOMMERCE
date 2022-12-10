@@ -38,6 +38,6 @@ public class DownloadImageController extends HttpServlet {
         if (file.exists()) {
             IOUtils.copy(new FileInputStream(file), resp.getOutputStream());
         }
-
+        
     }
 }

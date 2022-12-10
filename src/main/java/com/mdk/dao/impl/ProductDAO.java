@@ -13,19 +13,23 @@ import com.mdk.models.Product;
 import com.mdk.paging.Pageble;
 import com.mdk.services.ICategoryService;
 import com.mdk.services.IImageProductService;
+import com.mdk.services.IStoreService;
 import com.mdk.services.impl.CategoryService;
 import com.mdk.services.impl.ImageProductService;
+import com.mdk.services.impl.StoreService;
 
 public class ProductDAO extends DBConnection implements IProductDAO {
 	Connection conn = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
-	IImageProductService imageProductService = new ImageProductService();
+	
 
 	@Override
 	public List<Product> findAllProductProhibited() {
 		StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE isActive = false");
 		List<Product> products = new ArrayList<Product>();
+		IImageProductService imageProductService = new ImageProductService();
+		IStoreService storeService = new StoreService();
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -50,6 +54,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	public List<Product> findAllProductPermitted() {
 		StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE isActive = true");
 		List<Product> products = new ArrayList<Product>();
+		IImageProductService imageProductService = new ImageProductService();
+		IStoreService storeService = new StoreService();
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -208,6 +214,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	public Product findOneByName(String name, int storeId) {
 		StringBuilder sql = new StringBuilder("select * from product where name like ? and storeId = ?");
 		Product product = new Product();
+		IImageProductService imageProductService = new ImageProductService();
+		IStoreService storeService = new StoreService();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -243,6 +251,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		Product product = new Product();
 		ICategoryService categoryService = new CategoryService();
 		IImageProductService imageProductService = new ImageProductService();
+		IStoreService storeService = new StoreService();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -262,6 +271,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				product.setRating(rs.getInt("rating"));
 				product.setCreatedAt(rs.getTimestamp("createdAt"));
 				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
+				product.setStore(storeService.findById(product.getStoreId()));
 				product.setCategory(categoryService.findById(rs.getInt("categoryId")));
 				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
 				return product;
@@ -276,6 +286,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	public List<Product> getTopSeller(int index) {
 		StringBuilder sql = new StringBuilder("select * from product\n" + "order by sold DESC\n" + "limit ?");
 		List<Product> products = new ArrayList<>();
+		IImageProductService imageProductService = new ImageProductService();
+		IStoreService storeService = new StoreService();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -396,6 +408,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		return products;
 	}
 
+
+
 	@Override
 	public List<Product> findByCategoryId(int categoryId) {
 		StringBuilder sql = new StringBuilder("select * from product\n" + "where categoryId = ? and isActive = true");
@@ -464,6 +478,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	public List<Product> findByStoreId(int storeId) {
 		StringBuilder sql = new StringBuilder("select * from product where storeId = ?");
 		List<Product> products = new ArrayList<>();
+		IImageProductService imageProductService = new ImageProductService();
+		IStoreService storeService = new StoreService();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -495,10 +511,17 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	}
 	
 	@Override
-	public int count(String status) {
+	public int count(String status, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select count(*) from product");
 		if (status != "") {
 			sql.append(" where isActive = " + status);
+		}
+		if (storeId != 0) {
+			sql.append(" and storeId = " + storeId);
+		}
+		if (searchKey != null) {
+			sql.append(" and name like ");
+			sql.append("\"%" + searchKey + "%\"");
 		}
 		try {
 			conn = getConnection();
@@ -512,12 +535,18 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		}
 		return 0;
 	}
-
 	@Override
-	public List<Product> findAll(Pageble pageble, String status) {
+	public List<Product> findAll(Pageble pageble, String status, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select * from product");
-		if (status != "") {
-			sql.append(" where isActive = " + status);
+		if (status != null) {
+			sql.append(" where isActive = " + Boolean.parseBoolean(status));
+		}
+		if (storeId != 0) {
+			sql.append(" and storeId = " + storeId);
+		}
+		if (searchKey != null) {
+			sql.append(" and name like ");
+			sql.append("\"%" + searchKey + "%\"");
 		}
 		if (pageble.getSorter() != null) {
 			sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
@@ -530,13 +559,13 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
 				Product product = new Product();
 				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
 				product.setDescription(rs.getString("description"));
 				product.setPrice(rs.getDouble("price"));
-				product.setQuantity(rs.getInt("quantity"));
 				product.setSold(rs.getInt("sold"));
 				products.add(product);
 			}
@@ -545,12 +574,12 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		}
 		return products;
 	}
-
 	@Override
 	public List<Product> findAllByStoreId(int id) {
 		StringBuilder sql = new StringBuilder("select * from product\n" + "where storeId = ?");
 		List<Product> products = new ArrayList<>();
 		IImageProductService imageProductService = new ImageProductService();
+		IStoreService storeService = new StoreService();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -572,6 +601,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				product.setCreatedAt(rs.getTimestamp("createdAt"));
 				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
 //                product.setCategory(categoryService.findById(rs.getInt("categoryId")));
+				product.setStore(storeService.findById(product.getStoreId()));
 				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
 				products.add(product);
 			}
@@ -588,6 +618,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				+ "and categoryId like ? " + "and storeId like ? " + "and rating like ? "
 				+ "and price - promotionalPrice >= ? " + "and ? >= price - promotionalPrice ");
 		List<Product> products = new ArrayList<>();
+		IImageProductService imageProductService = new ImageProductService();
+		IStoreService storeService = new StoreService();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -639,6 +671,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	public List<Product> getTopRating(int index) {
 		StringBuilder sql = new StringBuilder("select * from product\n" + "order by rating DESC\n" + "limit ?");
 		List<Product> products = new ArrayList<>();
+		IImageProductService imageProductService = new ImageProductService();
+		IStoreService storeService = new StoreService();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -667,5 +701,20 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			e.printStackTrace();
 		}
 		return products;
+	}
+
+	@Override
+	public void updateRating(int productId, int rating) {
+		StringBuilder sql = new StringBuilder("update product set rating = ? where id = ?");
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setInt(1, rating);
+			ps.setInt(2, productId);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

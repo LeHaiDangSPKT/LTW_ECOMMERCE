@@ -94,18 +94,19 @@ public class DeliveryAdminController extends HttpServlet{
     protected void deliveryPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         int totalItemInPage = TOTAL_ITEM_IN_PAGE;
         String indexPage = req.getParameter("index");
+        String keyword = req.getParameter("search");
         if(indexPage == null) {
             indexPage = "1";
         }
         String state = req.getParameter("state") == null ? "false" : req.getParameter("state");
-        int countP = deliveryService.count(state);
+        int countP = deliveryService.count(state, keyword);
         int endP = (countP/totalItemInPage);
         if (countP % totalItemInPage != 0) {
             endP ++;
         }
 
         Pageble pageble = new PageRequest(Integer.parseInt(indexPage), totalItemInPage, null);
-        List<Delivery> deliveries = deliveryService.findAll(pageble, state);
+        List<Delivery> deliveries = deliveryService.findAll(pageble, state, keyword);
 
         req.setAttribute("state", state);
         req.setAttribute("countP", countP);
@@ -113,5 +114,6 @@ public class DeliveryAdminController extends HttpServlet{
         req.setAttribute("endP", endP);
         req.setAttribute("tag", indexPage);
         req.setAttribute("deliveries", deliveries);
+        req.setAttribute("search", keyword);
     }
 }
