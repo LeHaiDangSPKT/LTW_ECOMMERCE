@@ -16,13 +16,13 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public int count(String state) {
-        return categoryDAO.count(state);
+    public int count(String state, String keyword) {
+        return categoryDAO.count(state, keyword);
     }
 
     @Override
-    public List<Category> findAll(Pageble pageble, String state) {
-        return categoryDAO.findAll(pageble, state);
+    public List<Category> findAll(Pageble pageble, String state, String keyword) {
+        return categoryDAO.findAll(pageble, state, keyword);
     }
 
     @Override

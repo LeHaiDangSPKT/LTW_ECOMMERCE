@@ -21,13 +21,13 @@ public class DeliveryService implements IDeliveryService {
     }
 
     @Override
-    public int count(String state) {
-        return deliveryDAO.count(state);
+    public int count(String state, String keyword) {
+        return deliveryDAO.count(state, keyword);
     }
 
     @Override
-    public List<Delivery> findAll(Pageble pageble, String state) {
-        return deliveryDAO.findAll(pageble, state);
+    public List<Delivery> findAll(Pageble pageble, String state, String keyword) {
+        return deliveryDAO.findAll(pageble, state, keyword);
     }
 
     @Override

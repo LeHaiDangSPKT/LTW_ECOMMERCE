@@ -14,8 +14,9 @@ public interface ICategoryDAO {
     void delete(int id);
 
     Category findById(int id);
-    int count(String state);
-    List<Category> findAll(Pageble pageble, String state);
+    int count(String state, String keyword);
+    List<Category> findAll(Pageble pageble, String state, String keyword);
     List<Category> findAll();
+
 
 }

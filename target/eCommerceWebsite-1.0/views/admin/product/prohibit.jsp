@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp"%>
+<c:url value="/admin/product/prohibit?search=" var="urlPro"/>
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,7 +31,30 @@
             </div>
             <div class="iq-card-body">
               <div class="table-responsive">
+                <div class="d-flex align-items-center justify-content-between">
                 <h6>Tổng sản phẩm bị cấm bán: ${productList.size() + totalItemInPage*(tag-1)} / ${countP}</h6>
+                  <div>
+                    <label>Tìm kiếm theo tên sản phẩm:</label>
+                    <div class="iq-card-transparent mb-0">
+                      <div class="d-block">
+                        <div class="w-100 iq-search-filter">
+                          <div class="iq-search-bar search-book d-flex align-items-center">
+                            <form action="#" class="searchbox m-0">
+                              <input type="text" class="text search-input"
+                                     placeholder="Nhập tên sản phẩm cần tìm..."
+                                     id="input-search"
+                                     name=""
+                                     value="${search}"
+                              >
+                            </form>
+                            <button id="btn-search" onclick="Search()"
+                                    class="btn btn-warning search-data ml-2">Tìm</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                        aria-describedby="user-list-page-info">
                   <thead>
@@ -122,6 +146,10 @@
     const productId = document.getElementById('productId').value;
     const state = document.getElementById('state').value;
     window.location.href = 'ban?productId='+productId.toString() + '&state='+ state;
+  }
+  function Search() {
+    const key = $('#input-search').val();
+    window.location.href = "${urlProc}" + key;
   }
 </script>
 </body>

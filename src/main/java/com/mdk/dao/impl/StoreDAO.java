@@ -1,6 +1,16 @@
 
 package com.mdk.dao.impl;
 
+import com.mdk.connection.DBConnection;
+import com.mdk.dao.IStoreDAO;
+
+import com.mdk.models.ImageStore;
+import com.mdk.models.Store;
+import com.mdk.models.User;
+import com.mdk.paging.Pageble;
+import com.mdk.services.IImageStoreService;
+import com.mdk.services.impl.ImageStoreService;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,6 +98,44 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 	}
 
 	@Override
+	public List<Store> findAll(Pageble pageble, String keyword, String state) {
+		StringBuilder sql = new StringBuilder("select * from store");
+		if (state != "") {
+			sql.append(" where isOpen = " + Boolean.parseBoolean(state));
+		}
+		if (keyword != null) {
+			sql.append(" and name like ");
+			sql.append("\"%" + keyword + "%\"");
+		}
+		if (pageble.getSorter() != null) {
+			sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
+		}
+		if (pageble.getOffset() != null && pageble.getLimit() != null) {
+			sql.append(" limit " + pageble.getOffset() + ", " + pageble.getLimit() + "");
+		}
+		List<Store> stores = new ArrayList<Store>();
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Store store = new Store();
+				store.setId(rs.getInt("id"));
+				store.setName(rs.getString("name"));
+				store.setBio(rs.getString("bio"));
+				store.setOwnerID(rs.getInt("ownerId"));
+				store.setRating(rs.getInt("rating"));
+				store.seteWallet(rs.getDouble("eWallet"));
+				stores.add(store);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return stores;
+
+	}
+
+	@Override
 	public void insert(Store store) {
 		String sql = "insert into store(name, bio, ownerId, avatar) values(?, ?, ?, ?)";
 		try {
@@ -125,6 +173,29 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 			conn = getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int count(String keyword, String state) {
+		StringBuilder sql = new StringBuilder("select count(*) from store");
+		if(state != "") {
+			sql.append(" where isOpen = " + Boolean.parseBoolean(state));
+		}
+		if (keyword != null) {
+			sql.append(" and name like ");
+			sql.append("\"%" + keyword + "%\"");
+		}
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				return rs.getInt(1);
@@ -360,5 +431,68 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public void deleteSoft(int id) {
+		String sql = "UPDATE store SET isOpen = false WHERE id = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void delete(int id) {
+		String sql = "DELETE FROM store WHERE id = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void restore(int id) {
+		String sql = "UPDATE store SET isOpen = true WHERE id = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<Store> findAllForReport() {
+		String sql = "SELECT * FROM store";
+		List<Store> stores = new ArrayList<Store>();
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Store store = new Store();
+				store.setId(rs.getInt("id"));
+				store.setName(rs.getString("name"));
+				store.setBio(rs.getString("bio"));
+				store.setOwnerID(rs.getInt("ownerID"));
+				store.setAvatar(rs.getString("avatar"));  //tạm để lấy tên chủ cửa hàng đưa vào đây
+				store.setOpen(rs.getBoolean("isOpen"));
+				store.setRating(rs.getInt("rating"));
+				store.seteWallet(rs.getDouble("eWallet"));
+				stores.add(store);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return stores;
 	}
 }

@@ -14,6 +14,6 @@ public interface IDeliveryDAO {
     void restore(int id);
     void updateStatus(Delivery delivery);
     Delivery findById(int id);
-    int count(String state);
-    List<Delivery> findAll(Pageble pageble, String state);
+    int count(String state, String keyword);
+    List<Delivery> findAll(Pageble pageble, String state, String keyword);
 }

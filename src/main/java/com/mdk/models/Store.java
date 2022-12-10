@@ -1,9 +1,14 @@
 
 package com.mdk.models;
 
+import org.apache.poi.ss.usermodel.*;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Store extends AbstractModel<Store> {
+	private static CellStyle cellStyleFormatDouble = null;
 	private String name;
 	private String bio;
 	private int ownerID;
@@ -97,5 +102,43 @@ public class Store extends AbstractModel<Store> {
 		this.owner = owner;
 	}
 
+	public static List<HeaderElementExcel> getColumns() {
+		List<HeaderElementExcel> list = new ArrayList<>();
+		list.add(new HeaderElementExcel(0, "Tên cửa hàng"));
+		list.add(new HeaderElementExcel(1, "Giới thiệu"));
+		list.add(new HeaderElementExcel(2, "Mã chủ cửa hàng"));
+		list.add(new HeaderElementExcel(3, "Chủ cửa hàng"));
+		list.add(new HeaderElementExcel(4, "Đánh giá"));
+		list.add(new HeaderElementExcel(5, "Ví tiền"));
+		return list;
+	}
+
+	@Override
+	public void writeReport(Row row) {
+		if (cellStyleFormatDouble == null) {
+			Workbook workbook = row.getSheet().getWorkbook();
+			DataFormat format = workbook.createDataFormat();
+			cellStyleFormatDouble = workbook.createCellStyle();
+			cellStyleFormatDouble.setDataFormat(format.getFormat("#,##0.00"));
+		}
+
+		Cell cell = row.createCell(0);
+		cell.setCellValue(name);
+
+		cell = row.createCell(1);
+		cell.setCellValue(bio);
+
+		cell = row.createCell(2);
+		cell.setCellValue(ownerID);
+
+		cell = row.createCell(3);
+		cell.setCellValue(avatar);  //Thực chất là tên chủ cửa hàng
+
+		cell = row.createCell(4);
+		cell.setCellValue(rating);
+
+		cell = row.createCell(5);
+		cell.setCellValue(eWallet);
+	}
 }
 

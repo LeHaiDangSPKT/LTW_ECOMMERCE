@@ -6,6 +6,9 @@ import com.mdk.dao.IStoreDAO;
 import com.mdk.dao.impl.StoreDAO;
 import com.mdk.models.ImageStore;
 import com.mdk.models.Store;
+
+import com.mdk.models.User;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IImageStoreService;
 import com.mdk.services.IStoreService;
 
@@ -42,6 +45,11 @@ public class StoreService implements IStoreService {
     @Override
     public int count(int userId) {
         return storeDAO.count(userId);
+    }
+
+    @Override
+    public int count(String keyword, String state) {
+        return storeDAO.count(keyword, state);
     }
 
     @Override
@@ -100,6 +108,11 @@ public class StoreService implements IStoreService {
 	}
 
     @Override
+    public List<Store> findAll(Pageble pageble, String keyword, String state) {
+        return storeDAO.findAll(pageble, keyword, state);
+    }
+
+    @Override
     public void updateWallet(int id, double eWallet) {
         storeDAO.updateWallet(id, eWallet);
     }
@@ -108,4 +121,23 @@ public class StoreService implements IStoreService {
 	public void updateRating(int storeId, int rating) {
 		storeDAO.updateRating(storeId, rating);
 	}
+    @Override
+    public void deleteSoft(int id) {
+        storeDAO.deleteSoft(id);
+    }
+
+    @Override
+    public void delete(int id) {
+        storeDAO.delete(id);
+    }
+
+    @Override
+    public void restore(int id) {
+        storeDAO.restore(id);
+    }
+
+    @Override
+    public List<Store> findAllForReport() {
+        return storeDAO.findAllForReport();
+    }
 }

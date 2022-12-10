@@ -1,9 +1,12 @@
-
-
 package com.mdk.models;
+import org.apache.poi.ss.usermodel.*;
+
+import java.util.*;
 
 public class User extends  AbstractModel<User>{
-    
+
+    private static CellStyle cellStyleFormatDouble = null;
+    private String sex;
     private String firstname;
     private String lastname;
     private String id_card;
@@ -16,7 +19,6 @@ public class User extends  AbstractModel<User>{
     private String avatar;
     private Double eWallet;
     private int totalOrders;
-    private boolean sex;
     private String code;
     
     
@@ -29,11 +31,11 @@ public class User extends  AbstractModel<User>{
         this.code = code;
     }
 
-    public boolean getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(boolean sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
@@ -133,4 +135,38 @@ public class User extends  AbstractModel<User>{
         this.eWallet = eWallet;
     }
 
+    public static List<HeaderElementExcel> getColumns() {
+        List<HeaderElementExcel> list = new ArrayList<>();
+        list.add(new HeaderElementExcel(0, "Họ"));
+        list.add(new HeaderElementExcel(1, "Tên"));
+        list.add(new HeaderElementExcel(2, "CMND/CCCD"));
+        list.add(new HeaderElementExcel(3, "Email"));
+        list.add(new HeaderElementExcel(4, "Số điện thoại"));
+        return list;
+    }
+
+    @Override
+    public void writeReport(Row row) {
+        if (cellStyleFormatDouble == null) {
+            Workbook workbook = row.getSheet().getWorkbook();
+            DataFormat format = workbook.createDataFormat();
+            cellStyleFormatDouble = workbook.createCellStyle();
+            cellStyleFormatDouble.setDataFormat(format.getFormat("#,##0.00"));
+        }
+
+        Cell cell = row.createCell(0);
+        cell.setCellValue(lastname);
+
+        cell = row.createCell(1);
+        cell.setCellValue(firstname);
+
+        cell = row.createCell(2);
+        cell.setCellValue(id_card);
+
+        cell = row.createCell(3);
+        cell.setCellValue(email);
+
+        cell = row.createCell(4);
+        cell.setCellValue(phone);
+    }
 }
