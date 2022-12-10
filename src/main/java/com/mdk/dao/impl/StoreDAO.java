@@ -9,7 +9,9 @@ import com.mdk.models.Store;
 import com.mdk.models.User;
 import com.mdk.paging.Pageble;
 import com.mdk.services.IImageStoreService;
+import com.mdk.services.IUserService;
 import com.mdk.services.impl.ImageStoreService;
+import com.mdk.services.impl.UserService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,17 +45,18 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 
 	@Override
 	public List<Store> top10Store_Orders() {
-		String sql = "select store.id, store.name, store.bio, store.ownerId, total from (select storeId, count(storeId) as total from orders group by storeId order by total desc limit 10) as tb join store on tb.storeId = store.id";
+		String sql = "select store.id, store.name, store.bio, store.ownerId, total from (select storeId, count(storeId) as total from orders group by storeId order by total desc limit 10) as tb join store on tb.storeId = store.id order by total DESC";
 		List<Store> stores = new ArrayList<Store>();
+		IUserService userService = new UserService();
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Store store = new Store();
+				store.setNameUser(userService.findById(rs.getInt("ownerId")).getLastname() + userService.findById(rs.getInt("ownerId")).getFirstname());
 				store.setName(rs.getString("name"));
 				store.setBio(rs.getString("bio"));
-				store.setOwnerID(rs.getInt("ownerId"));
 				store.setTotal(rs.getInt("total"));
 				stores.add(store);
 			}

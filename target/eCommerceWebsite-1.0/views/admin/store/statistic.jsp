@@ -72,7 +72,7 @@
                       <td>${STT.index + 1 }</td>
                       <td>${stores.name}</td>
                       <td>${stores.bio}</td>
-                      <td>${stores.ownerID}</td>
+                      <td>${stores.nameUser}</td>
                       <td>${stores.total}</td>
                     </tr>
                   </c:forEach>
