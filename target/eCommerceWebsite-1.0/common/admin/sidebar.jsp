@@ -51,16 +51,7 @@
           </ul>
         </li>
         <li><a href="<c:url value='/admin/delivery'/>"><i class="fa-solid fa-truck"></i>Đơn vị vận chuyển</a></li>
-        <li>
-          <a href="#transaction" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
-                  class="ripple rippleEffect"></span><i class="fa-solid fa-file-lines"></i><span>Giao dịch</span><i
-                  class="fa-solid fa-chevron-right iq-arrow-right"></i></a>
-          <ul id="transaction" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-            <li><a href="<c:url value='/admin/transaction/buy'/>">Giao dịch mua bán</a></li>
-            <li><a href="<c:url value='/admin/transaction/withdraw'/>">Giao dịch nap/rút tiền</a>
-            </li>
-          </ul>
-        </li>
+        <li><a href="<c:url value='/admin/transaction'/>"><i class="fa-solid fa-file-lines"></i>Giao dịch</a></li>
         <li><a href="<c:url value='/logout'/>" class="text-danger"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a></li>
       </ul>
     </nav>

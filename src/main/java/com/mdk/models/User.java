@@ -6,7 +6,7 @@ import java.util.*;
 public class User extends  AbstractModel<User>{
 
     private static CellStyle cellStyleFormatDouble = null;
-    private boolean sex;
+    private String sex;
     private String firstname;
     private String lastname;
     private String id_card;
@@ -21,11 +21,11 @@ public class User extends  AbstractModel<User>{
     private int totalOrders;
     private boolean gender;
 
-    public boolean getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(boolean sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

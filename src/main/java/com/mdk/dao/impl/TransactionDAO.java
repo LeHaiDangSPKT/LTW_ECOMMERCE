@@ -2,10 +2,13 @@ package com.mdk.dao.impl;
 
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.ITransactionDAO;
+import com.mdk.models.Store;
 import com.mdk.models.Transaction;
 import com.mdk.models.User;
 import com.mdk.paging.Pageble;
+import com.mdk.services.IStoreService;
 import com.mdk.services.IUserService;
+import com.mdk.services.impl.StoreService;
 import com.mdk.services.impl.UserService;
 
 import java.sql.Connection;
@@ -120,10 +123,86 @@ public class TransactionDAO extends DBConnection implements ITransactionDAO {
     }
 
     @Override
-    public int countByUserId(int userId) {
-        StringBuilder sql = new StringBuilder("select count(*) from transaction");
-            sql.append(" where userId = " + userId);
+    public List<Transaction> findAll(Pageble pageble, int storeId, String keyword) {
+        StringBuilder sql = new StringBuilder("select * from transaction where storeId = " + storeId);
+        if (pageble.getSorter() != null) {
+            sql.append(" order by "+pageble.getSorter().getSortName()+" "+pageble.getSorter().getSortBy()+"");
+        }
+        if (pageble.getOffset() != null && pageble.getLimit() != null) {
+            sql.append(" limit "+pageble.getOffset()+", "+pageble.getLimit()+"");
+        }
+        List<Transaction> transactions = new ArrayList<>();
+        IUserService userService = new UserService();
+        IStoreService storeService = new StoreService();
 
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Transaction transaction = new Transaction();
+                User user = userService.findById(rs.getInt("userId"));
+                Store store = storeService.findById(rs.getInt("storeId"));
+                transaction.setNameUser(user.getLastname() + " " + user.getFirstname());
+                if (keyword != null) {
+                    if ((user.getFirstname() + " " + user.getLastname()).contains(keyword)) {
+                        transaction.setNameStore(store.getName());
+                        transaction.setIsUpString(rs.getBoolean("isUp") ? "Rút" : "Nạp");
+                        transaction.setAmount(rs.getDouble("amount"));
+                        transaction.setCreatedAt(rs.getTimestamp("createdAt"));
+                        transactions.add(transaction);
+                    }
+                } else {
+                    transaction.setNameStore(store.getName());
+                    transaction.setIsUpString(rs.getBoolean("isUp") ? "Rút" : "Nạp");
+                    transaction.setAmount(rs.getDouble("amount"));
+                    transaction.setCreatedAt(rs.getTimestamp("createdAt"));
+                    transactions.add(transaction);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return transactions;
+    }
+
+    @Override
+    public List<Transaction> findAllForReport() {
+        StringBuilder sql = new StringBuilder("select * from transaction");
+
+        List<Transaction> transactions = new ArrayList<>();
+        IUserService userService = new UserService();
+        IStoreService storeService = new StoreService();
+
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Transaction transaction = new Transaction();
+                User user = userService.findById(rs.getInt("userId"));
+                Store store = storeService.findById(rs.getInt("storeId"));
+                transaction.setNameUser(user.getFirstname() + " " + user.getLastname());
+                transaction.setNameStore(store.getName());
+                transaction.setIsUpString(rs.getBoolean("isUp") ? "Rút" : "Nạp");
+                transaction.setAmount(rs.getDouble("amount"));
+                transaction.setCreatedAt(rs.getTimestamp("createdAt"));
+                transactions.add(transaction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return transactions;
+    }
+
+    @Override
+    public int count(int storeId, String keyword) {
+        StringBuilder sql = new StringBuilder("select count(*) from transaction");
+        sql.append(" where storeId = " + storeId);
+        if (keyword != null) {
+            sql.append(" and nameUser like ");
+            sql.append("\"%" + keyword + "%\"");
+        }
         try {
             conn = getConnection();
             ps = conn.prepareStatement(String.valueOf(sql));

@@ -32,7 +32,18 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    public int countByUserId(int userId) {
-        return transactionDAO.countByUserId(userId);
+    public List<Transaction> findAll(Pageble pageble, int storeId, String keyword) {
+        return transactionDAO.findAll(pageble, storeId, keyword);
     }
+
+    @Override
+    public List<Transaction> findAllForReport() {
+        return transactionDAO.findAllForReport();
+    }
+
+    @Override
+    public int count(int storeId, String keyword) {
+        return transactionDAO.count(storeId, keyword);
+    }
+
 }

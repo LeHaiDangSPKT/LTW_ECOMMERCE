@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp"%>
-<c:url value="/admin/delivery" var="urlList"/>
+<c:url value="/admin/delivery?search=" var="urlList"/>
 <!doctype html>
 <html lang="en">
 <head>
@@ -31,7 +31,30 @@
             </div>
             <div class="iq-card-body">
               <div class="table-responsive">
+                <div class="d-flex align-items-center justify-content-between">
                 <h6>Tổng đơn vị vận chuyển: ${deliveries.size() + totalItemInPage*(tag-1)} / ${countP}</h6>
+                  <div>
+                    <label>Tìm kiếm theo tên đươn vị vận chuyển:</label>
+                    <div class="iq-card-transparent mb-0">
+                      <div class="d-block">
+                        <div class="w-100 iq-search-filter">
+                          <div class="iq-search-bar search-book d-flex align-items-center">
+                            <form action="#" class="searchbox m-0">
+                              <input type="text" class="text search-input"
+                                     placeholder="Nhập tên đơn vị vận chuyển cần tìm..."
+                                     id="input-search"
+                                     name=""
+                                     value="${search}"
+                              >
+                            </form>
+                            <button id="btn-search" onclick="Search()"
+                                    class="btn btn-warning search-data ml-2">Tìm</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <select class="form-control w-25" id="selectCate">
                   <option value="false" ${state == "false" ? "selected" : ""}>Đang hoạt động</option>
                   <option value="true" ${state == "true" ? "selected" : ""}>Tạm ngưng hoạt động</option>
@@ -57,7 +80,7 @@
                         <td>${STT.index + 1 + totalItemInPage*(tag-1)}</td>
                         <td>${deliveries.name}</td>
                         <td>${deliveries.description}</td>
-                        <td>${deliveries.price}</td>..
+                        <td>${deliveries.price}</td>
                         <td>
                           <div class="d-flex align-items-center list-user-action justify-content-around">
                             <a href="delivery/edit?id=${deliveries.id}"  class="bg-primary p-3"><i class="fa-solid fa-pencil" style="transform: translate(-50%, -50%); color: white"></i></a>
@@ -138,6 +161,10 @@
   </div>
 </div>
 <script type="text/javascript">
+  function Search() {
+    const key = $('#input-search').val();
+    window.location.href = "${urlList}" + key;
+  }
   function ClickIcon(e, state) {
     e.preventDefault();
     const id = e.target.id;
@@ -169,7 +196,7 @@
 
   $('#selectCate').change(function () {
     const state = $("#selectCate option:selected").val();
-    window.location.href = "${urlList}?state=" + state;
+    window.location.href = "${urlList}&state=" + state;
   });
 </script>
 </body>

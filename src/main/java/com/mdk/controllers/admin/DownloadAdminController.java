@@ -25,9 +25,6 @@ public class DownloadAdminController extends HttpServlet {
         } else if (type.equals("order")){
             filename = "reportOrder.xls";
             sendRedirect = "/admin/order?state=delivered";
-        } else if (type.equals("delivery")) {
-            filename = "reportDelivery.xls";
-            sendRedirect = "/admin/delivery";
         } else if (type.equals("transaction")) {
             filename = "reportTransaction.xls";
             sendRedirect = "/admin/transaction";

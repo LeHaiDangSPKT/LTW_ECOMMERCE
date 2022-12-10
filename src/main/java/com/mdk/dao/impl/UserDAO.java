@@ -32,7 +32,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 				user.setId_card(rs.getString("id_card"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone(rs.getString("phone"));
-				user.setSex(rs.getBoolean("sex"));
+				user.setSex(rs.getString("sex"));
 				user.setCreatedAt(rs.getTimestamp("createdAt"));
 				users.add(user);
 			}

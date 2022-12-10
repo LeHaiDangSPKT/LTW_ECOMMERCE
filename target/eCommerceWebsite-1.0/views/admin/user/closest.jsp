@@ -14,7 +14,7 @@
 <%--Hide--%>
 <input type="number" value="${total}" id="total">
 <input type="number" value="${male}" id="male">
-
+<input type="number" value="${female}" id="female">
 
 <div id="loading">
   <div id="loading-center">
@@ -102,6 +102,7 @@
     const arrEachMonthInLastYear = ${arrEachMonthInLastYear}
     const total = $("#total").val();
     const male = $("#male").val();
+    const female = $("#female").val();
     var chart1 = new CanvasJS.Chart("chartContainerCircle", {
       animationEnabled: true,
       title: {
@@ -118,7 +119,8 @@
         indexLabel: "{label} {y}",
         dataPoints: [
           {y: (male/total)*100, label: "Nam"},
-          {y: 100 - (male/total)*100, label: "Nữ"}
+          {y: (female/total)*100, label: "Nữ"},
+          {y: 100 - (female/total)*100 - (male/total)*100, label: "Đang cập nhật"}
         ]
       }]
     });

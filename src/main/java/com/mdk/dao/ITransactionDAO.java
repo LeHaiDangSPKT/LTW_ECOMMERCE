@@ -11,6 +11,8 @@ public interface ITransactionDAO {
     int count(int storeId, String dateStart, String dateEnd);
     List<Transaction> findAll(Pageble pageble, int storeId, String dateStart, String dateEnd);
     void insert(Transaction transaction);
-    int countByUserId(int userId);
+    List<Transaction> findAll(Pageble pageble, int storeId, String keyword);
+    List<Transaction> findAllForReport();
+    int count(int storeId, String keyword);
 
 }
