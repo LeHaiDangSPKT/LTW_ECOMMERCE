@@ -9,6 +9,18 @@
 			<div id="cart" class="card-block show p-0 col-12">
 				<div class="row align-item-center">
 					<div class="col-lg-12">
+						<c:if test="${empty listCart}">
+							<div class="iq-card pt-5 pb-4">
+								<div class="col-lg-12 d-flex justify-content-center">
+									<img style="width: 20%"
+										src="<c:url value="/template/images/emptycart.png"/>" />
+								</div>
+								<div class="col-lg-12 text-center mb-5">
+									<span class="text-second text-uppercase font-size-20">Giỏ
+										hàng của bạn đang trống. <a href="<c:url value="/web/book/search"/>">Cùng mua sắm nào!</a></span>
+								</div>
+							</div>
+						</c:if>
 						<c:forEach items="${listCart}" var="cart">
 							<div class="iq-card">
 								<div
@@ -90,7 +102,8 @@
 										<button
 											formaction="<c:url value="/web/cart/delivery?cart=${cart.id}"/>"
 											id="place-order" href="javascript:void();"
-											class="btn btn-primary d-block mt-3 next ">Thanh toán</button>
+											class="btn btn-primary d-block mt-3 next ">Thanh
+											toán</button>
 									</form>
 								</div>
 							</div>

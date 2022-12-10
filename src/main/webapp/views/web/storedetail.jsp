@@ -64,7 +64,9 @@
 											Mô tả: <span class="text-body">${store.bio}</span>
 										</div>
 										<div class="mb-3">
-											<a href="<c:url value="/web/following/store/add?id=${store.id}"/>" class="text-body text-center"><span
+											<a
+												href="<c:url value="/web/following/store/add?id=${store.id}"/>"
+												class="text-body text-center"><span
 												class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i
 													class="ri-heart-fill"></i></span><span>Theo dõi cửa hàng</span></a>
 										</div>
@@ -151,9 +153,8 @@
 					</div>
 					<div class="iq-card-body">
 						<div class="table-responsive">
-							<table id="user-list-table"
-								class="table table-striped mt-4" role="grid"
-								aria-describedby="user-list-page-info">
+							<table id="user-list-table" class="table table-striped mt-4"
+								role="grid" aria-describedby="user-list-page-info">
 								<thead>
 									<tr>
 										<th style="width: 10%">Người dùng</th>
@@ -161,22 +162,37 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td class="text-center"><img
-											class="rounded img-fluid avatar-40" src="images/user/01.jpg"
-											alt="profile">
-											<p class="mt-3">Anna Sthesia</p></td>
-										<td>
-											<div class="mb-3 d-block">
-												<span class="font-size-20 text-warning"> <i
-													class="fa fa-star mr-1"></i> <i class="fa fa-star mr-1"></i>
-													<i class="fa fa-star mr-1"></i> <i class="fa fa-star mr-1"></i>
-													<i class="fa fa-star"></i>
-												</span>
-											</div>
-											<p>Hàng xài êm</p>
-										</td>
-									</tr>
+									<c:forEach items="${reviewList}" var="review">
+										<tr>
+											<td class="text-center"><c:url
+													value="/image?fname=${review.user.avatar}&type=user"
+													var="imgAvatar"></c:url> <img
+												class="rounded img-fluid avatar-40" src="${imgAvatar}"
+												alt="profile">
+												<p class="mt-3">${review.user.firstname}
+													${review.user.lastname}</p>
+												<p class="mt-3">${review.createdAt}</p></td>
+											<td>
+												<div class="mb-3 d-block">
+												<strong>Đơn hàng:</strong> <p>${review.product.name}</p>
+												</div>
+												<div class="mb-3 d-block">
+													<span class="font-size-20 text-warning"> <c:forEach
+															var="i" begin="1" end="5">
+															<c:if test="${i <= review.stars }">
+																<i class="fa fa-star"></i>
+															</c:if>
+
+															<c:if test="${i > review.stars }">
+																<i class="fa fa-star-o"></i>
+															</c:if>
+														</c:forEach>
+													</span>
+												</div>
+												<p>${review.content}</p>
+											</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>

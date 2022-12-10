@@ -1,15 +1,15 @@
 package com.mdk.services;
 
-import com.mdk.models.Orders;
-import com.mdk.models.Store;
-
 import java.util.List;
+
+import com.mdk.models.Store;
 
 public interface IStoreService {
     Store findById(int id);
     void insert(Store store);
     void update(Store store);
     int count(int userId);
+    void updateRating(int storeId, int rating);
     Store findByUserId(int userId);
     int totalCustomer(int storeId);
     int totalProduct(int storeId);

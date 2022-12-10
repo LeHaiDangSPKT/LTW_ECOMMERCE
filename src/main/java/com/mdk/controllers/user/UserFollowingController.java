@@ -18,12 +18,13 @@ import com.mdk.services.impl.UserFollowProductService;
 import com.mdk.services.impl.UserFollowStoreService;
 import com.mdk.utils.SessionUtil;
 
-@WebServlet(urlPatterns = { "/web/following", "/web/following/book/add", "/web/following/book/delete", "/web/following/store/add", "/web/following/store/delete" })
+@WebServlet(urlPatterns = { "/web/following", "/web/following/book/add", "/web/following/book/delete",
+		"/web/following/store/add", "/web/following/store/delete" })
 public class UserFollowingController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	IUserFollowProductService userFollowProductService = new UserFollowProductService();
 	IUserFollowStoreService userFollowStoreService = new UserFollowStoreService();
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
@@ -33,7 +34,12 @@ public class UserFollowingController extends HttpServlet {
 			UserFollowStore userFollowStore = new UserFollowStore();
 			userFollowStore.setUserId(user.getId());
 			userFollowStore.setStoreId(Integer.parseInt(req.getParameter("id")));
-			userFollowStoreService.insert(userFollowStore);
+			if (userFollowStoreService.findFollow(userFollowStore) == null) {
+				userFollowStoreService.insert(userFollowStore);
+			} else {
+				userFollowStore.setId(userFollowStoreService.findFollow(userFollowStore).getId());
+				userFollowStoreService.update(userFollowStore);
+			}
 			resp.sendRedirect(req.getHeader("referer"));
 		} else if (url.contains("/web/following/store/delete")) {
 			userFollowStoreService.delete(Integer.parseInt(req.getParameter("id")));
@@ -43,7 +49,13 @@ public class UserFollowingController extends HttpServlet {
 			UserFollowProduct userFollowProduct = new UserFollowProduct();
 			userFollowProduct.setUserId(user.getId());
 			userFollowProduct.setProductId(Integer.parseInt(req.getParameter("id")));
-			userFollowProductService.insert(userFollowProduct);
+
+			if (userFollowProductService.findFollow(userFollowProduct) == null) {
+				userFollowProductService.insert(userFollowProduct);
+			} else {
+				userFollowProduct.setId(userFollowProductService.findFollow(userFollowProduct).getId());
+				userFollowProductService.update(userFollowProduct);
+			}
 			resp.sendRedirect(req.getHeader("referer"));
 		} else if (url.contains("/web/following/book/delete")) {
 			userFollowProductService.delete(Integer.parseInt(req.getParameter("id")));
@@ -52,7 +64,7 @@ public class UserFollowingController extends HttpServlet {
 			User user = (User) SessionUtil.getInstance().getValue(req, "USERMODEL");
 			List<UserFollowProduct> userFollowProductList = userFollowProductService.findByUserId(user.getId());
 			List<UserFollowStore> userFollowStoreList = userFollowStoreService.findByUserId(user.getId());
-			
+
 			req.setAttribute("userFollowProductList", userFollowProductList);
 			req.setAttribute("userFollowStoreList", userFollowStoreList);
 			req.getRequestDispatcher("/views/web/following.jsp").forward(req, resp);

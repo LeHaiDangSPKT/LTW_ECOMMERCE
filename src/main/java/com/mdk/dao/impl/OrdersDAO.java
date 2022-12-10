@@ -401,7 +401,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     }
 	@Override
 	public List<Orders> findAllByUser(int userId) {
-		String sql = "select * from orders where userId = ?";
+		String sql = "select * from orders where userId = ? order by createdAt desc";
         List<Orders> orders = new ArrayList<>();
         IUserService userService = new UserService();
         IStoreService storeService = new StoreService();

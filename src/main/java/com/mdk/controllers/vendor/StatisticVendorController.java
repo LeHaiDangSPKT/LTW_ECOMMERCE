@@ -1,8 +1,18 @@
 package com.mdk.controllers.vendor;
 
-import com.google.gson.Gson;
+import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.mdk.models.Orders;
-import com.mdk.models.Product;
 import com.mdk.models.Store;
 import com.mdk.services.IOrdersService;
 import com.mdk.services.IProductService;
@@ -12,18 +22,6 @@ import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.StoreService;
 import com.mdk.utils.MessageUtil;
 import com.mdk.utils.SessionUtil;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.*;
-
-import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
-import static com.mdk.utils.AppConstant.STORE_MODEL;
 
 @WebServlet(urlPatterns = {"/vendor/statistic", "/vendor/statistic/notification"})
 public class StatisticVendorController extends HttpServlet {
@@ -38,7 +36,7 @@ public class StatisticVendorController extends HttpServlet {
             req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
         } else if (url.contains("statistic")){
             if (checkStoreExist(req, resp)) {
-                Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
+                Store store = (Store) SessionUtil.getInstance().getValue(req, "STORE");
                 mainStatistic(req, resp, store);
                 req.getRequestDispatcher("/views/vendor/statistic.jsp").forward(req, resp);
             } else {

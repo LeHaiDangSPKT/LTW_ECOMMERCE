@@ -108,11 +108,11 @@
 											</div>
 											<div class="col-sm-12">
 												<div class="d-flex justify-content-between">
-													<button
-														formaction="<c:url value="/web/cart/delivery?cart=${cart.id}"/>"
+													<a
+														href="<c:url value="/web/book/review?orders=${orders.id}&product=${item.product.id}"/>"
 														id="place-order" href="javascript:void();"
 														class="btn btn-primary d-block mt-3 next ">Đánh
-														giá sản phẩm</button>
+														giá sản phẩm</a>
 												</div>
 											</div>
 										</div>

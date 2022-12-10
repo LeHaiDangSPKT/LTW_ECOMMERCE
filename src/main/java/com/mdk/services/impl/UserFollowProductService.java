@@ -26,4 +26,14 @@ public class UserFollowProductService implements IUserFollowProductService {
 		return userFollowProductDAO.findByUserId(id);
 	}
 
+	@Override
+	public UserFollowProduct findFollow(UserFollowProduct userFollowProduct) {
+		return userFollowProductDAO.findFollow(userFollowProduct);
+	}
+
+	@Override
+	public void update(UserFollowProduct userFollowProduct) {
+		userFollowProductDAO.update(userFollowProduct);
+	}
+
 }

@@ -11,6 +11,7 @@ public interface IStoreDAO {
     void insert(Store store);
     void update(Store store);
     int count(int userId);
+    void updateRating(int storeId, int rating);
     Store findByUserId(int userId);
     int totalCustomer(int storeId);
     int totalProduct(int storeId);

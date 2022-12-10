@@ -324,4 +324,19 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void updateRating(int storeId, int rating) {
+		StringBuilder sql = new StringBuilder("update store set rating = ? where id = ?");
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setInt(1, rating);
+			ps.setInt(2, storeId);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

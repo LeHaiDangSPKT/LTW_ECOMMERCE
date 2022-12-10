@@ -686,4 +686,19 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		}
 		return products;
 	}
+
+	@Override
+	public void updateRating(int productId, int rating) {
+		StringBuilder sql = new StringBuilder("update product set rating = ? where id = ?");
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setInt(1, rating);
+			ps.setInt(2, productId);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
