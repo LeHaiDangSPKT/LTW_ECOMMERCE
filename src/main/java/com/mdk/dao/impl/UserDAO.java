@@ -218,7 +218,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 			ps.setString(4, user.getEmail());
 			ps.setString(5, user.getPhone());
 			ps.setString(6, user.getPassword());
-			ps.setInt(7, user.getSex() ? 1 : 0);
+			ps.setString(7, user.getSex() == "Nam" ? "Nam" : user.getSex() == "Nữ" ? "Nữ" : "Đang cập nhật");
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -102,7 +102,7 @@ public class CategoryDAO extends DBConnection implements ICategoryDAO {
 
     @Override
     public List<Category> findAll() {
-        String sql = "select * from category";
+        String sql = "select * from category where isDeleted = false";
         List<Category> categories = new ArrayList<>();
         try {
             conn = getConnection();

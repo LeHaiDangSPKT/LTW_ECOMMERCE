@@ -120,7 +120,7 @@
     var chart2 = new CanvasJS.Chart("chartContainerColumn", {
       animationEnabled: true,
       title:{
-        text: "SO SÁNH NGƯỜI DÙNG CỦA HỆ THỐNG",
+        text: "SO SÁNH CỬA HÀNG CỦA HỆ THỐNG",
         padding: "15",
         fontSize: 20,
         fontFamily: "tahoma",

@@ -358,11 +358,13 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	@Override
 	public List<Product> findAll(Pageble pageble, int categoryId, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select * from product");
+		sql.append(" inner join category on product.categoryId = category.id");
+		sql.append(" where category.isDeleted = false");
 		if (categoryId != 0) {
-			sql.append(" where categoryId = " + categoryId);
+			sql.append(" and categoryId = " + categoryId);
 			sql.append(" and storeId = " + storeId);
 		} else {
-			sql.append(" where storeId = " + storeId);
+			sql.append(" and storeId = " + storeId);
 		}
 		if (searchKey != null) {
 			sql.append(" and name like ");
@@ -450,11 +452,13 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 	@Override
 	public int count(int categoryId, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select count(*) from product");
+		sql.append(" inner join category on product.categoryId = category.id");
+        sql.append(" where category.isDeleted = false");
 		if (categoryId != 0) {
-			sql.append(" where categoryId = " + categoryId);
+			sql.append(" and categoryId = " + categoryId);
 			sql.append(" and storeId = " + storeId);
 		} else {
-			sql.append(" where storeId = " + storeId);
+			sql.append(" and storeId = " + storeId);
 		}
 		if (searchKey != null) {
 			sql.append(" and name like ");
