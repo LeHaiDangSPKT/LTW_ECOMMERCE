@@ -88,7 +88,7 @@
                   </c:if>
                   <c:if test="${state == 'true'}">
                     <c:forEach items="${categories}" var="categories" varStatus="STT" >
-                      <tr>
+                      <tr class="text-center">
                         <td>${STT.index + 1 + totalItemInPage*(tag-1)}</td>
                         <td>${categories.name}</td>
                         <td>

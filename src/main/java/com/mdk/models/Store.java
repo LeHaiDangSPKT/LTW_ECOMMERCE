@@ -18,6 +18,15 @@ public class Store extends AbstractModel<Store> {
 	private double eWallet;
 	private User owner;
 	private List<ImageStore> images;
+	private String nameUser;
+
+	public String getNameUser() {
+		return nameUser;
+	}
+
+	public void setNameUser(String nameUser) {
+		this.nameUser = nameUser;
+	}
 
 	public int getTotal() {
 		return total;
