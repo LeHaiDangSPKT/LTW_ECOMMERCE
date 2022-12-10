@@ -68,7 +68,9 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public List<User> top10Users_Orders() {
-		String sql = "select user.id, user.firstname, user.lastname, user.id_card, user.email, user.phone, total from (select userId, count(userId) as total from orders group by userId order by total desc) as tb join user on tb.userId = user.id where user.role = 'USER' limit 10 order by total DESC";
+		String sql = "select user.id, user.firstname, user.lastname, user.id_card, user.email, user.phone, total " +
+				"from (select userId, count(userId) as total from orders group by userId order by total desc) as tb join user on tb.userId = user.id " +
+				"where user.role = 'USER' order by total DESC limit 10 ";
 		List<User> users = new ArrayList<User>();
 		try {
 			conn = super.getConnection();

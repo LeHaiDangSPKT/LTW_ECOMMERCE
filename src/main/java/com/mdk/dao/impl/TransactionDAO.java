@@ -197,11 +197,12 @@ public class TransactionDAO extends DBConnection implements ITransactionDAO {
 
     @Override
     public int count(int storeId, String keyword) {
-        StringBuilder sql = new StringBuilder("select count(*) from transaction");
+        StringBuilder sql = new StringBuilder("select count(*) from transaction inner join user on transaction.userId = user.id");
         sql.append(" where storeId = " + storeId);
         if (keyword != null) {
-            sql.append(" and nameUser like ");
-            sql.append("\"%" + keyword + "%\"");
+            sql.append(" and (user.lastname like ");
+            sql.append("\"%" + keyword + "%\" or user.firstname like ");
+            sql.append("\"%" + keyword + "%\")");
         }
         try {
             conn = getConnection();

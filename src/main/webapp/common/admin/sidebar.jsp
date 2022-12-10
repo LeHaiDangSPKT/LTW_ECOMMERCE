@@ -35,7 +35,7 @@
                   class="ripple rippleEffect"></span><i class="fa-brands fa-product-hunt"></i><span>Sản phẩm</span><i
                   class="fa-solid fa-chevron-right iq-arrow-right"></i></a>
           <ul id="product" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-            <li><a href="<c:url value='/admin/product/category'/>">Loại sản phẩm</a></li>
+            <li><a href="<c:url value='/admin/product/category'/>">Thể loại</a></li>
             <li><a href="<c:url value='/admin/product/permit'/>">Sản phẩm được cho phép</a></li>
             <li><a href="<c:url value='/admin/product/prohibit'/>">Sản phẩm bị cấm</a></li>
           </ul>

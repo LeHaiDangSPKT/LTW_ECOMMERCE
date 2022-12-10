@@ -21,4 +21,37 @@
 	</div>
 	<%@include file="/common/footer.jsp"%>
 </body>
+<script>
+	const url = "<c:url value='/web/book/search'/>";
+
+	function changeFormAction() {
+		var category = "?category="
+		var store = "&store="
+		var rating = "&rating="
+		var minPrice = "&minPrice="
+		var maxPrice = "&maxPrice="
+		var searchkeyword = "&search="
+				+ document.getElementById("searchinput").value;
+		if (document.getElementById("searchBook")) {
+			category = category
+					+ document.getElementById("categorySearch").value;
+			store = store + document.getElementById("storeSearch").value;
+			rating = rating + document.getElementById("ratingSearch").value;
+			minPrice = minPrice
+					+ document.getElementById("minPriceSearch").value;
+			maxPrice = maxPrice
+					+ document.getElementById("maxPriceSearch").value;
+			document.getElementById("searchBook").action = url + category
+					+ store + rating + minPrice + maxPrice + searchkeyword
+		} else {
+			category = category + 0
+			store = store + 0
+			rating = rating + -1
+			minPrice = minPrice + 0
+			maxPrice = maxPrice + 1000000
+			document.getElementById("searchbutton").formAction = url + category
+					+ store + rating + minPrice + maxPrice + searchkeyword;
+		}
+	}
+</script>
 </html>
