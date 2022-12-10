@@ -92,7 +92,9 @@
 													giỏ hàng</button>
 											</div>
 											<div class="mb-3">
-												<a href="<c:url value='/web/following/book/add?id=${product.id}'/>" class="text-body text-center"><span
+												<a
+													href="<c:url value='/web/following/book/add?id=${product.id}'/>"
+													class="text-body text-center"><span
 													class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i
 														class="ri-heart-fill"></i></span><span>Theo dõi sản phẩm</span></a>
 											</div>
@@ -105,18 +107,7 @@
 				</div>
 			</div>
 
-			<div class="form-group col-lg-12">
-				<div class="iq-card p-4">
-					<div class="mb-3">
-						<label>Đánh giá sản phẩm:</label>
-						<textarea class="form-control" name="address" rows="5"
-							style="line-height: 22px;"></textarea>
-					</div>
-					<button type="submit" class="btn btn-primary mr-2">Lưu
-						thay đổi</button>
-				</div>
 
-			</div>
 
 			<div class="col-lg-12">
 				<div class="iq-card p-4">
@@ -124,36 +115,49 @@
 						<h4>Đánh giá</h4>
 					</div>
 					<div class="iq-card-body">
+
 						<div class="table-responsive">
-							<table id="user-list-table"
-								class="table table-striped table-bordered mt-4" role="grid"
+							<table id="user-list-table" class="table mt-4" role="grid"
 								aria-describedby="user-list-page-info">
 								<thead>
 									<tr>
-										<th>Người dùng</th>
-										<th>Đánh giá</th>
+										<th class="text-center" style="width: 10%">Người dùng</th>
+										<th class="text-center" style="width: 90%">Đánh giá</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td class="text-center"><img
-											class="rounded img-fluid avatar-40"
-											src="./template/images/user/01.jpg" alt="profile">
-											<p class="mt-3">Anna Sthesia</p></td>
-										<td>
-											<div class="mb-3 d-block">
-												<span class="font-size-20 text-warning"> <i
-													class="fa fa-star mr-1"></i> <i class="fa fa-star mr-1"></i>
-													<i class="fa fa-star mr-1"></i> <i class="fa fa-star mr-1"></i>
-													<i class="fa fa-star"></i>
-												</span>
-											</div>
-											<p>Hàng xài êm</p>
-										</td>
-									</tr>
+									<c:forEach items="${reviewList}" var="review">
+										<tr>
+											<td class="text-center"><c:url
+													value="/image?fname=${review.user.avatar}&type=user"
+													var="imgAvatar"></c:url> <img
+												class="rounded img-fluid avatar-40" src="${imgAvatar}"
+												alt="profile">
+												<p class="mt-3">${review.user.firstname}
+													${review.user.lastname}</p>
+												<p class="mt-3">${review.createdAt}</p></td>
+											<td>
+												<div class="mb-3 d-block">
+													<span class="font-size-20 text-warning"> <c:forEach
+															var="i" begin="1" end="5">
+															<c:if test="${i <= review.stars }">
+																<i class="fa fa-star"></i>
+															</c:if>
+
+															<c:if test="${i > review.stars }">
+																<i class="fa fa-star-o"></i>
+															</c:if>
+														</c:forEach>
+													</span>
+												</div>
+												<p>${review.content}</p>
+											</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
+
 						<div class="row justify-content-between mt-3">
 							<div id="user-list-page-info" class="col-md-6">
 								<span>Showing 1 to 5 of 5 entries</span>

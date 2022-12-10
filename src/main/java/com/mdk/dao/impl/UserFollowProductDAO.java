@@ -75,5 +75,49 @@ public class UserFollowProductDAO extends DBConnection implements IUserFollowPro
 		}
 		return userFollowProducts;
 	}
+	
+	public UserFollowProduct findFollow(UserFollowProduct userFollowProduct){
+		String sql = "select * from userfollowproduct where userId = ? AND productId = ?";
+		IUserService userService = new UserService();
+		IProductService productService = new ProductService();
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userFollowProduct.getUserId());
+			ps.setInt(2, userFollowProduct.getProductId());
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				UserFollowProduct new_userFollowProduct = new UserFollowProduct();
+				new_userFollowProduct.setId(rs.getInt("id"));
+				new_userFollowProduct.setUserId(rs.getInt("userId"));
+				new_userFollowProduct.setProductId(rs.getInt("productId"));
+				new_userFollowProduct.setProduct(productService.findOneById(userFollowProduct.getProductId()));
+				new_userFollowProduct.setUser(userService.findById(userFollowProduct.getUserId()));
+				return new_userFollowProduct;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+
+	@Override
+	public void update(UserFollowProduct userFollowProduct) {
+		String sql = "update userfollowproduct "
+				+ "set userId = ?, productId = ? "
+				+ "where id = ?";
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userFollowProduct.getUserId());
+			ps.setInt(2, userFollowProduct.getProductId());
+			ps.setInt(3, userFollowProduct.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -103,4 +103,9 @@ public class StoreService implements IStoreService {
     public void updateWallet(int id, double eWallet) {
         storeDAO.updateWallet(id, eWallet);
     }
+
+	@Override
+	public void updateRating(int storeId, int rating) {
+		storeDAO.updateRating(storeId, rating);
+	}
 }

@@ -9,9 +9,12 @@ import java.util.List;
 
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IUserFollowStoreDAO;
+import com.mdk.models.UserFollowProduct;
 import com.mdk.models.UserFollowStore;
+import com.mdk.services.IProductService;
 import com.mdk.services.IStoreService;
 import com.mdk.services.IUserService;
+import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.StoreService;
 import com.mdk.services.impl.UserService;
 
@@ -73,5 +76,48 @@ public class UserFollowStoreDAO extends DBConnection implements IUserFollowStore
 		}
 		return userFollowStores;
 	}
+
+	@Override
+	public UserFollowStore findFollow(UserFollowStore userFollowStore) {
+		String sql = "select * from userfollowstore where userId = ? AND storeId = ?";
+		IUserService userService = new UserService();
+		IStoreService storeService = new StoreService();
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userFollowStore.getUserId());
+			ps.setInt(2, userFollowStore.getStoreId());
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				UserFollowStore new_userFollowStore = new UserFollowStore();
+				new_userFollowStore.setId(rs.getInt("id"));
+				new_userFollowStore.setUserId(rs.getInt("userId"));
+				new_userFollowStore.setStoreId(rs.getInt("storeId"));
+				new_userFollowStore.setStore(storeService.findById(userFollowStore.getStoreId()));
+				new_userFollowStore.setUser(userService.findById(userFollowStore.getUserId()));
+				return new_userFollowStore;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void update(UserFollowStore userFollowStore) {
+		String sql = "update userfollowstore "
+				+ "set userId = ?, storeId = ? "
+				+ "where id = ? ";
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userFollowStore.getUserId());
+			ps.setInt(2, userFollowStore.getStoreId());
+			ps.setInt(3, userFollowStore.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	}
 
 }

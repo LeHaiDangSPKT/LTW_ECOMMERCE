@@ -58,7 +58,7 @@
 									src="<c:url value="/template/images/ads/1.jpg"/>"
 									class="img-fluid w-100 rounded" alt="">
 							</a></li>
-						
+
 						</ul>
 					</div>
 				</div>
@@ -133,7 +133,7 @@
 																href="#">
 																<i class="ri-shopping-cart-2-fill text-primary"></i>
 															</button>
-															<a href="#" class="ml-2"><i
+															<a href="<c:url value='/web/following/book/add?id=${product.id}'/>" class="ml-2"><i
 																class="ri-heart-fill text-danger"></i></a>
 														</form>
 													</div>
@@ -197,10 +197,13 @@
 												</div>
 											</div>
 											<div class="price d-flex align-items-center">
-												<!-- <span class="pr-1 old-price">$99</span> -->
-												<h6>
-													<b><b>${product.price}</b></b>
-												</h6>
+												<div class="price d-flex">
+													<span class="pr-1 old-price font-size-13">${product.price}</span>
+													<br>
+													<h6>
+														<b>${product.promotionalPrice}</b>
+													</h6>
+												</div>
 											</div>
 											<div class="iq-product-action">
 												<form method="post">
@@ -209,7 +212,7 @@
 														href="#">
 														<i class="ri-shopping-cart-2-fill text-primary"></i>
 													</button>
-													<a href="#" class="ml-2"><i
+													<a href="<c:url value='/web/following/book/add?id=${product.id}'/>" class="ml-2"><i
 														class="ri-heart-fill text-danger"></i></a>
 												</form>
 											</div>
@@ -271,10 +274,13 @@
 												</div>
 											</div>
 											<div class="price d-flex align-items-center">
-												<!-- <span class="pr-1 old-price">$99</span> -->
-												<h6>
-													<b><b>${product.price}</b></b>
-												</h6>
+												<div class="price d-flex">
+													<span class="pr-1 old-price font-size-13">${product.price}</span>
+													<br>
+													<h6>
+														<b>${product.promotionalPrice}</b>
+													</h6>
+												</div>
 											</div>
 											<div class="iq-product-action">
 												<form method="post">
@@ -283,7 +289,7 @@
 														href="#">
 														<i class="ri-shopping-cart-2-fill text-primary"></i>
 													</button>
-													<a href="#" class="ml-2"><i
+													<a href="<c:url value='/web/following/book/add?id=${product.id}'/>" class="ml-2"><i
 														class="ri-heart-fill text-danger"></i></a>
 												</form>
 											</div>

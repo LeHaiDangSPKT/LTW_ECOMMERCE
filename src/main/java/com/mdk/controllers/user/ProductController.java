@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mdk.models.Category;
 import com.mdk.models.Product;
+import com.mdk.models.Review;
 import com.mdk.models.Store;
 import com.mdk.services.ICategoryService;
 import com.mdk.services.IProductService;
+import com.mdk.services.IReviewService;
 import com.mdk.services.IStoreService;
 import com.mdk.services.impl.CategoryService;
 import com.mdk.services.impl.ProductService;
+import com.mdk.services.impl.ReviewService;
 import com.mdk.services.impl.StoreService;
 
 @WebServlet(urlPatterns = { "/web/book/search", "/web/book/detail" })
@@ -25,7 +28,8 @@ public class ProductController extends HttpServlet {
 	IProductService productService = new ProductService();
 	ICategoryService categoryService = new CategoryService();
 	IStoreService storeService = new StoreService();
-
+	IReviewService reviewService = new ReviewService();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
@@ -41,8 +45,9 @@ public class ProductController extends HttpServlet {
 		} else if (url.contains("detail")) {
 			int id = Integer.parseInt(req.getParameter("id"));
 			Product product = productService.findOneById(id);
-
+			List<Review> reviewList = reviewService.findByProduct(id);
 			req.setAttribute("product", product);
+			req.setAttribute("reviewList", reviewList);
 			req.getRequestDispatcher("/views/web/productdetail.jsp").forward(req, resp);
 
 		}

@@ -1,5 +1,10 @@
 package com.mdk.controllers.user;
 
+import static com.mdk.utils.AppConstant.CART_HEADER;
+import static com.mdk.utils.AppConstant.CART_USER;
+import static com.mdk.utils.AppConstant.COUNT_CART_HEADER;
+import static com.mdk.utils.AppConstant.USER_MODEL;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -14,6 +19,7 @@ import com.mdk.models.CartItem;
 import com.mdk.models.Orders;
 import com.mdk.models.OrdersItem;
 import com.mdk.models.Store;
+import com.mdk.models.Transaction;
 import com.mdk.models.User;
 import com.mdk.services.ICartItemService;
 import com.mdk.services.ICartService;
@@ -22,6 +28,7 @@ import com.mdk.services.IOrdersItemService;
 import com.mdk.services.IOrdersService;
 import com.mdk.services.IProductService;
 import com.mdk.services.IStoreService;
+import com.mdk.services.ITransactionService;
 import com.mdk.services.IUserService;
 import com.mdk.services.impl.CartItemService;
 import com.mdk.services.impl.CartService;
@@ -30,10 +37,9 @@ import com.mdk.services.impl.OrdersItemService;
 import com.mdk.services.impl.OrdersService;
 import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.StoreService;
+import com.mdk.services.impl.TransactionService;
 import com.mdk.services.impl.UserService;
 import com.mdk.utils.SessionUtil;
-
-import static com.mdk.utils.AppConstant.*;
 @WebServlet(urlPatterns = { "/web/order/create", "/web/order/list", "/web/order/item/list" })
 public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -45,6 +51,7 @@ public class OrderController extends HttpServlet {
 	IOrdersService ordersService = new OrdersService();
 	IOrdersItemService ordersItemService = new OrdersItemService();
 	IUserService userService = new UserService();
+	ITransactionService transactionService = new TransactionService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -70,6 +77,7 @@ public class OrderController extends HttpServlet {
 		if (url.contains("/web/order/create")) {
 			insert(req, resp);
 			insertItem(req, resp);
+			insertTransaction(req,resp);
 			changeSessionCart(req, resp);
 			resp.sendRedirect(req.getContextPath() + "/web/cart");
 		}
@@ -142,5 +150,31 @@ public class OrderController extends HttpServlet {
 		SessionUtil.getInstance().putValue(req, CART_HEADER, carts);
 		SessionUtil.getInstance().putValue(req, COUNT_CART_HEADER, countOfCarts);
 		SessionUtil.getInstance().putValue(req, USER_MODEL, newuser);
+	}
+	
+	protected void insertTransaction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+
+		Cart cart = (Cart) SessionUtil.getInstance().getValue(req, CART_USER);
+		User user = (User) SessionUtil.getInstance().getValue(req, USER_MODEL);
+		Store store = cart.getStore();
+		
+		int deliveryId = Integer.parseInt(req.getParameter("deliveryId"));
+		
+		Double deliveryPrice = deliveryService.findById(deliveryId).getPrice();
+		Double amountFromUser = cart.getCartItems().stream().mapToDouble(o1 -> o1.getProduct().getPromotionalPrice())
+				.sum() + deliveryPrice;
+		Double amountToStore = amountFromUser - 0.025 * amountFromUser;
+		
+		Transaction transaction = new Transaction();
+		transaction.setUserId(user.getId());
+		transaction.setStoreId(store.getId());
+		transaction.setUp(true);
+		transaction.setAmount(amountToStore);
+		transactionService.insert(transaction);
+		
+		storeService.updateWallet(store.getId(), store.geteWallet()+amountToStore);
+		
 	}
 }

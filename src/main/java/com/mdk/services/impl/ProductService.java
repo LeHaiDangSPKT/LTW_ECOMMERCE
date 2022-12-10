@@ -131,4 +131,9 @@ public class ProductService implements IProductService {
         return productDAO.topSeller(storeId, top);
     }
 
+	@Override
+	public void updateRating(int productId, int rating) {
+		productDAO.updateRating(productId, rating);
+	}
+
 }

@@ -10,12 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mdk.models.Product;
+import com.mdk.models.Review;
 import com.mdk.models.Store;
 import com.mdk.models.User;
 import com.mdk.services.IProductService;
+import com.mdk.services.IReviewService;
 import com.mdk.services.IStoreService;
 import com.mdk.services.IUserService;
 import com.mdk.services.impl.ProductService;
+import com.mdk.services.impl.ReviewService;
 import com.mdk.services.impl.StoreService;
 import com.mdk.services.impl.UserService;
 
@@ -25,6 +28,7 @@ public class StoreController extends HttpServlet {
 	IStoreService storeService = new StoreService();
 	IUserService userService = new UserService();
 	IProductService productService = new ProductService();
+	IReviewService reviewService = new ReviewService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,15 +40,18 @@ public class StoreController extends HttpServlet {
 			int id = Integer.parseInt(req.getParameter("id"));
 			Store store = storeService.findById(id);
 			User owner = userService.findById(store.getId());
-			List<Product> storeProductList = productService.findAllByStoreId(owner.getId());
-			
+			List<Product> storeProductList = productService.findAllByStoreId(store.getId());
+			List<Review> reviewList = reviewService.findByStore(store.getId());
+
 			req.setAttribute("store", store);
 			req.setAttribute("owner", owner);
 			req.setAttribute("storeProductList", storeProductList);
+			req.setAttribute("reviewList", reviewList);
 			req.getRequestDispatcher("/views/web/storedetail.jsp").forward(req, resp);
 		}
 
 	}
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 
