@@ -29,11 +29,37 @@
 									</div>
 								</div>
 							</div>
+							<div class="row text-center col-lg-12 mb-3">
+								<c:if test="${phone_exist==true}">
+									<span class="text-danger w-100">Số điện thoại đã được
+										đăng ký</span>
+								</c:if>
+								<c:if test="${id_card_exist==true}">
+									<span class="text-danger w-100">CMND/CCCD đã được đăng
+										ký</span>
+								</c:if>
+							</div>
 							<div class=" row align-items-center">
 								<div class="form-group col-sm-6">
 									<label for="fname">Họ:</label> <input name="firstname"
 										type="text" class="form-control" id="fname"
 										value="${user.firstname}">
+								</div>
+								<div class="form-group col-sm-6">
+									<label class="d-block">Giới tính:</label>
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="customRadio6" name="sex"
+											class="custom-control-input" value="Nam"
+											<c:if test="${user.sex == 'Nam'}"> checked </c:if>> <label
+											class="custom-control-label" for="customRadio6"> Nam
+										</label>
+									</div>
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="customRadio7" name="sex"
+											class="custom-control-input" value="Nữ"
+											<c:if test="${user.sex == 'Nữ'}"> checked </c:if>> <label
+											class="custom-control-label" for="customRadio7"> Nữ </label>
+									</div>
 								</div>
 								<div class="form-group col-sm-6">
 									<label for="lname">Tên:</label> <input name="lastname"
@@ -48,7 +74,7 @@
 								<div class="form-group col-sm-6">
 									<label for="uname">Email:</label> <input name="email"
 										type="email" class="form-control" id="uname"
-										value="${user.email}">
+										value="${user.email}" readonly>
 								</div>
 								<div class="form-group col-sm-6">
 									<label for="cname">Số điện thoại:</label> <input name="phone"
@@ -64,44 +90,35 @@ Số 1 Võ Văn Ngân, Thủ Đức
 											</div> -->
 								</div>
 								<button formaction="<c:url value='/web/user/edit/update'/>"
-									class="btn btn-primary mr-2">Lưu thay đổi</button>
+									class="btn btn-primary mr-2 ml-3">Lưu thay đổi</button>
 								<button type="reset" class="btn iq-bg-danger">Hủy</button>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
-
 			<div class="col-lg-12">
 				<div class="iq-card">
 					<div class="iq-card-header d-flex justify-content-between">
 						<div class="iq-header-title">
-							<h4 class="card-title">Đổi mật khẩu</h4>
+							<h4 class="card-title">Nạp ví MKB</h4>
 						</div>
 					</div>
 					<div class="iq-card-body">
-						<form>
+						<form action="#" method="post" enctype="multipart/form-data">
 							<div class="form-group">
-								<label for="cpass">Nhập mật khẩu hiện tại:</label> <a
-									href="javascripe:void();" class="float-right">Forgot
-									Password</a> <input type="Password" class="form-control" id="cpass"
-									value="">
+								<label for="cpass">Số dư trong ví:</label> <span>${user.eWallet}</span>
 							</div>
 							<div class="form-group">
-								<label for="npass">Nhập mật khẩu mới:</label> <input
-									type="Password" class="form-control" id="npass" value="">
+								<label for="cpass">Số tiền nạp vào:</label> <input name="eWallet" type="number"
+									class="form-control" id="cpass" value="50000" min="50000" step="1000">
 							</div>
-							<div class="form-group">
-								<label for="vpass">Nhập lại mật khẩu mới:</label> <input
-									type="Password" class="form-control" id="vpass" value="">
-							</div>
-							<button type="submit" class="btn btn-primary mr-2">Submit</button>
-							<button type="reset" class="btn iq-bg-danger">Cancel</button>
+							<button formaction="<c:url value="/web/user/edit/eWallet/add"/>" class="btn btn-primary mr-2">Nạp</button>
+							<button type="reset" class="btn iq-bg-danger">Hủy</button>
 						</form>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

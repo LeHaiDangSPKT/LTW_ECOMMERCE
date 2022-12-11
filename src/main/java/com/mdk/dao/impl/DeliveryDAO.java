@@ -103,8 +103,8 @@ public class DeliveryDAO extends DBConnection implements IDeliveryDAO {
     }
 
     @Override
-    public List<Delivery> findAll() {
-        String sql = "SELECT * FROM delivery";
+    public List<Delivery> findAllActive() {
+        String sql = "SELECT * FROM delivery where isDeleted = 0";
         List<Delivery> deliveries = new ArrayList<Delivery>();
         try {
             conn = super.getConnection();

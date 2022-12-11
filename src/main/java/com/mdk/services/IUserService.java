@@ -10,6 +10,7 @@ public interface IUserService {
 	void update(User user);
 	void delete(int id);
 	void updateWallet(int id, double eWallet);
+
 	List<User> findBySearching(String keyword);
 
 	List<User> findAllForReport();
@@ -21,4 +22,6 @@ public interface IUserService {
 	List<User> findAll(Pageble pageble, String keyword);
     User findOneByUsernameAndPassword(String username, String password);
     int checkEmailExist(String email);
+    int checkPhoneExist(String phone);
+    int checkId_card(String id_card);
 }

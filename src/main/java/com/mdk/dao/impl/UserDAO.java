@@ -193,6 +193,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 				user.setPhoneActive(rs.getBoolean("isPhoneActive"));
 				user.setPassword(rs.getString("password"));
 				user.setRole(rs.getString("role"));
+				user.setSex(rs.getString("sex"));
 				user.setAvatar(rs.getString("avatar"));
 				user.seteWallet(rs.getDouble("eWallet"));
 				user.setCreatedAt(rs.getTimestamp("createdAt"));
@@ -227,7 +228,7 @@ public class UserDAO extends DBConnection implements IUserDAO {
 
 	@Override
 	public void update(User user) {
-		String sql = "UPDATE user " + "SET firstname = ?, lastname = ?, id_card = ?, email = ?, phone = ?, avatar = ? "
+		String sql = "UPDATE user " + "SET firstname = ?, lastname = ?, id_card = ?, email = ?, phone = ?, avatar = ?, sex = ? "
 				+ "WHERE id = ?";
 		try {
 			conn = super.getConnection();
@@ -238,7 +239,8 @@ public class UserDAO extends DBConnection implements IUserDAO {
 			ps.setString(4, user.getEmail());
 			ps.setString(5, user.getPhone());
 			ps.setString(6, user.getAvatar());
-			ps.setInt(7, user.getId());
+			ps.setString(7, user.getSex());
+			ps.setInt(8, user.getId());
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -316,5 +318,39 @@ public class UserDAO extends DBConnection implements IUserDAO {
         }
         return 0;
     }
+
+	@Override
+	public int checkPhoneExist(String phone) {
+		String sql = "select count(*) from user where phone = ?";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, phone);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+	}
+
+	@Override
+	public int checkId_card(String id_card) {
+		String sql = "select count(*) from user where id_card = ?";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, id_card);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+	}
 }
 

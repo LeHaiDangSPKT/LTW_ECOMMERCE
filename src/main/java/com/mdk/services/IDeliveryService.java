@@ -6,7 +6,7 @@ import com.mdk.paging.Pageble;
 import java.util.List;
 
 public interface IDeliveryService {
-    List<Delivery> findAll();
+    List<Delivery> findAllActive();
     void insert(Delivery delivery);
     void edit(Delivery delivery);
     void deleteSoft(int id);

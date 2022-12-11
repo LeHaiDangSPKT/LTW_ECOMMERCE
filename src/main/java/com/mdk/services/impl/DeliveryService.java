@@ -11,8 +11,8 @@ public class DeliveryService implements IDeliveryService {
     IDeliveryDAO deliveryDAO = new DeliveryDAO();
 
     @Override
-    public List<Delivery> findAll() {
-        return deliveryDAO.findAll();
+    public List<Delivery> findAllActive() {
+        return deliveryDAO.findAllActive();
     }
 
     @Override
