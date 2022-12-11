@@ -56,7 +56,7 @@
                     </div>
                   </div>
                 </div>
-                <select id="selectCate">
+                <select id="selectCate" class="form-control w-25">
                   <c:forEach items="${storesList}" var="storesList">
                     <option value="${storesList.id}"
                       ${storesList.id == storeId ? "selected" : ""}
@@ -127,8 +127,8 @@
     window.location.href = "${urlList}&search=" + key;
   }
 
-  $('#selectState').change(function () {
-    const storeId = $("#selectState option:selected").val();
+  $('#selectCate').change(function () {
+    const storeId = $("#selectCate option:selected").val();
     window.location.href = "${urlList}&storeId=" + storeId;
   });
 </script>

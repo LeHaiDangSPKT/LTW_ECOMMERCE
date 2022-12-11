@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
-<c:url value="/vendor/loadmore" var="UrlLoadMore" />
+<c:url value="/vendor/loadmore-product" var="UrlLoadMoreProduct" />
+<c:url value="/vendor/loadmore-customer" var="UrlLoadMoreCustomer" />
 <html>
 <head>
 <title>HomePage</title>
@@ -46,9 +47,7 @@
 								</div>
 								<div class="col-12 d-flex">
 										<h5>Để hiểu hơn về cách bán hàng trên hệ thống vui lòng tải tệp hướng dẫn sau:</h5>
-										<a href="<c:url value="/vendor/download-guide"/>" class="ml-3"> 
-											Hướng dẫn
-											<i class="fa-solid fa-download"></i> 
+										<a href="<c:url value="/vendor/download-guide"/>" class="ml-3"> Hướng dẫn <i class="fa-solid fa-download"></i>
 										</a>
 								</div>
 						</div>
@@ -144,7 +143,55 @@
 																</c:forEach>
 														</div>
 														<div class="iq-card-header-toolbar d-flex justify-content-center align-items-center">
-																<button onclick="LoadMore()" class="btn btn-sm btn-primary view-more">View More</button>
+																<button onclick="LoadMoreProduct()" class="btn btn-sm btn-primary view-more">View More</button>
+														</div>
+												</div>
+										</div>
+								</div>
+								<div class="col-lg-12">
+										<div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+												<div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+														<div class="iq-header-title">
+																<h4 class="card-title mb-0">Các khách hàng theo dõi</h4>
+														</div>
+												</div>
+												<div class="iq-card-body">
+														<div class="row" id="">
+																<table id="list-all-order" class="table table-striped table-bordered mt-4" role="grid"
+																		aria-describedby="user-list-page-info"
+																>
+																		<thead>
+																				<tr>
+																						<th>Thông tinh khách hàng</th>
+																						<th>Trạng thái</th>
+																				</tr>
+																		</thead>
+																		<tbody id="list-customer">
+																				<c:forEach items="${followStores}" var="followStore">
+																						<tr class="customer">
+																								<td>
+																										<div class="d-flex align-items-center mb-1">
+																												<c:choose>
+																														<c:when test="${review.user.avatar != null}">
+																																<c:url value="/image?fname=${followStore.user.avatar}&type=user" var="imgAvatar"></c:url>
+																														</c:when>
+																														<c:otherwise>
+																																<c:url value='/template/images/default-avatar.png' var="imgAvatar" />
+																														</c:otherwise>
+																												</c:choose>
+																												<img class="rounded-circle img-fluid avatar-40" src="${imgAvatar}" alt="profile">
+																												<p class="mt-3 ml-1 mr-3">${followStore.user.firstname} ${followStore.user.lastname}</p>
+																												<p class="mt-3 ml-1 mr-3">Giới tính:  ${followStore.user.sex}</p>
+																											</div>
+																								</td>
+																								<td>Đang theo dõi</td>
+																						</tr>
+																				</c:forEach>
+																		</tbody>
+																</table>
+														</div>
+														<div class="iq-card-header-toolbar d-flex justify-content-center align-items-center">
+																<button onclick="LoadMoreCustomer()" class="btn btn-sm btn-primary view-more">View More</button>
 														</div>
 												</div>
 										</div>
@@ -153,16 +200,32 @@
 				</c:if>
 		</div>
 		<script>
-			function LoadMore() {
+			function LoadMoreProduct() {
 				const amount = document.getElementsByClassName("product").length;
 				$.ajax({
-					url : "${UrlLoadMore}",
+					url : "${UrlLoadMoreProduct}",
 					type : "get",
 					data : {
 						exist : amount
 					},
 					success : function(data) {
 						$("#list-product").append(data);
+					},
+					error : function(xhr) {
+
+					}
+				})
+			}
+			function LoadMoreCustomer() {
+				const amount = document.getElementsByClassName("customer").length;
+				$.ajax({
+					url : "${UrlLoadMoreCustomer}",
+					type : "get",
+					data : {
+						exist : amount
+					},
+					success : function(data) {
+						$("#list-customer").append(data);
 					},
 					error : function(xhr) {
 

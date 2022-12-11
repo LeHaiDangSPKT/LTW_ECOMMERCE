@@ -10,6 +10,7 @@ import java.util.List;
 import com.mdk.connection.DBConnection;
 import com.mdk.dao.IReviewDAO;
 import com.mdk.models.Review;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IImageStoreService;
 import com.mdk.services.IOrdersService;
 import com.mdk.services.IProductService;
@@ -153,6 +154,53 @@ public class ReviewDAO extends DBConnection implements IReviewDAO {
 		}
 		return reviews;
 	}
+	@Override
+    public List<Review> findByStore(Pageble pageble, int storeId, String star, String searchKey) {
+        StringBuilder sql = new StringBuilder("select * from review inner join "
+                + "product on review.productId = product.id\r\n"
+                + "where review.storeId = ?");
+        List<Review> reviews = new ArrayList<Review>();
+        IImageStoreService imageStoreService = new ImageStoreService();
+        IUserService userService = new UserService();
+        IProductService productService = new ProductService();
+        IStoreService storeService = new StoreService();
+        IOrdersService orderService = new OrdersService();
+        if (!star.equals("all")) {
+            sql.append(" and stars = " + star);
+        }
+        if (searchKey != null) {
+            sql.append(" and product.name like ");
+            sql.append("\"%" + searchKey + "%\"");
+        }
+        if (pageble.getSorter() != null) {
+            sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
+        }
+        if (pageble.getOffset() != null && pageble.getLimit() != null) {
+            sql.append(" limit " + pageble.getOffset() + ", " + pageble.getLimit() + "");
+        }
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            ps.setInt(1, storeId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Review review = new Review();
+                review.setId(rs.getInt("id"));
+                review.setProductId(rs.getInt("productId"));
+                review.setUserId(rs.getInt("userId"));
+                review.setStars(rs.getInt("stars"));
+                review.setContent(rs.getString("content"));
+                review.setCreatedAt(rs.getTimestamp("createdAt"));
+                review.setUpdatedAt(rs.getTimestamp("updatedAt"));
+                review.setUser(userService.findById(review.getUserId()));
+                review.setProduct(productService.findOneById(review.getProductId()));
+                reviews.add(review);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reviews;
+    }
 
 	@Override
 	public Review findReview(Review review) {
@@ -192,5 +240,31 @@ public class ReviewDAO extends DBConnection implements IReviewDAO {
 		}
 		return null;
 	}
+
+    @Override
+    public int count(int storeId, String star, String searchKey) {
+        StringBuilder sql = new StringBuilder("select count(*) from review "
+                + "inner join product on review.productId = product.id\r\n"
+                + "where review.storeId = ?");
+        if (!star.equals("all")) {
+            sql.append(" and stars = " + star);
+        }
+        if (searchKey != null) {
+            sql.append(" and product.name like ");
+            sql.append("\"%" + searchKey + "%\"");
+        }
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            ps.setInt(1, storeId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 }

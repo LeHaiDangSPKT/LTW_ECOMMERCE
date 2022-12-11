@@ -94,7 +94,7 @@ public class CartController extends HttpServlet {
 		} else if (url.contains("/web/cart/item/delete")) {
 			deleteItem(req, resp);
 			changeSessionCart(req, resp);
-			resp.sendRedirect(req.getHeader("referer"));
+			resp.sendRedirect(req.getContextPath() + "/web");
 		}
 	}
 

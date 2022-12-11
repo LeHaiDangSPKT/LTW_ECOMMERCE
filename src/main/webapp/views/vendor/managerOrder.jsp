@@ -153,7 +153,7 @@
         <div class="col-sm-12 col-md-4">
             <div class="dataTables_paginate paging_simple_numbers">
                 <ul class="pagination">
-                    <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}">
+                    <li class="paginate_button page-item ${tag <= 1 ? "disabled" : ""}">
                         <a href="${pageContext.request.contextPath}/vendor/order/manager?status=${statusResp}&index=${tag - 1}"
                            class="page-link">Previous
                         </a>
@@ -164,7 +164,7 @@
                                class="page-link">${i}</a>
                         </li>
                     </c:forEach>
-                    <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}">
+                    <li class="paginate_button page-item ${tag >= endP ? "disabled" : ""}">
                         <a href="${pageContext.request.contextPath}/vendor/order/manager?status=${statusResp}&index=${tag + 1}"
                            class="page-link">Next</a>
                     </li>
@@ -188,10 +188,6 @@
     $("#statusOrder").innerText = newStatus;
 </script>
 <script>
-    // const now = new Date();
-    // const day = ("0" + now.getDate()).slice(-2);
-    // const month = ("0" + (now.getMonth() + 1)).slice(-2);
-    // const today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     function Report() {
         const dateStart = $("#date-start").val()
         const dateEnd = $("#date-end").val();

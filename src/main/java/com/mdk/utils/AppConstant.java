@@ -4,7 +4,7 @@ public class AppConstant {
 
     // role
     public static final String ADMIN = "ADMIN";
-    public static final String USER = "user";
+    public static final String USER = "USER";
     
     
     // upload

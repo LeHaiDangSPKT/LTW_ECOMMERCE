@@ -49,7 +49,7 @@
                             </tr>
                         </c:forEach>
                         </tbody>
-                        <h6>Tổng tiền: ${orders.amountFromUser} đồng</h6>
+                        <h6>Tổng tiền: ${orders.amountFromUser} đồng (đã bao gồm phí vận chuyển)</h6>
                     </table>
                 </div>
             </div>

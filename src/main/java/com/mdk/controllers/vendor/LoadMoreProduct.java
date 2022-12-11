@@ -21,7 +21,7 @@ import java.util.List;
 import static com.mdk.utils.AppConstant.STORE_MODEL;
 import static com.mdk.utils.AppConstant.TOTAL_ITEM_IN_PAGE;
 
-@WebServlet(urlPatterns = "/vendor/loadmore")
+@WebServlet(urlPatterns = "/vendor/loadmore-product")
 public class LoadMoreProduct extends HttpServlet {
     /**
 	 * 

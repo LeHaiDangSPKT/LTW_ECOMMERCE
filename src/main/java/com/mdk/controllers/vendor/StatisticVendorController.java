@@ -1,7 +1,6 @@
 package com.mdk.controllers.vendor;
 
 import static com.mdk.controllers.vendor.CheckStoreExist.checkStoreExist;
-import static com.mdk.utils.AppConstant.STORE_MODEL;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -48,6 +47,11 @@ public class StatisticVendorController extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + "/vendor/statistic/notification?message=nostore_error");
             }
         }
+    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        super.doPost(req, resp);
     }
     protected void mainStatistic(HttpServletRequest req, HttpServletResponse resp, Store store) throws ServletException,
             IOException {

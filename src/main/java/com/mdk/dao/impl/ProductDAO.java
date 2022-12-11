@@ -13,9 +13,11 @@ import com.mdk.models.Product;
 import com.mdk.paging.Pageble;
 import com.mdk.services.ICategoryService;
 import com.mdk.services.IImageProductService;
+import com.mdk.services.IProductService;
 import com.mdk.services.IStoreService;
 import com.mdk.services.impl.CategoryService;
 import com.mdk.services.impl.ImageProductService;
+import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.StoreService;
 
 public class ProductDAO extends DBConnection implements IProductDAO {
@@ -380,6 +382,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		List<Product> products = new ArrayList<>();
 		ICategoryService categoryService = new CategoryService();
 		IImageProductService imageProductService = new ImageProductService();
+		IProductService productService = new ProductService();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -400,6 +403,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				product.setRating(rs.getInt("rating"));
 				product.setCreatedAt(rs.getTimestamp("createdAt"));
 				product.setUpdatedAt(rs.getTimestamp("updatedAt"));
+				product.setLike(productService.countLikeProduct(product.getId()));
 				product.setCategory(categoryService.findById(rs.getInt("categoryId")));
 				product.setImages(imageProductService.findByProductId(rs.getInt("id")));
 				products.add(product);
@@ -409,8 +413,6 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		}
 		return products;
 	}
-
-
 
 	@Override
 	public List<Product> findByCategoryId(int categoryId) {
@@ -513,7 +515,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 		}
 		return products;
 	}
-	
+
 	@Override
 	public int count(String status, int storeId, String searchKey) {
 		StringBuilder sql = new StringBuilder("select count(*) from product");
@@ -721,4 +723,22 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			e.printStackTrace();
 		}
 	}
+
+    @Override
+    public int countLikeProduct(int productId) {
+        String sql = "select count(*) from product inner join userfollowproduct\r\n"
+                + "where product.id = userfollowproduct.productId and product.id = ?";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, productId);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

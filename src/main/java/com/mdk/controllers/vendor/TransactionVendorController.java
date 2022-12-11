@@ -42,6 +42,7 @@ public class TransactionVendorController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURL().toString();
         if (url.contains("notification")) {
+            req.setAttribute("storeExist", "store");
             MessageUtil.showMessage(req, resp);
             req.getRequestDispatcher("/views/vendor/transaction.jsp").forward(req, resp);
         } else if (url.contains("transaction")) {

@@ -136,4 +136,9 @@ public class ProductService implements IProductService {
 		productDAO.updateRating(productId, rating);
 	}
 
+    @Override
+    public int countLikeProduct(int productId) {
+        return productDAO.countLikeProduct(productId);
+    }
+
 }

@@ -28,4 +28,5 @@ public interface IProductService {
     List<Product> findAllProductProhibited();
     List<Product> findAllProductPermitted();
     List<Product> topSeller(int storeId, int top);
+    int countLikeProduct(int productId);
 }

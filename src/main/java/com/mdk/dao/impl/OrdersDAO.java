@@ -126,7 +126,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
     }
     @Override
     public List<OrderDetails> findDetailByOrderId(int id) {
-        StringBuilder sql = new StringBuilder("select name, description, price, count "
+        StringBuilder sql = new StringBuilder("select name, description, promotionalPrice, count "
                 + "from product inner join ordersItem on product.id = ordersItem.productId "
                 + "where ordersItem.ordersId = ?");
         try {
@@ -139,7 +139,7 @@ public class OrdersDAO extends DBConnection implements IOrdersDAO {
                 OrderDetails orderDetail = new OrderDetails();
                 orderDetail.setName(rs.getString("name"));
                 orderDetail.setDescription(rs.getString("description"));
-                orderDetail.setPrice(rs.getDouble("price"));
+                orderDetail.setPrice(rs.getDouble("promotionalPrice"));
                 orderDetail.setCount(rs.getInt("count"));
                 orderDetails.add(orderDetail);
             }

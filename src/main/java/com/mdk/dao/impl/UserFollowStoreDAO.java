@@ -11,6 +11,7 @@ import com.mdk.connection.DBConnection;
 import com.mdk.dao.IUserFollowStoreDAO;
 import com.mdk.models.UserFollowProduct;
 import com.mdk.models.UserFollowStore;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IProductService;
 import com.mdk.services.IStoreService;
 import com.mdk.services.IUserService;
@@ -119,5 +120,37 @@ public class UserFollowStoreDAO extends DBConnection implements IUserFollowStore
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	}
+
+    @Override
+    public List<UserFollowStore> findByStoreId(Pageble pageble, int storeId) {
+        StringBuilder sql = new StringBuilder("select * from userfollowstore where storeId = ?");
+        if (pageble.getSorter() != null) {
+            sql.append(" order by " + pageble.getSorter().getSortName() + " " + pageble.getSorter().getSortBy() + "");
+        }
+        if (pageble.getOffset() != null && pageble.getLimit() != null) {
+            sql.append(" limit " + pageble.getOffset() + ", " + pageble.getLimit() + "");
+        }
+        List<UserFollowStore> userFollowStores = new ArrayList<UserFollowStore>();
+        IUserService userService = new UserService();
+        IStoreService storeService = new StoreService();
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(String.valueOf(sql));
+            ps.setInt(1, storeId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                UserFollowStore userFollowStore = new UserFollowStore();
+                userFollowStore.setId(rs.getInt("id"));
+                userFollowStore.setUserId(rs.getInt("userId"));
+                userFollowStore.setStoreId(rs.getInt("storeId"));
+                userFollowStore.setStore(storeService.findById(userFollowStore.getStoreId()));
+                userFollowStore.setUser(userService.findById(userFollowStore.getUserId()));
+                userFollowStores.add(userFollowStore);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userFollowStores;
+    }
 
 }
