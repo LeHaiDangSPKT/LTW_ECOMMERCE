@@ -47,7 +47,13 @@
                 <li id="transaction" class="">
                     <a aria-expanded="false" href="<c:url value="/vendor/transaction"/>">
                         <i class="fa-solid fa-coins"></i>
-                        Giao dịch
+                        Quản lý giao dịch
+                    </a>
+                </li>
+                <li id="review" class="">
+                    <a aria-expanded="false" href="<c:url value="/vendor/review"/>">
+                        <i class="fa-solid fa-glasses"></i>
+                        Đánh giá cửa hàng
                     </a>
                 </li>
                 <li id="statistic" class="">
@@ -56,6 +62,7 @@
                         Thống kê
                     </a>
                 </li>
+                
                 <li id="guide" class="">
                     <a aria-expanded="false" href="<c:url value="/vendor/download-guide"/>">
                         <i class="fa-solid fa-download"></i>
@@ -81,6 +88,8 @@
             document.getElementById("transaction").classList.add("active");
         } else if (url.includes("statistic")){
             document.getElementById("statistic").classList.add("active");
+        } else if (url.includes("review")){
+            document.getElementById("review").classList.add("active");
         }
     }
 

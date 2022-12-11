@@ -23,14 +23,17 @@ import com.mdk.models.ImageStore;
 import com.mdk.models.Product;
 import com.mdk.models.Store;
 import com.mdk.models.User;
+import com.mdk.models.UserFollowStore;
 import com.mdk.paging.PageRequest;
 import com.mdk.paging.Pageble;
 import com.mdk.services.IImageStoreService;
 import com.mdk.services.IProductService;
 import com.mdk.services.IStoreService;
+import com.mdk.services.IUserFollowStoreService;
 import com.mdk.services.impl.ImageStoreService;
 import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.StoreService;
+import com.mdk.services.impl.UserFollowStoreService;
 import com.mdk.utils.DeleteImageUtil;
 import com.mdk.utils.MessageUtil;
 import com.mdk.utils.SessionUtil;
@@ -48,6 +51,7 @@ public class StoreVendorController extends HttpServlet {
     IStoreService storeService = new StoreService();
     IImageStoreService imageStoreService = new ImageStoreService();
     IProductService productService = new ProductService();
+    IUserFollowStoreService followStoreService = new UserFollowStoreService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,6 +65,7 @@ public class StoreVendorController extends HttpServlet {
         } else if (url.contains("home")) {
             int count = checkStoreExist(req, resp);
             if (count == 1) {
+                findAllCustomer(req, resp);
                 findAllProduct(req, resp);
             }
             req.getRequestDispatcher("/views/vendor/home.jsp").forward(req, resp);
@@ -212,5 +217,15 @@ public class StoreVendorController extends HttpServlet {
             products = productService.findAll(pageble, 0, store.getId(), null);
         }
         req.setAttribute("products", products);
+    }
+    protected void findAllCustomer(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        List<UserFollowStore> followStores = new ArrayList<>();
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
+        if (store != null) {
+            Pageble pageble = new PageRequest(1, TOTAL_ITEM_IN_PAGE, null);
+            followStores = followStoreService.findByStoreId(pageble, store.getId());
+        }
+        req.setAttribute("followStores", followStores);
     }
 }

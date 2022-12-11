@@ -13,6 +13,7 @@ public class Product extends AbstractModel<Product> {
     private int categoryId;
     private int storeId;
     private int rating;
+    private int like;
 
     private Category category;
     private Store store;
@@ -20,6 +21,17 @@ public class Product extends AbstractModel<Product> {
     public List<ImageProduct> getImages() {
         return images;
     }
+
+    
+    public int getLike() {
+        return like;
+    }
+
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
 
     public void setImages(List<ImageProduct> images) {
         this.images = images;

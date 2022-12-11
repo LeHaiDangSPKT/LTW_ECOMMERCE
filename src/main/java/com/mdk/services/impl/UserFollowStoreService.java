@@ -5,6 +5,7 @@ import java.util.List;
 import com.mdk.dao.IUserFollowStoreDAO;
 import com.mdk.dao.impl.UserFollowStoreDAO;
 import com.mdk.models.UserFollowStore;
+import com.mdk.paging.Pageble;
 import com.mdk.services.IUserFollowStoreService;
 
 public class UserFollowStoreService implements IUserFollowStoreService {
@@ -34,5 +35,12 @@ public class UserFollowStoreService implements IUserFollowStoreService {
 	public void update(UserFollowStore userFollowStore) {
 		userFollowStoreDAO.update(userFollowStore);
 	}
+
+    @Override
+    public List<UserFollowStore> findByStoreId(Pageble pageble, int storeId) {
+        return userFollowStoreDAO.findByStoreId(pageble, storeId);
+    }
+
+    
 
 }

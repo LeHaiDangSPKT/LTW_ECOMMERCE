@@ -28,9 +28,8 @@
                     <label>Chọn thể loại:</label> <select class="form-control" name="categoryId" id="selectCate">
                       <option value="0">Tất cả</option>
                       <c:forEach items="${categorise}" var="category">
-                        <option value="${category.id}" ${category.id == categoryId ? "selected" : ""}><a
-                            href="#"
-                          >${category.name}</a>
+                        <option value="${category.id}" ${category.id == categoryId ? "selected" : ""}>
+                        <a href="#">${category.name}</a>
                         </option>
                       </c:forEach>
                     </select>
@@ -66,6 +65,7 @@
                     <th>Giá giảm</th>
                     <th>Số lượng</th>
                     <th>Đã bán</th>
+                    <th>Yêu thích</th>
                     <th>Hành động</th>
                   </tr>
                 </thead>
@@ -85,6 +85,7 @@
                       <td>${product.promotionalPrice}vnd</td>
                       <td>${product.quantity}</td>
                       <td>${product.sold}</td>
+                      <td>${product.like}</td>
                       <td>
                         <div class="flex align-items-center list-user-action">
                           <a class="iq-bg-primary" data-toggle="tooltip" data-placement="center" title=""
@@ -122,7 +123,7 @@
       <div class="col-sm-12 col-md-4">
         <div class="dataTables_paginate paging_simple_numbers">
           <ul class="pagination">
-            <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}"><a
+            <li class="paginate_button page-item ${tag <= 1 ? "disabled" : ""}"><a
               href="${pageContext.request.contextPath}/vendor/product/category?categoryId=${categoryId}&index=${tag - 1}"
               class="page-link"
             >Previous </a></li>
@@ -132,7 +133,7 @@
                 class="page-link"
               >${i}</a></li>
             </c:forEach>
-            <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}"><a
+            <li class="paginate_button page-item ${tag >= endP ? "disabled" : ""}"><a
               href="${pageContext.request.contextPath}/vendor/product/category?categoryId=${categoryId}&index=${tag + 1}"
               class="page-link"
             >Next</a></li>

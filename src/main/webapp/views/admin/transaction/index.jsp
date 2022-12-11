@@ -98,7 +98,9 @@
                 <div class="dataTables_paginate paging_simple_numbers">
                   <ul class="pagination justify-content-center">
                     <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}">
-                      <a href="${pageContext.request.contextPath}/admin/transaction?storeId=${storeId}index=${tag - 1}"
+
+                      <a href="${pageContext.request.contextPath}/admin/transaction?storeId=${storeId}&index=${tag - 1}"
+
                          class="page-link">Previous
                       </a>
                     </li>
@@ -109,7 +111,9 @@
                       </li>
                     </c:forEach>
                     <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}">
-                      <a href="${pageContext.request.contextPath}/admin/transaction?storeId=${storeId}index=${tag + 1}"
+
+                      <a href="${pageContext.request.contextPath}/admin/transaction?storeId=${storeId}&index=${tag + 1}"
+
                          class="page-link">Next</a>
                     </li>
                   </ul>
