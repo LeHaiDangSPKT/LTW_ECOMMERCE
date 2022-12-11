@@ -80,7 +80,7 @@ public class CartController extends HttpServlet {
 		if (url.contains("/web/cart/delivery")) {
 			baseInfo(req, resp);
 			Cart cart = cartService.findById(Integer.parseInt(req.getParameter("cart")));
-			List<Delivery> listDelivery = deliveryService.findAll();
+			List<Delivery> listDelivery = deliveryService.findAllActive();
 
 			SessionUtil.getInstance().putValue(req, CART_USER, cart);
 
@@ -115,6 +115,8 @@ public class CartController extends HttpServlet {
 
 		if (req.getParameter("count") != null)
 			count = Integer.parseInt(req.getParameter("count"));
+		else if (product.getQuantity() == 0)
+			count = 0;
 		else
 			count = 1;
 

@@ -75,4 +75,16 @@ public class UserService implements IUserService {
     public int checkEmailExist(String email) {
         return userDao.checkEmailExist(email);
     }
+
+	@Override
+	public int checkPhoneExist(String phone) {
+		return userDao.checkPhoneExist(phone);
+	}
+
+	@Override
+	public int checkId_card(String id_card) {
+		// TODO Auto-generated method stub
+		return userDao.checkId_card(id_card);
+	}
+
 }

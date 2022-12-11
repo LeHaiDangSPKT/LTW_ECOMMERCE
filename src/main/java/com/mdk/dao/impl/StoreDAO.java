@@ -382,6 +382,8 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 	public List<Store> findAllByName(String keyword) {
 		String sql = "select * from store where name like CONCAT('%', ?, '%')";
 		List<Store> stores = new ArrayList<Store>();
+		IImageStoreService imageStoreService = new ImageStoreService();
+		IUserService userService = new UserService();
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -395,6 +397,8 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 
 				store.setOwnerID(rs.getInt("ownerId"));
 				store.setRating(rs.getInt("rating"));
+				store.setOwner(userService.findById(store.getOwnerID()));
+				store.setImages(imageStoreService.findByStoreId(rs.getInt("id")));
 				// store.setTotal(rs.getInt("total"));
 
 				stores.add(store);
