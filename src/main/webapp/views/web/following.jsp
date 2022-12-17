@@ -97,7 +97,7 @@
 										<tr>
 											<td class="d-flex justify-content-center"><a
 												href="<c:url value="/web/store/detail?id=${userFollowStore.store.id}"/>"><c:url
-														value="/image?fname=${userFollowStore.store.getImages().get(0).getName()}&type=product"
+														value="/image?fname=${userFollowStore.store.getImages().get(0).getName()}&type=store"
 														var="imgUrl"></c:url> <img class="img-fluid rounded "
 													style="object-fit: contain; height: 75px" src="${imgUrl}"
 													alt=""></a></td>
