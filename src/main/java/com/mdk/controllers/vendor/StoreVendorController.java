@@ -86,6 +86,7 @@ public class StoreVendorController extends HttpServlet {
         } else if (url.contains("edit")) {
             update(req, resp);
             resetSessionStore(req);
+            Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
             resp.sendRedirect(req.getContextPath() + "/vendor/store?message=update_success");
         }
     }
@@ -150,18 +151,17 @@ public class StoreVendorController extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-
-        // Store moi
+        
+        // Store cũ
+        Store oldStore = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
+        List<ImageStore> oldImages = imageStoreService.findByStoreId(oldStore.getId());
+     // Store moi
         Store store = new Store();
         List<ImageStore> images = new ArrayList<>();
-
+        store.setId(oldStore.getId());
         store.setName(req.getParameter("name"));
         store.setBio(req.getParameter("bio"));
         store.setOwnerID(Integer.valueOf(req.getParameter("ownerId")));
-
-        // Store cũ
-        Store oldStore = storeService.findByUserId(1);
-        List<ImageStore> oldImages = imageStoreService.findByStoreId(oldStore.getId());
         int flag = 0;
         // Xử lý ảnh
         Collection<Part> parts = req.getParts();

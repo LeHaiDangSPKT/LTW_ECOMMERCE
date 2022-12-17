@@ -156,7 +156,7 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 
 	@Override
 	public void update(Store store) {
-		String sql = "update store set name = ?, bio = ?, avatar = ?";
+		String sql = "update store set name = ?, bio = ?, avatar = ? where id = " + store.getId();
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(sql);
