@@ -26,7 +26,7 @@
           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
             <div class="iq-card-header d-flex justify-content-center align-items-center text-center">
               <div class="iq-header-title">
-                <h4>QUẢN LÝ CỬA HÀNG NỔI BẬT</h4>
+                <h4>THỐNG KÊ CỪA HÀNG</h4>
               </div>
             </div>
           </div>

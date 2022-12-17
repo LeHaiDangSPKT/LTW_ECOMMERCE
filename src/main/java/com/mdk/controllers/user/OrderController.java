@@ -18,6 +18,7 @@ import com.mdk.models.Cart;
 import com.mdk.models.CartItem;
 import com.mdk.models.Orders;
 import com.mdk.models.OrdersItem;
+import com.mdk.models.Product;
 import com.mdk.models.Store;
 import com.mdk.models.Transaction;
 import com.mdk.models.User;
@@ -131,6 +132,8 @@ public class OrderController extends HttpServlet {
 			ordersItem.setOrdersId(currentIndex);
 			ordersItem.setProductId(cartItem.getProductId());
 			ordersItem.setCount(cartItem.getCount());
+			Product product = productService.findOneById(cartItem.getProductId());
+			productService.updateSold(product.getId(), product.getSold() + cartItem.getCount());
 			ordersItemService.insert(ordersItem);
 			cartItemService.delete(cartItem.getId());
 		}

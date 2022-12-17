@@ -20,4 +20,6 @@ public interface IUserDAO {
     List<User> findAll(Pageble pageble, String keyword);
     User findOneByUsernameAndPassword(String username, String password);
     int checkEmailExist(String email);
+    int checkPhoneExist(String phone);
+    int checkId_card(String id_card);
 }

@@ -6,7 +6,7 @@ import com.mdk.models.Delivery;
 import com.mdk.paging.Pageble;
 
 public interface IDeliveryDAO {
-    List<Delivery> findAll();
+    List<Delivery> findAllActive();
     void insert(Delivery delivery);
     void edit(Delivery delivery);
     void deleteSoft(int id);

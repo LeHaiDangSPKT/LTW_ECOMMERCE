@@ -19,41 +19,47 @@
     <div id="sidebar-scrollbar">
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
-                <li>
-                    <a id="home" aria-expanded="false" href="<c:url value="/vendor/home" />">
+                <li id="home" class="">
+                    <a aria-expanded="false" href="<c:url value="/vendor/home" />">
                         <i class="fa-solid fa-book-open"></i>
                         Trang chủ
                     </a>
                 </li>
-                <li>
-                    <a id="store" aria-expanded="false" href="<c:url value="/vendor/store" />">
+                <li id="store" class="">
+                    <a aria-expanded="false" href="<c:url value="/vendor/store" />">
                         <i class="fa-solid fa-store"></i>
                         Thông tin cửa hàng
                     </a>
                 </li>
-                <li>
-                    <a id="product" aria-expanded="false"
+                <li id="product" class="">
+                    <a aria-expanded="false"
                        href="<c:url value="/vendor/product/category?categoryId=0"/> ">
                         <i class="fa-solid fa-table-list"></i>
                         Quản lý sản phẩm
                     </a>
                 </li>
-                <li>
-                    <a id="order" aria-expanded="false" href="<c:url value="/vendor/order/manager?status=all"/>">
+                <li id="order" class="">
+                    <a aria-expanded="false" href="<c:url value="/vendor/order/manager?status=all"/>">
                         <i class="fa-solid fa-truck-fast"></i>
                         Quản lý đơn hàng
                     </a>
                 </li>
-                <li>
-                    <a id="transaction" aria-expanded="false" href="<c:url value="/vendor/transaction"/>">
+                <li id="transaction" class="">
+                    <a aria-expanded="false" href="<c:url value="/vendor/transaction"/>">
                         <i class="fa-solid fa-coins"></i>
                         Giao dịch
                     </a>
                 </li>
-                <li>
-                    <a id="statistic" aria-expanded="false" href="<c:url value="/vendor/statistic"/>">
+                <li id="statistic" class="">
+                    <a aria-expanded="false" href="<c:url value="/vendor/statistic"/>">
                         <i class="fa-solid fa-chart-simple"></i>
                         Thống kê
+                    </a>
+                </li>
+                <li id="guide" class="">
+                    <a aria-expanded="false" href="<c:url value="/vendor/download-guide"/>">
+                        <i class="fa-solid fa-download"></i>
+                        Hướng dẫn
                     </a>
                 </li>
             </ul>
@@ -64,17 +70,17 @@
     function changeActive() {
         const url = window.location.pathname;
         if (url.includes("store")) {
-            document.getElementById("store").setAttribute("aria-expanded", "true");
+            document.getElementById("store").classList.add("active");
         } else if (url.includes("product")) {
-            document.getElementById("product").setAttribute("aria-expanded", "true");
+            document.getElementById("product").classList.add("active");
         } else if (url.includes("order")) {
-            document.getElementById("order").setAttribute("aria-expanded", "true");
+            document.getElementById("order").classList.add("active");
         } else if (url.includes("home")) {
-            document.getElementById("home").setAttribute("aria-expanded", "true");
-        } else if (url.includes("statistic")) {
-            document.getElementById("statistic").setAttribute("aria-expanded", "true");
+            document.getElementById("home").classList.add("active");
         } else if (url.includes("transaction")) {
-            document.getElementById("transaction").setAttribute("aria-expanded", "true");
+            document.getElementById("transaction").classList.add("active");
+        } else if (url.includes("statistic")){
+            document.getElementById("statistic").classList.add("active");
         }
     }
 

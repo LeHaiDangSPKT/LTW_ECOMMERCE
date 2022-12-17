@@ -46,7 +46,7 @@
                                 <a class="btn btn-danger"
                                    href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080${URL}&response_type=code&client_id=740094574805-pa2bc895e0nmd2h00b6njulev52331qg.apps.googleusercontent.com&approval_prompt=force">
                                     <i class="fa-brands fa-google"></i>
-                                    Đăng nhập với Google
+                                    Tiếp tục với Google
                                 </a>
                             </div>
                         </div>

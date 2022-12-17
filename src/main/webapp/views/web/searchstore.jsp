@@ -19,11 +19,12 @@
 											class="iq-search-bar search-book d-flex align-items-center">
 											<div class="searchbox mt-3 d-flex">
 												<input name="searchkeyword" type="text"
-													class="text search-input" placeholder="Nhập tên cửa hàng bạn muốn tìm kiếm...">
+													class="text search-input"
+													placeholder="Nhập tên cửa hàng bạn muốn tìm kiếm...">
 												<a class="search-link" href="#"><i
 													class="ri-search-line"></i></a>
-													<button type="submit"
-												class="btn btn-primary search-data ml-2">Tìm kiếm</button>
+												<button type="submit"
+													class="btn btn-primary search-data ml-2">Tìm kiếm</button>
 											</div>
 										</div></li>
 								</ul>
@@ -34,6 +35,16 @@
 				<div class="iq-card">
 					<div class="iq-card-body">
 						<div class="row">
+							<c:if test="${empty storeSearchList}">
+								<div class="col-lg-12 d-flex justify-content-center">
+									<img style="width: 30%"
+										src="<c:url value="/template/images/notfoundproduct.png"/>" />
+								</div>
+								<div class="col-lg-12 text-center mb-5">
+									<span class="text-second text-uppercase font-size-20">Không tìm thấy tên cửa hàng bạn cần tìm rồi.</span>
+								</div>
+
+							</c:if>
 							<c:forEach items="${storeSearchList}" var="store">
 								<div class="col-sm-6 col-md-4 col-lg-3">
 									<div
@@ -42,12 +53,18 @@
 											<div class="d-flex align-items-center">
 												<div
 													class="col-6 p-0 position-relative image-overlap-shadow">
-													<a href="javascript:void();"><img
+													<a href="javascript:void();">
+													<c:url
+															value="/image?fname=${store.getImages().get(0).getName()}&type=store"
+															var="imgUrl"></c:url> <img
 														class="img-fluid rounded w-100"
-														src="../template/images/browse-books/01.jpg" alt=""></a>
+														style="object-fit: contain; height: 25vh; width: 20vh"
+														src="${imgUrl}" alt="">
+													</a>
 													<div class="view-book">
-														<a href="<c:url value ='/web/store/detail?id=${store.id}'/>" class="btn btn-sm btn-white">Xem
-															chi tiết</a>
+														<a
+															href="<c:url value ='/web/store/detail?id=${store.id}'/>"
+															class="btn btn-sm btn-white">Xem chi tiết</a>
 													</div>
 												</div>
 
