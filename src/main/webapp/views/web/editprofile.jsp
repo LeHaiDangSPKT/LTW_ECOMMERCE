@@ -110,10 +110,41 @@ Số 1 Võ Văn Ngân, Thủ Đức
 								<label for="cpass">Số dư trong ví:</label> <span>${user.eWallet}</span>
 							</div>
 							<div class="form-group">
-								<label for="cpass">Số tiền nạp vào:</label> <input name="eWallet" type="number"
-									class="form-control" id="cpass" value="50000" min="50000" step="1000">
+								<label for="cpass">Số tiền nạp vào:</label> <input
+									name="eWallet" type="number" class="form-control" id="cpass"
+									value="50000" min="50000" step="1000">
 							</div>
-							<button formaction="<c:url value="/web/user/edit/eWallet/add"/>" class="btn btn-primary mr-2">Nạp</button>
+							<button formaction="<c:url value="/web/user/edit/eWallet/add"/>"
+								class="btn btn-primary mr-2">Nạp</button>
+							<button type="reset" class="btn iq-bg-danger">Hủy</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="iq-card">
+					<div class="iq-card-header d-flex justify-content-between">
+						<div class="iq-header-title">
+							<h4 class="card-title">Đổi mật khẩu</h4>
+						</div>
+					</div>
+					<div class="iq-card-body">
+						<form method="post">
+							<span class="text-danger d-none" id="caution">Sai mật khẩu hiện tại</span>
+							<div class="form-group">
+								<label for="cpass">Mật khẩu hiện tại:</label> <input oninput="currentPass()" name="current_pass"
+									type="Password" class="form-control" id="current_pass" value="">
+							</div>
+							<div class="form-group">
+								<label for="npass">Mật khẩu mới:</label> <input name="new_pass" oninput="changePass()" type="Password"
+									class="form-control" id="new_pass" value="">
+							</div>
+							<div class="form-group">
+								<label for="vpass">Xác nhận mật khẩu:</label> <input
+									type="Password" class="form-control" id="re_new_pass" value="" oninput="changePass()">
+							</div>
+							<button id="button_pass" formaction="<c:url value="/web/user/edit/updatepassword"/>" class="d-none btn btn-primary mr-2">Xác
+								nhận</button>
 							<button type="reset" class="btn iq-bg-danger">Hủy</button>
 						</form>
 					</div>
@@ -122,3 +153,35 @@ Số 1 Võ Văn Ngân, Thủ Đức
 		</div>
 	</div>
 </div>
+
+<script>
+
+function currentPass()
+{
+	var cur_pass = document.getElementById("new_pass").value;
+	if(cur_pass.localeCompare(${user.password}) == 0)
+	{
+		document.getElementById("caution").classList.remove("d-none");
+	}
+	else
+	{
+		document.getElementById("caution").classList.add("d-none");
+	}
+}
+
+function changePass()
+{
+	var ne_pass = document.getElementById("new_pass").value;
+	var re_pass = document.getElementById("new_pass").value;
+	
+	if(re_pass.localeCompare(ne_pass) == 0)
+	{
+		document.getElementById("button_pass").classList.remove("d-none");
+	}
+	else
+	{
+		document.getElementById("button_pass").classList.add("d-none");
+	}
+}
+
+</script>

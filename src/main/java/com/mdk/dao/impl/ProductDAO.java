@@ -625,7 +625,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				+ "and price - promotionalPrice >= ? " + "and ? >= price - promotionalPrice ");
 		List<Product> products = new ArrayList<>();
 		IImageProductService imageProductService = new ImageProductService();
-		IStoreService storeService = new StoreService();
+
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
