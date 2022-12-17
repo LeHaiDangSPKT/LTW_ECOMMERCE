@@ -145,7 +145,7 @@
 					window.location.href = "${UrlTransaction}" + "?start="
 							+ dateStart + "&end=" + dateEnd;
 				} else {
-					window.location.href = "${UrlTransaction}?message=invalid_date"
+					window.location.href = "${UrlTransaction}/notification?message=invalid_date"
 				}
 			}
 			function CheckDate() {

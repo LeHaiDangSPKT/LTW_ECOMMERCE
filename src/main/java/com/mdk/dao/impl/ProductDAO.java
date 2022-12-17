@@ -369,7 +369,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			sql.append(" and storeId = " + storeId);
 		}
 		if (searchKey != null) {
-			sql.append(" and name like ");
+			sql.append(" and product.name like ");
 			sql.append("\"%" + searchKey + "%\"");
 		}
 		sql.append(" and isActive = true");
@@ -463,7 +463,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 			sql.append(" and storeId = " + storeId);
 		}
 		if (searchKey != null) {
-			sql.append(" and name like ");
+			sql.append(" and product.name like ");
 			sql.append("\"%" + searchKey + "%\"");
 		}
 		sql.append(" and isActive = true");
