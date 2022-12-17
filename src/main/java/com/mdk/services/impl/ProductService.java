@@ -140,5 +140,9 @@ public class ProductService implements IProductService {
     public int countLikeProduct(int productId) {
         return productDAO.countLikeProduct(productId);
     }
+	@Override
+	public void updateSold(int id, int sold) {
+		productDAO.updateSold(id, sold);
+	}
 
 }

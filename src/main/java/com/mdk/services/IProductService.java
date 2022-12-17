@@ -10,6 +10,7 @@ public interface IProductService {
     void update(Product product);
     void delete(int id);
     void updateRating(int productId, int rating);
+	void updateSold(int id, int sold);
     Product findOneByName(String name, int storeId);
     List<Product> getTopSeller(int index);
     List<Product> findAll();

@@ -85,7 +85,6 @@ public class ReviewDAO extends DBConnection implements IReviewDAO {
 	public List<Review> findByProduct(int productId) {
 		String sql = "select * from review where productId = ?";
 		List<Review> reviews = new ArrayList<Review>();
-		IImageStoreService imageStoreService = new ImageStoreService();
 		IUserService userService = new UserService();
 		IProductService productService = new ProductService();
 		IStoreService storeService = new StoreService();
@@ -122,7 +121,6 @@ public class ReviewDAO extends DBConnection implements IReviewDAO {
 	public List<Review> findByStore(int storeId) {
 		String sql = "select * from review where storeId = ?";
 		List<Review> reviews = new ArrayList<Review>();
-		IImageStoreService imageStoreService = new ImageStoreService();
 		IUserService userService = new UserService();
 		IProductService productService = new ProductService();
 		IStoreService storeService = new StoreService();
@@ -205,7 +203,6 @@ public class ReviewDAO extends DBConnection implements IReviewDAO {
 	@Override
 	public Review findReview(Review review) {
 		String sql = "select * from review where userId = ? AND productId = ? AND storeId = ? AND ordersId = ?";
-		IImageStoreService imageStoreService = new ImageStoreService();
 		IUserService userService = new UserService();
 		IProductService productService = new ProductService();
 		IStoreService storeService = new StoreService();

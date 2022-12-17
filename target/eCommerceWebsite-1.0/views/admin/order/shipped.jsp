@@ -56,7 +56,7 @@
                     </div>
                   </div>
                 </div>
-                <select id="selectCate">
+                <select id="selectCate" class="form-control w-25">
                   <c:forEach items="${storesList}" var="storesList">
                     <option value="${storesList.id}"
                       ${storesList.id == storeId ? "selected" : ""}

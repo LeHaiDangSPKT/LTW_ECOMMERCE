@@ -35,6 +35,11 @@ public class StoreController extends HttpServlet {
 		String url = req.getRequestURL().toString();
 
 		if (url.contains("/web/store/search")) {
+			String searchkeyword = "";
+			List<Store> storeSearchList = storeService.findAllByName(searchkeyword);
+			List<User> ownerSearchList = userService.findAll();
+			req.setAttribute("storeSearchList", storeSearchList);
+			req.setAttribute("ownerSearchList", ownerSearchList);
 			req.getRequestDispatcher("/views/web/searchstore.jsp").forward(req, resp);
 		} else if (url.contains("/web/store/detail")) {
 			int id = Integer.parseInt(req.getParameter("id"));

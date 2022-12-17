@@ -11,6 +11,7 @@ public interface IProductDAO {
     void delete(int id);
     void updateRating(int productId, int rating);
     void ban(int id, Boolean state);
+    void updateSold(int id, int sold);
     String findOwnerEmailByProductId(int id);
     Product findOneByName(String name, int storeId);
     Product findOneById(int id);

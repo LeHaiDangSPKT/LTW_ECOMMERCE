@@ -625,7 +625,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 				+ "and price - promotionalPrice >= ? " + "and ? >= price - promotionalPrice ");
 		List<Product> products = new ArrayList<>();
 		IImageProductService imageProductService = new ImageProductService();
-		IStoreService storeService = new StoreService();
+
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement(String.valueOf(sql));
@@ -741,4 +741,18 @@ public class ProductDAO extends DBConnection implements IProductDAO {
         }
         return 0;
     }
+	@Override
+	public void updateSold(int id, int sold) {
+		StringBuilder sql = new StringBuilder("update product set sold = ? where id = ?");
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setInt(1, sold);
+			ps.setInt(2, id);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
