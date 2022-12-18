@@ -130,21 +130,26 @@ Số 1 Võ Văn Ngân, Thủ Đức
 					</div>
 					<div class="iq-card-body">
 						<form method="post">
-							<span class="text-danger d-none" id="caution">Sai mật khẩu hiện tại</span>
+							<span class="text-danger d-none" id="caution">Sai mật khẩu
+								hiện tại</span>
 							<div class="form-group">
-								<label for="cpass">Mật khẩu hiện tại:</label> <input oninput="currentPass()" name="current_pass"
-									type="Password" class="form-control" id="current_pass" value="">
+								<label for="cpass">Mật khẩu hiện tại:</label> <input
+									oninput="currentPass()" name="current_pass" type="Password"
+									class="form-control" id="current_pass" value="">
 							</div>
 							<div class="form-group">
-								<label for="npass">Mật khẩu mới:</label> <input name="new_pass" oninput="changePass()" type="Password"
-									class="form-control" id="new_pass" value="">
+								<label for="npass">Mật khẩu mới:</label> <input name="new_pass"
+									oninput="changePass()" type="Password" class="form-control"
+									id="new_pass" value="">
 							</div>
 							<div class="form-group">
 								<label for="vpass">Xác nhận mật khẩu:</label> <input
-									type="Password" class="form-control" id="re_new_pass" value="" oninput="changePass()">
+									type="Password" class="form-control" id="re_new_pass" value=""
+									oninput="changePass()">
 							</div>
-							<button id="button_pass" formaction="<c:url value="/web/user/edit/updatepassword"/>" class="d-none btn btn-primary mr-2">Xác
-								nhận</button>
+							<button id="button_pass"
+								formaction="<c:url value="/web/user/edit/updatepassword"/>"
+								class="d-none btn btn-primary mr-2">Xác nhận</button>
 							<button type="reset" class="btn iq-bg-danger">Hủy</button>
 						</form>
 					</div>
@@ -158,9 +163,11 @@ Số 1 Võ Văn Ngân, Thủ Đức
 
 function currentPass()
 {
-	var cur_pass = document.getElementById("new_pass").value;
-	if(cur_pass.localeCompare(${user.password}) == 0)
+	var cur_pass = document.getElementById("current_pass").value;
+	
+	if(cur_pass.localeCompare(${user.password}) != 0)
 	{
+		alert(${user.password})
 		document.getElementById("caution").classList.remove("d-none");
 	}
 	else
@@ -172,7 +179,7 @@ function currentPass()
 function changePass()
 {
 	var ne_pass = document.getElementById("new_pass").value;
-	var re_pass = document.getElementById("new_pass").value;
+	var re_pass = document.getElementById("re_new_pass").value;
 	
 	if(re_pass.localeCompare(ne_pass) == 0)
 	{

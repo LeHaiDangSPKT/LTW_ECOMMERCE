@@ -45,7 +45,7 @@ public class StoreController extends HttpServlet {
 			int id = Integer.parseInt(req.getParameter("id"));
 			Store store = storeService.findById(id);
 			User owner = userService.findById(store.getId());
-			List<Product> storeProductList = productService.findAllByStoreId(store.getId());
+			List<Product> storeProductList = productService.findByStoreId(store.getId());
 			List<Review> reviewList = reviewService.findByStore(store.getId());
 
 			req.setAttribute("store", store);

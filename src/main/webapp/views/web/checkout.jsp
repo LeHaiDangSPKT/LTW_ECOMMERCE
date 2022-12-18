@@ -75,7 +75,7 @@
 																				<c:choose>
 																					<c:when test="${cartItem.product.quantity > 0}">
 																						<input name="count" class="form-control"
-																							style="max-width: 75px; height: 35px" type="number" min="1"
+																							style="max-width: 75px; height: 35px" type="number" min="${-1*cartItem.count+1}"
 																							max="${cartItem.product.quantity}" step="1" value="1">
 																					</c:when>
 																					<c:otherwise>

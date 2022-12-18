@@ -129,96 +129,97 @@
 												<form method="post">
 													<a href="#"><button
 															formaction="<c:url value='/web/cart/item/create?id=${product.id}'/>"
-															class="btn btn-primary view-more mr-3">Thêm vào giỏ
-															hàng</button></a>
+															class="btn btn-primary view-more mr-3">Thêm vào
+															giỏ hàng</button></a>
 												</form>
 											</div>
 										</div>
 									</div>
+
+								</li>
+							</c:forEach>
+						</ul>
 					</div>
-					</li>
-					</c:forEach>
-					</ul>
 				</div>
 			</div>
-		</div>
 
-		<div class="col-lg-12">
-			<div class="iq-card p-4">
-				<div class="d-block text-center">
-					<h4>Đánh giá</h4>
-				</div>
-				<div class="iq-card-body">
-					<div class="table-responsive">
-						<table id="user-list-table" class="table table-striped mt-4"
-							role="grid" aria-describedby="user-list-page-info">
-							<thead>
-								<tr>
-									<th style="width: 10%">Người dùng</th>
-									<th style="width: 90%">Đánh giá</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${reviewList}" var="review">
+			<div class="col-lg-12">
+				<div class="iq-card p-4">
+					<div class="d-block text-center">
+						<h4>Đánh giá</h4>
+					</div>
+					<div class="iq-card-body">
+						<div class="table-responsive">
+							<table id="user-list-table" class="table table-striped mt-4"
+								role="grid" aria-describedby="user-list-page-info">
+								<thead>
 									<tr>
-										<td class="text-center"><c:url
-												value="/image?fname=${review.user.avatar}&type=user"
-												var="imgAvatar"></c:url> <img
-											class="rounded img-fluid avatar-40" src="${imgAvatar}"
-											alt="profile">
-											<p class="mt-3">${review.user.firstname}
-												${review.user.lastname}</p>
-											<p class="mt-3">${review.createdAt}</p></td>
-										<td>
-											<div class="mb-3 d-block">
-												<strong>Đơn hàng:</strong>
-												<p>${review.product.name}</p>
-											</div>
-											<div class="mb-3 d-block">
-												<span class="font-size-20 text-warning"> <c:forEach
-														var="i" begin="1" end="5">
-														<c:if test="${i <= review.stars }">
-															<i class="fa fa-star"></i>
-														</c:if>
-
-														<c:if test="${i > review.stars }">
-															<i class="fa fa-star-o"></i>
-														</c:if>
-													</c:forEach>
-												</span>
-											</div>
-											<p>${review.content}</p>
-										</td>
+										<th style="width: 10%">Người dùng</th>
+										<th style="width: 90%">Đánh giá</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-					<div class="row justify-content-between mt-3">
-						<div id="user-list-page-info" class="col-md-6">
-							<span>Showing 1 to 5 of 5 entries</span>
+								</thead>
+								<tbody>
+									<c:forEach items="${reviewList}" var="review">
+										<tr>
+											<td class="text-center"><c:url
+													value="/image?fname=${review.user.avatar}&type=user"
+													var="imgAvatar"></c:url> <img
+												class="rounded img-fluid avatar-40" src="${imgAvatar}"
+												alt="profile">
+												<p class="mt-3">${review.user.firstname}
+													${review.user.lastname}</p>
+												<p class="mt-3">${review.createdAt}</p></td>
+											<td>
+												<div class="mb-3 d-block">
+													<strong>Đơn hàng:</strong>
+													<p>${review.product.name}</p>
+												</div>
+												<div class="mb-3 d-block">
+													<span class="font-size-20 text-warning"> <c:forEach
+															var="i" begin="1" end="5">
+															<c:if test="${i <= review.stars }">
+																<i class="fa fa-star"></i>
+															</c:if>
+
+															<c:if test="${i > review.stars }">
+																<i class="fa fa-star-o"></i>
+															</c:if>
+														</c:forEach>
+													</span>
+												</div>
+												<p>${review.content}</p>
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
 						</div>
-						<div class="col-md-6">
-							<nav aria-label="Page navigation example">
-								<ul class="pagination justify-content-end mb-0">
-									<li class="page-item disabled"><a class="page-link"
-										href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
-									<li class="page-item active"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">Next</a>
-									</li>
-								</ul>
-							</nav>
+						<div class="row justify-content-between mt-3">
+							<div id="user-list-page-info" class="col-md-6">
+								<span>Showing 1 to 5 of 5 entries</span>
+							</div>
+							<div class="col-md-6">
+								<nav aria-label="Page navigation example">
+									<ul class="pagination justify-content-end mb-0">
+										<li class="page-item disabled"><a class="page-link"
+											href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
+										<li class="page-item active"><a class="page-link"
+											href="#">1</a></li>
+										<li class="page-item"><a class="page-link" href="#">2</a></li>
+										<li class="page-item"><a class="page-link" href="#">3</a></li>
+										<li class="page-item"><a class="page-link" href="#">Next</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+
+
 		</div>
-
-
-
 	</div>
-</div>
 </div>
 </div>
