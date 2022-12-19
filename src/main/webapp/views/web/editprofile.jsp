@@ -121,40 +121,42 @@ Số 1 Võ Văn Ngân, Thủ Đức
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-12">
-				<div class="iq-card">
-					<div class="iq-card-header d-flex justify-content-between">
-						<div class="iq-header-title">
-							<h4 class="card-title">Đổi mật khẩu</h4>
+			<c:if test="${user.password.length() <= 15 }">
+				<div class="col-lg-12">
+					<div class="iq-card">
+						<div class="iq-card-header d-flex justify-content-between">
+							<div class="iq-header-title">
+								<h4 class="card-title">Đổi mật khẩu</h4>
+							</div>
+						</div>
+						<div class="iq-card-body">
+							<form method="post">
+								<span class="text-danger d-none" id="caution">Sai mật
+									khẩu hiện tại</span>
+								<div class="form-group">
+									<label for="cpass">Mật khẩu hiện tại:</label> <input
+										oninput="currentPass()" name="current_pass" type="Password"
+										class="form-control" id="current_pass" value="">
+								</div>
+								<div class="form-group">
+									<label for="npass">Mật khẩu mới:</label> <input name="new_pass"
+										oninput="changePass()" type="Password" class="form-control"
+										id="new_pass" value="">
+								</div>
+								<div class="form-group">
+									<label for="vpass">Xác nhận mật khẩu:</label> <input
+										type="Password" class="form-control" id="re_new_pass" value=""
+										oninput="changePass()">
+								</div>
+								<button id="button_pass"
+									formaction="<c:url value="/web/user/edit/updatepassword"/>"
+									class="d-none btn btn-primary mr-2">Xác nhận</button>
+								<button type="reset" class="btn iq-bg-danger">Hủy</button>
+							</form>
 						</div>
 					</div>
-					<div class="iq-card-body">
-						<form method="post">
-							<span class="text-danger d-none" id="caution">Sai mật khẩu
-								hiện tại</span>
-							<div class="form-group">
-								<label for="cpass">Mật khẩu hiện tại:</label> <input
-									oninput="currentPass()" name="current_pass" type="Password"
-									class="form-control" id="current_pass" value="">
-							</div>
-							<div class="form-group">
-								<label for="npass">Mật khẩu mới:</label> <input name="new_pass"
-									oninput="changePass()" type="Password" class="form-control"
-									id="new_pass" value="">
-							</div>
-							<div class="form-group">
-								<label for="vpass">Xác nhận mật khẩu:</label> <input
-									type="Password" class="form-control" id="re_new_pass" value=""
-									oninput="changePass()">
-							</div>
-							<button id="button_pass"
-								formaction="<c:url value="/web/user/edit/updatepassword"/>"
-								class="d-none btn btn-primary mr-2">Xác nhận</button>
-							<button type="reset" class="btn iq-bg-danger">Hủy</button>
-						</form>
-					</div>
 				</div>
-			</div>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -167,7 +169,6 @@ function currentPass()
 	
 	if(cur_pass.localeCompare(${user.password}) != 0)
 	{
-		alert(${user.password})
 		document.getElementById("caution").classList.remove("d-none");
 	}
 	else

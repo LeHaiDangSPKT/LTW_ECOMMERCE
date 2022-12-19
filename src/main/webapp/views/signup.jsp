@@ -49,13 +49,13 @@
                                     <label>Mật khẩu</label>
                                     <input
                                         name="password" type="password" class="form-control mb-0"
-                                        placeholder="Mật khẩu">
+                                        placeholder="Mật khẩu" maxlength="15">
                                 </div>
                                 <div class="form-group">
                                     <label>Nhập lại mật khẩu</label>
                                     <input
                                         name="re-password" type="password" class="form-control mb-0"
-                                        placeholder="Nhập lại mật khẩu">
+                                        placeholder="Nhập lại mật khẩu" maxlength="15">
                                 </div>
                                 <div class="sign-info text-center">
                                     <button formaction="<c:url value="/signup?action=create"/>"
