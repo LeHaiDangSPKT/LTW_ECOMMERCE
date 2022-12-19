@@ -87,4 +87,9 @@ public class UserService implements IUserService {
 		return userDao.checkId_card(id_card);
 	}
 
+	@Override
+	public void updatePass(int id, String pass) {
+		userDao.updatePass(id, pass);
+	}
+
 }

@@ -30,7 +30,7 @@ import com.mdk.utils.UploadUtil;
 		maxRequestSize = 1024 * 1024 * 50) // 50MB
 
 @WebServlet(urlPatterns = { "/web/user/search", "/web/user/profile", "/web/user/edit", "/web/user/edit/update",
-		"/web/user/edit/eWallet/add" })
+		"/web/user/edit/eWallet/add", "/web/user/edit/updatepassword" })
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	IUserService userService = new UserService();
@@ -78,6 +78,14 @@ public class UserController extends HttpServlet {
 			User user = userService.findById(id);
 			userService.updateWallet(id, user.geteWallet() + Double.parseDouble(req.getParameter("eWallet")));
 			user = userService.findById(id);
+			SessionUtil.getInstance().putValue(req, USER_MODEL, user);
+			resp.sendRedirect(req.getContextPath() + "/web/user/edit");
+
+		} else if (url.contains("updatepassword")) {
+			int id = ((User) SessionUtil.getInstance().getValue(req, USER_MODEL)).getId();
+			String pass = req.getParameter("new_pass");
+			userService.updatePass(id, pass);
+			User user = userService.findById(id);
 			SessionUtil.getInstance().putValue(req, USER_MODEL, user);
 			resp.sendRedirect(req.getContextPath() + "/web/user/edit");
 

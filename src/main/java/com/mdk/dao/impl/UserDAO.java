@@ -352,5 +352,20 @@ public class UserDAO extends DBConnection implements IUserDAO {
         }
         return 0;
 	}
+
+	@Override
+	public void updatePass(int id, String pass) {
+		String sql = "UPDATE user " + "SET password = ? "
+				+ "WHERE id = ?";
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, pass);
+			ps.setInt(2,  id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 
