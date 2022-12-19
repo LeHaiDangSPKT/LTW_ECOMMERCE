@@ -482,7 +482,7 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
 	@Override
 	public List<Product> findByStoreId(int storeId) {
-		StringBuilder sql = new StringBuilder("select * from product where storeId = ?");
+		StringBuilder sql = new StringBuilder("select * from product where storeId = ? and isActive = 1");
 		List<Product> products = new ArrayList<>();
 		IImageProductService imageProductService = new ImageProductService();
 		IStoreService storeService = new StoreService();

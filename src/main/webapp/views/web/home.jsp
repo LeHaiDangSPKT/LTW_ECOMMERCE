@@ -70,10 +70,6 @@
 						<div class="iq-header-title">
 							<h4 class="card-title mb-0">Sách hiện có</h4>
 						</div>
-						<div class="iq-card-header-toolbar d-flex align-items-center">
-							<a href="category.html" class="btn btn-sm btn-primary view-more">Xem
-								thêm</a>
-						</div>
 					</div>
 					<div class="iq-card-body">
 						<div class="row">
@@ -133,8 +129,9 @@
 																href="#">
 																<i class="ri-shopping-cart-2-fill text-primary"></i>
 															</button>
-															<a href="<c:url value='/web/following/book/add?id=${product.id}'/>" class="ml-2"><i
-																class="ri-heart-fill text-danger"></i></a>
+															<a
+																href="<c:url value='/web/following/book/add?id=${product.id}'/>"
+																class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
 														</form>
 													</div>
 												</div>
@@ -156,10 +153,6 @@
 						class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 trendy-detail">
 						<div class="iq-header-title">
 							<h4 class="card-title mb-0">Sách bán chạy</h4>
-						</div>
-						<div class="iq-card-header-toolbar d-flex align-items-center">
-							<a href="category.html" class="btn btn-sm btn-primary view-more">Xem
-								thêm</a>
 						</div>
 					</div>
 					<div class="iq-card-body trendy-contens">
@@ -212,8 +205,9 @@
 														href="#">
 														<i class="ri-shopping-cart-2-fill text-primary"></i>
 													</button>
-													<a href="<c:url value='/web/following/book/add?id=${product.id}'/>" class="ml-2"><i
-														class="ri-heart-fill text-danger"></i></a>
+													<a
+														href="<c:url value='/web/following/book/add?id=${product.id}'/>"
+														class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
 												</form>
 											</div>
 										</div>
@@ -231,10 +225,6 @@
 						class="iq-card-header d-flex justify-content-between align-items-center position-relative">
 						<div class="iq-header-title">
 							<h4 class="card-title mb-0">Sách được ưa thích</h4>
-						</div>
-						<div class="iq-card-header-toolbar d-flex align-items-center">
-							<a href="<c:url value ='/web/book/detail?id=${product.id}'/>"
-								class="btn btn-sm btn-primary view-more">Xem chi tiết</a>
 						</div>
 					</div>
 					<div class="iq-card-body favorites-contens">
@@ -289,8 +279,9 @@
 														href="#">
 														<i class="ri-shopping-cart-2-fill text-primary"></i>
 													</button>
-													<a href="<c:url value='/web/following/book/add?id=${product.id}'/>" class="ml-2"><i
-														class="ri-heart-fill text-danger"></i></a>
+													<a
+														href="<c:url value='/web/following/book/add?id=${product.id}'/>"
+														class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
 												</form>
 											</div>
 										</div>
