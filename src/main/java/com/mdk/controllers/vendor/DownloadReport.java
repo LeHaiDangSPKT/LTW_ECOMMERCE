@@ -21,7 +21,7 @@ public class DownloadReport extends HttpServlet {
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
         String filename = "report.xls";
-        String path = "D:\\";
+        String path = "E:\\";
         resp.setContentType("APPLICATION/OCTET-STREAM");
         resp.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 
