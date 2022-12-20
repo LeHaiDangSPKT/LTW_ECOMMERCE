@@ -30,6 +30,7 @@ public interface IStoreDAO {
     List<Store> findAll();
     List<Store> findAll(Pageble pageble, String keyword, String state);
     List<Store> findAllByName(String keyword);
+    List<String> findOwnerEmailByStoreId(int id);
     void updateWallet(int id, double eWallet);
     void deleteSoft(int id);
     void delete(int id);

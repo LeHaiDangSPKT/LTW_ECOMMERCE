@@ -113,6 +113,12 @@ public class StoreService implements IStoreService {
     }
 
     @Override
+    public List<String> findOwnerEmailByStoreId(int id) {
+        return storeDAO.findOwnerEmailByStoreId(id);
+    }
+
+
+    @Override
     public void updateWallet(int id, double eWallet) {
         storeDAO.updateWallet(id, eWallet);
     }

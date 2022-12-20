@@ -127,8 +127,8 @@
     window.location.href = "${urlList}&search=" + key;
   }
 
-  $('#selectState').change(function () {
-    const storeId = $("#selectState option:selected").val();
+  $('#selectCate').change(function () {
+    const storeId = $("#selectCate option:selected").val();
     window.location.href = "${urlList}&storeId=" + storeId;
   });
 </script>

@@ -112,18 +112,24 @@
                 <div class="dataTables_paginate paging_simple_numbers">
                   <ul class="pagination justify-content-center">
                     <li class="paginate_button page-item ${tag == 1 ? "disabled" : ""}">
-                      <a href="${pageContext.request.contextPath}/admin/store/all?index=${tag - 1}"
+
+                      <a href="${pageContext.request.contextPath}/admin/user/all?state=${state}&index=${tag - 1}"
+
                          class="page-link">Previous
                       </a>
                     </li>
                     <c:forEach begin="1" end="${endP}" var="i">
                       <li class="paginate_button page-item ${i == tag ? "active" : ""}">
-                        <a href="${pageContext.request.contextPath}/admin/store/all?&index=${i}"
+
+                        <a href="${pageContext.request.contextPath}/admin/user/all?state=${state}&index=${i}"
+
                            class="page-link">${i}</a>
                       </li>
                     </c:forEach>
                     <li class="paginate_button page-item ${tag == endP ? "disabled" : ""}">
-                      <a href="${pageContext.request.contextPath}/admin/store/all?index=${tag + 1}"
+
+                      <a href="${pageContext.request.contextPath}/admin/user/all?state=${state}&index=${tag + 1}"
+
                          class="page-link">Next</a>
                     </li>
                   </ul>
