@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+<html>
+<head>
+<title>HomePage</title>
+</head>
+<body>
 
 <div id="content-page" class="content-page"
 	style="margin-left: 0; padding-left: 100px !important; padding-right: 100px !important; background-color: #efefef">
@@ -33,12 +38,12 @@
 											</div>
 											<div class="col-9">
 												<ul id="description-slider"
-													class="list-inline p-0 m-0  d-flex align-items-center">
+													class="list-inline p-0 m-0 d-flex align-items-center">
 													<c:forEach items="${product.images}" var="image">
 														<c:url value="/image?fname=${image.name}&type=product"
-															var="imgUrl"></c:url>
+															var="imgUrls"></c:url>
 														<li><a href="javascript:void(0);"> <img
-																src="${imgUrl}" class="img-fluid rounded w-100" alt="">
+																src="${imgUrls}" class="img-fluid rounded w-100" alt="">
 														</a></li>
 													</c:forEach>
 												</ul>
@@ -180,11 +185,8 @@
 					</div>
 				</div>
 			</div>
-
-
-
-
 		</div>
 	</div>
 </div>
-
+</body>
+</html>

@@ -53,6 +53,10 @@
                   </div>
                 </div>
               </div>
+              <div class="d-flex" style="margin-top: -40px">
+              	<span style="display: inline-block; height: 20px; width: 20px; background-color: red; border-radius: 5px"></span>
+              	<p style="margin-left: 3px; line-height:20px">Hết hàng</p>
+              </div>
               <table id="table-product" class="data-tables table table-striped table-bordered" style="width: 100%">
                 <thead>
                   <tr>
@@ -71,7 +75,7 @@
                 </thead>
                 <tbody id="list-product">
                   <c:forEach items="${products}" var="product" varStatus="index">
-                    <tr class="item-product">
+                    <tr class="item-product" ${product.quantity == 0 ? "style='color: red;'" : "" }>
                       <td>${index.index + 1 + total*(tag-1)}</td>
                       <td style="width: 100px; min-height: 100px;"><c:url
                           value="/image?fname=${product.getImages().get(0).getName()}&type=product" var="imgUrl"

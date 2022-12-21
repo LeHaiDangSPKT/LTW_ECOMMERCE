@@ -54,7 +54,8 @@ public class ProductDAO extends DBConnection implements IProductDAO {
 
 	@Override
 	public List<Product> findAllProductPermitted() {
-		StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE isActive = true");
+	    StringBuilder sql = new StringBuilder("select * from product inner join store on product.storeId = store.id"
+                + " where isActive = true and store.isOpen=true");
 		List<Product> products = new ArrayList<Product>();
 		IImageProductService imageProductService = new ImageProductService();
 		IStoreService storeService = new StoreService();

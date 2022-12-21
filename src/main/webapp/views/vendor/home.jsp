@@ -150,6 +150,62 @@
 								</div>
 								<div class="col-lg-12">
 										<div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+												<div
+														class="iq-card-header d-flex justify-content-between align-items-center position-relative mb-0 similar-detail"
+												>
+														<div class="iq-header-title">
+																<h4 class="card-title mb-0 d-flex align-items-center">Đơn hàng mới nhất</h4>
+														</div>
+												</div>
+												<div class="iq-card-body">
+														<div class="table-responsive">
+																<table id="list-all-order" class="table table-striped table-bordered mt-4" role="grid"
+																		aria-describedby="user-list-page-info"
+																>
+																		<thead>
+																				<tr>
+																						<th>Mã đơn hàng</th>
+																						<th>Người mua</th>
+																						<th>Vận chuyển</th>
+																						<th>Ngày đặt</th>
+																						<th>Trạng thái</th>
+																						<th>Thao tác</th>
+																				</tr>
+																		</thead>
+																		<tbody>
+																				<c:forEach items="${orders}" var="order">
+																						<tr>
+																								<td>${order.id}</td>
+																								<td>${order.user.firstname}${order.user.lastname}</td>
+																								<td>${order.delivery.name}</td>
+																								<td>${order.createdAt}</td>
+																								<c:if test="${order.status == 'not-processed'}">
+																										<td>Chờ xử lý</td>
+																								</c:if>
+																								<c:if test="${order.status == 'shipped'}">
+																										<td>Đang giao</td>
+																								</c:if>
+																								<c:if test="${order.status == 'delivered'}">
+																										<td>Đã giao</td>
+																								</c:if>
+																								<c:if test="${order.status == 'cancelled'}">
+																										<td>Đã hủy</td>
+																								</c:if>
+																								<td><a class="iq-bg-primary" data-toggle="tooltip" data-placement="center" title=""
+																										data-original-title="Edit"
+																										href="<c:url
+                                                       value="/vendor/order/detail?action=edit&orderId=${order.id}"/> "
+																								> Xem chi tiết </a></td>
+																						</tr>
+																				</c:forEach>
+																		</tbody>
+																</table>
+														</div>
+												</div>
+										</div>
+								</div>
+								<div class="col-lg-12">
+										<div class="iq-card iq-card-block iq-card-stretch iq-card-height">
 												<div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
 														<div class="iq-header-title">
 																<h4 class="card-title mb-0">Các khách hàng theo dõi</h4>
@@ -180,9 +236,13 @@
 																														</c:otherwise>
 																												</c:choose>
 																												<img class="rounded-circle img-fluid avatar-40" src="${imgAvatar}" alt="profile">
-																												<p class="mt-3 ml-1 mr-3">${followStore.user.firstname} ${followStore.user.lastname}</p>
-																												<p class="mt-3 ml-1 mr-3">Giới tính:  ${followStore.user.sex}</p>
-																											</div>
+																												<p class="mt-3 ml-1 mr-3">${followStore.user.firstname}${followStore.user.lastname}</p>
+																												<div>
+																													<p class="mt-3 ml-1 mr-3">Giới tính: ${followStore.user.sex}</p>
+																													<p class="mt-3 ml-1 mr-3">Số điện thoại: ${followStore.user.phone}</p>
+																													<p class="mt-3 ml-1 mr-3">Email: ${followStore.user.email}</p>
+																												</div>
+																										</div>
 																								</td>
 																								<td>Đang theo dõi</td>
 																						</tr>

@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.mdk.models.ImageStore;
+import com.mdk.models.Orders;
 import com.mdk.models.Product;
 import com.mdk.models.Store;
 import com.mdk.models.User;
@@ -27,10 +28,12 @@ import com.mdk.models.UserFollowStore;
 import com.mdk.paging.PageRequest;
 import com.mdk.paging.Pageble;
 import com.mdk.services.IImageStoreService;
+import com.mdk.services.IOrdersService;
 import com.mdk.services.IProductService;
 import com.mdk.services.IStoreService;
 import com.mdk.services.IUserFollowStoreService;
 import com.mdk.services.impl.ImageStoreService;
+import com.mdk.services.impl.OrdersService;
 import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.StoreService;
 import com.mdk.services.impl.UserFollowStoreService;
@@ -52,6 +55,7 @@ public class StoreVendorController extends HttpServlet {
     IImageStoreService imageStoreService = new ImageStoreService();
     IProductService productService = new ProductService();
     IUserFollowStoreService followStoreService = new UserFollowStoreService();
+    IOrdersService ordersService = new OrdersService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -67,6 +71,7 @@ public class StoreVendorController extends HttpServlet {
             if (count == 1) {
                 findAllCustomer(req, resp);
                 findAllProduct(req, resp);
+                ordersNew(req, resp);
             }
             req.getRequestDispatcher("/views/vendor/home.jsp").forward(req, resp);
         } else {
@@ -227,5 +232,10 @@ public class StoreVendorController extends HttpServlet {
             followStores = followStoreService.findByStoreId(pageble, store.getId());
         }
         req.setAttribute("followStores", followStores);
+    }
+    protected void ordersNew(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Store store = (Store) SessionUtil.getInstance().getValue(req, STORE_MODEL);
+        List<Orders> orders = ordersService.ordersNew(store.getId());
+        req.setAttribute("orders", orders);
     }
 }
