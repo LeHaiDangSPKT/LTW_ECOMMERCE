@@ -39,7 +39,7 @@
 					SHOP</a></h2> --%>
 
 			</div>
-			<div class="iq-search-bar">
+			<div class="iq-search-bar d-flex align-items-center">
 				<form method="post" class="searchbox d-flex mt-3">
 					<input id="searchinput" name="searchkeyword" type="text"
 						oninput="changeFormAction()" class="text search-input"
@@ -47,11 +47,17 @@
 						class="search-link" href="#"><i class="ri-search-line"></i></a>
 					<button id="searchbutton"
 						formaction="<c:url value='/web/book/search?category=0&store=0&rating=-1&minPrice=0&maxPrice=1000000&search=${searchkeyword}'/>"
-						class="btn btn-primary search-data ml-2">
+						class="btn text-primary search-data ml-2"
+						style="background-color: white">
 						<i class="ri-search-line"></i>
 					</button>
 				</form>
+				<div>
+					<a href="<c:url value="/web/store/search"/>" class="btn text-primary search-data ml-2" style="background-color: white; height: 40px">
+						Trang tìm kiếm cửa hàng</a>
+				</div>
 			</div>
+
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent"
@@ -207,8 +213,7 @@
 									</c:if>
 									<div class="caption" style="text-align: center">
 										<h6 class="mb-1 line-height text-white">${sessionScope.USERMODEL.firstname}
-											${sessionScope.USERMODEL.lastname}
-										</h6>
+											${sessionScope.USERMODEL.lastname}</h6>
 										<span class="font-size-14 text-danger font-weight-bold">(${sessionScope.USERMODEL.eWallet}
 											vnđ)</span>
 									</div>
@@ -274,8 +279,10 @@
 							</c:when>
 
 							<c:otherwise>
-								<div class="iq-waves-effect d-flex align-items-center h-100" style="width:160px; transform: translateY(-5px)">
-									<a href="<c:url value="/login"/>" class="w-50 d-block text-white font-weight-bold">Đăng nhập</a>
+								<div class="iq-waves-effect d-flex align-items-center h-100"
+									style="width: 160px; transform: translateY(-5px)">
+									<a href="<c:url value="/login"/>"
+										class="w-50 d-block text-white font-weight-bold">Đăng nhập</a>
 									<a href="<c:url value="signup"/>"
 										class="w-50 d-block text-white font-weight-bold">Đăng ký</a>
 								</div>

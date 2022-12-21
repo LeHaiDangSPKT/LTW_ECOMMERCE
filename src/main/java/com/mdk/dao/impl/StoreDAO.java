@@ -410,6 +410,26 @@ public class StoreDAO extends DBConnection implements IStoreDAO {
 	}
 
 	@Override
+	public List<String> findOwnerEmailByStoreId(int id) {
+		StringBuilder sql = new StringBuilder("select user.email, user.firstname, user.lastname from store inner join user on store.ownerId = user.id where store.id = ?");
+		List<String> datas = new ArrayList<String>();
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement(String.valueOf(sql));
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				datas.add(rs.getString("email"));
+				datas.add(rs.getString("firstname"));
+				datas.add(rs.getString("lastname"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return datas;
+	}
+
+	@Override
 	public void updateWallet(int id, double eWallet) {
 		String sql = "UPDATE store "
 				+ "SET eWallet = ? "

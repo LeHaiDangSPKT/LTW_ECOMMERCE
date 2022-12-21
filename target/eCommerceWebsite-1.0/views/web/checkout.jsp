@@ -17,7 +17,9 @@
 								</div>
 								<div class="col-lg-12 text-center mb-5">
 									<span class="text-second text-uppercase font-size-20">Giỏ
-										hàng của bạn đang trống. <a href="<c:url value="/web/book/search"/>">Cùng mua sắm nào!</a></span>
+										hàng của bạn đang trống. <a
+										href="<c:url value="/web/book/search"/>">Cùng mua sắm nào!</a>
+									</span>
 								</div>
 							</div>
 						</c:if>
@@ -61,13 +63,29 @@
 															<div class="row">
 																<div class="col-sm-10">
 																	<div class="row align-items-center mt-2">
-																		<div class="col-sm-7 col-md-6">
-																			<button type="button" class="fa fa-minus qty-btn"
-																				id="btn-minus"></button>
-																			<input type="text" id="quantity"
-																				value="${cartItem.count }">
-																			<button type="button" class="fa fa-plus qty-btn"
-																				id="btn-plus"></button>
+																		<div class="col-sm-3 col-md-2">
+																			<label class="mr-3">Số lượng</label> <label
+																				class=" mr-3">${cartItem.count}</label>
+
+
+																		</div>
+																		<div class="col-sm-4 cold-md-4">
+																			<label class="mr-3">Thêm sản phẩm</label>
+																			<div class="d-flex align-items-center">
+																				<c:choose>
+																					<c:when test="${cartItem.product.quantity > 0}">
+																						<input name="count" class="form-control"
+																							style="max-width: 75px; height: 35px" type="number" min="1"
+																							max="${cartItem.product.quantity}" step="1" value="1">
+																					</c:when>
+																					<c:otherwise>
+																						<label class="mr-3 text-danger">Hết hàng</label>
+																					</c:otherwise>
+																				</c:choose>
+																				<button
+																					formaction="<c:url value='/web/cart/item/create?id=${cartItem.product.id}'/>"
+																					class="btn btn-primary view-more ml-2">Thêm</button>
+																			</div>
 																		</div>
 																		<div class="col-sm-5 col-md-6">
 																			<span class="product-price">${cartItem.product.promotionalPrice*cartItem.count}</span>

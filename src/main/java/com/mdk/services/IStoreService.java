@@ -28,6 +28,7 @@ public interface IStoreService {
     List<Store> findAll();
     List<Store> findAllByName(String keyword);
     List<Store> findAll(Pageble pageble, String keyword, String state);
+    List<String> findOwnerEmailByStoreId(int id);
     void updateWallet(int id, double eWallet);
     void deleteSoft(int id);
     void delete(int id);
