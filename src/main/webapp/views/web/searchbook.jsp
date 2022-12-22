@@ -163,9 +163,10 @@
 										src="<c:url value="/template/images/notfoundproduct.png"/>" />
 								</div>
 								<div class="col-lg-12 text-center mb-5">
-									<span class="text-second text-uppercase font-size-20">Rất tiếc! Không tìm thấy sản phẩm rồi.</span>
+									<span class="text-second text-uppercase font-size-20">Rất
+										tiếc! Không tìm thấy sản phẩm rồi.</span>
 								</div>
-								
+
 							</c:if>
 							<c:forEach items="${searchProductList}" var="product">
 								<div class="col-sm-6 col-md-4 col-lg-3">
@@ -182,9 +183,17 @@
 														style="object-fit: contain; height: 25vh; width: 20vh"
 														src="${imgUrl}" alt=""></a>
 													<div class="view-book">
-														<a
-															href="<c:url value ='/web/book/detail?id=${product.id}'/>"
-															class="btn btn-sm btn-white">Xem chi tiết</a>
+														<c:if test="${not empty sessionScope.USER_MODEL}">
+															<a
+																href="<c:url value ='/web/book/detail?id=${product.id}'/>"
+																class="btn btn-sm btn-white">Xem chi tiết</a>
+														</c:if>
+														<c:if test="${empty sessionScope.USER_MODEL}">
+															<a
+																href="<c:url value ='/home/book/detail?id=${product.id}'/>"
+																class="btn btn-sm btn-white">Xem chi tiết</a>
+														</c:if>
+
 													</div>
 												</div>
 

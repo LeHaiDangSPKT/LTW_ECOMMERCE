@@ -17,49 +17,73 @@
 
 		<div class="row">
 
+			<div class="col-sm-12">
+				<div class="iq-card">
 
-			<div class="col-lg-12">
-				<div
-					class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height rounded">
-					<div class="newrealease-contens">
-						<ul id="newrealease-slider"
-							class="list-inline p-0 m-0 d-flex align-items-center">
+					<div class="iq-card-body">
 
-							<li class="item"><a href="javascript:void(0);"> <img
-									src="<c:url value="/template/images/ads/1.jpg"/>"
-									class="img-fluid w-100 rounded" alt="">
-							</a></li>
-
-							<li class="item"><a href="javascript:void(0);"> <img
-									src="<c:url value="/template/images/ads/6.jpg"/>"
-									class="img-fluid w-100 rounded" alt="">
-							</a></li>
-							<li class="item"><a href="javascript:void(0);"> <img
-									src="<c:url value="/template/images/ads/6.jpg"/>"
-									class="img-fluid w-100 rounded" alt="">
-							</a></li>
-							<li class="item"><a href="javascript:void(0);"> <img
-									src="<c:url value="/template/images/ads/6.jpg"/>"
-									class="img-fluid w-100 rounded" alt="">
-							</a></li>
-							<li class="item"><a href="javascript:void(0);"> <img
-									src="<c:url value="/template/images/ads/6.jpg"/>"
-									class="img-fluid w-100 rounded" alt="">
-							</a></li>
-							<li class="item"><a href="javascript:void(0);"> <img
-									src="<c:url value="/template/images/ads/1.jpg"/>"
-									class="img-fluid w-100 rounded" alt="">
-							</a></li>
-							<li class="item"><a href="javascript:void(0);"> <img
-									src="<c:url value="/template/images/ads/1.jpg"/>"
-									class="img-fluid w-100 rounded" alt="">
-							</a></li>
-							<li class="item"><a href="javascript:void(0);"> <img
-									src="<c:url value="/template/images/ads/1.jpg"/>"
-									class="img-fluid w-100 rounded" alt="">
-							</a></li>
-
-						</ul>
+						<div id="carouselExampleIndicators" class="carousel slide"
+							data-ride="carousel">
+							<ol class="carousel-indicators">
+								<li data-target="#carouselExampleIndicators" data-slide-to="0"
+									class="active"></li>
+								<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+								<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+								<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+								<li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+								<li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+								<li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+								<li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+								<li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+							</ol>
+							<div class="carousel-inner">
+								<div class="carousel-item active">
+									<img src="<c:url value="/template/images/ads/1.jpg"/>"
+										class="d-block w-100" alt="#">
+								</div>
+								<div class="carousel-item">
+									<img src="<c:url value="/template/images/ads/2.jpg"/>"
+										class="d-block w-100" alt="#">
+								</div>
+								<div class="carousel-item">
+									<img src="<c:url value="/template/images/ads/3.jpg"/>"
+										class="d-block w-100" alt="#">
+								</div>
+								<div class="carousel-item">
+									<img src="<c:url value="/template/images/ads/4.jpg"/>"
+										class="d-block w-100" alt="#">
+								</div>
+								<div class="carousel-item">
+									<img src="<c:url value="/template/images/ads/5.jpg"/>"
+										class="d-block w-100" alt="#">
+								</div>
+								<div class="carousel-item">
+									<img src="<c:url value="/template/images/ads/6.jpg"/>"
+										class="d-block w-100" alt="#">
+								</div>
+								<div class="carousel-item">
+									<img src="<c:url value="/template/images/ads/7.jpg"/>"
+										class="d-block w-100" alt="#">
+								</div>
+								<div class="carousel-item">
+									<img src="<c:url value="/template/images/ads/8.jpg"/>"
+										class="d-block w-100" alt="#">
+								</div>
+								<div class="carousel-item">
+									<img src="<c:url value="/template/images/ads/9.jpg"/>"
+										class="d-block w-100" alt="#">
+								</div>
+							</div>
+							<a class="carousel-control-prev"
+								href="#carouselExampleIndicators" role="button"
+								data-slide="prev"> <span class="carousel-control-prev-icon"
+								aria-hidden="true"></span> <span class="sr-only">Previous</span>
+							</a> <a class="carousel-control-next"
+								href="#carouselExampleIndicators" role="button"
+								data-slide="next"> <span class="carousel-control-next-icon"
+								aria-hidden="true"></span> <span class="sr-only">Next</span>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -89,15 +113,23 @@
 														style="object-fit: contain;" src="${imgUrl}" alt="">
 													</a>
 													<div class="view-book">
-														<a
-															href="<c:url value ='/web/book/detail?id=${product.id}'/>"
-															class="btn btn-sm btn-white"> View Book </a>
+														<c:if test="${not empty sessionScope.USER_MODEL}">
+															<a
+																href="<c:url value ='/web/book/detail?id=${product.id}'/>"
+																class="btn btn-sm btn-white"> View Book </a>
+														</c:if>
+														<c:if test="${empty sessionScope.USER_MODEL}">
+															<a
+																href="<c:url value ='/home/book/detail?id=${product.id}'/>"
+																class="btn btn-sm btn-white"> View Book </a>
+														</c:if>
 													</div>
 												</div>
 												<div class="col-12 mt-3">
 													<div class="mb-2">
 														<h6 class="mb-1">${product.name}</h6>
 														<p class="font-size-13 line-height mb-1">${product.description}</p>
+
 														<div class="d-block line-height">
 															<span id="rating" class="font-size-11 text-warning">
 																<c:forEach var="i" begin="1" end="5">
@@ -129,6 +161,7 @@
 																href="#">
 																<i class="ri-shopping-cart-2-fill text-primary"></i>
 															</button>
+
 															<a
 																href="<c:url value='/web/following/book/add?id=${product.id}'/>"
 																class="ml-2"><i class="ri-heart-fill text-danger"></i></a>
@@ -167,9 +200,16 @@
 												style="object-fit: contain; height: 25vh" src="${imgUrl}"
 												alt=""></a>
 											<div class="view-book">
-												<a
-													href="<c:url value ='/web/book/detail?id=${product.id}'/>"
-													class="btn btn-sm btn-white">Xem chi tiết</a>
+												<c:if test="${not empty sessionScope.USER_MODEL}">
+													<a
+														href="<c:url value ='/web/book/detail?id=${product.id}'/>"
+														class="btn btn-sm btn-white"> View Book </a>
+												</c:if>
+												<c:if test="${empty sessionScope.USER_MODEL}">
+													<a
+														href="<c:url value ='/home/book/detail?id=${product.id}'/>"
+														class="btn btn-sm btn-white"> View Book </a>
+												</c:if>
 											</div>
 										</div>
 										<div class="col-7">
@@ -241,9 +281,16 @@
 												alt="">
 											</a>
 											<div class="view-book">
-												<a
-													href="<c:url value ='/web/book/detail?id=${product.id}'/>"
-													class="btn btn-sm btn-white">Xem chi tiết</a>
+												<c:if test="${not empty sessionScope.USER_MODEL}">
+													<a
+														href="<c:url value ='/web/book/detail?id=${product.id}'/>"
+														class="btn btn-sm btn-white"> View Book </a>
+												</c:if>
+												<c:if test="${empty sessionScope.USER_MODEL}">
+													<a
+														href="<c:url value ='/home/book/detail?id=${product.id}'/>"
+														class="btn btn-sm btn-white"> View Book </a>
+												</c:if>
 											</div>
 										</div>
 										<div class="col-7">

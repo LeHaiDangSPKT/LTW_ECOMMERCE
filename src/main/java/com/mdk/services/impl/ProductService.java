@@ -141,4 +141,9 @@ public class ProductService implements IProductService {
 		productDAO.updateSold(id, sold);
 	}
 
+	@Override
+	public List<Product> findAll(Pageble pageble) {
+		return productDAO.findAll(pageble);
+	}
+
 }

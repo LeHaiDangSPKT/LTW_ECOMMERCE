@@ -84,7 +84,18 @@
 													</c:otherwise>
 												</c:choose>
 											</div>
-											<span class="text-dark mb-4 pb-4 iq-border-bottom d-block">${product.description}</span>
+											<span class="text-dark mb-4 d-block">${product.description}</span>
+											<span class="text-dark mb-4 pb-4 iq-border-bottom d-block">Cửa
+												hàng: <c:if test="${not empty sessionScope.USER_MODEL}">
+													<a
+														href="<c:url value="/web/store/detail?id=${product.store.id}"/>"
+														class="text-primary">${product.store.name}</a>
+												</c:if> <c:if test="${empty sessionScope.USER_MODEL}">
+													<a
+														href="<c:url value="/home/store/detail?id=${product.store.id}"/>"
+														class="text-primary">${product.store.name}</a>
+												</c:if>
+											</span>
 											<div class="mb-4 d-flex align-items-center">
 												<button
 													formaction="<c:url value='/web/cart/item/create?id=${product.id}'/>"

@@ -22,7 +22,12 @@
 	<%@include file="/common/footer.jsp"%>
 </body>
 <script>
-	const url = "<c:url value='/web/book/search'/>";
+	<c:if test="${not empty sessionScope.USER_MODEL}">
+		const url = "<c:url value='/web/book/search'/>";
+	</c:if>
+	<c:if test="${empty sessionScope.USER_MODEL}">
+		const url = "<c:url value='/home/book/search'/>";
+	</c:if>
 
 	function changeFormAction() {
 		var category = "?category="

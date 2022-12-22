@@ -29,4 +29,5 @@ public interface IProductService {
     List<Product> findAllProductProhibited();
     List<Product> findAllProductPermitted();
     List<Product> topSeller(int storeId, int top);
+    List<Product> findAll(Pageble pageble);
 }

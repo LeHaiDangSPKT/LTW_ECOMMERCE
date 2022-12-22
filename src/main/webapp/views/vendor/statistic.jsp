@@ -168,6 +168,7 @@
                                     <td>${order.user.firstname} ${order.user.lastname}</td>
                                     <td>${order.delivery.name}</td>
                                     <td>${order.createdAt}</td>
+                                    <td>${order.status}</td>
                                     <c:if test="${order.status == 'not-processed'}">
                                         <td>Chờ xử lý</td>
                                     </c:if>
