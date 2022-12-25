@@ -41,7 +41,8 @@
 										src="<c:url value="/template/images/notfoundproduct.png"/>" />
 								</div>
 								<div class="col-lg-12 text-center mb-5">
-									<span class="text-second text-uppercase font-size-20">Không tìm thấy tên cửa hàng bạn cần tìm rồi.</span>
+									<span class="text-second text-uppercase font-size-20">Không
+										tìm thấy tên cửa hàng bạn cần tìm rồi.</span>
 								</div>
 
 							</c:if>
@@ -53,8 +54,7 @@
 											<div class="d-flex align-items-center">
 												<div
 													class="col-6 p-0 position-relative image-overlap-shadow">
-													<a href="javascript:void();">
-													<c:url
+													<a href="javascript:void();"> <c:url
 															value="/image?fname=${store.getImages().get(0).getName()}&type=store"
 															var="imgUrl"></c:url> <img
 														class="img-fluid rounded w-100"
@@ -62,9 +62,17 @@
 														src="${imgUrl}" alt="">
 													</a>
 													<div class="view-book">
-														<a
+														<c:if test="${not empty sessionScope.USER_MODEL}">
+															<a
 															href="<c:url value ='/web/store/detail?id=${store.id}'/>"
 															class="btn btn-sm btn-white">Xem chi tiết</a>
+														</c:if>
+														<c:if test="${empty sessionScope.USER_MODEL}">
+															<a
+															href="<c:url value ='/home/store/detail?id=${store.id}'/>"
+															class="btn btn-sm btn-white">Xem chi tiết</a>
+														</c:if>
+														
 													</div>
 												</div>
 

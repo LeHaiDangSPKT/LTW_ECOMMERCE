@@ -22,7 +22,7 @@ import com.mdk.services.impl.ProductService;
 import com.mdk.services.impl.ReviewService;
 import com.mdk.services.impl.StoreService;
 
-@WebServlet(urlPatterns = { "/web/book/search", "/web/book/detail" })
+@WebServlet(urlPatterns = { "/web/book/search", "/web/book/detail", "/home/book/search", "/home/book/detail" })
 public class ProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	IProductService productService = new ProductService();

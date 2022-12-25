@@ -45,6 +45,12 @@
 									${orders.delivery.name}
 								</div>
 							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><strong>Tổng tiền thanh toán:</strong></label>
+									${orders.amountFromUser}
+								</div>
+							</div>
 						</div>
 
 					</div>
@@ -108,11 +114,16 @@
 											</div>
 											<div class="col-sm-12">
 												<div class="d-flex justify-content-between">
-													<a
-														href="<c:url value="/web/book/review?orders=${orders.id}&product=${item.product.id}"/>"
-														id="place-order" href="javascript:void();"
-														class="btn btn-primary d-block mt-3 next ">Đánh
-														giá sản phẩm</a>
+													<c:if test="${orders.status == 'delivered'}">
+														<a
+															href="<c:url value="/web/book/review?orders=${orders.id}&product=${item.product.id}"/>"
+															id="place-order" href="javascript:void();"
+															class="btn btn-primary d-block mt-3 next ">Đánh giá
+															sản phẩm</a>
+													</c:if>
+													<c:if test="${orders.status != 'delivered'}">
+													<p class="text-danger mt-3">Chưa thể đánh giá sản phẩm</p>
+													</c:if>
 												</div>
 											</div>
 										</div>

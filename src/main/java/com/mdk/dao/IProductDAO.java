@@ -32,4 +32,5 @@ public interface IProductDAO {
     List<Product> findAllProductPermitted();
     List<Product> topSeller(int storeId, int top);
     int countLikeProduct(int productId);
+    List<Product> findAll(Pageble pageble);
 }

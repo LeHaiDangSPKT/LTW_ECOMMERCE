@@ -13,26 +13,51 @@
 					</div>
 				</div>
 				<div class="iq-navbar-logo d-flex justify-content-between">
-					<a href="<c:url value='/web'/>" class="header-logo"> <img
-						src="../template/images/logo.png" class="img-fluid rounded-normal"
-						alt="">
-						<div class="logo-title">
-							<span class="text-primary text-uppercase">MDK Book</span>
-						</div>
-					</a>
+					<c:if test="${not empty sessionScope.USER_MODEL}">
+						<a href="<c:url value='/web'/>" class="header-logo"> <img
+							src="../template/images/logo.png"
+							class="img-fluid rounded-normal" alt="">
+							<div class="logo-title">
+								<span class="text-primary text-uppercase">MDK Book</span>
+							</div>
+						</a>
+					</c:if>
+					<c:if test="${empty sessionScope.USER_MODEL}">
+						<a href="<c:url value='/home'/>" class="header-logo"> <img
+							src="../template/images/logo.png"
+							class="img-fluid rounded-normal" alt="">
+							<div class="logo-title">
+								<span class="text-primary text-uppercase">MDK Book</span>
+							</div>
+						</a>
+					</c:if>
 				</div>
 			</div>
 			<div class="navbar-breadcrumb ">
 				<div class="iq-navbar-logo d-flex justify-content-between">
-					<a href="<c:url value='/web'/>" class="header-logo"> <img
-						src="<c:url value="/template/images/logo.png"/>"
-						class="img-fluid rounded-normal" alt="">
-						<div class="logo-title">
-							<h2 class="text-primary text-uppercase text-white"
-								style="font-size: 28px !important; margin-left: 5px; line-height: 45px;">MDK
-								SHOP</h2>
-						</div>
-					</a>
+					<c:if test="${not empty sessionScope.USER_MODEL}">
+						<a href="<c:url value='/web'/>" class="header-logo"> <img
+							src="<c:url value="/template/images/logo.png"/>"
+							class="img-fluid rounded-normal" alt="">
+							<div class="logo-title">
+								<h2 class="text-primary text-uppercase text-white"
+									style="font-size: 28px !important; margin-left: 5px; line-height: 45px;">MDK
+									SHOP</h2>
+							</div>
+						</a>
+					</c:if>
+					<c:if test="${empty sessionScope.USER_MODEL}">
+						<a href="<c:url value='/home'/>" class="header-logo"> <img
+							src="<c:url value="/template/images/logo.png"/>"
+							class="img-fluid rounded-normal" alt="">
+							<div class="logo-title">
+								<h2 class="text-primary text-uppercase text-white"
+									style="font-size: 28px !important; margin-left: 5px; line-height: 45px;">MDK
+									SHOP</h2>
+							</div>
+						</a>
+					</c:if>
+
 				</div>
 
 				<%-- <h2 class="mb-0 text-white" style="font-size: 28px !important;"><a href="<c:url value='/web'/>" class="header-logo">MDK
@@ -45,16 +70,38 @@
 						oninput="changeFormAction()" class="text search-input"
 						placeholder="Tìm kiếm sách..." value="${searchkeyword}"> <a
 						class="search-link" href="#"><i class="ri-search-line"></i></a>
-					<button id="searchbutton"
-						formaction="<c:url value='/web/book/search?category=0&store=0&rating=-1&minPrice=0&maxPrice=1000000&search=${searchkeyword}'/>"
-						class="btn text-primary search-data ml-2"
-						style="background-color: white">
-						<i class="ri-search-line"></i>
-					</button>
+					<c:if test="${not empty sessionScope.USER_MODEL}">
+						<button id="searchbutton"
+							formaction="<c:url value='/web/book/search?category=0&store=0&rating=-1&minPrice=0&maxPrice=1000000&search=${searchkeyword}'/>"
+							class="btn text-primary search-data ml-2"
+							style="background-color: white">
+							<i class="ri-search-line"></i>
+						</button>
+					</c:if>
+					<c:if test="${empty sessionScope.USER_MODEL}">
+						<button id="searchbutton"
+							formaction="<c:url value='/home/book/search?category=0&store=0&rating=-1&minPrice=0&maxPrice=1000000&search=${searchkeyword}'/>"
+							class="btn text-primary search-data ml-2"
+							style="background-color: white">
+							<i class="ri-search-line"></i>
+						</button>
+					</c:if>
+
 				</form>
 				<div>
-					<a href="<c:url value="/web/store/search"/>" class="btn text-primary search-data ml-2" style="background-color: white; height: 40px">
-						Trang tìm kiếm cửa hàng</a>
+					<c:if test="${not empty sessionScope.USER_MODEL}">
+						<a href="<c:url value="/web/store/search"/>"
+							class="btn text-primary search-data ml-2"
+							style="background-color: white; height: 40px"> Trang tìm kiếm
+							cửa hàng</a>
+					</c:if>
+					<c:if test="${empty sessionScope.USER_MODEL}">
+						<a href="<c:url value="/home/store/search"/>"
+							class="btn text-primary search-data ml-2"
+							style="background-color: white; height: 40px"> Trang tìm kiếm
+							cửa hàng</a>
+					</c:if>
+
 				</div>
 			</div>
 
